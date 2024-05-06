@@ -286,3 +286,9 @@ footer a.linked-in:hover {
     opacity: 0;
     animation: floatDown 3s linear forwards;
 }
+
+.house-locations img {
+    max-height: 400px;
+    width: auto;
+    display: inline-block;
+}
