@@ -1,0 +1,289 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #ede1f2;
+}
+
+body {
+  cursor: url('/charmanderlink.cur'), auto;
+}
+
+a,
+.button-link {
+  cursor: url('/pokemano.cur'), auto;
+}
+
+p {
+    font-size: 18px;
+}
+
+header {
+  background: #532d64;
+  color: #fff;
+  padding: 10px 20px;
+  position: relative;
+}
+
+header .menu-btn {
+  display: none;
+  font-size: 24px;
+}
+
+.logo-button {
+  background-color: #8e44ad;
+}
+
+.logo-button img {
+  height: 45px;
+  width: auto;
+  vertical-align: middle;
+  transition: transform 0.5s ease;
+}
+
+.logo-button img:hover {
+    transform: scale(1.1);
+    content: url('/FL-logo2.png');
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  flex: 1;
+  text-align: center;
+  padding: 10px 20px;
+}
+
+nav ul li a {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+.border {
+  border: 2px solid;
+  animation: borderTransition 3s infinite alternate;
+}
+
+@keyframes borderTransition {
+  0% {
+    border-color: #753694;
+  }
+  25% {
+    border-color: #823c8e;
+  }
+  50% {
+    border-color: #9647a0;
+  }
+  75% {
+    border-color: #a464b4;
+  }
+  100% {
+    border-color: #ba6fd7;
+  }
+}
+
+nav ul li a:hover {
+  background-color: #8e44ad;
+}
+
+.active {
+  background-color: #9c53bb;
+}
+
+section {
+  padding: 20px;
+  margin: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+}
+
+.gallery {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.gallery img {
+  width: 30%;
+  margin: 5px;
+  height: auto;
+  border-radius: 5px;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+}
+
+footer {
+  text-align: center;
+  padding: 5px 0;
+  background: #713c88;
+  color: #fff;
+  margin-top: 20px;
+}
+
+footer a.linked-in {
+  color: #fff;
+  text-decoration: none;
+}
+
+footer a.linked-in:hover {
+  color: #ebd5ff;
+}
+
+#back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #8647a0;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#back-to-top:hover,
+.menu-btn:hover {
+  background-color: #411f50;
+}
+
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    position: fixed;
+    width: 100%;
+    top: 60px;
+    left: 0;
+    background: #9b59b6;
+    display: none;
+  }
+
+  .logo-button img {
+    height: 23px;
+  }
+
+  header .menu-btn {
+    display: block;
+  }
+
+  .gallery img {
+    width: 100%;
+  }
+}
+
+@media (min-width: 769px) {
+  .nav ul {
+    display: flex !important;
+  }
+}
+
+.img-reglas {
+    display: flex;
+    justify-content: center;
+}
+
+.img-reglas img {
+    max-width: 100%;
+    height: auto;
+}
+
+.home-p {
+    text-align: center;
+}
+
+.img-bienvenidos {
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.img-bienvenidos img {
+    display: block;
+    margin: 0 auto;
+    max-width: 30%;
+    transition: transform 0.3s ease;
+}
+
+.img-bienvenidos img:hover {
+    transform: scale(1.05);
+}
+
+.img-eventos {
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.img-eventos img {
+    display: block;
+    margin: 0 auto;
+    max-width: 50%;
+    transition: transform 0.3s ease;
+}
+
+.img-eventos img:hover {
+    transform: scale(1.05);
+}
+
+@keyframes floatDown {
+    0% {
+        transform: translateY(-100px);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+}
+
+.star {
+    position: fixed;
+    color: #cd8ad2;
+    font-size: 10px;
+    user-select: none;
+    pointer-events: none;
+    opacity: 0;
+    animation: floatDown 3s linear forwards;
+}
+
+.stary {
+    position: fixed;
+    color: #efc530;
+    font-size: 10px;
+    user-select: none;
+    pointer-events: none;
+    opacity: 0;
+    animation: floatDown 3s linear forwards;
+}
