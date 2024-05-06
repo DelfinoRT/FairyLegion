@@ -43,7 +43,6 @@ header .menu-btn {
 
 .logo-button img:hover {
     transform: scale(1.1);
-    content: url('/FL-logo2.png');
 }
 
 nav {
