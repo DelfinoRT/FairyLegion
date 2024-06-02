@@ -292,3 +292,47 @@ footer a.linked-in:hover {
     width: auto;
     display: inline-block;
 }
+
+.section {
+  padding: 20px;
+  text-align: center;
+}
+
+.fishing-assistant {
+  margin-top: 20px;
+}
+
+.fishing-assistant select {
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+#pokemon-info {
+  margin-top: 20px;
+}
+
+#pokemon-info img {
+  width: 100px;
+  height: 100px;
+}
+
+#pokemon-info p {
+  margin: 10px 0;
+}
+
+#back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+#back-to-top:hover {
+  background: #555;
+}
