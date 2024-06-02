@@ -81,21 +81,18 @@ setInterval(sprinkleFairyDusty, 500);
 // Data for fishing information
 const fishingData = {
     "Old Rod": {
-        "noBait": ["Finneon", "Spheal", "Horsea", "Wooper", "Goldeen", "Shellder", "Magikarp", "Chinchou", "Clamperl", "Krabby", "Poliwag"],
         "Misty Bait": ["Shellder", "Poliwag", "Goldeen", "Krabby", "Magikarp", "Horsea"],
         "Johto Bait": ["Remoraid", "Wooper", "Chinchou"],
         "Hoen Bait": ["Spheal", "Clamperl", "Barboach", "Surskit"],
         "Kannovalola Bait": ["Mareanie", "Finneon", "Mantyke"]
     },
     "Great Rod": {
-        "noBait": ["Staryu", "Tentacool", "Psyduck", "Seel", "Slowpoke", "Marill", "Carvanha", "Wailmer", "Spheal"],
         "Misty Bait": ["Tentacool", "Staryu", "Seel", "Squirtle", "Poliwhirl", "Psyduck", "Slowpoke"],
         "Johto Bait": ["Corsola", "Marill", "Qwilfish", "Totodile"],
         "Hoen Bait": ["Wailmer", "Corphish", "Mudkip", "Carvanha", "Lotad"],
         "Kannovalola Bait": ["Popplio", "Dewpider", "Piplup", "Froakie"]
     },
     "Super Rod": {
-        "noBait": ["Poliwhirl", "Seaking", "Starmie", "Kingler", "Seadra", "Lanturn", "Quagsire", "Whiscash", "Sealeo", "Luvdisc"],
         "Misty Bait": ["Seaking", "Starmie", "Seadra", "Kingler", "Wartortle", "Slowbro"],
         "Johto Bait": ["Croconaw", "Quagsire", "Azumarill", "Lanturn", "Octillery"],
         "Hoen Bait": ["Lombre", "Marshtomp", "Whiscash", "Sealeo", "Sharpedo", "Luvdisc"],
@@ -122,6 +119,7 @@ const fishingData = {
 };
 
 const pokemonImages = {
+    "-": "",
     "Alomomola": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/594.png",
     "Araquanid": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/752.png",
     "Azumarill": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/184.png",
@@ -258,7 +256,7 @@ pokemonSelect.addEventListener('change', function () {
     for (let rod in fishingData) {
         for (let bait in fishingData[rod]) {
             if (fishingData[rod][bait].includes(selectedPokemon)) {
-                rodInfo += `<p>${rod} ${bait !== 'noBait' ? 'with ' + bait : 'without bait'}</p>`;
+                rodInfo += `<p>${rod} ${bait !== 'noBait' ? 'con ' + bait : 'without bait'}</p>`;
             }
         }
     }
