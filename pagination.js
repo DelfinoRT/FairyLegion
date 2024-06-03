@@ -5,7 +5,7 @@ const achievements = [
   "<b>Achievement #135</b>: Pescar 1 Shellder mientras se tiene a Slowpoke activo",
   "<b>Achievement #211</b>: Pescar 1500 pokemon",
   "<b>Achievement #256</b>: Atrapar 35 pokemon tipo agua diferentes (Pescando se hace facil)",
-  "<b>Achievement #267</b>: Atrapar a Shiny Corsola mientras se tiene a Toxapex activo",
+  "<b>Achievement #267</b>: Atrapar a Shiny Corsola teniendo a Toxapex activo",
   "<b>Achievement #389</b>: Conseguir Great Rod",
   "<b>Achievement #390</b>: Conseguir Great Rod",
   "<b>Achievement #391</b>: Conseguir Super Rod",
@@ -21,11 +21,17 @@ const achievements = [
   "<b>Achievement #446</b>: Capturar 5 Wimpod",
   "<b>Achievement #448</b>: Derrotar 500 Crawdaunt",
   "<b>Achievement #449</b>: Derrotar 500 Wailord",
-  "<b>Achievement #23</b>: Requisitos...",
-  "<b>Achievement #24</b>: Requisitos...",
-  "<b>Achievement #25</b>: Requisitos...",
-  "<b>Achievement #26</b>: Requisitos...",
-  "<b>Achievement #27</b>: Requisitos..."
+  "<b>Achievement #450</b>: Derrotar 750 Corsola usando a Toxapex",
+  "<b>Achievement #451</b>: Derrotar a Dewpider usando a Surskit",
+  "<b>Achievement #464</b>: Derrotar 20 Shiny Sharpedo",
+  "<b>Achievement #468</b>: Derrotar 250 Shiny Greninja",
+  "<b>Achievement #470</b>: Derrotar 100 Shiny Primarina",
+  "<b>Achievement #579</b>: Derrotar 500 Froakie",
+  "<b>Achievement #580</b>: Derrotar 1200 Frogadier",
+  "<b>Achievement #581</b>: Derrotar 2000 Greninja",
+  "<b>Achievement #601</b>: Derrotar 1000 Bruxish",
+  "<b>Achievement #604</b>: Derrotar 750 Bruxish",
+  "<b>Achievement #xxxxx</b>: Requisitos..."
 ];
 
 const itemsPerPage = 20;
