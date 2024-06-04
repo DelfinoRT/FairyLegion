@@ -96,25 +96,25 @@ const fishingData = {
         "Misty Bait": ["Seaking", "Starmie", "Seadra", "Kingler", "Wartortle", "Slowbro"],
         "Johto Bait": ["Croconaw", "Quagsire", "Azumarill", "Lanturn", "Octillery"],
         "Hoen Bait": ["Lombre", "Marshtomp", "Whiscash", "Sealeo", "Sharpedo", "Luvdisc"],
-        "Kannovalola Bait": ["Brionne", "Prinplup", "Wimpod", "Wishiwashi", "Lumineon", "Bruxish", "Frogadier", "Pyukumuku", "Tynamo"]
+        "Kannovalola Bait": ["Brionne", "Prinplup", "Wimpod", "Wishiwashi", "Lumineon", "Bruxish", "Frogadier", "Pyukumuku", "Tynamo","Hisuian Qwilfish"]
     },
     "Ultra Rod": {
         "Misty Bait": ["Tentacruel", "Poliwrath", "Gyarados", "Golduck", "Cloyster", "Dewgong", "Big Magikarp"],
         "Johto Bait": ["Feraligatr", "Politoed", "Slowking", "Mantine", "Kingdra"],
         "Hoen Bait": ["Ludicolo", "Walrein", "Gorebyss", "Huntail", "Relicanth", "Crawdaunt"],
-        "Kannovalola Bait": ["Primarina", "Toxapex", "Araquanid", "Empoleon", "Greninja", "Gastrodon", "Alomomola", "Jellicent", "Eelektrik", "Galarian Slowpoke"]
+        "Kannovalola Bait": ["Primarina", "Toxapex", "Araquanid", "Empoleon", "Greninja", "Gastrodon", "Alomomola", "Jellicent", "Eelektrik", "Galarian Slowpoke", "Overqwil"]
     },
     "Master Rod": {
         "Misty Bait": ["Poliwrath", "Tantacruel", "Gyarados", "Vaporeon", "Cloyster", "Dewgong", "Golduck", "Big Magikarp", "Big Tentacruel"],
         "Johto Bait": ["Feraligatr", "Politoed", "Slowking", "Mantine", "Kingdra"],
         "Hoen Bait": ["Ludicolo", "Walrein", "Gorebyss", "Huntail", "Relicanth", "Crawdaunt"],
-        "Kannovalola Bait": ["Primarina", "Toxapex", "Araquanid", "Empoleon", "Greninja", "Gastrodon", "Alomomola", "Jellicent", "Eelektrik", "Galarian Slowpoke"],
+        "Kannovalola Bait": ["Primarina", "Toxapex", "Araquanid", "Empoleon", "Greninja", "Gastrodon", "Alomomola", "Jellicent", "Eelektrik", "Galarian Slowpoke", "Overqwil"],
         "Big Shrimp Bait": ["Shiny Araquanid", "Shiny Politoed", "Shiny Big Magikarp"],
-        "Misty Bait and Meowth Bait": ["Mega Slowbro", "Mega Gyarados", "Blastoise", "Lapras", "Red Gyarados"],
-        "Johto Bait and Meowth Bait": ["Shiny Corsola", "Shiny Kingdra", "Shiny Quagsire", "Shiny Qwilfish"],
-        "Hoen Bait and Meowth Bait": ["Mega Swampert", "Shiny Sharpedo", "Shiny Ludicolo", "Wailord", "Swampert", "Feebas", "Milotic"],
-        "Kannovalola Bait and Meowth Bait": ["Shiny Primarina", "Shiny Eelektros", "Shiny Bruxish", "Wash Rotom", "Buizel", "Floatzel", "Eelektros"],
-        "Big Shrimp Bait and Meowth Bait": ["Shiny Primarina", "Shiny Eelektros", "Shiny Bruxish", "Wash Rotom", "Buizel", "Floatzel", "Eelektros"]
+        "Misty Bait y Meowth Bait": ["Mega Slowbro", "Mega Gyarados", "Blastoise", "Lapras", "Red Gyarados"],
+        "Johto Bait y Meowth Bait": ["Shiny Corsola", "Shiny Kingdra", "Shiny Quagsire", "Shiny Qwilfish"],
+        "Hoen Bait y Meowth Bait": ["Mega Swampert", "Shiny Sharpedo", "Shiny Ludicolo", "Wailord", "Swampert", "Feebas", "Milotic"],
+        "Kannovalola Bait y Meowth Bait": ["Shiny Primarina", "Shiny Eelektros", "Shiny Bruxish", "Wash Rotom", "Buizel", "Floatzel", "Eelektros"],
+        "Big Shrimp Bait y Meowth Bait": ["Shiny Primarina", "Shiny Eelektros", "Shiny Bruxish", "Wash Rotom", "Buizel", "Floatzel", "Eelektros"]
     }
 };
 
@@ -148,7 +148,7 @@ const pokemonImages = {
     "Floatzel": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/419.png",
     "Frogadier": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/657.png",
     "Froakie": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/656.png",
-    "Galarian Slowpoke": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/79-galar.png",
+    "Galarian Slowpoke": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/79-.png",
     "Gastrodon": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/423.png",
     "Goldeen": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/118.png",
     "Golduck": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/55.png",
@@ -156,6 +156,7 @@ const pokemonImages = {
     "Greninja": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/658.png",
     "Gyarados": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/130.png",
     "Horsea": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/116.png",
+    "Hisuian Qwilfish": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/211-.png",
     "Huntail": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/367.png",
     "Jellicent": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/593.png",
     "Kingdra": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/230.png",
@@ -179,6 +180,7 @@ const pokemonImages = {
     "Milotic": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/350.png",
     "Mudkip": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/258.png",
     "Octillery": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/224.png",
+    "Overqwil": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/904.png",
     "Piplup": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/393.png",
     "Politoed": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/186.png",
     "Poliwag": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/60.png",
