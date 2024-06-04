@@ -252,6 +252,12 @@ footer a.linked-in:hover {
     transition: transform 0.3s ease;
 }
 
+.img-pesca img {
+    display: block;
+    max-width: 50%;
+    transition: transform 0.3s ease;
+}
+
 .img-eventos img:hover {
     transform: scale(1.05);
 }
