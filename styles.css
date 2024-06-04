@@ -252,14 +252,13 @@ footer a.linked-in:hover {
     transition: transform 0.3s ease;
 }
 
+.img-eventos img:hover {
+    transform: scale(1.05);
+}
+
 .img-pesca img {
     display: block;
     max-width: 25%;
-    transition: transform 0.3s ease;
-}
-
-.img-eventos img:hover {
-    transform: scale(1.05);
 }
 
 @keyframes floatDown {
