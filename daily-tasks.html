@@ -1,55 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fairy Legion - Daily Tasks</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Fairy Legion - Daily Tasks</title>
+   <link rel="stylesheet" href="styles.css">
+   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 </head>
 <body>
-    <header >
-        <div class="menu-btn">☰</div>
-        <nav class="nav">
-            <ul>
-                <li><a href="/" class="logo-button"><img src="/fl-boton.png" alt="Logo"></a></li>
-                <li><a href="/index.html" class="border">Inicio</a></li>
-                <li><a href="/guias-consejos.html" class="border active">Guías/Consejos</a></li>
-                <li><a href="/reglas.html" class="border">Reglas</a></li>
-                <li><a href="/eventos.html" class="border">Eventos</a></li>
-                <li><a href="/contacto.html" class="border">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
+   <header>
+       <div class="menu-btn">☰</div>
+       <nav class="nav">
+           <ul>
+               <li><a href="/" class="logo-button"><img src="/fl-boton.png" alt="Logo"></a></li>
+               <li><a href="/index.html" class="border">Inicio</a></li>
+               <li><a href="/guias-consejos.html" class="border active">Guías/Consejos</a></li>
+               <li><a href="/reglas.html" class="border">Reglas</a></li>
+               <li><a href="/eventos.html" class="border">Eventos</a></li>
+               <li><a href="/contacto.html" class="border">Contacto</a></li>
+           </ul>
+       </nav>
+   </header>
 
-    <section id="events">
-        <h2>Asistente para Daily Tasks</h2>
-        <p>En esta sección encontrarás toda la información que necesitas para completar tus misiones de Daily Task de forma más eficiente y rápida. El enfoque de este asistente es proporcionarte con el spawn/zona o método sugerido para completar la task de mejor forma.</p>
-        <p>Si aun no conoces como funciona el Daily Task en PADventures, <a href="http://es.padventures.info/Daily_Task">revisa aquí la guía oficial.</a></p>
-    </section>
+   <section id="events">
+       <h2>Asistente para Daily Tasks</h2>
+       <p>En esta sección encontrarás toda la información que necesitas para completar tus misiones de Daily Task de forma más eficiente y rápida. El enfoque de este asistente es proporcionarte con el spawn/zona o método sugerido para completar la task de mejor forma.</p>
+       <p>Si aun no conoces como funciona el Daily Task en PADventures, <a href="http://es.padventures.info/Daily_Task">revisa aquí la guía oficial.</a></p>
+   </section>
 
-    <section id="events">
-        <h2>Consejos generales para Daily Tasks</h2>
-        <ol>
-            <li>
-                <p>Si al revisar tus opciones de Daily Task encuentras Pokémon obtenibles mediante pesca, inenta tomar dichas task como prioridad. Casi siempre, las task de pesca son  sencillas y convenientes, sobre todo si se hace en equipo.
-                </p>
-                <p>Pescar te ayuda a incrementar gradualmente tu habilidad de pesca (fishing skill) lo que te ayudará en un futuro a conseguir mejores Pokémon.
-                </p>
-                <p>Puedes usar nuestro <a href="pesca.html">asistente de pesca</a> para saber con que caña (rod) y cebo (bait) se obtienen los Pokémon.</p>
-            </li>
-            <li><p>Es recomendable seleccionar tasks de Pokémon que puedas derrotar fácilmente. Es decir: Elige a los Pokémon de tu equipo que sean más efectivos contra los Pokémon que debes derrotar para completar la task.</p>
-                <p>Por ejemplo, debes tomar la task de un Pokémon tipo Fuego si para tu equipo tienes disponible Pokémon tipo Tierra, Roca o Agua ya que esos tipos son super efectivos contra los Pokémon de tipo Fuego.</p></li>
-            <li>ssss</li>
-            <li>ssss</li>
-        </ol>
-    </section>
+   <section id="tips">
+       <h2>Consejos generales para Daily Tasks</h2>
+       <ol>
+           <li>
+               <p>Si al revisar tus opciones de Daily Task encuentras Pokémon obtenibles mediante pesca, inenta tomar dichas task como prioridad. Casi siempre, las task de pesca son sencillas y convenientes, sobre todo si se hace en equipo.
+               </p>
+               <p>Pescar te ayuda a incrementar gradualmente tu habilidad de pesca (fishing skill) lo que te ayudará en un futuro a conseguir mejores Pokémon.
+               </p>
+               <p>Puedes usar nuestro <a href="pesca.html">asistente de pesca</a> para saber con que caña (rod) y cebo (bait) se obtienen los Pokémon.</p>
+           </li>
+           <li><p>Es recomendable seleccionar tasks de Pokémon que puedas derrotar fácilmente. Es decir: Elige a los Pokémon de tu equipo que sean más efectivos contra los Pokémon que debes derrotar para completar la task.</p>
+               <p>Por ejemplo, debes tomar la task de un Pokémon tipo Fuego si para tu equipo tienes disponible Pokémon tipo Tierra, Roca o Agua ya que esos tipos son super efectivos contra los Pokémon de tipo Fuego.</p></li>
+           <li>ssss</li>
+           <li>ssss</li>
+       </ol>
+   </section>
 
-    <button id="back-to-top" onclick="scrollToTop()">Subir ⤴</button>
-    <footer>
-        <p>© 2024 Fairy Legion <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in"> / Desarrollado por Silvarion</a></p>
-    </footer>
-    <script src="script.js"></script>
-    <script src="pagination.js"></script>
+   <section id="pokemon-tasks">
+       <h2>Ubicaciones/Spawns para completar Pokémon Daily Tasks</h2>
+       <div id="pokemon-task-list"></div>
+   </section>
+
+   <button id="back-to-top" onclick="scrollToTop()">Subir ⤴</button>
+   <footer>
+       <p>© 2024 Fairy Legion <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in"> / Desarrollado por Silvarion</a></p>
+   </footer>
+   <script src="script.js"></script>
+   <script src="daily-tasks.js"></script>
 </body>
 </html>
