@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
         pokemonDiv.appendChild(name);
         pokemonDiv.appendChild(task);
 
+        // Only add the map container if the task does not involve fishing
         if (!pokemon.task.includes("pesca")) {
           const mapContainer = document.createElement("div");
           mapContainer.classList.add("map-container");
@@ -67,23 +68,26 @@ document.addEventListener("DOMContentLoaded", function () {
           mapImage.src = `/spawn-maps/${pokemon.map}`;
           mapImage.classList.add("map-image");
           mapImage.id = `map-${index}`;
-          mapImage.style.display = "none";
+          mapImage.style.display = "none"; // Ensure the image is hidden initially
 
           mapButton.addEventListener("click", function () {
             const mapImg = document.getElementById(`map-${this.dataset.index}`);
+            const pokemonLine = this.closest('.pokemon-task');
             if (mapImg.style.display === "none" || !mapImg.style.display) {
               mapImg.style.display = "block";
               this.textContent = "Ocultar Mapa";
+              pokemonLine.classList.add("lightpurple"); // Add the class for light purple background
             } else {
               mapImg.style.display = "none";
               this.textContent = "Mostrar Mapa";
+              pokemonLine.classList.remove("lightpurple"); // Remove the class to revert background color
             }
           });
 
           mapContainer.appendChild(mapButton);
           mapContainer.appendChild(mapImage);
-            
-          pokemonDiv.appendChild(mapContainer);
+
+          pokemonDiv.appendChild(mapContainer); // Add the map container
         }
 
         taskListContainer.appendChild(pokemonDiv);

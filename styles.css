@@ -379,6 +379,12 @@ footer a.linked-in:hover {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.lightpurple {
+  background-color: #dfd2e8;
 }
 
 .pokemon-task img.pokemon-img {
@@ -395,10 +401,6 @@ footer a.linked-in:hover {
 .pokemon-task p {
   margin: 0;
   font-size: 1em;
-}
-
-.pokemon-task {
-  margin-bottom: 20px;
 }
 
 .map-container {
