@@ -9,53 +9,64 @@
 </head>
 <body>
   <header>
-      <div class="menu-btn">☰</div>
-      <nav class="nav">
-          <ul>
-              <li><a href="/" class="logo-button"><img src="/fl-boton.png" alt="Logo"></a></li>
-              <li><a href="/index.html" class="border">Inicio</a></li>
-              <li><a href="/guias-consejos.html" class="border active">Guías/Consejos</a></li>
-              <li><a href="/reglas.html" class="border">Reglas</a></li>
-              <li><a href="/eventos.html" class="border">Eventos</a></li>
-              <li><a href="/contacto.html" class="border">Contacto</a></li>
-          </ul>
-      </nav>
+    <div class="menu-btn">☰</div>
+    <div class="logo-container">
+      <a href="/" class="logo-button"><img src="/fl-boton.png" alt="Logo"></a>
+    </div>
+    <nav class="nav">
+      <ul>
+        <li><a href="/index.html" class="border">Inicio</a></li>
+        <li><a href="/guias-consejos.html" class="border active">Guías/Consejos</a></li>
+        <li><a href="/reglas.html" class="border">Reglas</a></li>
+        <li><a href="/eventos.html" class="border">Eventos</a></li>
+        <li><a href="/contacto.html" class="border">Contacto</a></li>
+      </ul>
+    </nav>
   </header>
 
   <section id="events">
+    <div class="section-content">
       <h2>Asistente para Daily Tasks</h2>
       <p>En esta sección encontrarás toda la información que necesitas para completar tus misiones de Daily Task de forma más eficiente y rápida. El enfoque de este asistente es proporcionarte con el spawn/zona o método sugerido para completar la task de mejor forma.</p>
       <p>Si aun no conoces como funciona el Daily Task en PADventures, <a href="http://es.padventures.info/Daily_Task">revisa aquí la guía oficial.</a></p>
+    </div>
   </section>
 
   <section id="tips">
+    <div class="section-content">
       <h2>Consejos generales para Daily Tasks</h2>
       <ol>
-          <li>
-              <p>Si al revisar tus opciones de Daily Task encuentras Pokémon obtenibles mediante pesca, inenta tomar dichas task como prioridad. Casi siempre, las task de pesca son sencillas y convenientes, sobre todo si se hace en equipo.
-              </p>
-              <p>Pescar te ayuda a incrementar gradualmente tu habilidad de pesca (fishing skill) lo que te ayudará en un futuro a conseguir mejores Pokémon.
-              </p>
-              <p>Puedes usar nuestro <a href="pesca.html">asistente de pesca</a> para saber con que caña (rod) y cebo (bait) se obtienen los Pokémon.</p>
-          </li>
-          <li><p>Es recomendable seleccionar tasks de Pokémon que puedas derrotar fácilmente. Es decir: Elige a los Pokémon de tu equipo que sean más efectivos contra los Pokémon que debes derrotar para completar la task.</p>
-              <p>Por ejemplo, debes tomar la task de un Pokémon tipo Fuego si para tu equipo tienes disponible Pokémon tipo Tierra, Roca o Agua ya que esos tipos son super efectivos contra los Pokémon de tipo Fuego.</p></li>
-          <li><p>CLas recompensas por completar Daily Task son: Daily Points, 15x Pokeball aleatorias, 15x Full Revive y una Daily Box</p>
-              <p>Dependiento del precio actual de la Daily Box, puedes conseguir suficiente dinero para tu siguiente VIP en un par de días al vender dichas Daily Box por lo que es sugerido este método para mantener status VIP y conseguir dinero extra</p>
-          </li>
-          <li>ssss</li>
+        <li>
+          <p>Si al revisar tus opciones de Daily Task encuentras Pokémon obtenibles mediante pesca, intenta tomar dichas task como prioridad. Casi siempre, las task de pesca son sencillas y convenientes, sobre todo si se hace en equipo.</p>
+          <p>Pescar te ayuda a incrementar gradualmente tu habilidad de pesca (fishing skill) lo que te ayudará en un futuro a conseguir mejores Pokémon.</p>
+          <p>Puedes usar nuestro <a href="pesca.html">asistente de pesca</a> para saber con qué caña (rod) y cebo (bait) se obtienen los Pokémon.</p>
+        </li>
+        <li>
+          <p>Es recomendable seleccionar tasks de Pokémon que puedas derrotar fácilmente. Es decir: Elige a los Pokémon de tu equipo que sean más efectivos contra los Pokémon que debes derrotar para completar la task.</p>
+          <p>Por ejemplo, debes tomar la task de un Pokémon tipo Fuego si para tu equipo tienes disponible Pokémon tipo Tierra, Roca o Agua ya que esos tipos son super efectivos contra los Pokémon de tipo Fuego.</p>
+        </li>
+        <li>
+          <p>Las recompensas por completar Daily Task son: Daily Points, 15x Pokeball aleatorias, 15x Full Revive y una Daily Box</p>
+          <p>Dependiendo del precio actual de la Daily Box, puedes conseguir suficiente dinero para tu siguiente VIP en un par de días al vender dichas Daily Box por lo que es sugerido este método para mantener status VIP y conseguir dinero extra</p>
+        </li>
       </ol>
+    </div>
   </section>
 
   <section id="pokemon-tasks">
+    <div class="section-content">
       <h2>Ubicaciones/Spawns para completar Pokémon Daily Tasks</h2>
       <div id="pokemon-task-list"></div>
+    </div>
   </section>
 
   <button id="back-to-top" onclick="scrollToTop()">Subir ⤴</button>
   <footer>
+    <div class="footer-content">
       <p>© 2024 Fairy Legion <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in"> / Desarrollado por Silvarion</a></p>
+    </div>
   </footer>
+
   <script src="script.js"></script>
   <script src="daily-tasks.js"></script>
 </body>

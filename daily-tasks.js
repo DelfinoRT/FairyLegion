@@ -26,72 +26,71 @@ document.addEventListener("DOMContentLoaded", function () {
     { name: "Venusaur", task: "Task en elemental grass", map: "locatmagi.png" },
   ];
 
-  const taskListContainer = document.getElementById("pokemon-task-list");
+     const taskListContainer = document.getElementById("pokemon-task-list");
 
-  pokemonTasks.forEach((pokemon, index) => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name.toLowerCase()}`)
-      .then((response) => response.json())
-      .then((data) => {
-        const pokemonDiv = document.createElement("div");
-        pokemonDiv.classList.add("pokemon-task");
+      pokemonTasks.forEach((pokemon, index) => {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name.toLowerCase()}`)
+          .then((response) => response.json())
+          .then((data) => {
+            const pokemonDiv = document.createElement("div");
+            pokemonDiv.classList.add("pokemon-task");
 
-        const img = document.createElement("img");
-        img.src = data.sprites.front_default;
-        img.alt = pokemon.name;
-        img.classList.add("pokemon-img");
+            const img = document.createElement("img");
+            img.src = data.sprites.front_default;
+            img.alt = pokemon.name;
+            img.classList.add("pokemon-img");
 
-        const name = document.createElement("h3");
-
-        if (pokemon.task.includes("pesca")) {
-          name.style.color = "cornflowerblue";
-        }
-        name.textContent = pokemon.name;
-
-        const task = document.createElement("p");
-        task.textContent = pokemon.task;
-
-        pokemonDiv.appendChild(img);
-        pokemonDiv.appendChild(name);
-        pokemonDiv.appendChild(task);
-
-        // Only add the map container if the task does not involve fishing
-        if (!pokemon.task.includes("pesca")) {
-          const mapContainer = document.createElement("div");
-          mapContainer.classList.add("map-container");
-
-          const mapButton = document.createElement("button");
-          mapButton.textContent = "Mostrar Mapa";
-          mapButton.classList.add("show-map-btn");
-          mapButton.dataset.index = index;
-
-          const mapImage = document.createElement("img");
-          mapImage.src = `/spawn-maps/${pokemon.map}`;
-          mapImage.classList.add("map-image");
-          mapImage.id = `map-${index}`;
-          mapImage.style.display = "none"; // Ensure the image is hidden initially
-
-          mapButton.addEventListener("click", function () {
-            const mapImg = document.getElementById(`map-${this.dataset.index}`);
-            const pokemonLine = this.closest('.pokemon-task');
-            if (mapImg.style.display === "none" || !mapImg.style.display) {
-              mapImg.style.display = "block";
-              this.textContent = "Ocultar Mapa";
-              pokemonLine.classList.add("lightpurple"); // Add the class for light purple background
-            } else {
-              mapImg.style.display = "none";
-              this.textContent = "Mostrar Mapa";
-              pokemonLine.classList.remove("lightpurple"); // Remove the class to revert background color
+            const name = document.createElement("h3");
+            if (pokemon.task.includes("pesca")) {
+              name.style.color = "cornflowerblue";
             }
-          });
+            name.textContent = pokemon.name;
 
-          mapContainer.appendChild(mapButton);
-          mapContainer.appendChild(mapImage);
+            const task = document.createElement("p");
+            task.textContent = pokemon.task;
 
-          pokemonDiv.appendChild(mapContainer); // Add the map container
-        }
+            pokemonDiv.appendChild(img);
+            pokemonDiv.appendChild(name);
+            pokemonDiv.appendChild(task);
 
-        taskListContainer.appendChild(pokemonDiv);
-      })
-      .catch((error) => console.error("Error fetching data from PokeAPI:", error));
-  });
-});
+            // Only add the map container if the task does not involve fishing
+            if (!pokemon.task.includes("pesca")) {
+              const mapContainer = document.createElement("div");
+              mapContainer.classList.add("map-container");
+
+              const mapButton = document.createElement("button");
+              mapButton.textContent = "Mostrar Mapa";
+              mapButton.classList.add("show-map-btn");
+              mapButton.dataset.index = index;
+
+              const mapImage = document.createElement("img");
+              mapImage.src = `/spawn-maps/${pokemon.map}`;
+              mapImage.classList.add("map-image");
+              mapImage.id = `map-${index}`;
+              mapImage.style.display = "none"; // Ensure the image is hidden initially
+
+              mapButton.addEventListener("click", function () {
+                const mapImg = document.getElementById(`map-${this.dataset.index}`);
+                const pokemonLine = this.closest('.pokemon-task');
+                if (mapImg.style.display === "none" || !mapImg.style.display) {
+                  mapImg.style.display = "block";
+                  this.textContent = "Ocultar Mapa";
+                  pokemonLine.classList.add("lightpurple");
+                } else {
+                  mapImg.style.display = "none";
+                  this.textContent = "Mostrar Mapa";
+                  pokemonLine.classList.remove("lightpurple");
+                }
+              });
+
+              mapContainer.appendChild(mapButton);
+              mapContainer.appendChild(mapImage);
+
+              pokemonDiv.appendChild(mapContainer);
+            }
+
+            taskListContainer.appendChild(pokemonDiv);
+          })
+          .catch((error) => console.error("Error fetching data from PokeAPI:", error));
+      });
+    });
