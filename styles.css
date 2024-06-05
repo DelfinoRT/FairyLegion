@@ -396,3 +396,33 @@ footer a.linked-in:hover {
   margin: 0;
   font-size: 1em;
 }
+
+.pokemon-task {
+  margin-bottom: 20px;
+}
+
+.map-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.map-image {
+  width: 300px;
+  height: 300px;
+  margin-top: 5px;
+  margin-left: 20px;
+}
+
+.show-map-btn {
+  display: block;
+  margin-left: 20px;
+  background-color: #6a3595;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.show-map-btn:hover {
+  background-color: #4b266a;
+}

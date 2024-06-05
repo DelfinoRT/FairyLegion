@@ -1,34 +1,34 @@
 document.addEventListener("DOMContentLoaded", function () {
   const pokemonTasks = [
-    { name: "Alomomola", task: "Task recomendada mediante la pesca" },
-    { name: "Araquanid", task: "Task recomendada mediante la pesca" },
-    { name: "Ampharos", task: "Task en Malie" },
-    { name: "Arcanine", task: "Task cianwood a la izquierda" },
-    { name: "Blastoise", task: "Task en la zona Water de Elemental" },
-    { name: "Empoleon", task: "Task recomendada mediante la pesca" },
-    { name: "Gastrodon", task: "Task recomendada mediante la pesca" },
-    { name: "Gigalith", task: "Task en Hau'Oli, la zona Rock 170" },
-    { name: "Golem", task: "Task en Pewter cave (saliendo de la ciudad por la izquierda y luego al sur) o en la zona de inquisition quest" },
-    { name: "Golisopod", task: "Task recomendada mediante la pesca" },
-    { name: "Greninja", task: "Task recomendada mediante la pesca" },
-    { name: "Gyarados", task: "Task recomendada mediante la pesca" },
-    { name: "Jellicent", task: "Task recomendada mediante la pesca" },
-    { name: "Magmar", task: "Task en Golden Rod" },
-    { name: "Meganium", task: "Task en Shamouti (Isla al oeste / parte nor-oeste de esa isla)" },
-    { name: "Nidoking", task: "Task en Mandarin, primer isla al nor-este" },
-    { name: "Nidoqueen", task: "Task en Mandarin, primer isla al nor-este" },
-    { name: "Onix", task: "Task en Pewter cave tercer piso (saliendo de la ciudad por la izquierda y luego al sur) o en trovitopolis" },
-    { name: "Primape", task: "Task mandarin o suroeste de goldenrod o en pelea de dewford o ascorbia sur" },
-    { name: "Primarina", task: "Task recomendada mediante la pesca" },
-    { name: "Rhydon", task: "Task en Pewter cave (saliendo de la ciudad por la izquierda y luego al sur) o en Lavender arriba del Centro Pokémon" },
-    { name: "Spiritomb", task: "Task en Hau'Oli, la zona Dark 150 del Cementerio" },
-    { name: "Toxapex", task: "Task recomendada mediante la pesca" },
-    { name: "Venusaur", task: "Task en elemental grass" },
+    { name: "Alomomola", task: "Task recomendada mediante la pesca", map: "map001.png" },
+    { name: "Araquanid", task: "Task recomendada mediante la pesca", map: "asd2d.png" },
+    { name: "Ampharos", task: "Task en Malie", map: "pokemaons.png" },
+    { name: "Arcanine", task: "Task cianwood a la izquierda", map: "locatmagi.png" },
+    { name: "Blastoise", task: "Task en la zona Water de Elemental", map: "map001.png" },
+    { name: "Empoleon", task: "Task recomendada mediante la pesca", map: "asd2d.png" },
+    { name: "Gastrodon", task: "Task recomendada mediante la pesca", map: "pokemaons.png" },
+    { name: "Gigalith", task: "Task en Hau'Oli, la zona Rock 170", map: "locatmagi.png" },
+    { name: "Golem", task: "Task en Pewter cave (saliendo de la ciudad por la izquierda y luego al sur) o en la zona de inquisition quest", map: "map001.png" },
+    { name: "Golisopod", task: "Task recomendada mediante la pesca", map: "asd2d.png" },
+    { name: "Greninja", task: "Task recomendada mediante la pesca", map: "pokemaons.png" },
+    { name: "Gyarados", task: "Task recomendada mediante la pesca", map: "locatmagi.png" },
+    { name: "Jellicent", task: "Task recomendada mediante la pesca", map: "map001.png" },
+    { name: "Magmar", task: "Task en Golden Rod", map: "asd2d.png" },
+    { name: "Meganium", task: "Task en Shamouti (Isla al oeste / parte nor-oeste de esa isla)", map: "pokemaons.png" },
+    { name: "Nidoking", task: "Task en Mandarin, primer isla al nor-este", map: "locatmagi.png" },
+    { name: "Nidoqueen", task: "Task en Mandarin, primer isla al nor-este", map: "map001.png" },
+    { name: "Onix", task: "Task en Pewter cave (saliendo de la ciudad por la izquierda y luego al sur) o en Trovitopolis", map: "asd2d.png" },
+    { name: "Primape", task: "Task mandarin o suroeste de goldenrod o en pelea de dewford o ascorbia sur", map: "pokemaons.png" },
+    { name: "Primarina", task: "Task recomendada mediante la pesca", map: "locatmagi.png" },
+    { name: "Rhydon", task: "Task en Pewter cave (saliendo de la ciudad por la izquierda y luego al sur) o en Lavender arriba del Centro Pokémon", map: "map001.png" },
+    { name: "Spiritomb", task: "Task en Hau'Oli, la zona Dark 150 del Cementerio", map: "asd2d.png" },
+    { name: "Toxapex", task: "Task recomendada mediante la pesca", map: "pokemaons.png" },
+    { name: "Venusaur", task: "Task en elemental grass", map: "locatmagi.png" },
   ];
- 
+
   const taskListContainer = document.getElementById("pokemon-task-list");
 
-  pokemonTasks.forEach((pokemon) => {
+  pokemonTasks.forEach((pokemon, index) => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name.toLowerCase()}`)
       .then((response) => response.json())
       .then((data) => {
@@ -42,9 +42,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const name = document.createElement("h3");
 
-        // Set the name color to blue if the task recommends fishing
         if (pokemon.task.includes("pesca")) {
-          name.style.color = "blue";
+          name.style.color = "cornflowerblue";
         }
         name.textContent = pokemon.name;
 
@@ -54,6 +53,39 @@ document.addEventListener("DOMContentLoaded", function () {
         pokemonDiv.appendChild(img);
         pokemonDiv.appendChild(name);
         pokemonDiv.appendChild(task);
+
+        if (!pokemon.task.includes("pesca")) {
+          const mapContainer = document.createElement("div");
+          mapContainer.classList.add("map-container");
+
+          const mapButton = document.createElement("button");
+          mapButton.textContent = "Mostrar Mapa";
+          mapButton.classList.add("show-map-btn");
+          mapButton.dataset.index = index;
+
+          const mapImage = document.createElement("img");
+          mapImage.src = `/spawn-maps/${pokemon.map}`;
+          mapImage.classList.add("map-image");
+          mapImage.id = `map-${index}`;
+          mapImage.style.display = "none";
+
+          mapButton.addEventListener("click", function () {
+            const mapImg = document.getElementById(`map-${this.dataset.index}`);
+            if (mapImg.style.display === "none" || !mapImg.style.display) {
+              mapImg.style.display = "block";
+              this.textContent = "Ocultar Mapa";
+            } else {
+              mapImg.style.display = "none";
+              this.textContent = "Mostrar Mapa";
+            }
+          });
+
+          mapContainer.appendChild(mapButton);
+          mapContainer.appendChild(mapImage);
+            
+          pokemonDiv.appendChild(mapContainer);
+        }
+
         taskListContainer.appendChild(pokemonDiv);
       })
       .catch((error) => console.error("Error fetching data from PokeAPI:", error));
