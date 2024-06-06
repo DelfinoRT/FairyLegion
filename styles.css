@@ -409,8 +409,7 @@ footer a.linked-in:hover {
 }
 
 .map-image {
-  width: 300px;
-  height: 300px;
+  max-height: 300px;
   margin-top: 5px;
   margin-left: 20px;
 }
@@ -427,4 +426,8 @@ footer a.linked-in:hover {
 
 .show-map-btn:hover {
   background-color: #4b266a;
+}
+
+.credits {
+  font-size: 0.9em;
 }
