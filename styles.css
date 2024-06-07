@@ -431,3 +431,9 @@ footer a.linked-in:hover {
 .credits {
   font-size: 0.9em;
 }
+
+.pescabanner {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+}
