@@ -113,7 +113,7 @@ const fishingData = {
         "Misty Bait y Meowth Bait": ["Mega Slowbro", "Mega Gyarados", "Blastoise", "Lapras", "Red Gyarados"],
         "Johto Bait y Meowth Bait": ["Shiny Corsola", "Shiny Kingdra", "Shiny Quagsire", "Shiny Qwilfish"],
         "Hoen Bait y Meowth Bait": ["Mega Swampert", "Shiny Sharpedo", "Shiny Ludicolo", "Wailord", "Swampert", "Feebas", "Milotic"],
-        "Kannovalola Bait y Meowth Bait": ["Shiny Primarina", "Shiny Eelektros", "Shiny Bruxish", "Wash Rotom", "Buizel", "Floatzel", "Eelektros"],
+        "Kannovalola Bait y Meowth Bait": ["Shiny Primarina", "Shiny Eelektros", "Shiny Bruxish", "Wash Rotom", "Buizel", "Floatzel", "Eelektros","Shiny Hisuian Qwilfish", "Shiny Overqwil", "Overqwil"],
         "Big Shrimp Bait y Meowth Bait": ["Shiny Primarina", "Shiny Eelektros", "Shiny Bruxish", "Wash Rotom", "Buizel", "Floatzel", "Eelektros"]
     }
 };
@@ -209,6 +209,7 @@ const pokemonImages = {
     "Shiny Eelektros": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/604.png",
     "Shiny Kingdra": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/230.png",
     "Shiny Ludicolo": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/272.png",
+    "Shiny Overqwil": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/272.png",
     "Shiny Politoed": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/186.png",
     "Shiny Primarina": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/730.png",
     "Shiny Quagsire": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/195.png",
