@@ -102,7 +102,7 @@ const fishingData = {
         "Misty Bait": ["Tentacruel", "Poliwrath", "Gyarados", "Golduck", "Cloyster", "Dewgong", "Big Magikarp"],
         "Johto Bait": ["Feraligatr", "Politoed", "Slowking", "Mantine", "Kingdra"],
         "Hoen Bait": ["Ludicolo", "Walrein", "Gorebyss", "Huntail", "Relicanth", "Crawdaunt"],
-        "Kannovalola Bait": ["Primarina", "Toxapex", "Araquanid", "Empoleon", "Greninja", "Gastrodon", "Alomomola", "Jellicent", "Eelektrik", "Galarian Slowpoke", "Overqwil"]
+        "Kannovalola Bait": ["Primarina", "Toxapex", "Araquanid", "Empoleon", "Greninja", "Gastrodon", "Alomomola", "Jellicent", "Eelektrik", "Galarian Slowpoke", "Golisopod", "Overqwil"]
     },
     "Master Rod": {
         "Misty Bait": ["Poliwrath", "Tantacruel", "Gyarados", "Vaporeon", "Cloyster", "Dewgong", "Golduck", "Big Magikarp", "Big Tentacruel"],
@@ -152,6 +152,7 @@ const pokemonImages = {
     "Gastrodon": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/423.png",
     "Goldeen": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/118.png",
     "Golduck": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/55.png",
+    "Golisopod": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/768.png",
     "Gorebyss": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/368.png",
     "Greninja": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/658.png",
     "Gyarados": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/130.png",
