@@ -436,3 +436,9 @@ footer a.linked-in:hover {
     height: auto;
     max-width: 80%;
 }
+
+.error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 4px;
+}
