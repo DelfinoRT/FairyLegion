@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
     { name: "Jellicent", task: "Task recomendada mediante la pesca", map: "xxx.png" },
     { name: "Ludicolo", task: "Esta task se puede usando Master Rod/Ultra Rod con Hoen Bait o en respawns de Malie o Lilycove", map: "respawn-ludicolo-01.png" },
     { name: "Magmar", task: "Task en Golden Rod", map: "xxx.png" },
+    { name: "Marowak", task: "Task en Elemental ground (Ver el mapa de Elemental en la siguiente sección)", map: "" },
     { name: "Meganium", task: "Task en Shamouti (Isla al oeste / parte nor-oeste de esa isla) o en Mandarin", map: "xxx.png" },
     { name: "Nidoking", task: "Task en Mandarin, primer isla al nor-este. Se llega usando Fly.", map: "respawn-nidokingnidoqueen.jpg" },
     { name: "Nidoqueen", task: "Task en Mandarin, primer isla al nor-este. Se llega usando Fly", map: "respawn-nidokingnidoqueen.jpg" },
