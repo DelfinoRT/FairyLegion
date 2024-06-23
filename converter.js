@@ -126,11 +126,11 @@ function displayResult(inputAmount, tenThousandDollars, hundredDollars, cents) {
     let resultHTML = `
         <h3>Resultado de Conversión</h3>
         <p>${inputAmount} se convierte en:</p>
-        <p>${formatNumber(tenThousandDollars)} <img src="/ttd.png" alt="Ten Thousand Dollars"> Ten Thousand Dollars</p>
+        <p>${formatNumber(tenThousandDollars)} <img src="/ttd.png" alt="Ten Thousand Dollars"> Ten Thousand Dollars (ttd)</p>
     `;
 
     if (hundredDollars > 0) {
-        resultHTML += `<p>${formatNumber(hundredDollars)} <img src="/hd.png" alt="Hundred Dollars"> Hundred Dollars</p>`;
+        resultHTML += `<p>${formatNumber(hundredDollars)} <img src="/hd.png" alt="Hundred Dollars"> Hundred Dollars (hd)</p>`;
     }
 
     if (cents > 0) {
