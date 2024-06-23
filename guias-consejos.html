@@ -30,26 +30,30 @@
 
     <section id="currency-converter">
         <h2>Convertidor de Moneda</h2>
-        <img class="pescabanner" src="/moneyPAD.png" alt="Banner de Pesca">
+        <img class="pescabanner" src="/moneyPAD.png">
+        <div>
+            <label for="ttd-amount">Ingrese cantidad en TTD:</label>
+            <input type="text" id="ttd-amount" placeholder="Ingrese valor en TTD">
+            <button id="convert-ttd-btn">Convertir TTD</button>
+        </div>
         <div>
             <label for="k-amount">Ingrese cantidad en K:</label>
             <input type="text" id="k-amount" placeholder="Ingrese valor en K">
-            <button id="convert-k-btn" onclick="convertK()">Convertir K</button>
+            <button id="convert-k-btn">Convertir K</button>
         </div>
         <div>
             <label for="kk-amount">Ingrese cantidad en KK:</label>
             <input type="text" id="kk-amount" placeholder="Ingrese valor en KK">
-            <button id="convert-kk-btn" onclick="convertKK()">Convertir KK</button>
+            <button id="convert-kk-btn">Convertir KK</button>
         </div>
         <div id="conversion-result">
             <!-- Conversion results will be displayed here -->
         </div>
     </section>
 
-
     <section id="events">
         <h2>Guía de Inicio (Seguimos trabajando en esta sección)</h2>
-        <img class="pescabanner" src="/PAD-Inicio.png" alt="Banner de Pesca">
+        <img class="pescabanner" src="/PAD-Inicio.png">
         <p>¿Eres nuevo en PAdventures? Esta sección es para ti.</p>
         <p>Aquí encontrarás una breve guía de la estrategia a seguir para progresar adecuadamente en el juego, junto con sugerencias, recomendaciones y otros recursos invaluables recopilados a partir de la experiencia de varios jugadores experimentados.</p>
         <p><a href="guia-inicial.html">Haz clic aquí para leer la guía completa</a>.</p>
@@ -76,6 +80,8 @@
         <p>© 2024 Fairy Legion <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in"> / Desarrollado por Silvarion</a></p>
     </footer>
     <script src="script.js"></script>
-    <script src="converter.js"></script>
+    <script src="k-conversion.js"></script>
+    <script src="kk-conversion.js"></script>
+    <script src="ttd-conversion.js"></script>
 </body>
 </html>
