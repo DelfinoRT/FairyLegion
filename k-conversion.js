@@ -1,5 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
     let convertKButton = document.getElementById('convert-k-btn');
+    let kInput = document.getElementById('k-amount');
+
+    kInput.addEventListener('input', function() {
+        validateInput(kInput);
+    });
+
     convertKButton.addEventListener('click', convertK);
 });
 
@@ -23,11 +29,21 @@ function validateInput(inputElement) {
 }
 
 function showInputError(inputElement, message) {
-    let errorDiv = document.createElement('div');
+    let parent = inputElement.parentNode;
+    let errorDiv = parent.querySelector('.error-message');
+
+    // Remove any existing error message
+    if (errorDiv) {
+        parent.removeChild(errorDiv);
+    }
+
+    // Create new error message
+    errorDiv = document.createElement('div');
     errorDiv.className = 'error-message';
     errorDiv.textContent = message;
-    let parent = inputElement.parentNode;
     parent.appendChild(errorDiv);
+
+    // Disable the convert button
     document.getElementById('convert-k-btn').disabled = true;
 }
 
@@ -37,11 +53,14 @@ function hideInputError(inputElement) {
     if (errorDiv) {
         parent.removeChild(errorDiv);
     }
+
+    // Enable the convert button
     document.getElementById('convert-k-btn').disabled = false;
 }
 
 function convertK() {
     let kAmount = parseFloat(document.getElementById('k-amount').value.replace(',', '.'));
+
     if (!validateInput(document.getElementById('k-amount')) || isNaN(kAmount) || kAmount < 0) {
         return;
     }
@@ -91,7 +110,6 @@ function displayKResult(inputAmount, tenThousandDollars, hundredDollars, cents) 
 }
 
 function formatNumber(number) {
-    // Convert number to string and remove trailing zeros after the decimal point
     let formatted = number.toFixed(2).replace(/\.?0*$/, '');
     return formatted;
 }
