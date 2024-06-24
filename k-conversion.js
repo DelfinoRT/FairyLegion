@@ -77,21 +77,20 @@ function convertK() {
         cents = 0;
     }
 
-    displayKResult(`${kAmount} K`, tenThousandDollars, hundredDollars, cents);
+    displayKResult(kAmount, tenThousandDollars, hundredDollars, cents);
 
     document.getElementById('k-amount').value = "";
 }
 
-function displayKResult(inputAmount, tenThousandDollars, hundredDollars, cents) {
+function displayKResult(kAmount, tenThousandDollars, hundredDollars, cents) {
     let resultDiv = document.getElementById('conversion-result');
     let resultHTML = `
         <h3>Resultado de Conversión</h3>
-        <p>${inputAmount} equivalen a:</p>
-        <p>${formatNumber(tenThousandDollars)} <img src="/ttd.png" alt="Ten Thousand Dollars"> Ten Thousand Dollars (ttd)</p>
-    `;
+        <p>${kAmount} K equivalen a:</p>
+        <p>${formatNumber(tenThousandDollars)} <img src="/ttd.png" alt="Ten Thousand Dollars"> Ten Thousand Dollars (ttd)`;
 
     if (hundredDollars > 0 || cents > 0) {
-        resultHTML += `<p>con`;
+        resultHTML += ` con `;
     }
 
     if (hundredDollars > 0) {
@@ -102,9 +101,7 @@ function displayKResult(inputAmount, tenThousandDollars, hundredDollars, cents) 
         resultHTML += ` ${formatNumber(cents)} <img src="/c.png" alt="Cents"> Cents`;
     }
 
-    if (hundredDollars > 0 || cents > 0) {
-        resultHTML += `</p>`;
-    }
+    resultHTML += `</p>`;
 
     resultDiv.innerHTML = resultHTML;
 }
