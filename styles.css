@@ -488,3 +488,12 @@ footer a.linked-in:hover {
     font-size: 0.8em;
     margin-top: 4px;
 }
+
+#eventfish {
+    background-image: url('/waterback.png');
+    background-size: cover; /* Adjust as needed */
+    background-repeat: no-repeat;
+    background-position: center;
+  opacity: 0.7;
+    padding: 20px; /* Adjust as needed */
+}
