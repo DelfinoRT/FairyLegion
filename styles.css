@@ -302,6 +302,22 @@ footer a.linked-in:hover {
     transform: scale(1.05);
 }
 
+.img-eventos2 {
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.img-eventos2 img {
+  display: block;
+  margin: 0 auto;
+  max-width: 50%;
+  transition: transform 0.3s ease;
+}
+
+.img-eventos2 img:hover {
+  transform: scale(1.35);
+}
+
 .img-pesca img {
     display: block;
     max-width: 35%;
@@ -496,4 +512,50 @@ footer a.linked-in:hover {
     background-position: center;
   opacity: 0.7;
     padding: 20px; /* Adjust as needed */
+}
+
+.TituloEvento {
+  color: purple;
+  animation: colorChange 5s infinite, sizeChange 5s infinite;
+}
+
+@keyframes colorChange {
+  0%, 100% {
+    color: purple;
+  }
+  50% {
+    color: pink;
+  }
+}
+
+@keyframes sizeChange {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.collapsible {
+  background-color: #692777;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #773379;
+}
+
+.collapsibleContent {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
 }
