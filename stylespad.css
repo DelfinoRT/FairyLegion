@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background: url('https://padventures.org/templates/padventures/images/main_bg.png') repeat;
 }
 
 /* Navigation Menu */
@@ -27,6 +28,9 @@ nav {
 .nav-links li {
     margin: 0 15px;
     position: relative;
+}
+
+.nav-links li:hover {
 }
 
 .nav-links a {
@@ -62,8 +66,8 @@ nav {
 }
 
 .dropdown-content li a:hover {
-    background-color: #ff6600;
-    color: #fff;
+    color: #ff6600;
+    transition: color 0.3s;
 }
 
 .dropdown:hover .dropdown-content {
