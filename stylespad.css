@@ -17,20 +17,23 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 .nav-links {
     list-style: none;
     display: flex;
-    position: relative;
+    flex-wrap: wrap;
 }
 
 .nav-links li {
     margin: 0 15px;
     position: relative;
-}
-
-.nav-links li:hover {
 }
 
 .nav-links a {
@@ -66,12 +69,45 @@ nav {
 }
 
 .dropdown-content li a:hover {
-    color: #ff6600;
-    transition: color 0.3s;
+    background-color: #ff6600;
+    color: #fff;
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+/* Burger Menu */
+.burger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.burger div {
+    width: 25px;
+    height: 3px;
+    background-color: #000;
+    margin: 5px;
+    transition: 0.3s;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        text-align: center;
+    }
+    .nav-links li {
+        margin: 10px 0;
+    }
+    .nav-links.active {
+        display: flex;
+    }
+    .burger {
+        display: flex;
+    }
 }
 
 /* Hero Section */
