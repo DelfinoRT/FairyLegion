@@ -138,7 +138,6 @@ nav {
     display: block;
 }
 
-
 .dropdown:hover .dropdown-content {
     display: block;
 }
@@ -148,6 +147,7 @@ nav {
     display: none;
     flex-direction: column;
     cursor: pointer;
+    margin-left: auto;
 }
 
 .burger div {
