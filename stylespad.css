@@ -46,7 +46,8 @@ nav {
 .nav-links {
     list-style: none;
     display: flex;
-    align-items: center; /* Align items vertically */
+    align-items: center;
+    /* Align items vertically */
     flex-wrap: wrap;
 }
 
@@ -105,10 +106,12 @@ nav {
         transform: translate(-50%, -50%) scale(1);
         opacity: 1;
     }
+
     50% {
         transform: translate(-50%, -50%) scale(1.5);
         opacity: 0.5;
     }
+
     100% {
         transform: translate(-50%, -50%) scale(0.8);
         opacity: 0;
@@ -123,7 +126,7 @@ nav {
     border-radius: 6px;
     min-width: 160px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+    z-index: 999;
     list-style: none;
     padding: 0;
 }
@@ -147,7 +150,7 @@ nav {
     display: none;
     flex-direction: column;
     cursor: pointer;
-    margin-left: auto;
+    margin-left: 20px;
 }
 
 .burger div {
@@ -165,15 +168,19 @@ nav {
         flex-direction: column;
         text-align: center;
     }
+
     .nav-links li {
         margin: 10px 0;
     }
+
     .nav-links.active {
         display: flex;
     }
+
     .burger {
         display: flex;
     }
+
     .character-search {
         width: 100%;
         justify-content: center;
@@ -281,7 +288,8 @@ footer .social-links a:hover {
 .character-search {
     display: flex;
     align-items: center;
-    margin: 0 15px; /* Match the margin of other nav items */
+    margin: 0 15px;
+    /* Match the margin of other nav items */
 }
 
 .character-search input[type="text"] {
@@ -319,7 +327,8 @@ footer .social-links a:hover {
     margin-right: 10px;
     border-radius: 50%;
     overflow: hidden;
-    border: 2px solid #000; /* Adding the black border around the Pokéball */
+    border: 2px solid #000;
+    /* Adding the black border around the Pokéball */
 }
 
 .top-half,
