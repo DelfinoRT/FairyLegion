@@ -1,11 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fairy Legion - Guia de Inicio</title>
+    <title>Fairy Legion - Guía de Inicio</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <style>
+        .collapsible {
+            background-color: #f1f1f1;
+            color: #444;
+            cursor: pointer;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .active, .collapsible:hover {
+            background-color: #ccc;
+        }
+
+        .content {
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -29,46 +53,50 @@
         <p>Antes de comenzar, es importante entender que no existe una única y exclusiva manera de iniciar o progresar en el juego.</p>
         <p>Así como cada persona es única, la experiencia de juego también lo es. Esta experiencia depende de tus objetivos, motivación, estado de ánimo, convivencia y otros factores. Por ello, esta guía no pretende ser estricta, sino ofrecerte un conjunto de referencias y consejos que creemos te serán útiles.</p>
         <p>Una vez aprendas lo básico sobre el juego, la responsabilidad de divertirte y pasar un buen rato es solo tuya. ¡Te deseamos lo mejor!</p>
-        
+
         <br><br><br>
-        
+
         <article>
             <h3>Conoce los sistemas básicos de PAdventures</h3>
             <img class="pescabanner" src="/capturing.gif" alt="Banner de Pesca">
             <p>Es fundamental familiarizarse con los sistemas básicos del juego. Este <a href="http://es.padventures.info/Gu%C3%ADa_para_reci%C3%A9n_llegados">enlace</a> te ayudará a entender lo necesario para tus primeros pasos en PAdventures.</p>
             <p>Algunos de los sistemas indispensables son:</p>
-                <ul>
-                    <li>Sistema de captura de Pokémon</li>
-                    <li>Evolución de los Pokémon</li>
-                    <li>Venta de artículos y Pokémon</li>
-                    <li>Viajar entre ciudades y regiones</li>
-                    <li>Autoloot</li>
-                </ul>
-            
+            <ul>
+                <li>Sistema de captura de Pokémon</li>
+                <li>Evolución de los Pokémon</li>
+                <li>Venta de artículos y Pokémon</li>
+                <li>Viajar entre ciudades y regiones</li>
+                <li>Autoloot</li>
+            </ul>
+    </section>
+
+    <section id="events">
             <h3>Sube de nivel y consigue dinero</h3>
-            <img class="pescabanner" src="/moneyPAD.png" alt="Banner de Pesca">
-            <ol>
+            <ul>
                 <li><strong>Ubicación Inicial:</strong>
-                    <ul>
-                        <li><strong>Recomendación:</strong> Comienza en Celadon, donde encontrarás una gran cantidad de NPCs necesarios para tu progreso.</li>
-                    </ul>
+                    <p>Comienza en <strong>Celadon</strong>, donde encontrarás una gran cantidad de NPCs necesarios para tu progreso.<p>
                 </li>
                 <li><strong>Primeros Niveles:</strong>
                     <p>Dirígete a la salida Este de Celadon. Aquí encontrarás Pokémon tipo hierba y veneno. Usa tus Pokémon para derrotarlos y mantente atento a la barra de vida de tus Pokémon. Utiliza un revive de tu bolsa si es necesario.</p>
                 </li>
                 <li><strong>Objetos y Recompensas:</strong>
-                    <p>Al subir de nivel, recibirás diversos objetos como pokeballs y pociones, esenciales para mantener a tus Pokémon en batalla. Recorre los alrededores y conoce el mapa. Usa el comando <code>!get_maps</code> para descargar el mapa explorado y facilitar tu exploración.</p>
+                    <p>Al subir de nivel, recibirás diversos objetos como pokeballs y pociones, esenciales para mantener a tus Pokémon en batalla. Recorre los alrededores y conoce el mapa. Usa el comando <code>!get_maps</code> para <strong>descargar el mapa explorado</strong> y facilitar tu exploración.</p>
                 </li>
                 <li><strong>Alternativas de Nivelación:</strong>
                     <p>En el sur de Celadon, la playa y las montañas conectadas por puentes son excelentes lugares para subir de nivel, ya que hay una gran diversidad de Pokémon tipo agua.</p>
                 </li>
                 <li><strong>Configuración de Hotkeys:</strong>
-                    <p>Configura tus "hotkeys" para revivir a tus Pokémon de manera rápida y eficiente. Esta <a href="https://padventures.org/index.php/p/v/gui_interface">guía</a> te ayudará a configurar la interfaz del juego y las hotkeys.</p>
+                    <p>Configura tus "hotkeys" para <strong>revivir a tus Pokémon de manera rápida</strong> y eficiente. Esta <a href="https://padventures.org/index.php/p/v/gui_interface">guía</a> te ayudará a configurar la interfaz del juego y las hotkeys.</p>
                 </li>
-            </ol>
-            
-            <h3>Paso 3: Conseguir Dinero</h3>
-            <ol>
+            </ul>
+
+        <h3>Subir nivel en Malie</h3>
+            <p>Un buen lugar para subir de nivel es la Torre Ghost Malie. Lleva un <strong>Mightyena con habilidad Moxie</strong>. Puedes capturar un Poochyena en los niveles inferiores de la isla de desierto al este de Azalea o comprarlo en el market.</p>
+            <p>Para llegar a Malie, necesitas tener status <strong>premium</strong> y completar la quest <a href="http://en.padventures.info/Getting_familiar_with_Alola">Getting familiar with Alola</a>, que da acceso a las islas de Alola.</p>
+        <img class="pescabanner" src="/malie-ghost-tower.png" alt="Ghost Tower Malie">
+
+            <h3>Conseguir Dinero</h3>
+            <ul>
                 <li><strong>Quests/Misiones:</strong>
                     <p>Consulta las <a href="http://es.padventures.info/Misiones">misiones</a> disponibles para tu nivel. Algunas misiones rentables para niveles bajos incluyen:</p>
                     <ul>
@@ -82,48 +110,299 @@
                         <li>Kimberly of Cinnabar</li>
                     </ul>
                 </li>
+                <br>
                 <li><strong>Captura y Venta de Pokémon:</strong>
-                    <p>Captura Pokémon y véndelos al NPC Santiago, ubicado al Oeste de Celadon. Un Pokémon fácil de capturar es Mankey. En el Oeste de Viridian hay un buen campamento de Mankeys. Usa Great Balls para capturarlos eficientemente.</p>
+                    <p>Captura Pokémon y véndelos al <strong>NPC Santiago</strong>, ubicado al << Oeste de Celadon en la torre comercial.</p>
+                    <p></Oeste>Un Pokémon fácil de capturar es <strong>Mankey</strong>. En el Oeste de Viridian hay un buen campamento de Mankeys. Usa Great Balls para capturarlos eficientemente.</p>
                 </li>
                 <li><strong>Recolección de Objetos:</strong>
                     <p>Derrotar Pokémon te otorga objetos/loot que puedes vender. Mantén siempre activado el sistema de autoloot. Este <a href="https://www.youtube.com/watch?v=xwIioq9sI-E">video</a> explica cómo funciona.</p>
                 </li>
-            </ol>
-            
-            <h3>Paso 4: Adquirir Status Premium</h3>
+            </ul>
+
+            <h3>Adquirir Status Premium</h3>
             <p>Una vez que consigas el dinero necesario, puedes comprar diamantes a través del sistema de market. Este <a href="https://www.youtube.com/watch?v=UpLBkPvqk5A&t=22s">video</a> explica el proceso de compra/venta de objetos/items.</p>
-            <ol>
-                <li><strong>Compra de Diamantes:</strong>
-                    <p>Compra 10 diamantes y dirígete a la tienda en la parte Sur-Este de Celadon. Habla con el NPC Sr. Eko y sigue estos pasos:</p>
-                    <ul>
-                        <li>"Hi"</li>
-                        <li>"premium"</li>
-                        <li>"yes"</li>
-                    </ul>
-                    <p>Felicidades, has conseguido tus primeros 30 días de status premium.</p>
+            <p>En resumen, el proceso para hacerte premium es:</p>
+                    <ol>
+                        <li>Compra 10 diamantes y dirígete a la tienda en la parte Sur-Este de Celadon.</li>
+                        <li> Habla con el NPC Sr. Eko diciendo "Hi" > "premium" > "yes"</li>
+                    </ol>
+            <p>Felicidades, has conseguido tus primeros 30 días de status premium.</p>
                 </li>
             </ol>
-            
-            <h3>Paso 5: Mejora de Equipo</h3>
-            <ol>
-                <li><strong>Recomendación Inicial:</strong>
-                    <p>Un buen lugar para subir de nivel es la Torre Ghost Malie. Lleva un Mightyena con habilidad Moxie. Puedes capturar un Poochyena en los niveles inferiores de la isla desierta al este de Azalea o comprarlo en el market.</p>
-                </li>
-                <li><strong>Consideraciones:</strong>
-                    <p>No gastes dinero innecesariamente en Pokémon no esenciales. La experiencia te enseñará qué Pokémon son realmente necesarios para progresar en diferentes zonas, misiones, o actividades.</p>
-                </li>
-            </ol>
-            
-            <h3>Acceso a Malie</h3>
-            <p>Para llegar a Malie, necesitas tener status premium y completar la quest <a href="http://en.padventures.info/Getting_familiar_with_Alola">Getting familiar with Alola</a>, que da acceso a las islas de Alola.</p>
         </article>
     </section>
+    
+    <section id="events">
+        <article>
+            <h3>Guía de Pokémon (por tipo) para jugadores nuevos</h3>
 
-    <button id="back-to-top" onclick="scrollToTop()">Subir ⤴</button>
-    <footer>
-        <p>© 2024 Fairy Legion <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in"> / Desarrollado por Silvarion</a></p>
-    </footer>
-    <script src="script.js"></script>
-    <script src="pagination.js"></script>
-</body>
+            <p>Te dejamos una lista de Pokémon que puedes conseguir/capturar de forma sencilla para iniciar en PAdventures, son Pokémon elegidos en base a utilidad/precio, son relativamente baratos si decides comprarlos y puedes usarlos durante un tiempo sin necesidad de comprarles TMs ya que su kit de ataques básico es moderadamente bueno.</p>
+            <p>De igual forma, vas a encontrar Pokémon en la lista que son más complicados de conseguir o capturar pero siguen estando dentro de lo posible para jugadores nuevos.</p>
+            <p>Le informacion que te mostramos acá fue principalmente obtenida de  <a href="https://docs.google.com/spreadsheets/d/1qbTJpzNIk3WExc4hvGtudQiA5p03_FlD6c1zd8GYWs8/htmlview?pli=1#gid=0">este documento</a> (desconozco al autor o autores) y se mejora con la ayuda de miembros de la guild al paso del tiempo.</p>
+            <div>
+                <button type="button" class="collapsible">Tipo Normal</button>
+                <div class="content">
+                    <ul>
+                        <li>Eevee (y sus evoluciones): Obtenibles mediante misiones, sus evoluciones son muy útiles.</li>
+                        <li>Lopunny o Buneary con habilidad Scrappy.</li>
+                        <li>Slaking o Vigoroth o Slakoth con habilidad Scrappy.</li>
+                        <li>Exploud con habilidad Scrappy.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Tipo Lucha</button>
+                <div class="content">
+                    <ul>
+                        <li>Hitmonlee con habilidad Reckless (posible obtenerlo de la misión "Fighting for pride").</li>
+                        <li>Hitmonchan (posible obtenerlo de la misión "Fighting for pride").</li>
+                        <li>Hariyama (el luchador más económico).</li>
+                        <li>Conkeldurr o Gurdurr o Timburr.</li>
+                        <li>Machamp o Machoke o Machop con habilidad No Guard (posible obtenerlo de la misión "Fighting for pride").</li>
+                        <li>Hitmontop con habilidad Technician.</li>
+                        <li>Lucario o Riolu con habilidad Justified.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Tipo Volador</button>
+                <div class="content">
+                    <ul>
+                        <li>Noctowl o Hoothoot con habilidad Tinted Lens.</li>
+                        <li>Staraptor o Staravia o Starly con habilidad Reckless.</li>
+                        <li>Cloned Pidgeot.</li>
+                        <li>Cloned Farfetch'd.</li>
+                        <li>Cloned Dodrio.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Tipo Veneno</button>
+                <div class="content">
+                    <ul>
+                        <li>Weezing o Koffing con habilidad Levitate.</li>
+                        <li>Seviper.</li>
+                        <li>Garbodor o Trubbish.</li>
+                        <li>Venomoth o Venonat con habilidad Wonder Skin.</li>
+                        <li>Cloned Venomoth con habilidad Wonder Skin.</li>
+                        <li>Arbok o Ekans.</li>
+                        <li>Muk o Grimer.</li>
+                        <li>Nidoking o Nidorino o Nidoran.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Tipo Tierra</button>
+                <div class="content">
+                    <ul>
+                        <li>Sandslash o Sandshrew.</li>
+                        <li>Donphan o Phanpy.</li>
+                        <li>Cloned Marowak.</li>
+                        <li>Rhyperior con habilidad Reckless.</li>
+                        <li>Flygon o Vibrava o Trapinch.</li>
+                        <li>Golurk o Golett con habilidad No Guard.</li>
+                        <li>Dugtrio o Diglett.</li>
+                        <li>Marowak o Cubone.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Tipo Roca</button>
+                <div class="content">
+                    <ul>
+                        <li>Rhydon o Rhyhorn.</li>
+                        <li>Golem o Graveler o Geodude.</li>
+                        <li>Gigalith o Boldore o Roggenrola con habilidad Sand Force.</li>
+                        <li>Lycanroc (midnight, dusk, midday).</li>
+                        <li>Sudowoodo.</li>
+                        <li>Shiny Corsola.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Tipo Bicho</button>
+                <div class="content">
+                    <ul>
+                        <li>Ledian o Ledyba con habilidad Swarm.</li>
+                        <li>Butterfree o Metapod o Caterpie.</li>
+                        <li>Pinsir con habilidad Moxie.</li>
+                        <li>Heracross con habilidad Moxie.</li>
+                        <li>Parasect o Paras con habilidad Dry Skin.</li>
+                        <li>Cloned Butterfree.</li>
+                        <li>Yanmega o Yanma con habilidad Tinted Lens.</li>
+                        <li>Cloned Pinsir con habilidad Moxie.</li>
+                        <li>Cloned Parasect con habilidad Dry Skin.</li>
+                        <li>Mothim con habilidad Tinted Lens.</li>
+                        <li>Kricketune o Kricketot.</li>
+                        <li>Volbeat con habilidad Swarm.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Tipo Fantasma</button>
+                <div class="content">
+                    <ul>
+                        <li>Shedinja o 2x Nincada.</li>
+                        <li>Poltaegeist o Sinistea.</li>
+                        <li>Golurk o Golett con habilidad No Guard.</li>
+                        <li>Spiritomb.</li>
+                        <li>Hisuian Zoroark o Hisuian Zorua.</li>
+                        <li>Mismagius o Misdreavus.</li>
+                        <li>Banette o Shuppet.</li>
+                        <li>Cursola o Galarian Corsola.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Tipo Fuego</button>
+                <div class="content">
+                    <ul>
+                        <li>Typhlosion o Quilava o Cyndaquil con habilidad Blaze.</li>
+                        <li>Galarian Darmanitan o Galarian Darumaka con habilidad Zen Mode.</li>
+                        <li>Pyroar o Litleo con habilidad Moxie.</li>
+                        <li>Emboar o Pignite o Tepig con habilidad Reckless.</li>
+                        <li>Torkoal.</li>
+                        <li>Magmortar o Magmar.</li>
+                        <li>Centiskorch.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Tipo Agua</button>
+                <div class="content">
+                    <ul>
+                        <li>Cloned Kingler.</li>
+                        <li>Kingler o Krabby.</li>
+                        <li>Starmie o Staryu.</li>
+                        <li>Omastar o Omanyte con habilidad Shell Armor o Weak Armor.</li>
+                        <li>Octillery con habilidad Moody.</li>
+                        <li>Primarina o Brionne o Popplio con habilidad Liquid Voice.</li>
+                        <li>Kingdra con habilidad Sniper.</li>
+                        <li>Shiny Quagsire.</li>
+                        <li>Lapras con habilidad Hydration.</li>
+                        <li>Swampert o Marshtomp o Mudkip.</li>
+                        <li>Gyarados con habilidad Moxie.</li>
+                        <li>Whiscash con habilidad Hydration.</li>
+                        <li>Blastoise o Wartortle o Squirtle con habilidad Torrent.</li>
+                        <li>Samurott o Dewott o Oshawott con habilidad Torrent.</li>
+                        <li>Shiny Corsola.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Tipo Planta</button>
+                <div class="content">
+                    <ul>
+                        <li>Sunflora o Sunkern con habilidad Early Bird.</li>
+                        <li>Bellossom o Gloom con habilidad Healer.</li>
+                        <li>Vileplume o Gloom o Oddish.</li>
+                        <li>Tropius con habilidad Leaf Guard.</li>
+                        <li>Meganium o Bayleef o Chikorita.</li>
+                        <li>Leafeon.</li>
+                        <li>Cacturne o Cacnea con habilidad Sand Veil.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Tipo Eléctrico</button>
+                <div class="content">
+                    <ul>
+                        <li>Alolan Raichu con habilidad Lightning Rod.</li>
+                        <li>Manectric o Electrike con habilidad Lightning Rod.</li>
+                        <li>Pikachu.</li>
+                        <li>Electrode o Voltorb.</li>
+                        <li>Heliolisk o Helioptile con habilidad Dry Skin.</li>
+                        <li>Hisuian Electrode o Hisuian Voltorb con habilidad Aftermath.</li>
+                        <li>Cloned Electrode con habilidad Aftermath.</li>
+                        <li>Pachirisu.</li>
+                        <li>Dedenne.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Tipo Psíquico</button>
+                <div class="content">
+                    <ul>
+                        <li>Mr. Mime o Mime Jr con habilidad Technician.</li>
+                        <li>Espeon.</li>
+                        <li>Xatu o Natu.</li>
+                        <li>Abra.</li>
+                        <li>Bruxish con habilidad Wonder Skin.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Tipo Hielo</button>
+                <div class="content">
+                    <ul>
+                        <li>Glalie o Snorunt con habilidad Moody.</li>
+                        <li>Glaceon con habilidad Snow Cloak.</li>
+                        <li>Vanilluxe o Vanillish o Vanillite con habilidad Weak Armor.</li>
+                        <li>Glastrier con habilidad Reckless.</li>
+                        <li>Galarian Darmanitan o Galarian Darumaka con habilidad Zen Mode.</li>
+                        <li>Cryogonal.</li>
+                        <li>Frosmoth o Snom.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Tipo Dragón</button>
+                <div class="content">
+                    <ul>
+                        <li>Salamence o Shelgon o Bagon con habilidad Moxie.</li>
+                        <li>Kingdra con habilidad Sniper.</li>
+                        <li>Dragonair o Dratini.</li>
+                        <li>Haxorus o Fraxure o Axew.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Tipo Siniestro</button>
+                <div class="content">
+                    <ul>
+                        <li>Mightyena o Poochyena con habilidad Moxie.</li>
+                        <li>Alolan Raticate o Alolan Rattata con habilidad Hustle.</li>
+                        <li>Incineroar o Torracat o Litten.</li>
+                        <li>Umbreon.</li>
+                        <li>Obstagoon o Galarian Linoone con habilidad Reckless.</li>
+                        <li>Malamar con habilidad Infiltrator.</li>
+                        <li>Mandibuzz o Vullaby con habilidad Weak Armor.</li>
+                        <li>Honchkrow o Murkrow con habilidad Moxie.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Tipo Acero</button>
+                <div class="content">
+                    <ul>
+                        <li>Bastiodon o Shieldon.</li>
+                        <li>Probopass o Nosepass.</li>
+                        <li>Corviknight o Corvisquire o Rookidee con habilidad Reckless.</li>
+                        <li>Metagross o Metang o Beldum.</li>
+                        <li>Aggron o Lairon o Aron.</li>
+                        <li>Magnezone o Magneton o Magnemite.</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="collapsible">Tipo Hada</button>
+                <div class="content">
+                    <ul>
+                        <li>Mr. Mime o Mime Jr con habilidad Technician.</li>
+                        <li>Wigglytuff o Jigglypuff con habilidad Pixilate.</li>
+                        <li>Slurpuff o Swirlix.</li>
+                        <li>Aromatisse o Spritzee con habilidad Healer.</li>
+                        <li>Sylveon con habilidad Pixilate.</li>
+                        <li>Togekiss o Togetic o Togepi con habilidad Hustle.</li>
+                        <li>Clefable o Clefairy.</li>
+                        <li>Alcremie.</li>
+                        <li>Mawile.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+
+            for (i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                        content.style.display = "none";
+                    } else {
+                        content.style.display = "block";
+                    }
+                });
+            }
+        </script>
+
+    </body>
 </html>
