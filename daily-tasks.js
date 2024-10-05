@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
     { name: "Nidoking", task: "Task en Mandarin, primer isla al nor-este. Se llega usando Fly.", map: "respawn-nidokingnidoqueen.jpg" },
     { name: "Nidoqueen", task: "Task en Mandarin, primer isla al nor-este. Se llega usando Fly", map: "respawn-nidokingnidoqueen.jpg" },
     { name: "Onix", task: "Task en Pewter cave (saliendo de la ciudad por la izquierda y luego al sur) o en Trovitopolis o en Pacifidlog", map: "respawn-onix-01.png" },
-    { name: "Primape", task: "Task mandarin o suroeste de goldenrod o en pelea de dewford o ascorbia sur", map: "xxx.png" },
+    { name: "Primeape", task: "Task mandarin o suroeste de goldenrod o en pelea de dewford o ascorbia sur", map: "spawn-primeape.png" },
     { name: "Primarina", task: "Task recomendada mediante la pesca", map: "xxx.png" },
     { name: "Rhydon", task: "Task en Pewter cave (saliendo de la ciudad por la izquierda y luego al sur) o en Lavender arriba del Centro Pokémon", map: "xxx.png" },
     { name: "Skarmory", task: "Task en Violet, al sur de la montaña.", map: "xxx.png" },
