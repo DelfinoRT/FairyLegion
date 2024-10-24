@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fairy Legion - Eventos</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 </head>
 <body>
@@ -131,11 +131,27 @@
   </div>
   </section>
 
+  <section id="gallery">
+      <h2>Halloween 2024:</h2>
+      <div class="gallery-container">
+          <button class="prev" onclick="prevImage()">&#10094;</button>
+          <div class="gallery">
+            <img src="EventosPAD/halloween2024/danierin1.png">
+            <img src="EventosPAD/halloween2024/danierin2.png">
+          </div>
+          <button class="next" onclick="nextImage()">&#10095;</button>
+      </div>
+      <div class="counter">
+          <span id="currentImage">1</span> / <span id="totalImages">4</span>
+      </div>
+  </section>
+
     
   <button id="back-to-top" onclick="scrollToTop()">Subir ⤴</button>
   <footer>
       <p>© 2024 Fairy Legion <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in"> / Desarrollado por Silvarion</a></p>
   </footer>
-    <script src="/script.js"></script>
+  <script src="/script.js"></script>
+  <script src="gallery.js"></script>
 </body>
 </html>
