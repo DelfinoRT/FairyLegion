@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fairy Legion - Respawns</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+</head>
+<body>
+    <header >
+        <div class="menu-btn">☰</div>
+        <nav class="nav">
+            <ul>
+                <li><a href="/" class="logo-button"><img src="/fl-boton.png" alt="Logo"></a></li>
+                <li><a href="/index.html" class="border">Inicio</a></li>
+                <li><a href="/guias-consejos.html" class="border active">Guías/Consejos</a></li>
+                <li><a href="/reglas.html" class="border">Reglas</a></li>
+                <li><a href="/eventos.html" class="border">Eventos</a></li>
+                <li><a href="/contacto.html" class="border">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="respawn-info">
+        <h2>Asistente de Respawn</h2>
+        <label for="level-input">Nivel:</label>
+        <input type="number" id="level-input" placeholder="Introduce tu nivel" required min="1">
+        <br>
+        <label for="type-select">Tipo de Pokémon (opcional):</label>
+        <select id="type-select">
+            <option value="">Selecciona un tipo...</option>
+            <option value="Ice">Hielo</option>
+            <option value="Electric">Eléctrico</option>
+            <option value="Fight">Lucha</option>
+            <option value="Rock">Roca</option>
+            <option value="Dark">Oscuro</option>
+            <option value="Steel">Acero</option>
+            <option value="Fire">Fuego</option>
+            <option value="Psychic">Psíquico</option>
+            <option value="Water">Agua</option>
+        </select>
+        <br>
+        <button id="go-btn">¡Buscar Respawn!</button>
+
+        <div id="respawn-results">
+            <!-- Respawn information will be displayed here -->
+        </div>
+    </section>
+
+
+    <section id="events">
+            <h2>Preguntas Frecuentes</h2>
+            <ol>
+                <li><b>¿Cómo equipar un cebo (bait)?</b><br> Identifica la caña (rod) que quieres utilizar, haz clic <b>derecho</b> sobre la ella, luego haz clic <b>izquierdo</b> sobre el cebo (bait) deseado.</li>
+                <li><b>¿Cómo desequipar un cebo (bait)?</b><br> Identifica la caña de la cual quieres remover el/los cebo(s), haz clic <b>derecho</b> sobre ella y luego haz clic <b>izquierdo</b> nuevamente sobre ella.</li>
+                <li><b>¿Dónde comprar cebos (baits)?</b><br> El NPC <b>Fishing Guru</b> (el mismo que te da las tareas de pesca) en <b>Cinnabar</b> te ofrece algunos cebos si interactúas con él para hacer "trade". Otros cebos pueden ser obtenidos como loot de algunos Pokémon o comprados a otros jugadores utilizando el Market.</li>
+                <li><b>¿Cuáles son algunos Pokémon adecuados para pescar?</b><br> Actualmente, el Pokémon más utilizado para pescar es <b>Shedinja</b> debido a su resistencia. Cuando se le da una Silver Nanab Berry como held item, también absorbe parte del daño recibido, mejorando aún más su capacidad defensiva. Otras opciones son <b>Heliolisk</b> y <b>Cloned Parasect</b> con la habilidad Dry Skin, que les ayuda a absorber también una buena parte del daño recibido.</li>
+            </ol>
+    </section>
+
+    <button id="back-to-top" onclick="scrollToTop()">Subir ⤴</button>
+
+    <section style="text-align: center;">
+        <a href="https://www.freecounterstat.com" title="website counters" class="counter">
+            <img src="https://counter4.optistats.ovh/private/freecounterstat.php?c=pqslpefqag48zdrasffds9yddq2d6f97" border="0" title="website counters" alt="website counters">
+        </a>
+    </section>
+
+    
+    <footer>
+        <p>© 2024 Fairy Legion <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in"> / Desarrollado por Silvarion</a></p>
+    </footer>
+    <script src="script.js"></script>
+    <script src="respawnData.js"></script>
+</body>
+</html>

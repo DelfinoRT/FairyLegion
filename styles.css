@@ -559,3 +559,35 @@ footer a.linked-in:hover {
   overflow: hidden;
   background-color: #f1f1f1;
 }
+
+#respawn-info {
+  text-align: center;
+  margin: 20px;
+}
+
+#respawn-results {
+  margin-top: 20px;
+}
+
+.respawn-entry {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.respawn-entry h3 {
+  color: #2d2d2d;
+}
+
+.respawn-entry ul {
+  list-style-type: none;
+}
+
+.respawn-entry ul li {
+  margin: 5px 0;
+}
+
+#go-btn {
+  margin-top: 10px;
+}
