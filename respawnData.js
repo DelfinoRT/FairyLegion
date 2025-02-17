@@ -886,7 +886,7 @@ const respawnData = [
         video: "https://www.youtube.com/watch?v=zLaN9rWtDtU",
         spawnMany: ["Combusken", "Blaziken", "Charizard"],
         spawnFew: ["Charmeleon", "Torkoal", "Typhlosion", "Heat Rotom"],
-        city: "",
+        city: "Rustboro",
         minLevel: 90,
         mainType: "Fire"
     },
@@ -896,7 +896,7 @@ const respawnData = [
         video: "https://www.youtube.com/watch?v=tEkaM8VGODI",
         spawnMany: ["Gengar", "Haunter", "Dusknoir", "Misdreavus", "Banette"],
         spawnFew: ["Drifblim", "Mismagius"],
-        city: "",
+        city: "Malie",
         minLevel: 80,
         mainType: "Ghost"
     },
@@ -906,7 +906,7 @@ const respawnData = [
         video: "https://www.youtube.com/watch?v=bPjHPmNxgJA",
         spawnMany: ["Xatu", "Ariados", "Kadabra", "Alakazam"],
         spawnFew: [],
-        city: "",
+        city: "Cianwood",
         minLevel: 60,
         mainType: "Psychic"
     },
@@ -916,7 +916,7 @@ const respawnData = [
         video: "https://www.youtube.com/watch?v=htydF86-LBw",
         spawnMany: ["Kadabra", "Alakazam"],
         spawnFew: ["Hypno", "Reuniclus"],
-        city: "",
+        city: "Fuchsia",
         minLevel: 40,
         mainType: "Psychic"
     },
@@ -926,7 +926,7 @@ const respawnData = [
         video: "https://www.youtube.com/watch?v=PVy558PXReQ",
         spawnMany: ["Drifloon", "Gastly", "Haunter", "Duskull", "Dusclops"],
         spawnFew: ["Lampent", "Mimikyu", "Gourgeist", "Banette", "Misdreavus"],
-        city: "",
+        city: "Malie",
         minLevel: 40,
         mainType: "Ghost"
     },
