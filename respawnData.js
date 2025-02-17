@@ -963,11 +963,11 @@ document.getElementById("go-btn").addEventListener("click", function() {
                 <h3>Ciudad: ${respawn.city}</h3>
                 <p><strong>Requiere nivel mínimo:</strong> ${respawn.minLevel}</p>
                 <p><strong>Tipo principal:</strong> ${respawn.mainType}</p>
-                <p><strong>Pokémon que aparecen:</strong></p>
+                <p><strong>Pokémon más comunes:</strong></p>
                 <ul>
                     ${respawn.spawnMany.map(pokemon => `<li>${pokemon}</li>`).join('')}
                 </ul>
-                <p><strong>Pokémon raros:</strong></p>
+                <p><strong>Pokémon poco frecuentes:</strong></p>
                 <ul>
                     ${respawn.spawnFew.map(pokemon => `<li>${pokemon}</li>`).join('')}
                 </ul>
