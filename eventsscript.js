@@ -37,23 +37,27 @@ async function fetchEvents() {
                 <div class="event">
                     <p><strong>${event.event}</strong></p>
                     <p>${event.date} at ${event.time || "Unknown Time"} (${event.timezone || "Unknown Timezone"})</p>
-                    <p id="${eventId}" class="countdown">Calculating...</p>
+                    <p id="${eventId}" class="countdown">${event.time ? "Calculating..." : "Time Unknown"}</p>
                 </div>
             `;
 
             // Append to container
             eventsContainer.innerHTML += eventHTML;
 
-            // Start countdown
-            updateCountdown(eventId, eventDateTime);
+            // Start countdown if time is known
+            if (event.time) {
+                updateCountdown(eventId, eventDateTime);
+            }
         });
 
         // Update countdowns every second
         setInterval(() => {
             events.forEach((event, index) => {
-                let eventDateTime = getEventDateTime(event.date, event.time, event.timezone);
                 let eventId = `countdown-${index}`;
-                updateCountdown(eventId, eventDateTime);
+                if (event.time) {
+                    let eventDateTime = getEventDateTime(event.date, event.time, event.timezone);
+                    updateCountdown(eventId, eventDateTime);
+                }
             });
         }, 1000);
 
@@ -77,7 +81,7 @@ function getEventDateTime(date, time, timezone) {
         eventDateTime.setHours(0, 0, 0, 0);
     }
 
-    // Convert to the event's specified time zone
+    // Convert to the event's specified time zone if the time is known
     let timeZoneOffset = parseTimeZoneOffset(timezone);
     eventDateTime.setTime(eventDateTime.getTime() + timeZoneOffset * 60 * 60 * 1000);
 
