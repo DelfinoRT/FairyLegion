@@ -232,6 +232,7 @@ const pokemonImages = {
     "Totodile": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/158.png",
     "Toxapex": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/748.png",
     "Tynamo": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/602.png",
+    "Vaporeon": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/134.png",
     "Wailmer": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/320.png",
     "Wailord": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/321.png",
     "Walrein": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/365.png",
