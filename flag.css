@@ -1,0 +1,49 @@
+/* flag.css */
+#floating-lgbt-flag {
+  position: fixed; /* Keeps the element fixed in the viewport */
+  bottom: 20px; /* Initial vertical position */
+  left: 20px; /* Initial horizontal position */
+  width: auto; /* Adjust width to content */
+  height: 30px; /* Adjust flag height */
+  padding: 5px 10px; /* Add padding for text inside */
+  background: linear-gradient(to right,
+    #FF0000 16.666%, /* Red */
+    #FF7F00 16.666% 33.332%, /* Orange */
+    #FFFF00 33.332% 49.998%, /* Yellow */
+    #00FF00 49.998% 66.664%, /* Green */
+    #0000FF 66.664% 83.330%, /* Blue */
+    #8B00FF 83.330% 100% /* Purple */
+  );
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Optional shadow */
+  cursor: pointer; /* Indicate it might be interactive */
+  z-index: 1000; /* Ensure it's on top of other elements */
+  border-radius: 5px; /* Optional rounded corners */
+  color: white; /* Text color */
+  font-size: 0.9em; /* Adjust font size */
+  white-space: nowrap; /* Prevent text from wrapping */
+  opacity: 0.8; /* Optional transparency */
+  transition: opacity 0.3s ease-in-out; /* Smooth hover effect */
+  display: flex; /* Enable flexbox for text background */
+  align-items: center; /* Vertically center text */
+  justify-content: center; /* Horizontally center text (optional, but good for single line) */
+}
+
+#floating-lgbt-flag::before {
+  content: ""; /* Create a pseudo-element for the text background */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black background */
+  border-radius: 3px; /* Optional rounded corners for text background */
+  z-index: -1; /* Place the background behind the text */
+}
+
+#floating-lgbt-flag:hover {
+  opacity: 1;
+}
+
+#floating-lgbt-flag span {
+  display: none !important; /* Hide the span element */
+}
