@@ -642,3 +642,17 @@ footer a.linked-in:hover {
   font-weight: bold;
   font-size: 0.95rem;
 }
+
+#floating-lgbt-flag button {
+  display: inline-block; /* Make buttons appear next to each other or on separate lines */
+  padding: 8px 12px;
+  margin-right: 5px; /* Add some spacing between buttons */
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+#floating-lgbt-flag button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
