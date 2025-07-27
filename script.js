@@ -270,3 +270,24 @@ pokemonSelect.addEventListener('change', function () {
 
     pokemonInfo.innerHTML = `<img src="${pokemonImages[selectedPokemon]}" alt="${selectedPokemon}"><p>${rodInfo}</p>`;
 });
+
+// Funcionalidad colapsable para guías
+document.addEventListener('DOMContentLoaded', function () {
+  const headers = document.querySelectorAll('.collapsible-header');
+
+  headers.forEach(header => {
+    header.addEventListener('click', function () {
+      const section = this.closest('.collapsibleFS');
+      const content = section.querySelector('.collapsible-content');
+      const arrow = this.querySelector('.arrow');
+
+      if (content.style.display === 'block') {
+        content.style.display = 'none';
+        arrow.textContent = '▼';
+      } else {
+        content.style.display = 'block';
+        arrow.textContent = '▲';
+      }
+    });
+  });
+});

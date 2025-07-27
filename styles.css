@@ -656,3 +656,30 @@ footer a.linked-in:hover {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.collapsibleFS {
+  max-width: 80%;  /* or any width you prefer */
+  margin: 2em auto;  /* centers the section and adds vertical spacing */
+  padding: 1em;
+  background-color: #9dccd4;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.collapsible-content {
+  width: 90%;
+  display: none; /* collapsed by default */
+  padding: 1em;
+  border-top: 1px solid #ccc;
+}
+
+.collapsible-header {
+  width: 90%;
+  cursor: pointer;
+  padding: 1em;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
