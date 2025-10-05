@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fairy Legion - Detector de Fantasmas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        caption {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tbody tr:hover {
+            background-color: #f3e5f5;
+            /* Light purple for a spooky touch */
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+            /* Light grey for even rows */
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+            /* White for odd rows */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="menu-btn">☰</div>
+        <nav class="nav">
+            <ul>
+                <li><a href="/" class="logo-button"><img src="/fl-boton.png" alt="Logo"></a></li>
+                <li><a href="/index.html" class="border">Inicio</a></li>
+                <li><a href="/guias-consejos.html" class="border active">Guías/Consejos</a></li>
+                <li><a href="/reglas.html" class="border">Reglas</a></li>
+                <li><a href="/eventos.html" class="border">Eventos</a></li>
+                <li><a href="/contacto.html" class="border">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="info">
+            <h2>Ghost Detector</h2>
+            <p>Funciona de manera similar a la Bug Net, Ice Hammer, etc.</p>
+            <p>Puedes usar el detector en lugares específicos para invocar Pokémon de tipo <b>Fantasma</b>.</p>
+            <br>
+            <p>Puedes usar tu Detector de Fantasmas en los siguientes objetos/lugares:</p>
+            <img src="/GhostDetector/GhostDetector-Locations.png" width="470px">
+        </section>
+<br>
+        <table>
+            <caption><b>Potenciadores y Cebos</b></caption>
+            <thead>
+                <tr>
+                    <th>-</th>
+                    <th>Objeto/Cebo</th>
+                    <th>Efecto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img src="/GhostDetector/GhostPearlBait.png" width="40" height="40"></td>
+                    <td>Ghost Pearl Bait</td>
+                    <td>Permite encontrar Pokémon <b>más fuertes</b> (evoluciones)</td>
+                </tr>
+                <tr>
+                    <td><img src="/GhostDetector/CursedHorseshoeBait.png" width="40" height="40"></td>
+                    <td>Cursed Horseshoe Bait</td>
+                    <td>Aumenta la posibilidad de encontrar Pokémon de tipo Fantasma en un <b>30%</b></td>
+                </tr>
+                <tr>
+                    <td><img src="/GhostDetector/HydreigonIncense.png" width="40" height="40"></td>
+                    <td>Hydreigon's Incense</td>
+                    <td>Da posibilidad de encontrar <b>1 o 2 Pokémon adicionales</b></td>
+                </tr>
+            </tbody>
+        </table>
+<br>
+        <table>
+            <caption><b>Gemas Espiritualistas (Spiritualist Gems)</b></caption>
+            <thead>
+                <tr>
+                    <th>-</th>
+                    <th>Gema</th>
+                    <th>Efecto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img src="/GhostDetector/GreaterSpiritualistGem.png" width="40" height="40"></td>
+                    <td>Greater Spiritualist Gem</td>
+                    <td>Da posibilidad de encontrar <b>Pokémon shiny</b></td>
+                </tr>
+                <tr>
+                    <td><img src="/GhostDetector/MediumSpiritualistGem.png" width="40" height="40"></td>
+                    <td>Medium Spiritualist Gem</td>
+                    <td>Invoca <b>solo Pokémon Fantasma de Kanto, Johto, Hoenn, Sinnoh</b>. No se puede combinar con la
+                        Greater Spiritualist Gem.</td>
+                </tr>
+                <tr>
+                    <td><img src="/GhostDetector/SmallSpiritualistGem.png" width="40" height="40"></td>
+                    <td>Small Spiritualist Gem</td>
+                    <td>Invoca <b>solo Pokémon Fantasma de Unova, Kalos, Alola, Galar</b>. No se puede combinar con la
+                        Greater Spiritualist Gem.</td>
+                </tr>
+            </tbody>
+        </table>
+
+<br>
+
+        <table>
+            <caption><b>Pokémon encontrados sin Gemas ni potenciadores</b></caption>
+            <thead>
+                <tr>
+                    <th>Pokémon</th>
+                    <th>Pokémon</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Misdreavus</td>
+                    <td>Shuppet</td>
+                </tr>
+                <tr>
+                    <td>Duskull</td>
+                    <td>Dusclops</td>
+                </tr>
+                <tr>
+                    <td>Yamask</td>
+                    <td>Sinistea</td>
+                </tr>
+                <tr>
+                    <td>Greavard</td>
+                    <td>Gimmighoul</td>
+                </tr>
+                <tr>
+                    <td>Gastly</td>
+                    <td>Haunter</td>
+                </tr>
+                <tr>
+                    <td>Drifloon</td>
+                    <td>Litwick</td>
+                </tr>
+                <tr>
+                    <td>Lampent</td>
+                    <td>Phantump</td>
+                </tr>
+                <tr>
+                    <td>Pumpkaboo</td>
+                    <td>Hisuian Zorua</td>
+                </tr>
+                <tr>
+                    <td>Frillish</td>
+                    <td>Honedge</td>
+                </tr>
+                <tr>
+                    <td>Doublade</td>
+                    <td>Dreepy</td>
+                </tr>
+                <tr>
+                    <td>Drakloak</td>
+                    <td>Galarian Corsola</td>
+                </tr>
+                <tr>
+                    <td>Galarian Yamask</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+<br>
+
+        <table>
+            <caption><b>Pokémon encontrados con Ghost Pearl Bait</b></caption>
+            <thead>
+                <tr>
+                    <th>Pokémon</th>
+                    <th>Pokémon</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mismagius</td>
+                    <td>Banette</td>
+                </tr>
+                <tr>
+                    <td>Dusknoir</td>
+                    <td>Cofagrigus</td>
+                </tr>
+                <tr>
+                    <td>Polteageist</td>
+                    <td>Cursola</td>
+                </tr>
+                <tr>
+                    <td>Houndstone</td>
+                    <td>Gholdengo</td>
+                </tr>
+                <tr>
+                    <td>Gengar</td>
+                    <td>Drifblim</td>
+                </tr>
+                <tr>
+                    <td>Spiritomb</td>
+                    <td>Chandelure</td>
+                </tr>
+                <tr>
+                    <td>Trevenant</td>
+                    <td>Gourgeist</td>
+                </tr>
+                <tr>
+                    <td>Mimikyu</td>
+                    <td>Dhelmise</td>
+                </tr>
+                <tr>
+                    <td>Sableye</td>
+                    <td>Hisuian Zoroark</td>
+                </tr>
+                <tr>
+                    <td>Jellicent</td>
+                    <td>Aegislash</td>
+                </tr>
+                <tr>
+                    <td>Dragapult</td>
+                    <td>Runerigus</td>
+                </tr>
+            </tbody>
+        </table>
+
+<br>
+
+        <table>
+            <caption><b>Pokémon Shiny encontrados con Greater Spiritualist Gem</b></caption>
+            <thead>
+                <tr>
+                    <th>Pokémon Shiny</th>
+                    <th>Pokémon Shiny</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Shiny Mismagius</td>
+                    <td>Shiny Dusknoir</td>
+                </tr>
+                <tr>
+                    <td>Spectrier</td>
+                    <td>Shiny Spectrier</td>
+                </tr>
+                <tr>
+                    <td>Shiny Greavard</td>
+                    <td>Shiny Houndstone</td>
+                </tr>
+                <tr>
+                    <td>Shiny Gimmighoul</td>
+                    <td>Shiny Gholdengo</td>
+                </tr>
+                <tr>
+                    <td>Shiny Spiritomb</td>
+                    <td>Shiny Sableye</td>
+                </tr>
+                <tr>
+                    <td>Shiny Hisuian Zoroark</td>
+                    <td>Shiny Aegislash</td>
+                </tr>
+                <tr>
+                    <td>Shiny Mimikyu</td>
+                    <td>Shiny Cofagrigus</td>
+                </tr>
+                <tr>
+                    <td>Shiny Dragapult</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer>
+        <p>© 2025 Fairy Legion <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in"> / Desarrollado
+                por Silvarion</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="pagination.js"></script>
+</body>
+
+</html>
