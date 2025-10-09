@@ -1,0 +1,78 @@
+/* ADD THIS STYLE TO YOUR styles.css FILE for consistency */
+        .boss-location-image {
+            max-width: 100%; /* Ensure image is responsive */
+            height: auto;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 3px solid #713c88; /* Consistent border style */
+        }
+        /* Style for the container that holds the dynamic info */
+        #boss-dynamic-info {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed #ccc; /* Separator line for clarity */
+        }
+
+        /* --- NEW STYLES FOR SEARCH / SUGGESTIONS --- */
+        .search-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 600px; /* Adjust to accommodate button */
+            margin: 0 auto 20px;
+            gap: 10px;
+        }
+        .search-container {
+            position: relative; /* Needed to position suggestions */
+            max-width: 400px;
+            flex-grow: 1; /* Allows it to take up available space */
+        }
+        #boss-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+            border: 2px solid #532d64;
+            border-radius: 5px;
+        }
+        #suggestions-container {
+            position: absolute;
+            width: 100%;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-top: none;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 10;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            color: #532d64;
+            font-weight: bold;
+        }
+        .suggestion-item:hover, .suggestion-item.active-suggestion {
+            background-color: #ede1f2; /* Light hover effect */
+        }
+        
+        /* Clear Button Styles */
+        #clear-boss-btn {
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #713c88;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        #clear-boss-btn:hover:not(:disabled) {
+            background-color: #532d64;
+        }
+        #clear-boss-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }

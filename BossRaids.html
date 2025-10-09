@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fairy Legion - Boss Raids</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="bossstyles.css">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    </head>
+</head>
 <body>
     <header >
         <div class="menu-btn">☰</div>
@@ -14,7 +15,7 @@
             <ul>
                 <li><a href="/" class="logo-button"><img src="/fl-boton.png" alt="Logo"></a></li>
                 <li><a href="/index.html" class="border">Inicio</a></li>
-                <li><a href="/boss-raids.html" class="border active">Boss Raids</a></li>
+                <li><a href="/guias-consejos.html" class="border active">Guías/Consejos</a></li>
                 <li><a href="/reglas.html" class="border">Reglas</a></li>
                 <li><a href="/eventos.html" class="border">Eventos</a></li>
                 <li><a href="/contacto.html" class="border">Contacto</a></li>
@@ -24,56 +25,76 @@
 
     <section id="raid-info" style="text-align: center;">
         <h2>Asistente de Raids de Jefes 🛡️</h2>
-        <p>Selecciona un jefe para ver su **ubicación**, el **sistema de loot** y los **premios** potenciales de cada grupo.</p>
+        <p>Busca un Jefe de Raid para ver su <b>ubicación</b> y los <b>premios</b> potenciales.</p>
         
-        <label for="boss-select">Jefe de Raid:</label>
-        <select id="boss-select" style="padding: 10px; font-size: 16px; margin-bottom: 20px;">
-            <option value="" disabled selected>Selecciona un jefe...</option>
-            </select>
-        
-        <div id="raid-results">
-            <div id="raid-system-details">
-                <h3>Reglas del Sistema de Loot 💰</h3>
-                <p>El sistema de loot se divide en **3 grupos (A, B, C)** basados en el valor de los ítems, y la asignación de jugadores a estos grupos depende de la cantidad total de participantes y el daño infligido:</p>
-                
-                <p>El **loot** tiene 3 grupos de valor:</p>
-                <ul style="list-style-type: disc; text-align: left; max-width: 600px; margin: 0 auto 20px;">
-                    <li>**Grupo A:** Ítem o ítems de **mayor valor** (mejores recompensas).</li>
-                    <li>**Grupo B:** Ítem o ítems de **buen valor**.</li>
-                    <li>**Grupo C:** Ítems que **podrían ser valiosos** pero no necesariamente los principales.</li>
-                </ul>
-
-                <h4>Asignación de Jugadores por Grupo de Loot (Basado en el Daño):</h4>
-                <div class="loot-table" style="max-width: 600px; margin: 0 auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Jugadores en Raid</th>
-                                <th>Jugadores Asignados por Grupo (A, B, C)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>**10+**</td><td>**5** jugadores por grupo</td></tr>
-                            <tr><td>**9-**</td><td>**4** jugadores por grupo</td></tr>
-                            <tr><td>**7-**</td><td>**3** jugadores por grupo</td></tr>
-                            <tr><td>**5-**</td><td>**2** jugadores por grupo</td></tr>
-                            <tr><td>**3-**</td><td>**1** jugador por grupo</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <p class="warning-text" style="color: #6a3595; margin-top: 15px;">⚠️ **Nota Importante:** Ser asignado a un grupo (ej. top 5 damagers al Grupo A) no garantiza un ítem de ese grupo. La cantidad de ítems disponibles puede ser menor que la cantidad de jugadores asignados. Si no obtienes loot del Grupo A o B, automáticamente serás movido al Grupo C. Sin embargo, estar en el Grupo A te da la **mayor probabilidad** de obtener la mejor recompensa.</p>
+        <label for="boss-input">Buscar Jefe:</label>
+        <div class="search-controls">
+            <div class="search-container">
+                <input type="text" id="boss-input" placeholder="Escribe el nombre del jefe...">
+                <div id="suggestions-container">
+                    </div>
             </div>
+            <button id="clear-boss-btn" disabled>Limpiar</button>
+        </div>
+        
+        <div id="boss-dynamic-info">
+            </div>
+
+        <div id="raid-system-details">
+            <h3>Reglas del Sistema de Loot 💰</h3>
+            <p>El sistema de loot se divide en <b>3 grupos (A, B, C)</b> basados en el valor de los ítems. <br>
+                La asignación de jugadores a estos grupos depende de la cantidad total de participantes y el daño infligido:</p>
+            
+            <p>El loot tiene 3 grupos de valor:</p>
+            <ul style="list-style-type: disc; text-align: left; max-width: 600px; margin: 0 auto 20px;">
+                <li><b>Grupo A:</b> Loot de mayor valor (mejores recompensas)</li>
+                <li><b>Grupo B:</b> Loot de buen valor</li>
+                <li><b>Grupo C:</b> Loot que podría ser valiosos pero no necesariamente los principales</li>
+            </ul>
+
+            <h4>Asignación de Jugadores por Grupo de Loot (Basado en el Daño):</h4>
+            <div class="loot-table" style="max-width: 600px; margin: 0 auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Jugadores en Raid</th>
+                            <th>Jugadores Asignados por Grupo (A, B, C)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>10+</td><td>5 jugadores por grupo</td></tr>
+                        <tr><td>9-</td><td>4 jugadores por grupo</td></tr>
+                        <tr><td>7-</td><td>3 jugadores por grupo</td></tr>
+                        <tr><td>5-</td><td>2 jugadores por grupo</td></tr>
+                        <tr><td>3-</td><td>1 jugador por grupo</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="warning-text" style="color: #6a3595; margin-top: 15px;">⚠️ <b>Notas Importantes:</b> <br>
+                Ser asignado a un grupo (ej. top 5
+                damagers al Grupo A) <b> no garantiza un ítem de ese grupo</b>. <br>
+                La cantidad de ítems disponibles puede ser menor que la cantidad de jugadores asignados. <br>
+                Si no obtienes loot del Grupo A o B, automáticamente serás movido al Grupo C. <br>
+                Sin embargo, estar en el Grupo A te da la <b>mayor probabilidad</b> de obtener la mejor recompensa.</p>
         </div>
     </section>
 
     <hr>
-
-    <section id="events" class="boss-locations">
-        <h2>Ubicaciones de Jefes por Región 🗺️</h2>
-        <div id="boss-location-list" style="text-align: left;">
-            </div>
+    
+    <section style="text-align: center;">
+        <h2>Detalles Adicionales del Sistema de Raids</h2>
+        <p style="font-size: 1.1em; max-width: 800px; margin: 0 auto;">
+            Para obtener más detalles sobre el funcionamiento general del sistema de raids, el reparto de botín y las reglas oficiales, visita el siguiente enlace en el foro:
+        </p>
+        <p>
+            <a href="https://forum.padventures.org/index.php?threads/raid-system.45269/" target="_blank" style="font-weight: bold; color: #532d64; text-decoration: underline;">
+                Ver Guía Completa del Sistema de Raids 🔗
+            </a>
+        </p>
     </section>
+
+    <hr>
     
     <button id="back-to-top" onclick="scrollToTop()">Subir ⤴</button>
 
@@ -81,13 +102,17 @@
         <a href="https://www.freecounterstat.com" title="website counters" class="counter">
             <img src="https://counter4.optistats.ovh/private/freecounterstat.php?c=pqslpefqag48zdrasffds9yddq2d6f97" border="0" title="website counters" alt="website counters">
         </a>
+        <p style="font-size: 14px; margin-top: 15px;">
+        Especial agradecimiento a <a href="https://padventures.org/index.php/character/view/Tuerka" target="_blank" style="font-weight: bold; color: #532d64; text-decoration: underline;">Tuerka
+        </a> por proporcionar la información sobre las ubicaciones de los jefes.
+    </p>
     </section>
-    
+
+
     <footer>
         <p>© 2025 Fairy Legion <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in"> / Desarrollado por Silvarion</a></p>
     </footer>
-    
     <script src="script.js"></script>
-    <script src="BossRaids.js"></script>
+    <script src="BossRaids.js"></script> 
 </body>
 </html>
