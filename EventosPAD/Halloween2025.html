@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fairy Legion - Halloween 2024</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #1d1f27;
+            color: #f2f2f2;
+            font-family: 'Creepster', cursive, 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #2b2d42;
+            padding: 20px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        nav ul li a {
+            color: #ff7518;
+            text-decoration: none;
+            padding: 10px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #d80032;
+            border: 2px solid #d80032;
+            background-color: #444;
+        }
+
+        .active {
+            color: #d80032;
+            border-bottom: 2px solid #d80032;
+        }
+
+        .home-p {
+            text-align: center;
+            padding: 50px 0;
+            background: linear-gradient(120deg, #444444 0%, #0f0f0f 100%);
+        }
+
+        .img-eventos img {
+            width: 80%;
+            max-width: 600px;
+            border: 3px solid #d80032;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+            margin: 20px 0;
+        }
+
+        .TituloEvento {
+            font-size: 3rem;
+            color: #ff7518;
+            text-shadow: 3px 3px 3px #000;
+        }
+
+        section {
+            background-color: #1a1a1a;
+            padding: 40px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 1200px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+        }
+
+        h2 {
+            color: #ff7518;
+            font-size: 2.5rem;
+        }
+
+        h3 {
+            color: #d80032;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        p, li {
+            font-size: 1.3rem;
+            color: #eaeaea;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #d80032;
+            text-align: center;
+            background-color: #333;
+        }
+
+        th {
+            background-color: #444;
+            color: #ff7518;
+        }
+
+        /* Gallery Styles */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .gallery-item {
+            position: relative;
+            cursor: pointer;
+            border: 3px solid #d80032;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 20px rgba(255, 117, 24, 0.6);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .caption {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(43, 45, 66, 0.85);
+            color: #ff7518;
+            font-size: 1.2rem;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            border: 3px solid #ff7518;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(216, 0, 50, 0.8);
+        }
+
+        .close {
+            position: absolute;
+            top: 60px;
+            right: 80px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #ff7518;
+        }
+
+        button#back-to-top {
+            background-color: #d80032;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            cursor: pointer;
+            border-radius: 50px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        button#back-to-top:hover {
+            background-color: #ff7518;
+            color: #000;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #2b2d42;
+            color: #fff;
+        }
+
+        .linked-in {
+            color: #ff7518;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .linked-in:hover {
+            color: #d80032;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="nav">
+            <ul>
+                <li><a href="/" class="logo-button"><img src="/fl-boton.png" alt="Logo"></a></li>
+                <li><a href="/index.html">Inicio</a></li>
+                <li><a href="/guias-consejos.html">Guías/Consejos</a></li>
+                <li><a href="/reglas.html">Reglas</a></li>
+                <li><a href="/eventos.html" class="active">Eventos</a></li>
+                <li><a href="/contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="home-p">
+        <div class="img-eventos">
+            <img src="/EventosPAD/halloween2025/H25Banner.png" alt="Halloween Map">
+        </div>
+        <h2 class="TituloEvento">Evento de Halloween 2025</h2>
+    </section>
+
+    <!-- Event Presentation -->
+    <section id="event-info">
+        <h2>🎃 Concurso de Decoración de Casas de Halloween 🎃</h2>
+        <p>¡Miembros de <strong>Fairy Legion</strong>! Es hora de mostrar su creatividad en el <strong>Concurso de Decoración 
+            de Casas de Halloween</strong>. Crea una atmósfera terrorífica, divertida o misteriosa en casa. ¡Haz que tus decoraciones destaquen!</p>
+
+        <p>Las mejores decoraciones participarán en una <strong>ruleta de premios</strong> el 31 de octubre, transmitida en el Discord de la guild. Solo se considerarán aportes de miembros activos.</p>
+    </section>
+
+    <!-- Rewards Section -->
+    <section id="rewards">
+        <h2>🏆 Recompensas Disponibles</h2>
+        <table>
+            <tr><th>Premios Disponibles</th><th>Premios Disponibles</th></tr>
+            <tr><td>3x Video Boxes</td><td>Cloned Flareon</td></tr>
+            <tr><td>Cetitan</td><td>Absolite (Megastone)</td></tr>
+            <tr><td>Pokemon Shiny Fantasma o Dark</td><td>50 Diamonds</td></tr>
+            <tr><td>-</td><td>-</td></tr>
+            <tr><td>-</td><td>-</td></tr>
+        </table>
+    </section>
+
+    <!-- Gallery of participants and their entries-->
+    <section id="gallery">
+        <h2>🕸️ Galería de Participantes 🕸️</h2>
+        <div class="gallery">
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="/EventosPAD/halloween2025/entry1.png" alt="Entry 1">
+                <div class="caption">#1 - Player1</div>
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="/EventosPAD/halloween2025/entry1.png" alt="Entry 2">
+                <div class="caption">#2 - Player2</div>
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="/EventosPAD/halloween2025/entry1.png" alt="Entry 1">
+                <div class="caption">#3 - Player3</div>
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="/EventosPAD/halloween2025/entry1.png" alt="Entry 2">
+                <div class="caption">#4 - Player4</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImg" alt="Preview">
+    </div>
+
+    <button id="back-to-top" onclick="scrollToTop()">Subir ⤴</button>
+
+    <footer>
+        <p>© 2025 Fairy Legion <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in"> / Desarrollado por Silvarion</a></p>
+    </footer>
+
+    <script>
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openModal(element) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            modal.style.display = "block";
+            modalImg.src = element.querySelector('img').src;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = "none";
+        }
+    </script>
+</body>
+</html>
