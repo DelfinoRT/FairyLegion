@@ -1,0 +1,455 @@
+/* Base styles */
+body {
+  font-family: Arial, 'Segoe UI', sans-serif;
+  background: #242d34;
+  color: #fff;
+  margin: 0;
+}
+
+/* Header & Footer */
+header, footer {
+  background: #2e3942;
+  padding: 12px 0;
+  box-shadow: 0 2px 6px #1b18185a;
+}
+header .game-header {
+  max-width: 1080px; 
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+footer {
+  text-align: center;
+  font-size: 0.98em;
+  color: #9bb7c4;
+}
+footer a {
+  color: #7ecbff;
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Prominent Score Display */
+.main-score-display {
+  font-size: 1.4em;
+  font-weight: 500;
+  color: #ffda79;
+}
+.main-score-display strong {
+  font-weight: bold;
+  color: #fff;
+  margin-left: 5px;
+}
+
+
+/* Game container */
+.game-container {
+  display: flex;
+  max-width: 1080px; 
+  margin: 30px auto;
+  gap: 20px; 
+  align-items: flex-start;
+}
+
+/* Panel Base Style */
+.item-inventory-panel,
+.capture-log-panel {
+  width: 200px; 
+  background: #2e3942;
+  box-shadow: 0 2px 16px #0004;
+  border-radius: 16px;
+  padding: 18px;
+  min-height: 370px;
+  flex-shrink: 0;
+}
+
+/* Log Content Styling */
+.log-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px dashed #3a4753;
+}
+
+.log-item:last-child {
+  border-bottom: none;
+}
+
+.log-left {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.log-sprite {
+  border-radius: 50%;
+  padding: 1px;
+  background: #3f4a56;
+}
+.shiny-sprite {
+  box-shadow: 0 0 5px gold;
+}
+.mythic-sprite {
+    background: #4a148c; 
+    box-shadow: 0 0 10px #e040fb;
+}
+
+.log-points {
+  font-weight: bold;
+  color: #a1ffcb;
+  font-size: 0.95em;
+}
+.item-points {
+  color: #ffbc5b;
+}
+
+.no-catches {
+  text-align: center;
+  color: #9bb7c4;
+  font-style: italic;
+  font-size: 0.9em;
+  margin-top: 15px;
+}
+
+
+/* Game area */
+.game-area {
+  flex-grow: 1; 
+  width: 100%;
+  max-width: 650px; 
+  margin: 0; 
+  background: rgba(0,0,0,0.17);
+  box-shadow: 0 2px 16px #0004;
+  border-radius: 16px;
+  padding: 18px;
+  min-height: 370px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Pokéball Inventory Display */
+.pokeball-inventory-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 1.15em;
+  margin-bottom: 10px;
+  color: #eaeeff;
+  padding: 5px 0;
+  background: rgba(46, 57, 66, 0.5); 
+  border-radius: 8px;
+}
+.pokeball-inventory-display strong {
+  color: #ff4757;
+}
+.pokeball-inventory-display .masterball-count-separator {
+    color: #4a5966;
+    margin: 0 5px;
+}
+#masterballs-count {
+    color: #e040fb; 
+}
+
+
+/* Catch Streak Display */
+.catch-streak-display {
+  text-align: center;
+  font-size: 1.05em;
+  color: #7ecbff;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+.catch-streak-display strong {
+  font-weight: bold;
+  color: #fff;
+}
+
+/* NEW: Game Message Panel Styling */
+.game-message-panel {
+    background: #3a4753;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-align: center;
+    min-height: 20px;
+    margin-bottom: 10px;
+    font-size: 0.95em;
+    transition: background 0.3s;
+}
+
+.game-message-panel p {
+    margin: 0;
+    line-height: 1.4;
+}
+.game-message-panel h4 {
+    margin: 5px 0;
+}
+.game-message-panel strong {
+    color: #ffda79;
+}
+
+/* Message Types */
+.message-error {
+    background: #c0392b;
+    color: #fff;
+}
+.message-success {
+    background: #2ecc71;
+}
+.message-alert {
+    background: #e67e22;
+}
+.message-bonus {
+    background: #9b59b6;
+}
+.message-start {
+    background: #3498db;
+}
+.message-summary {
+    background: #2c3e50;
+    color: #fff;
+    border: 1px solid #ffda79;
+}
+
+
+.capture-log-panel h3,
+.item-inventory-panel h3 {
+  margin-top: 0;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #4a5966;
+  text-align: center;
+}
+
+/* Map themes (backgrounds) */
+#game-map {
+  width: 100%;
+  height: 320px;
+  position: relative;
+  border-radius: 12px;
+  margin-bottom: 16px; /* Reduced margin to fit message panel */
+  background: #cbe1f1;
+  transition: background 0.6s;
+  box-shadow: 0 1.5px 16px #1d23404c;
+}
+.theme-volcano {
+  background: linear-gradient(90deg, #e25822 70%, #ffbc5b);
+}
+.theme-forest {
+  background: linear-gradient(90deg, #67be72 80%, #aae2a1);
+}
+.theme-tundra {
+  background: linear-gradient(90deg, #d6e7f8 80%, #8bbcfa);
+}
+
+/* Buttons */
+.map-theme-btn, .spawn-btn {
+  margin: 0 0 0 10px;
+  padding: 5px 15px;
+  border: none;
+  color: #fff;
+  background: #5b8ff3;
+  cursor: pointer;
+  border-radius: 7px;
+  font-weight: bold;
+  box-shadow: 0 1px 4px #345a7a25;
+  outline: none;
+  transition: background 0.18s, transform 0.13s;
+  font-size: 1em;
+}
+.map-theme-btn:hover,
+.spawn-btn:hover {
+  background: #5089ed;
+  transform: translateY(-1.5px) scale(1.04);
+}
+.spawn-btn {
+  margin-top: 14px;
+  background: #57d785;
+  color: #1d2920;
+}
+.spawn-btn:hover {
+  background: #44be74;
+}
+
+/* Game map entity spawns (pokemon or items) */
+.spawn-entity {
+  position: absolute;
+  cursor: pointer;
+  user-select: none;
+  z-index: 2;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px #30353f60;
+  transition: filter 0.13s, transform 0.09s;
+  border: 2.5px solid #fafaff;
+  padding: 2px;
+  background: #2d343d;
+}
+.spawn-entity:hover {
+  filter: brightness(1.18) drop-shadow(0 0 6px #baca17cc);
+  transform: scale(1.13) rotate(-2deg);
+  z-index: 10;
+  border: 2.5px solid #ffe771;
+  background: #fffedf;
+}
+
+.spawn-entity.pokemon {
+  border-color: #1e6aff;
+  background: #314480;
+}
+.spawn-entity.shiny {
+  border-color: gold;
+  background: #fff6d2;
+  filter: drop-shadow(0 0 12px #ffe771cc);
+}
+.spawn-entity.mythic {
+    border-color: #e040fb;
+    background: #4a148c;
+    filter: drop-shadow(0 0 15px #e040fb);
+}
+.mythic-aura {
+    color: #e040fb;
+    font-size: 19px;
+    margin-left: 3px;
+    text-shadow: 0 0 6px #fff;
+    filter: drop-shadow(0 0 5px #fae595);
+}
+
+
+.spawn-entity.item {
+  border-color: #a1ffcb;
+  background: #2ed191;
+}
+.spawn-entity.gem {
+  background: #6de6ee;
+  border-color: #53d8e7;
+}
+
+/* Shiny icon star */
+.shiny-star {
+  color: gold;
+  font-size: 19px;
+  margin-left: 3px;
+  text-shadow: 0 0 6px #fff590;
+  filter: drop-shadow(0 0 5px #fae595);
+}
+
+h3 {
+  color: #f9e2ff;
+  margin-bottom: 7px;
+}
+
+ul {
+  color: #f0eefd;
+}
+
+/* Instructions layout */
+@media (max-width: 1080px) {
+  .game-container {
+    flex-direction: column;
+    max-width: 650px;
+    margin: 30px auto;
+  }
+  .game-area {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  .capture-log-panel,
+  .item-inventory-panel {
+    width: 100%;
+    min-height: auto;
+    max-width: 650px;
+    margin-bottom: 15px;
+  }
+  header .game-header {
+    max-width: 650px;
+  }
+}
+
+@media (max-width: 700px) {
+  .game-area,
+  header .game-header {
+    max-width: 98vw;
+    padding: 6vw 2vw;
+  }
+  #game-map {
+    height: 42vw;
+    min-height: 200px;
+  }
+}
+@media (max-width: 520px) {
+  .game-area {
+    padding: 2vw 1vw;
+    min-height: 230px;
+  }
+  #game-map {
+    height: 36vw;
+    min-height: 120px;
+  }
+  header, footer {
+    padding: 8px 0;
+  }
+}
+/* Countdown timer on entities */
+.countdown-timer {
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  background: #ff4757;
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  z-index: 5;
+}
+
+/* Score Popup Styles */
+.score-popup {
+  position: absolute;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #fff;
+  background: #3ed062; 
+  padding: 3px 8px;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  animation: floatUpAndFade 0.9s ease-out forwards;
+  z-index: 100; 
+  pointer-events: none; 
+  transform: translateX(-50%); 
+}
+
+.score-popup.shiny-popup {
+  background: gold;
+  color: #242d34;
+  font-size: 1.4em;
+  text-shadow: 0 0 3px #fff;
+}
+
+.score-popup.mythic-popup {
+  background: #e040fb; 
+  color: #fff;
+  font-size: 1.5em;
+  border: 2px solid #fff;
+}
+
+/* Animation to float up and fade out */
+@keyframes floatUpAndFade {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -40px);
+  }
+}
