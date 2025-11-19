@@ -109,8 +109,16 @@ const STREAK_BONUS_THRESHOLD = 5;
 
 // --- Exchange Constants ---
 const GEMSTONE_NAME = 'gemstone';
-const GEMSTONE_POINTS = ITEMS.find(item => item.name === GEMSTONE_NAME).points; // Should be 34
+const GEMSTONE_POINTS = ITEMS.find(item => item.name === GEMSTONE_NAME).points; 
 const POKEBALLS_GAINED = 2;
+
+// --- Pokédex Tracking State (NEW) ---
+// Key: theme name (Volcán, Bosque, Tundra), Value: Set of caught Pokémon names
+let mapPokedexCaught = {
+    "Volcán": new Set(),
+    "Bosque": new Set(),
+    "Tundra": new Set()
+};
 
 // --- Sound Initialization ---
 const shinySound = new Audio('ShinySound.mp3');
@@ -136,9 +144,11 @@ const streakDisplay = document.getElementById("catch-streak");
 const gameMessagePanel = document.getElementById("game-message-panel"); 
 const gameMessageText = document.getElementById("game-message-text"); 
 const highScoreDisplay = document.getElementById("high-score-display");
-const gemstoneExchangePanel = document.getElementById("gemstone-exchange-panel"); // NEW
-const gemstoneCountDisplay = document.getElementById("gemstone-count"); // NEW
-const exchangeButton = document.getElementById("exchange-btn"); // NEW
+const gemstoneExchangePanel = document.getElementById("gemstone-exchange-panel");
+const gemstoneCountDisplay = document.getElementById("gemstone-count");
+const exchangeButton = document.getElementById("exchange-btn");
+const pokedexTracker = document.getElementById("map-pokedex-tracker"); // NEW
+const pokedexProgress = document.getElementById("pokedex-progress"); // NEW
 
 // --- Helper: Random integer ---
 function randInt(min, max) {
@@ -164,6 +174,33 @@ function saveHighScore() {
     return false;
 }
 
+// --- Map Pokédex Rendering (NEW) ---
+function renderMapPokedex() {
+    const themeData = THEMES[currentThemeIndex];
+    const caughtSet = mapPokedexCaught[themeData.name];
+    
+    pokedexTracker.innerHTML = '';
+    let caughtCount = 0;
+
+    themeData.pokemons.forEach(poke => {
+        const isCaught = caughtSet.has(poke.name);
+        if (isCaught) caughtCount++;
+
+        const entry = document.createElement('div');
+        entry.className = `pokedex-entry ${isCaught ? 'caught' : ''}`;
+        entry.title = `${poke.name.charAt(0).toUpperCase() + poke.name.slice(1)}: ${poke.points} pts`;
+        entry.innerHTML = `
+            <img src="/PADDown/${poke.name}.png">
+            <span class="poke-name">${poke.name.charAt(0).toUpperCase() + poke.name.slice(1)}</span>
+            <span class="poke-points">${poke.points} pts</span>
+        `;
+        pokedexTracker.appendChild(entry);
+    });
+
+    pokedexProgress.textContent = `${caughtCount}/${themeData.pokemons.length}`;
+}
+
+
 // --- Message/Error Panel Function ---
 function displayGameMessage(message, type = 'info') {
     gameMessageText.innerHTML = message;
@@ -179,7 +216,7 @@ function displayGameMessage(message, type = 'info') {
     }
 }
 
-// --- Gemstone Exchange Logic (NEW) ---
+// --- Gemstone Exchange Logic ---
 
 function updateExchangeDisplay() {
     const gemCount = itemsCollectedLog[GEMSTONE_NAME] ? itemsCollectedLog[GEMSTONE_NAME].count : 0;
@@ -187,14 +224,15 @@ function updateExchangeDisplay() {
     // 1. Update text count
     gemstoneCountDisplay.textContent = gemCount;
 
-    // 2. Update exchange points display (Static text, but updated if GEMSTONE_POINTS changes)
+    // 2. Update exchange points display
     gemstoneExchangePanel.querySelector('.point-loss-value').textContent = GEMSTONE_POINTS + ' pts';
 
     // 3. Toggle visibility and button state
-    if (gemCount > 0) {
+    if (gemCount > 0 && roundActive) {
         gemstoneExchangePanel.classList.remove('hidden');
         exchangeButton.disabled = false;
     } else {
+        // Only hide if the round is active OR if the count is zero (always hidden post-game/pre-game if empty)
         gemstoneExchangePanel.classList.add('hidden');
         exchangeButton.disabled = true;
     }
@@ -302,7 +340,7 @@ function updateCapturedLogDisplay() {
   }
 }
 
-// --- Item Log Display functionality (UPDATED to call updateExchangeDisplay) ---
+// --- Item Log Display functionality ---
 function updateItemsLogDisplay() {
   const logList = document.getElementById("item-log-list");
   logList.innerHTML = '';
@@ -337,7 +375,7 @@ function updateItemsLogDisplay() {
     logList.innerHTML = '<p class="no-catches">Recolecta ítems para verlos aquí.</p>';
   }
   
-  updateExchangeDisplay(); // NEW: Refresh exchange panel visibility/count
+  updateExchangeDisplay(); // Refresh exchange panel visibility/count
 }
 
 // --- Game Logic Functions ---
@@ -348,6 +386,8 @@ function changeTheme() {
   gameMap.className = themeData.class;
   currentThemeDisplay.textContent = themeData.name;
   clearEntities();
+  
+  renderMapPokedex(); // NEW: Update Pokedex when theme changes
 }
 changeThemeBtn.addEventListener("click", changeTheme);
 
@@ -527,6 +567,9 @@ function handleCatch(entity, poke, xPos, yPos, isShiny = false) {
         shiniesCaughtCount += 1;
     } else {
         regularCaughtCount += 1;
+        // NEW: Update Map Pokedex (only for regular Pokemon, shinies are global bonus)
+        mapPokedexCaught[THEMES[currentThemeIndex].name].add(poke.name);
+        renderMapPokedex();
     }
 
     // Update streak: Reset streak if shiny was caught after guarantee. Otherwise, increment.
@@ -697,7 +740,9 @@ function spawnOneItem(item) {
     // LOGIC: Update item log
     const itemKey = item.name; 
     if (!itemsCollectedLog[itemKey]) {
-      itemsCollectedLog[itemKey] = { count: 0, totalPoints: 0, icon: item.icon };
+      // Use existing item definition points for initial total points calculation
+      const itemDefinition = ITEMS.find(i => i.name === itemKey);
+      itemsCollectedLog[itemKey] = { count: 0, totalPoints: 0, icon: item.icon, basePoints: itemDefinition.points };
     }
     itemsCollectedLog[itemKey].count += 1;
     itemsCollectedLog[itemKey].totalPoints += pointsGained;
@@ -731,8 +776,12 @@ function startRound() {
   // RESET LOGS AND DISPLAYS ONLY AT START
   pokemonsCapturedLog = {}; 
   itemsCollectedLog = {}; 
+  // Reset Pokedex for the current map
+  mapPokedexCaught[THEMES[currentThemeIndex].name].clear();
+  
   updateCapturedLogDisplay(); 
   updateItemsLogDisplay(); 
+  renderMapPokedex(); // NEW: Initial render of Pokedex
   
   updateScore();
   displayGameMessage("¡Ronda iniciada! ¡A capturar Pokémon!", 'start'); 
@@ -783,6 +832,7 @@ function endRound() {
   displayGameMessage(summaryMessage, 'summary'); 
   
   // Logs maintain their final state until startRound() is called again.
+  updateExchangeDisplay(); // Hide exchange button if round ends
 }
 
 spawnBtn.addEventListener("click", function() {
@@ -798,7 +848,14 @@ window.onload = function() {
   
   gameMap.className = THEMES[currentThemeIndex].class;
   currentThemeDisplay.textContent = THEMES[currentThemeIndex].name;
+  
+  // Initialize mapPokedexCaught from scratch with all themes set to empty Set
+  THEMES.forEach(theme => {
+      mapPokedexCaught[theme.name] = new Set();
+  });
+  
   updateScore();
   updateCapturedLogDisplay(); 
-  updateItemsLogDisplay(); // Initialize Exchange Display
+  updateItemsLogDisplay(); 
+  renderMapPokedex(); // NEW: Initial render
 };

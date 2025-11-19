@@ -8,21 +8,12 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/PADDown/favicon-32x32.png">
 </head>
 <body>
-  <header>
-    <div class="game-header">
-      <div class="score-group">
-        <div class="main-score-display">
-          Puntaje Actual: <strong id="points">0</strong>
-        </div>
-        <div id="high-score-display" class="high-score-display">
-          Máximo Puntaje: <strong>0</strong>
-        </div>
-      </div>
-      <button class="map-theme-btn" id="changeThemeBtn">Cambiar Mapa</button>
-      <span id="current-theme">Bosque</span>
-    </div>
-  </header>
-  <section style="max-width:650px;margin:30px auto 0 auto;text-align:center;">
+  <div class="top-title-area">
+    <h1 class="game-title">PokeCatch</h1>
+    <p class="game-credits">by Fairy Legion</p>
+  </div>
+  
+    <section class="instructions-section">
       <h3>Instrucciones</h3>
       <ul style="text-align:left;display:inline-block;margin:0 auto;">
         <li>Haz click rápido sobre Pokémon o ítems cuando aparezcan en el mapa para capturarlos o recolectar puntos.</li>
@@ -35,25 +26,49 @@
         <li>Cambiar el tema del mapa (volcán, bosque, tundra) cambiará los tipos de Pokémon e ítems que pueden aparecer.</li>
       </ul>
     </section>
+
+<header>
+    <div class="game-header">
+      <div class="score-group">
+        <div class="main-score-display">
+          Puntaje Actual: <strong id="points">0</strong>
+        </div>
+        <div id="high-score-display" class="high-score-display">
+          Máximo Puntaje: <strong>0</strong>
+        </div>
+      </div>
+      <button class="map-theme-btn" id="changeThemeBtn">Cambiar Mapa</button>
+      <span id="current-theme">Bosque</span>
+    </div>
+  </header>
+  
+  <div id="map-pokedex-tracker-wrapper">
+    <div class="map-pokedex-header">
+        <h3>Pokédex Mapa Actual: <span id="pokedex-progress">0/12</span></h3>
+    </div>
+    <div id="map-pokedex-tracker" class="pokedex-tracker">
+        </div>
+  </div>
+    
   <main>
     <div class="game-container">
       
       <div class="item-inventory-panel-wrapper">
-          <div class="item-inventory-panel">
-            <h3>Ítems Recolectados</h3>
-            <div id="item-log-list">
-              <p class="no-catches">Recolecta ítems para verlos aquí.</p>
-            </div>
-          </div>
-          <div id="gemstone-exchange-panel" class="gemstone-exchange-panel hidden">
-              <h4>Intercambio de Gemas</h4>
-              <p>Tienes <strong id="gemstone-count">0</strong> Gemas disponibles.</p>
-              <div class="exchange-offer">
-                  <p>1 Gema (<span class="point-loss-value">34 pts</span>) &rarr; 2 Pokéballs</p>
-                  <button id="exchange-btn" disabled>Intercambiar</button>
-              </div>
-          </div>
-      </div>
+          <div class="item-inventory-panel">
+            <h3>Ítems Recolectados</h3>
+            <div id="item-log-list">
+              <p class="no-catches">Recolecta ítems para verlos aquí.</p>
+            </div>
+          </div>
+          <div id="gemstone-exchange-panel" class="gemstone-exchange-panel hidden">
+              <h4>Intercambio de Gemas</h4>
+              <p>Tienes <strong id="gemstone-count">0</strong> Gemas disponibles.</p>
+              <div class="exchange-offer">
+                  <p>1 Gema (<span class="point-loss-value">34 pts</span>) &rarr; 2 Pokéballs</p>
+                  <button id="exchange-btn" disabled>Intercambiar</button>
+              </div>
+          </div>
+      </div>
       
       <div class="game-area">
         <div class="pokeball-inventory-display">
@@ -88,7 +103,7 @@
     <br>
   </main>
   <footer>
-    <p>© 2025 PokéMiniGame <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in">/ Desarrollado por Silvarion</a></p>
+    <p>© 2025 PokéCatch <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in">/ Desarrollado por Silvarion</a></p>
   </footer>
   <script src="script-paddown.js"></script>
 </body>

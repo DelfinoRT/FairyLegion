@@ -6,6 +6,26 @@ body {
   margin: 0;
 }
 
+/* NEW: Game Title Area */
+.top-title-area {
+    text-align: center;
+    padding: 20px 0 0 0;
+    margin-bottom: -15px; /* Pulls the header up slightly */
+}
+.game-title {
+    font-size: 2.8em;
+    color: #ff4757; /* Pokéball red */
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    font-weight: bold;
+}
+.game-credits {
+    font-size: 0.9em;
+    color: #5b8ff3; /* Button blue */
+    margin: 0;
+    padding-bottom: 5px;
+}
+
 /* Header & Footer */
 header, footer {
   background: #2e3942;
@@ -60,11 +80,69 @@ footer a:hover {
     color: #fff;
 }
 
+/* NEW: POKEDEX TRACKER STYLING */
+#map-pokedex-tracker-wrapper {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background: #1f252a;
+    box-shadow: 0 2px 8px #0004;
+    border-radius: 0 0 10px 10px;
+    text-align: center;
+}
+.map-pokedex-header h3 {
+    margin: 5px 0 10px;
+    color: #a1ffcb;
+    font-size: 1.1em;
+}
+#pokedex-progress {
+    font-weight: bold;
+    color: #fff;
+}
+.pokedex-tracker {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 5px 0;
+}
+.pokedex-entry {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 0.75em;
+    padding: 5px;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.1);
+    width: 60px; /* Fixed width for alignment */
+    opacity: 0.25; /* Default: Not caught */
+    transition: opacity 0.3s;
+}
+.pokedex-entry.caught {
+    opacity: 1; /* Fully visible when caught */
+    background: rgba(0,0,0,0.3);
+}
+.pokedex-entry img {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 2px;
+    border-radius: 50%;
+}
+.pokedex-entry .poke-points {
+    font-weight: bold;
+    color: #ffda79;
+    margin-top: 2px;
+}
+.pokedex-entry .poke-name {
+    line-height: 1.2;
+}
 
-/* Game container (UPDATED max-width) */
+
+/* Game container */
 .game-container {
   display: flex;
-  max-width: 1280px; /* INCREASED: To fit wider game area */
+  max-width: 1280px; 
   margin: 30px auto;
   gap: 20px; 
   align-items: flex-start;
@@ -85,7 +163,7 @@ footer a:hover {
   box-shadow: 0 2px 16px #0004;
   border-radius: 16px;
   padding: 18px;
-  min-height: 150px; /* Reduced minimum height to allow space for the new panel */
+  min-height: 150px; 
   flex-shrink: 0;
 }
 
@@ -100,20 +178,20 @@ footer a:hover {
   flex-shrink: 0;
 }
 
-/* NEW: Gemstone Exchange Panel Styling */
+/* Gemstone Exchange Panel Styling */
 .gemstone-exchange-panel {
     width: 200px;
     background: #1f252a;
     box-shadow: 0 2px 8px #0004;
+    border: 2px solid #6de6ee;
     border-radius: 16px;
     padding: 18px;
-    border: 2px solid #6de6ee;
     text-align: center;
     transition: opacity 0.3s;
 }
 
 .gemstone-exchange-panel.hidden {
-    display: none; /* Hide when player has no gemstones */
+    display: none; 
 }
 
 .gemstone-exchange-panel h4 {
@@ -216,11 +294,11 @@ footer a:hover {
 }
 
 
-/* Game area (WIDER) */
+/* Game area */
 .game-area {
   flex-grow: 1; 
   width: 100%;
-  max-width: 800px; /* INCREASED max width for central game area */
+  max-width: 800px; 
   margin: 0; 
   background: rgba(0,0,0,0.17);
   box-shadow: 0 2px 16px #0004;
@@ -412,6 +490,13 @@ ul {
   color: #f0eefd;
 }
 
+/* Instructions section styling */
+.instructions-section {
+    max-width: 800px; /* Match the game-area max-width */
+    margin: 30px auto 0 auto;
+    text-align: center;
+}
+
 /* Instructions layout */
 @media (max-width: 1280px) { /* Adjust breakpoint for larger map */
   .game-container {
@@ -422,6 +507,9 @@ ul {
   .game-area {
     max-width: 100%;
     margin-bottom: 20px;
+  }
+  .instructions-section {
+      max-width: 650px;
   }
   /* Stacking panels below the map */
   .item-inventory-panel-wrapper {
