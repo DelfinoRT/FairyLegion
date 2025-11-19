@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PokeDuel - Shiny Update</title>
+    <title>PokeDuel - Battle Analysis Update</title>
     <link rel="stylesheet" href="PokeDuel-Style.css">
 </head>
 <body>
@@ -32,28 +32,22 @@
     </header>
 
     <main>
-        <!-- INTRO PANEL -->
         <div id="main-message-panel" class="main-message-panel">
             <h2>Bienvenido a la Arena</h2>
             <p id="main-message-text">Presiona "Comenzar Juego" para iniciar el Draft 3 vs 3.</p>
             <p class="note">Gana 5 duelos para obtener un <strong>Shiny Token</strong>.</p>
         </div>
 
-        <!-- STAGE 1: POKEMON SELECTION -->
         <section id="selection-stage" class="game-stage hidden">
             <div class="stage-header">
                 <h2>Fase de Selección</h2>
                 <p id="selection-instruction">Turno: <span id="turn-indicator">Jugador</span></p>
             </div>
             
-            <!-- Shiny Token Info Area -->
             <div id="shiny-selector-area" class="shiny-controls hidden">
-                <p>Tienes <strong id="shiny-tokens-available">0</strong> Tokens. Haz clic en tus Pokémon seleccionados abajo para hacerlos Shiny (Costo: 1 Token).</p>
+                <p>Tienes <strong id="shiny-tokens-available">0</strong> Tokens. Haz clic en tus Pokémon para hacerlos Shiny (+20% Daño).</p>
             </div>
-
-            <div id="selection-grid" class="selection-grid"></div>
-            
-            <div class="draft-preview">
+<div class="draft-preview">
                 <div class="team-box">
                     <h4>Tu Equipo (Clic para Shiny)</h4>
                     <div id="player-team-preview" class="mini-team-row player-preview-interactive"></div>
@@ -63,31 +57,30 @@
                     <div id="machine-team-preview" class="mini-team-row"></div>
                 </div>
             </div>
+            <br>
             <button id="confirmTeamBtn" class="action-btn" disabled>Confirmar Equipo</button>
+            <br><br>
+            <div id="selection-grid" class="selection-grid"></div>
         </section>
 
-        <!-- STAGE 2: TM SELECTION -->
         <section id="tm-stage" class="game-stage hidden">
             <h2>Configuración de Movimientos</h2>
-            <p class="instruction-text">Todos los movimientos son de daño directo. Elige <strong>4 TMs</strong>.</p>
+            <p class="instruction-text">Elige <strong>4 TMs</strong>. Todos los ataques causan daño directo.</p>
             <div id="tm-selection-container"></div>
             <div class="tm-controls">
                 <button id="goToStarterBtn" class="action-btn" disabled>Siguiente: Elegir Líder</button>
             </div>
         </section>
 
-        <!-- STAGE 3: STARTER SELECTION -->
         <section id="starter-stage" class="game-stage hidden">
             <h2>Elige tu Pokémon Inicial</h2>
             <p>Selecciona qué Pokémon enviarás primero a la batalla.</p>
             <div id="starter-selection-grid" class="starter-grid"></div>
         </section>
 
-        <!-- STAGE 4: DUEL -->
         <section id="duel-stage" class="game-stage hidden">
             <div class="duel-layout">
                 
-                <!-- LEFT: Player Party -->
                 <div class="party-sidebar player-party-sidebar">
                     <div class="sidebar-header">
                         <h4>Tu Equipo</h4>
@@ -96,11 +89,9 @@
                     <div id="player-party-list" class="party-list"></div>
                 </div>
 
-                <!-- CENTER: Battle Area -->
                 <div class="battle-center">
                     <div id="duel-container" class="duel-container">
                         
-                        <!-- PLAYER Side -->
                         <div class="battle-side player-side">
                             <div class="sprite-area">
                                 <img id="player-sprite" class="battle-sprite-img" src="" alt="Player Pokemon">
@@ -115,12 +106,10 @@
                             </div>
                         </div>
 
-                        <!-- Log -->
                         <div class="log-wrapper">
                             <div id="battle-log" class="battle-log"></div>
                         </div>
 
-                        <!-- MACHINE Side -->
                         <div class="battle-side foe-side">
                             <div class="sprite-area">
                                 <img id="foe-sprite" class="battle-sprite-img" src="" alt="Foe Pokemon">
@@ -137,14 +126,12 @@
 
                     </div>
 
-                    <!-- Controls -->
-                    <div class="battle-controls-wrapper">
+                    <div id="battle-controls-wrapper" class="battle-controls-wrapper">
                         <h4 id="control-label">Elige tu ataque:</h4>
                         <div id="battle-controls" class="move-grid"></div>
                     </div>
                 </div>
 
-                <!-- RIGHT: Machine Party -->
                 <div class="party-sidebar machine-party-sidebar">
                     <div class="sidebar-header">
                         <h4>Rival</h4>
@@ -155,7 +142,6 @@
             </div>
         </section>
         
-        <!-- STAGE 5: RESULTS -->
         <section id="results-stage" class="game-stage hidden">
             <h2 id="result-title">Resultado</h2>
             <p id="duel-result-text"></p>
@@ -171,7 +157,7 @@
             <div class="rules-grid">
                 <div class="rule-item">
                     <h3>3️⃣ Draft 3 vs 3:</h3>
-                    <p>Selección <strong>alternada</strong> de Pokémon (Tú eliges uno, la máquina otro) hasta tener 3 cada uno</p>
+                    <p>Selección <strong>alternada</strong> de Pokémon (Tú eliges uno, la máquina otro) hasta tener 3 cada uno.</p>
                 </div>
                 <div class="rule-item">
                     <h3>✨ Sistema Shiny</h3>
@@ -185,8 +171,8 @@
                 </div>
                 <div class="rule-item">
                     <h3>🔄 Mecánica de Cambios (Swaps)</h3>
-                    <p>Cambios Tácticos: Tienes un límite de 2 cambios manuales por partida para salvar a un Pokémon o ganar ventaja de tipo</p>
-                    <p>Cambio Forzado: Si tu Pokémon se debilita, debes elegir otro (esto no gasta tus cambios tácticos)</p>
+                    <p>Cambios Tácticos: Tienes un límite de 2 cambios manuales por partida para salvar a un Pokémon o ganar ventaja de tipo.</p>
+                    <p>Cambio Forzado: Si tu Pokémon se debilita, debes elegir otro (esto no gasta tus cambios tácticos).</p>
                 </div>
                 <div class="rule-item">
                     <h3>🤖 Inteligencia Artificial (IA)</h3>
@@ -195,7 +181,7 @@
                 </div>
                 <div class="rule-item">
                     <h3>💾 Progreso</h3>
-                    <p>Las victorias y los Tokens se guardan automáticamente en tu navegador (LocalStorage</p>
+                    <p>Las victorias y los Tokens se guardan automáticamente en tu navegador (LocalStorage).</p>
                     <p>Puedes elegir borrar los datos guardados y comenzar desde cero en cualquier momento.</p>
                 </div>
             </div>
@@ -204,7 +190,7 @@
     </div>
 
     <footer>
-        <p>© 2025 PokeDuel | Imágenes deben estar en ./PokeDuel/</p>
+        <p>© 2025 PokéDuel <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in">/ Desarrollado por Silvarion</a></p>
     </footer>
 
     <script src="PokeDuel-Script.js"></script>

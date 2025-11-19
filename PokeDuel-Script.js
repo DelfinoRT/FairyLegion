@@ -3,45 +3,55 @@
    ========================================= */
 const pokemonData = [
     { name: "Charizard", types: ["Fire", "Flying"], hp: 390, tms: ["Flamethrower", "Air Slash", "Dragon Claw", "Solar Beam", "Earthquake", "Shadow Claw", "Focus Blast", "Heat Wave", "Dragon Pulse", "Fire Blast"] },
+    { name: "Arcanine", types: ["Fire"], hp: 400, tms: ["Flamethrower", "Crunch", "Wild Charge", "Extreme Speed", "Bulldoze", "Psychic Fangs", "Heat Wave", "Close Combat", "Iron Head", "Play Rough"] },
+    { name: "Mamoswine", types: ["Ice", "Ground"], hp: 530, tms: ["Icicle Crash", "Earthquake", "Rock Slide", "Ice Fang", "Stone Edge", "Superpower", "Avalanche", "Bulldoze", "Iron Head", "High Horsepower"] },
+    { name: "Haxorus", types: ["Dragon"], hp: 385, tms: ["Dragon Claw", "Earthquake", "Iron Tail", "Outrage", "Rock Slide", "Brick Break", "Poison Jab", "Shadow Claw", "Aqua Tail", "Crunch"] },
+    { name: "Reuniclus", types: ["Psychic"], hp: 400, tms: ["Psychic", "Focus Blast", "Energy Ball", "Shadow Ball", "Signal Beam", "Thunderbolt", "Future Sight", "Hyper Voice", "Giga Impact", "Surf"] },
+    { name: "Galvantula", types: ["Bug", "Electric"], hp: 355, tms: ["Thunderbolt", "Bug Buzz", "Energy Ball", "Giga Drain", "Volt Switch", "Cross Poison", "Signal Beam", "Crunch", "Sucker Punch", "Charge Beam"] },
+    { name: "Conkeldurr", types: ["Fighting"], hp: 510, tms: ["Hammer Arm", "Stone Edge", "Earthquake", "Fire Punch", "Ice Punch", "Poison Jab", "Rock Slide", "Drain Punch", "Payback", "Superpower"] },
+    { name: "Chandelure", types: ["Ghost", "Fire"], hp: 340, tms: ["Shadow Ball", "Flamethrower", "Energy Ball", "Psychic", "Dark Pulse", "Heat Wave", "Fire Blast", "Giga Drain", "Mystical Fire", "Solar Beam"] },
+    { name: "Escavalier", types: ["Bug", "Steel"], hp: 450, tms: ["Iron Head", "Megahorn", "X-Scissor", "Drill Run", "Poison Jab", "Rock Slide", "Reversal", "Smart Strike", "Facade", "Knock Off"] },
+    { name: "Eelektross", types: ["Electric"], hp: 490, tms: ["Thunderbolt", "Crunch", "Flamethrower", "Giga Drain", "Volt Switch", "Dragon Claw", "Aqua Tail", "Rock Slide", "Iron Tail", "Superpower"] },
+    { name: "Houndoom", types: ["Dark", "Fire"], hp: 350, tms: ["Flamethrower", "Dark Pulse", "Sludge Bomb", "Crunch", "Fire Blast", "Thunder Fang", "Shadow Ball", "Solar Beam", "Iron Tail", "Heat Wave"] },
     { name: "Blastoise", types: ["Water"], hp: 395, tms: ["Surf", "Ice Beam", "Hydro Pump", "Earthquake", "Flash Cannon", "Focus Blast", "Dark Pulse", "Dragon Pulse", "Blizzard", "Scald"] },
-    { name: "Venusaur", types: ["Grass", "Poison"], hp: 400, tms: ["Solar Beam", "Sludge Bomb", "Giga Drain", "Earthquake", "Energy Ball", "Toxic", "Earth Power", "Power Whip", "Leaf Storm", "Venoshock"] },
-    { name: "Alakazam", types: ["Psychic"], hp: 275, tms: ["Psychic", "Shadow Ball", "Focus Blast", "Dazzling Gleam", "Energy Ball", "Thunderbolt", "Calm Mind", "Psyshock", "Trick Room", "Future Sight"] },
-    { name: "Machamp", types: ["Fighting"], hp: 450, tms: ["Dynamic Punch", "Stone Edge", "Earthquake", "Thunderbolt", "Ice Punch", "Fire Punch", "Close Combat", "Bulk Up", "Rock Slide", "Poison Jab"] },
+    { name: "Venusaur", types: ["Grass", "Poison"], hp: 400, tms: ["Solar Beam", "Sludge Bomb", "Giga Drain", "Earthquake", "Energy Ball", "Poison Jab", "Earth Power", "Power Whip", "Leaf Storm", "Venoshock"] },
+    { name: "Alakazam", types: ["Psychic"], hp: 275, tms: ["Psychic", "Shadow Ball", "Focus Blast", "Dazzling Gleam", "Energy Ball", "Thunderbolt", "Psybeam", "Psyshock", "Extrasensory", "Future Sight"] },
+    { name: "Machamp", types: ["Fighting"], hp: 450, tms: ["Dynamic Punch", "Stone Edge", "Earthquake", "Thunderbolt", "Ice Punch", "Fire Punch", "Close Combat", "Brick Break", "Rock Slide", "Poison Jab"] },
     { name: "Gengar", types: ["Ghost", "Poison"], hp: 300, tms: ["Shadow Ball", "Sludge Bomb", "Thunderbolt", "Focus Blast", "Energy Ball", "Dazzling Gleam", "Dark Pulse", "Hex", "Venoshock", "Psychic"] },
-    { name: "Dragonite", types: ["Dragon", "Flying"], hp: 455, tms: ["Dragon Claw", "Hurricane", "Earthquake", "Fire Punch", "Thunder Punch", "Ice Beam", "Superpower", "Dragon Dance", "Outrage", "Thunder"] },
-    { name: "Tyranitar", types: ["Rock", "Dark"], hp: 500, tms: ["Stone Edge", "Crunch", "Earthquake", "Fire Blast", "Ice Beam", "Thunderbolt", "Dragon Dance", "Dark Pulse", "Rock Slide", "Superpower"] },
-    { name: "Gardevoir", types: ["Psychic", "Fairy"], hp: 340, tms: ["Psychic", "Moonblast", "Thunderbolt", "Focus Blast", "Shadow Ball", "Energy Ball", "Dazzling Gleam", "Calm Mind", "Hyper Voice", "Mystical Fire"] },
-    { name: "Blaziken", types: ["Fire", "Fighting"], hp: 400, tms: ["Flare Blitz", "Close Combat", "Earthquake", "Stone Edge", "Thunder Punch", "Shadow Claw", "Brave Bird", "Bulk Up", "Fire Blast", "Focus Blast"] },
+    { name: "Dragonite", types: ["Dragon", "Flying"], hp: 455, tms: ["Dragon Claw", "Hurricane", "Earthquake", "Fire Punch", "Thunder Punch", "Ice Beam", "Superpower", "Dragon Breath", "Outrage", "Thunder"] },
+    { name: "Tyranitar", types: ["Rock", "Dark"], hp: 500, tms: ["Stone Edge", "Crunch", "Earthquake", "Fire Blast", "Ice Beam", "Thunderbolt", "Rock Slide", "Dark Pulse", "Rock Blast", "Superpower"] },
+    { name: "Gardevoir", types: ["Psychic", "Fairy"], hp: 340, tms: ["Psychic", "Moonblast", "Thunderbolt", "Focus Blast", "Shadow Ball", "Energy Ball", "Dazzling Gleam", "Psybeam", "Hyper Voice", "Mystical Fire"] },
+    { name: "Blaziken", types: ["Fire", "Fighting"], hp: 400, tms: ["Flare Blitz", "Close Combat", "Earthquake", "Stone Edge", "Thunder Punch", "Shadow Claw", "Brave Bird", "Brick Break", "Fire Blast", "Focus Blast"] },
     { name: "Swampert", types: ["Water", "Ground"], hp: 500, tms: ["Surf", "Earthquake", "Ice Beam", "Stone Edge", "Avalanche", "Hammer Arm", "Waterfall", "Scald", "Superpower", "Rock Slide"] },
     { name: "Sceptile", types: ["Grass"], hp: 350, tms: ["Leaf Blade", "Dragon Pulse", "Energy Ball", "Earthquake", "Focus Blast", "X-Scissor", "Acrobatics", "Leaf Storm", "Giga Drain", "Thunder Punch"] },
     { name: "Aggron", types: ["Steel", "Rock"], hp: 350, tms: ["Iron Head", "Stone Edge", "Earthquake", "Heavy Slam", "Ice Punch", "Fire Punch", "Thunder Punch", "Dragon Claw", "Rock Slide", "Superpower"] },
     { name: "Metagross", types: ["Steel", "Psychic"], hp: 400, tms: ["Meteor Mash", "Zen Headbutt", "Earthquake", "Hammer Arm", "Ice Punch", "Thunder Punch", "Bullet Punch", "Explosion", "Rock Slide", "Psychic"] },
-    { name: "Salamence", types: ["Dragon", "Flying"], hp: 475, tms: ["Dragon Claw", "Hurricane", "Earthquake", "Fire Blast", "Hydro Pump", "Stone Edge", "Dragon Dance", "Outrage", "Flamethrower", "Roost"] },
-    { name: "Garchomp", types: ["Dragon", "Ground"], hp: 540, tms: ["Earthquake", "Dragon Claw", "Stone Edge", "Fire Blast", "Poison Jab", "Iron Head", "Outrage", "Swords Dance", "Crunch", "Rock Slide"] },
+    { name: "Salamence", types: ["Dragon", "Flying"], hp: 475, tms: ["Dragon Claw", "Hurricane", "Earthquake", "Fire Blast", "Hydro Pump", "Stone Edge", "Dragon Breath", "Outrage", "Flamethrower", "Aerial Ace"] },
+    { name: "Garchomp", types: ["Dragon", "Ground"], hp: 540, tms: ["Earthquake", "Dragon Claw", "Stone Edge", "Fire Blast", "Poison Jab", "Iron Head", "Outrage", "Slash", "Crunch", "Rock Slide"] },
     { name: "Lucario", types: ["Fighting", "Steel"], hp: 350, tms: ["Close Combat", "Flash Cannon", "Earthquake", "Stone Edge", "Ice Punch", "Thunder Punch", "Shadow Ball", "Dragon Pulse", "Extreme Speed", "Aura Sphere"] },
     { name: "Abomasnow", types: ["Grass", "Ice"], hp: 450, tms: ["Blizzard", "Energy Ball", "Earthquake", "Ice Beam", "Focus Blast", "Shadow Ball", "Giga Drain", "Ice Shard", "Wood Hammer", "Avalanche"] },
-    { name: "Weavile", types: ["Dark", "Ice"], hp: 350, tms: ["Ice Beam", "Night Slash", "Ice Shard", "X-Scissor", "Brick Break", "Poison Jab", "Avalanche", "Focus Blast", "Low Kick", "Swords Dance"] },
+    { name: "Weavile", types: ["Dark", "Ice"], hp: 350, tms: ["Ice Beam", "Night Slash", "Ice Shard", "X-Scissor", "Brick Break", "Poison Jab", "Avalanche", "Focus Blast", "Low Kick", "Slash"] },
     { name: "Rhyperior", types: ["Ground", "Rock"], hp: 575, tms: ["Earthquake", "Stone Edge", "Megahorn", "Ice Punch", "Thunder Punch", "Fire Punch", "Hammer Arm", "Rock Wrecker", "Rock Blast", "Drill Run"] },
     { name: "Electivire", types: ["Electric"], hp: 375, tms: ["Thunderbolt", "Earthquake", "Ice Punch", "Fire Punch", "Thunder Punch", "Focus Blast", "Thunder", "Cross Chop", "Rock Slide", "Giga Impact"] },
     { name: "Magmortar", types: ["Fire"], hp: 375, tms: ["Flamethrower", "Fire Blast", "Thunderbolt", "Focus Blast", "Earthquake", "Solar Beam", "Psychic", "Scorching Sands", "Thunder Punch", "Overheat"] },
-    { name: "Togekiss", types: ["Fairy", "Flying"], hp: 425, tms: ["Air Slash", "Dazzling Gleam", "Flamethrower", "Aura Sphere", "Shadow Ball", "Psychic", "Thunder Wave", "Roost", "Heat Wave", "Hyper Voice"] },
-    { name: "Roserade", types: ["Grass", "Poison"], hp: 300, tms: ["Sludge Bomb", "Energy Ball", "Shadow Ball", "Dazzling Gleam", "Giga Drain", "Venoshock", "Toxic Spikes", "Leaf Storm", "Sleep Powder", "Spikes"] },
+    { name: "Togekiss", types: ["Fairy", "Flying"], hp: 425, tms: ["Air Slash", "Dazzling Gleam", "Flamethrower", "Aura Sphere", "Shadow Ball", "Psychic", "Shock Wave", "Aerial Ace", "Heat Wave", "Hyper Voice"] },
+    { name: "Roserade", types: ["Grass", "Poison"], hp: 300, tms: ["Sludge Bomb", "Energy Ball", "Shadow Ball", "Dazzling Gleam", "Giga Drain", "Venoshock", "Poison Jab", "Leaf Storm", "Solar Beam", "Mud Shot"] },
     { name: "Luxray", types: ["Electric"], hp: 400, tms: ["Thunderbolt", "Crunch", "Wild Charge", "Ice Fang", "Fire Fang", "Thunder Fang", "Volt Switch", "Superpower", "Thunder", "Play Rough"] },
-    { name: "Staraptor", types: ["Normal", "Flying"], hp: 425, tms: ["Brave Bird", "Close Combat", "Quick Attack", "U-turn", "Steel Wing", "Heat Wave", "Aerial Ace", "Roost", "Facade", "Double-Edge"] },
+    { name: "Staraptor", types: ["Normal", "Flying"], hp: 425, tms: ["Brave Bird", "Close Combat", "Quick Attack", "U-turn", "Steel Wing", "Heat Wave", "Aerial Ace", "Giga Impact", "Facade", "Double-Edge"] },
     { name: "Floatzel", types: ["Water"], hp: 425, tms: ["Waterfall", "Ice Punch", "Aqua Jet", "Crunch", "Brick Break", "Ice Beam", "Surf", "Scald", "Focus Blast", "Hydro Pump"] },
-    { name: "Gastrodon", types: ["Water", "Ground"], hp: 555, tms: ["Surf", "Earth Power", "Ice Beam", "Sludge Bomb", "Earthquake", "Scald", "Recover", "Toxic", "Stone Edge", "Body Slam"] },
-    { name: "Drifblim", types: ["Ghost", "Flying"], hp: 750, tms: ["Shadow Ball", "Air Slash", "Thunderbolt", "Psychic", "Will-O-Wisp", "Acrobatics", "Hex", "Calm Mind", "Icy Wind", "Explosion"] },
-    { name: "Lopunny", types: ["Normal"], hp: 325, tms: ["Return", "Ice Punch", "Thunder Punch", "Fire Punch", "Focus Blast", "Shadow Ball", "High Jump Kick", "Drain Punch", "U-turn", "Play Rough"] },
+    { name: "Gastrodon", types: ["Water", "Ground"], hp: 555, tms: ["Surf", "Earth Power", "Ice Beam", "Sludge Bomb", "Earthquake", "Scald", "Body Slam", "Venoshock", "Stone Edge", "Ancient Power"] },
+    { name: "Drifblim", types: ["Ghost", "Flying"], hp: 450, tms: ["Shadow Ball", "Air Slash", "Thunderbolt", "Psychic", "Giga Impact", "Acrobatics", "Hex", "Psybeam", "Icy Wind", "Explosion"] },
+    { name: "Lopunny", types: ["Normal"], hp: 325, tms: ["Double-Edge", "Ice Punch", "Thunder Punch", "Fire Punch", "Focus Blast", "Shadow Ball", "High Jump Kick", "Drain Punch", "U-turn", "Play Rough"] },
     { name: "Toxicroak", types: ["Poison", "Fighting"], hp: 415, tms: ["Drain Punch", "Poison Jab", "Earthquake", "Ice Punch", "Stone Edge", "X-Scissor", "Sludge Bomb", "Focus Blast", "Venoshock", "Sucker Punch"] },
-    { name: "Lumineon", types: ["Water"], hp: 345, tms: ["Surf", "Ice Beam", "Dazzling Gleam", "U-turn", "Signal Beam", "Giga Drain", "Scald", "Aqua Tail", "Psybeam", "Defog"] },
-    { name: "Serperior", types: ["Grass"], hp: 375, tms: ["Leaf Storm", "Giga Drain", "Dragon Pulse", "Energy Ball", "Leech Seed", "Reflect", "Light Screen", "Substitute", "Knock Off", "Synthesis"] },
+    { name: "Lumineon", types: ["Water"], hp: 345, tms: ["Surf", "Ice Beam", "Dazzling Gleam", "U-turn", "Signal Beam", "Giga Drain", "Scald", "Aqua Tail", "Psybeam", "Water Pulse"] },
+    { name: "Serperior", types: ["Grass"], hp: 375, tms: ["Leaf Storm", "Giga Drain", "Dragon Pulse", "Energy Ball", "Mega Drain", "Leaf Blade", "Solar Beam", "Body Slam", "Knock Off", "Leaf Blade"] },
     { name: "Emboar", types: ["Fire", "Fighting"], hp: 550, tms: ["Flare Blitz", "Superpower", "Earthquake", "Stone Edge", "Thunder Punch", "Fire Blast", "Scald", "Wild Charge", "Hammer Arm", "Head Smash"] },
     { name: "Samurott", types: ["Water"], hp: 475, tms: ["Surf", "Ice Beam", "Megahorn", "Aqua Tail", "X-Scissor", "Grass Knot", "Hydro Pump", "Scald", "Drill Run", "Smart Strike"] },
     { name: "Stoutland", types: ["Normal"], hp: 425, tms: ["Return", "Crunch", "Wild Charge", "Ice Fang", "Fire Fang", "Thunder Fang", "Play Rough", "Superpower", "Giga Impact", "Surf"] },
-    { name: "Excadrill", types: ["Ground", "Steel"], hp: 550, tms: ["Earthquake", "Iron Head", "Rock Slide", "X-Scissor", "Drill Run", "Swords Dance", "Poison Jab", "Shadow Claw", "Smart Strike", "Horn Drill"] },
+    { name: "Excadrill", types: ["Ground", "Steel"], hp: 550, tms: ["Earthquake", "Iron Head", "Rock Slide", "X-Scissor", "Drill Run", "Slash", "Poison Jab", "Shadow Claw", "Smart Strike", "Skull Bash"] },
     { name: "Krookodile", types: ["Ground", "Dark"], hp: 475, tms: ["Earthquake", "Crunch", "Stone Edge", "Dragon Claw", "Fire Fang", "Thunder Fang", "Outrage", "Dark Pulse", "Foul Play", "Superpower"] },
-    { name: "Zoroark", types: ["Dark"], hp: 300, tms: ["Dark Pulse", "Flamethrower", "Focus Blast", "Shadow Ball", "Grass Knot", "U-turn", "Extrasensory", "Sludge Bomb", "Night Daze", "Nasty Plot"] },
-    { name: "Volcarona", types: ["Bug", "Fire"], hp: 425, tms: ["Bug Buzz", "Flamethrower", "Hurricane", "Psychic", "Giga Drain", "Solar Beam", "Quiver Dance", "Fire Blast", "Heat Wave", "Overheat"] }
+    { name: "Zoroark", types: ["Dark"], hp: 300, tms: ["Dark Pulse", "Flamethrower", "Focus Blast", "Shadow Ball", "Grass Knot", "U-turn", "Extrasensory", "Sludge Bomb", "Night Daze", "Snarl"] },
+    { name: "Volcarona", types: ["Bug", "Fire"], hp: 425, tms: ["Bug Buzz", "Flamethrower", "Hurricane", "Psychic", "Giga Drain", "Solar Beam", "Silver Wind", "Fire Blast", "Heat Wave", "Overheat"] }
 ];
 
 const tmDatabase = {
@@ -65,7 +75,6 @@ const tmDatabase = {
     "Sludge Bomb": { type: "Poison", power: 90, pp: 10 },
     "Giga Drain": { type: "Grass", power: 75, pp: 10 },
     "Energy Ball": { type: "Grass", power: 90, pp: 10 },
-    "Toxic": { type: "Poison", power: 0, pp: 10 }, 
     "Earth Power": { type: "Ground", power: 90, pp: 10 },
     "Power Whip": { type: "Grass", power: 120, pp: 10 },
     "Leaf Storm": { type: "Grass", power: 130, pp: 5 },
@@ -74,23 +83,20 @@ const tmDatabase = {
     "Shadow Ball": { type: "Ghost", power: 80, pp: 15 },
     "Dazzling Gleam": { type: "Fairy", power: 80, pp: 10 },
     "Thunderbolt": { type: "Electric", power: 90, pp: 15 },
-    "Calm Mind": { type: "Psychic", power: 0, pp: 20 },
     "Psyshock": { type: "Psychic", power: 80, pp: 10 },
-    "Trick Room": { type: "Psychic", power: 0, pp: 5 },
     "Future Sight": { type: "Psychic", power: 120, pp: 10 },
     "Dynamic Punch": { type: "Fighting", power: 100, pp: 5 },
     "Stone Edge": { type: "Rock", power: 100, pp: 5 },
     "Ice Punch": { type: "Ice", power: 75, pp: 15 },
     "Fire Punch": { type: "Fire", power: 75, pp: 15 },
     "Close Combat": { type: "Fighting", power: 120, pp: 5 },
-    "Bulk Up": { type: "Fighting", power: 0, pp: 20 },
     "Rock Slide": { type: "Rock", power: 75, pp: 10 },
     "Poison Jab": { type: "Poison", power: 80, pp: 20 },
     "Hex": { type: "Ghost", power: 65, pp: 10 },
     "Hurricane": { type: "Flying", power: 110, pp: 10 },
     "Thunder Punch": { type: "Electric", power: 75, pp: 15 },
     "Superpower": { type: "Fighting", power: 120, pp: 5 },
-    "Dragon Dance": { type: "Dragon", power: 0, pp: 20 },
+    "Dragon Breath": { type: "Dragon", power: 60, pp: 20 },
     "Outrage": { type: "Dragon", power: 120, pp: 10 },
     "Thunder": { type: "Electric", power: 110, pp: 10 },
     "Crunch": { type: "Dark", power: 80, pp: 15 },
@@ -111,7 +117,7 @@ const tmDatabase = {
     "Zen Headbutt": { type: "Psychic", power: 80, pp: 15 },
     "Bullet Punch": { type: "Steel", power: 40, pp: 30 },
     "Explosion": { type: "Normal", power: 250, pp: 5 },
-    "Swords Dance": { type: "Normal", power: 0, pp: 20 },
+    "Slash": { type: "Normal", power: 70, pp: 20 },
     "Extreme Speed": { type: "Normal", power: 80, pp: 5 },
     "Aura Sphere": { type: "Fighting", power: 80, pp: 20 },
     "Ice Shard": { type: "Ice", power: 40, pp: 30 },
@@ -127,11 +133,6 @@ const tmDatabase = {
     "Giga Impact": { type: "Normal", power: 150, pp: 5 },
     "Scorching Sands": { type: "Ground", power: 70, pp: 10 },
     "Overheat": { type: "Fire", power: 130, pp: 5 },
-    "Thunder Wave": { type: "Electric", power: 0, pp: 20 },
-    "Roost": { type: "Flying", power: 0, pp: 10 },
-    "Toxic Spikes": { type: "Poison", power: 0, pp: 20 },
-    "Sleep Powder": { type: "Grass", power: 0, pp: 15 },
-    "Spikes": { type: "Ground", power: 0, pp: 20 },
     "Wild Charge": { type: "Electric", power: 90, pp: 15 },
     "Ice Fang": { type: "Ice", power: 65, pp: 15 },
     "Fire Fang": { type: "Fire", power: 65, pp: 15 },
@@ -145,9 +146,7 @@ const tmDatabase = {
     "Facade": { type: "Normal", power: 70, pp: 20 },
     "Double-Edge": { type: "Normal", power: 120, pp: 15 },
     "Aqua Jet": { type: "Water", power: 40, pp: 20 },
-    "Recover": { type: "Normal", power: 0, pp: 10 },
     "Body Slam": { type: "Normal", power: 85, pp: 15 },
-    "Will-O-Wisp": { type: "Fire", power: 0, pp: 15 },
     "Icy Wind": { type: "Ice", power: 55, pp: 15 },
     "Return": { type: "Normal", power: 102, pp: 20 },
     "High Jump Kick": { type: "Fighting", power: 130, pp: 10 },
@@ -155,24 +154,25 @@ const tmDatabase = {
     "Signal Beam": { type: "Bug", power: 75, pp: 15 },
     "Aqua Tail": { type: "Water", power: 90, pp: 10 },
     "Psybeam": { type: "Psychic", power: 65, pp: 20 },
-    "Defog": { type: "Flying", power: 0, pp: 15 },
-    "Leech Seed": { type: "Grass", power: 0, pp: 10 },
-    "Reflect": { type: "Psychic", power: 0, pp: 20 },
-    "Light Screen": { type: "Psychic", power: 0, pp: 30 },
-    "Substitute": { type: "Normal", power: 0, pp: 10 },
+    "Mega Drain": { type: "Grass", power: 40, pp: 15 },
     "Knock Off": { type: "Dark", power: 65, pp: 20 },
-    "Synthesis": { type: "Grass", power: 0, pp: 5 },
     "Head Smash": { type: "Rock", power: 150, pp: 5 },
     "Grass Knot": { type: "Grass", power: 80, pp: 20 },
     "Smart Strike": { type: "Steel", power: 70, pp: 10 },
-    "Horn Drill": { type: "Normal", power: 999, pp: 5 },
+    "Skull Bash": { type: "Normal", power: 130, pp: 5 },
     "Foul Play": { type: "Dark", power: 95, pp: 15 },
     "Extrasensory": { type: "Psychic", power: 80, pp: 20 },
     "Night Daze": { type: "Dark", power: 85, pp: 10 },
-    "Nasty Plot": { type: "Dark", power: 0, pp: 20 },
+    "Snarl": { type: "Dark", power: 55, pp: 15 },
     "Bug Buzz": { type: "Bug", power: 90, pp: 10 },
-    "Quiver Dance": { type: "Bug", power: 0, pp: 20 },
-    "Sucker Punch": { type: "Dark", power: 70, pp: 5 }
+    "Silver Wind": { type: "Bug", power: 60, pp: 5 },
+    "Sucker Punch": { type: "Dark", power: 70, pp: 5 },
+    "Water Pulse": { type: "Water", power: 60, pp: 20 },
+    "Mud Shot": { type: "Ground", power: 55, pp: 15 },
+    "Acid Spray": { type: "Poison", power: 40, pp: 20 },
+    "Ancient Power": { type: "Rock", power: 60, pp: 5 },
+    "Shock Wave": { type: "Electric", power: 60, pp: 20 },
+    "Incinerate": { type: "Fire", power: 60, pp: 15 }
 };
 
 const typeMatchups = {
@@ -254,6 +254,7 @@ const els = {
     // Duel Elements
     battleLog: document.getElementById('battle-log'),
     battleControls: document.getElementById('battle-controls'),
+    battleControlsWrapper: document.getElementById('battle-controls-wrapper'),
     controlLabel: document.getElementById('control-label'),
     winDisplay: document.getElementById('wins-display'),
     tokenDisplay: document.getElementById('token-display'),
@@ -349,11 +350,10 @@ loadStorage();
 
 if(els.startBtn) els.startBtn.addEventListener('click', initGame);
 if(els.resetBtn) els.resetBtn.addEventListener('click', resetData);
-if(els.confirmTeamBtn) els.confirmTeamBtn.addEventListener('click', confirmTeamAndSpendTokens);
+if(els.confirmTeamBtn) els.confirmTeamBtn.addEventListener('click', confirmTeam);
 if(els.goToStarterBtn) els.goToStarterBtn.addEventListener('click', startStarterSelection);
 if(els.restartBtn) els.restartBtn.addEventListener('click', resetUI);
 
-// Rules Modal
 if(els.rulesBtn) {
     els.rulesBtn.addEventListener('click', () => { els.rulesModal.classList.remove('hidden'); });
 }
@@ -405,7 +405,6 @@ function initGame() {
     els.confirmTeamBtn.disabled = true;
     if(els.statusSpan) els.statusSpan.innerText = "FASE DE SELECCIÓN";
     
-    // Show shiny controls if player has tokens
     if (gameState.tokens > 0 && els.shinyArea) {
         els.shinyArea.classList.remove('hidden');
         els.tokensAvailable.innerText = gameState.tokens;
@@ -417,7 +416,7 @@ function initGame() {
 }
 
 /* =========================================
-   6. PHASE 1: SELECTION (WITH SHINY TOGGLE)
+   6. PHASE 1: SELECTION
    ========================================= */
 function renderSelectionGrid() {
     els.selectionGrid.innerHTML = '';
@@ -439,7 +438,6 @@ function playerPick(index, cardElement) {
     if (gameState.turn !== 'player_select' || gameState.playerTeam.length >= 3 || cardElement.classList.contains('unavailable')) return;
 
     const picked = gameState.availablePokemon[index];
-    // Default properties for shiny
     picked.isShiny = false; 
     
     gameState.playerTeam.push(picked);
@@ -480,7 +478,6 @@ function machinePick() {
     }
 }
 
-// UPDATE PREVIEWS WITH CLICKABLE SHINY TOGGLE
 function updatePreviews() {
     els.playerPreview.innerHTML = '';
     
@@ -489,12 +486,10 @@ function updatePreviews() {
         item.className = 'preview-item';
         if(p.isShiny) item.classList.add('shiny-active');
 
-        // Image
         const img = document.createElement('img');
         img.src = getImagePath(p.name, p.isShiny);
         item.appendChild(img);
 
-        // Shiny Icon if active
         if(p.isShiny) {
             const star = document.createElement('div');
             star.className = 'shiny-icon';
@@ -502,9 +497,7 @@ function updatePreviews() {
             item.appendChild(star);
         }
 
-        // Click event to toggle shiny
         item.addEventListener('click', () => toggleShinyStatus(index));
-
         els.playerPreview.appendChild(item);
     });
 
@@ -527,13 +520,7 @@ function toggleShinyStatus(teamIndex) {
     updatePreviews();
 }
 
-function confirmTeamAndSpendTokens() {
-    const shiniesUsed = gameState.playerTeam.filter(p => p.isShiny).length;
-    if (shiniesUsed > 0) {
-        gameState.tokens -= shiniesUsed;
-        saveStorage();
-        loadStorage(); 
-    }
+function confirmTeam() {
     startTmSelection();
 }
 
@@ -632,6 +619,24 @@ function startDuel(starterPokemon) {
     els.duelStage.classList.remove('hidden');
     if(els.statusSpan) els.statusSpan.innerText = "EN COMBATE";
     
+    // Reset Controls (Remove old end game messages)
+    els.battleControlsWrapper.innerHTML = `
+        <h4 id="control-label">Elige tu ataque:</h4>
+        <div id="battle-controls" class="move-grid"></div>
+    `;
+    // Re-bind dynamic elements
+    els.controlLabel = document.getElementById('control-label');
+    els.battleControls = document.getElementById('battle-controls');
+
+    // TOKEN DEDUCTION
+    const shiniesUsed = gameState.playerTeam.filter(p => p.isShiny).length;
+    if (shiniesUsed > 0) {
+        gameState.tokens = Math.max(0, gameState.tokens - shiniesUsed);
+        if(els.tokenDisplay) els.tokenDisplay.innerText = gameState.tokens;
+        if(els.tokensAvailable) els.tokensAvailable.innerText = gameState.tokens;
+        saveStorage();
+    }
+
     gameState.activePlayerMon = starterPokemon;
     if (gameState.machineTeam.length > 0) {
         gameState.activeMachineMon = gameState.machineTeam[Math.floor(Math.random() * gameState.machineTeam.length)];
@@ -648,7 +653,6 @@ function startDuel(starterPokemon) {
 }
 
 function updatePartyViews() {
-    // SAFE UPDATES
     if(els.playerSwapsText) els.playerSwapsText.innerText = gameState.playerSwapsLeft;
     if(els.machineSwapsText) els.machineSwapsText.innerText = gameState.machineSwapsLeft;
 
@@ -738,7 +742,10 @@ function updateBattleUI() {
 }
 
 function renderMoveButtons() {
-    if(els.battleControls) els.battleControls.innerHTML = '';
+    if(!els.battleControls) return;
+    
+    // Clear grid
+    els.battleControls.innerHTML = '';
     
     if (gameState.isSwitching) {
         if(els.controlLabel) els.controlLabel.innerText = "¡Tu Pokémon se debilitó! Elige otro en la izquierda.";
@@ -748,7 +755,7 @@ function renderMoveButtons() {
     if(els.controlLabel) els.controlLabel.innerText = "Elige tu ataque:";
 
     if (!gameState.activePlayerMon || !gameState.activePlayerMon.moves || gameState.activePlayerMon.moves.length === 0) {
-        if(els.battleControls) els.battleControls.innerHTML = "<p>Error: No moves loaded.</p>";
+        els.battleControls.innerHTML = "<p>Error: No moves loaded.</p>";
         return;
     }
 
@@ -765,7 +772,7 @@ function renderMoveButtons() {
         `;
         btn.disabled = move.currentPP <= 0;
         btn.addEventListener('click', () => executeTurn(move));
-        if(els.battleControls) els.battleControls.appendChild(btn);
+        els.battleControls.appendChild(btn);
     });
 }
 
@@ -857,7 +864,7 @@ function performMachineAttack() {
 }
 
 function performMachineTacticalSwap(newPokemon) {
-    gameState.machineSwapsLeft--;
+    gameState.machineSwapsLeft = Math.max(0, gameState.machineSwapsLeft - 1); 
     logBattle(`¡Rival retiró a ${gameState.activeMachineMon.name}!`);
     gameState.activeMachineMon = newPokemon;
     logBattle(`¡Rival envió a ${newPokemon.name}!`);
@@ -893,7 +900,6 @@ function performAttack(attacker, defender, move) {
     else if (multiplier < 1 && multiplier > 0) effText = "No muy efectivo...";
     else if (multiplier === 0) effText = "¡No afecta!";
     
-    // Log with Shiny mention
     let shinyText = attacker.isShiny ? " (Shiny Bonus!)" : "";
     logBattle(`${attacker.name} usó ${move.name}.${shinyText} Daño: ${totalDmg}. ${effText}`);
 }
@@ -958,25 +964,34 @@ function disableControls(disabled) {
 }
 
 function endDuel(playerWon) {
-    els.duelStage.classList.add('hidden');
-    els.resultsStage.classList.remove('hidden');
     if (playerWon) {
         gameState.wins++;
-        if(els.winDisplay) els.winDisplay.innerText = gameState.wins;
-        if(els.resultText) {
-            els.resultText.innerText = "¡VICTORIA! Has derrotado al equipo rival.";
-            els.resultText.style.color = "#4caf50";
-        }
         if (gameState.wins % 5 === 0) {
             gameState.tokens++;
-            if(els.tokenDisplay) els.tokenDisplay.innerText = gameState.tokens;
             alert("¡Ganaste 1 Shiny Token!");
-        }
-    } else {
-        if(els.resultText) {
-            els.resultText.innerText = "DERROTA. Te has quedado sin Pokémon.";
-            els.resultText.style.color = "#f44336";
         }
     }
     saveStorage();
+
+    const message = playerWon ? "<span style='color:#4caf50'>¡VICTORIA!</span>" : "<span style='color:#f44336'>DERROTA</span>";
+    
+    // Replace controls with result panel
+    els.battleControlsWrapper.innerHTML = `
+        <div class="end-game-panel">
+            <h2>${message}</h2>
+            <button id="finishDuelBtn">Continuar</button>
+        </div>
+    `;
+
+    document.getElementById('finishDuelBtn').onclick = () => {
+        els.duelStage.classList.add('hidden');
+        els.resultsStage.classList.remove('hidden');
+        if(els.winDisplay) els.winDisplay.innerText = gameState.wins;
+        if(els.tokenDisplay) els.tokenDisplay.innerText = gameState.tokens;
+        if(els.resultText) {
+            els.resultText.innerHTML = playerWon 
+                ? "¡Has derrotado al equipo rival!" 
+                : "Te has quedado sin Pokémon.";
+        }
+    };
 }
