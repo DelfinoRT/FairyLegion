@@ -176,16 +176,40 @@
         </div>
     </div>
 
+    <!-- RULES MODAL -->
     <div id="rulesModal" class="modal hidden">
         <div class="modal-content">
             <h2>📜 Reglas</h2>
             <div class="rules-grid">
-                <div class="rule-item"><h3>3️⃣ Draft</h3><p>Selección alternada 3vs3.</p></div>
-                <div class="rule-item"><h3>✨ Shiny</h3><p>+20% Daño. Gana 5 partidas para 1 Token.</p></div>
-                <div class="rule-item"><h3>⚔️ Batalla</h3><p>Turnos clásicos. Usa efectividad de tipos.</p></div>
-                <div class="rule-item"><h3>🔄 Cambios</h3><p>2 Cambios Tácticos por duelo.</p></div>
-                <div class="rule-item"><h3>🏆 Gimnasios</h3><p>Cada 10 victorias desbloqueas un Líder.</p></div>
-                <div class="rule-item"><h3>💾 Datos</h3><p>Se guarda tu progreso automáticamente.</p></div>
+                <div class="rule-item">
+                    <h3>3️⃣ Draft 3 vs 3:</h3>
+                    <p>Selección <strong>alternada</strong> de Pokémon (Tú eliges uno, la máquina otro) hasta tener 3 cada uno.</p>
+                </div>
+                <div class="rule-item">
+                    <h3>✨ Sistema Shiny</h3>
+                    <p>Usa tus Tokens en la selección. Los Shiny hacen <strong>+20% de daño</strong>.</p>
+                    <p>Ganas 1 Token por cada 5 victorias.</p>
+                </div>
+                <div class="rule-item">
+                    <h3>⚔️ Batalla por turnos clásica</h3>
+                    <p>Efectividad: El daño se calcula según los tipos (Fuego vence a Planta, Agua vence a Fuego, etc.).</p>
+                    <p>Cálculo de Daño: Base del movimiento + Aleatoriedad + Multiplicador de Tipo + Bono Shiny (si aplica).</p>
+                </div>
+                <div class="rule-item">
+                    <h3>🔄 Mecánica de Cambios (Swaps)</h3>
+                    <p>Cambios Tácticos: Tienes un límite de 2 cambios manuales por partida para salvar a un Pokémon o ganar ventaja de tipo.</p>
+                    <p>Cambio Forzado: Si tu Pokémon se debilita, debes elegir otro (esto no gasta tus cambios tácticos).</p>
+                </div>
+                <div class="rule-item">
+                    <h3>🏆 Gimnasios</h3>
+                    <p>Cada 10 victorias desbloqueas un Líder</p>
+                    <p>Obtienes una medalla tras derrotar a cada uno de los líeres.</p>
+                </div>
+                <div class="rule-item">
+                    <h3>💾 Progreso</h3>
+                    <p>Las victorias y los Tokens se guardan automáticamente en tu navegador (LocalStorage).</p>
+                    <p>Puedes elegir borrar los datos guardados y comenzar desde cero en cualquier momento.</p>
+                </div>
             </div>
             <button id="closeRulesBtn" class="action-btn">Entendido</button>
         </div>
