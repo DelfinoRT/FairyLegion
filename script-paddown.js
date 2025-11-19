@@ -54,7 +54,7 @@ const ITEMS = [
   { name: "coin", type: "item", points: 12, icon: "/PADDown/coin.png" },
   { name: "diamond", type: "item", points: 50, icon: "/PADDown/diamond.png" },
   { name: "pearl", type: "item", points: 40, icon: "/PADDown/pearl.png" },
-  { name: "gemstone", type: "gem", points: 34, icon: "/PADDown/gem.png" }
+  { name: "gemstone", type: "gem", points: 34, icon: "/PADDown/gem.png" } // Gemstone item definition
 ];
 
 // List of unique shiny pokémon
@@ -73,14 +73,14 @@ const SHINY_POOL = [
   { name: "shiny-magikarp", display: "Shiny Magikarp", points: 350, img: "/PADDown/shiny-magikarp.png" }
 ];
 
-// NEW: Mythic Pokémon Pool
+// Mythic Pokémon Pool
 const MYTHIC_POOL = [
   { name: "mew", display: "Mew (Mítico)", points: 800, img: "/PADDown/mew.png" },
   { name: "celebi", display: "Celebi (Mítico)", points: 850, img: "/PADDown/celebi.png" },
   { name: "jirachi", display: "Jirachi (Mítico)", points: 900, img: "/PADDown/jirachi.png" }
 ];
 
-const SHINY_CHANCE = 0.05; // 5% chance a spawn is shiny (from pool)
+const SHINY_CHANCE = 0.05;
 
 // --- Game state ---
 let currentThemeIndex = 1; 
@@ -92,17 +92,37 @@ let catchStreak = 0;
 let shiniesCaughtCount = 0; 
 let regularCaughtCount = 0; 
 let roundTimeLeft = 0; 
+let highScore = 0; 
 let activeSpawns = [];
 let pokemonsCapturedLog = {}; 
 let itemsCollectedLog = {}; 
 let roundActive = false;
 let roundTimer = null;
 let autoSpawnInterval = null;
-const ROUND_DURATION = 45; 
+const ROUND_DURATION = 60; 
 const AUTO_SPAWN_INTERVAL = 2500; 
 const TIME_BONUS_MYTHIC = 15; 
 const SHINY_REQUIREMENT = 3;
 const REGULAR_REQUIREMENT = 6;
+const SHINY_STREAK_REQUIREMENT = 8;
+const STREAK_BONUS_THRESHOLD = 5;
+
+// --- Exchange Constants ---
+const GEMSTONE_NAME = 'gemstone';
+const GEMSTONE_POINTS = ITEMS.find(item => item.name === GEMSTONE_NAME).points; // Should be 34
+const POKEBALLS_GAINED = 2;
+
+// --- Sound Initialization ---
+const shinySound = new Audio('ShinySound.mp3');
+shinySound.volume = 0.5;
+
+function playShinySound() {
+    shinySound.pause();
+    shinySound.currentTime = 0;
+    shinySound.play().catch(e => {
+        console.log("Audio playback blocked:", e);
+    });
+}
 
 // --- DOM Elements ---
 const gameMap = document.getElementById("game-map");
@@ -115,21 +135,42 @@ const masterballsDisplay = document.getElementById("masterballs-count");
 const streakDisplay = document.getElementById("catch-streak");
 const gameMessagePanel = document.getElementById("game-message-panel"); 
 const gameMessageText = document.getElementById("game-message-text"); 
+const highScoreDisplay = document.getElementById("high-score-display");
+const gemstoneExchangePanel = document.getElementById("gemstone-exchange-panel"); // NEW
+const gemstoneCountDisplay = document.getElementById("gemstone-count"); // NEW
+const exchangeButton = document.getElementById("exchange-btn"); // NEW
 
 // --- Helper: Random integer ---
 function randInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// --- Message/Error Panel Function (FIXED) ---
+// --- High Score Persistence ---
+function loadHighScore() {
+    const storedScore = localStorage.getItem('pokeCatchHighScore');
+    if (storedScore) {
+        highScore = parseInt(storedScore, 10);
+        highScoreDisplay.querySelector('strong').textContent = highScore;
+    }
+}
+
+function saveHighScore() {
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('pokeCatchHighScore', highScore);
+        highScoreDisplay.querySelector('strong').textContent = highScore;
+        return true;
+    }
+    return false;
+}
+
+// --- Message/Error Panel Function ---
 function displayGameMessage(message, type = 'info') {
     gameMessageText.innerHTML = message;
     gameMessagePanel.className = `game-message-panel message-${type}`;
     
-    // Clear any existing timeout before setting a new one
     clearTimeout(gameMessagePanel.timer);
 
-    // FIX: Only set the timeout to clear the message if it's NOT the summary
     if (type !== 'summary') {
         gameMessagePanel.timer = setTimeout(() => {
             gameMessageText.innerHTML = '¡Encuentra y captura rápidamente!';
@@ -137,6 +178,58 @@ function displayGameMessage(message, type = 'info') {
         }, 5000);
     }
 }
+
+// --- Gemstone Exchange Logic (NEW) ---
+
+function updateExchangeDisplay() {
+    const gemCount = itemsCollectedLog[GEMSTONE_NAME] ? itemsCollectedLog[GEMSTONE_NAME].count : 0;
+
+    // 1. Update text count
+    gemstoneCountDisplay.textContent = gemCount;
+
+    // 2. Update exchange points display (Static text, but updated if GEMSTONE_POINTS changes)
+    gemstoneExchangePanel.querySelector('.point-loss-value').textContent = GEMSTONE_POINTS + ' pts';
+
+    // 3. Toggle visibility and button state
+    if (gemCount > 0) {
+        gemstoneExchangePanel.classList.remove('hidden');
+        exchangeButton.disabled = false;
+    } else {
+        gemstoneExchangePanel.classList.add('hidden');
+        exchangeButton.disabled = true;
+    }
+}
+
+function exchangeGemstone() {
+    if (!roundActive) return;
+
+    const gemLog = itemsCollectedLog[GEMSTONE_NAME];
+    if (gemLog && gemLog.count > 0) {
+        
+        // 1. Deduct Gemstone
+        gemLog.count -= 1;
+        
+        // 2. Deduct points related to the gemstone
+        gemLog.totalPoints -= GEMSTONE_POINTS;
+        score -= GEMSTONE_POINTS;
+
+        // 3. Grant Pokéballs
+        pokeballs += POKEBALLS_GAINED;
+
+        // 4. Update UI
+        updateScore();
+        updateItemsLogDisplay();
+        updateExchangeDisplay();
+
+        displayGameMessage(`¡Intercambio exitoso! Perdiste ${GEMSTONE_POINTS} pts, ganaste ${POKEBALLS_GAINED} Pokéballs.`, 'success');
+
+    } else {
+        displayGameMessage("Error: No tienes gemas para intercambiar.", 'error');
+    }
+}
+
+// Attach event listener for the exchange button
+exchangeButton.addEventListener('click', exchangeGemstone);
 
 // --- Score Popup functionality ---
 function showScorePopup(points, x, y, isShiny = false, isMythic = false) {
@@ -209,7 +302,7 @@ function updateCapturedLogDisplay() {
   }
 }
 
-// --- Item Log Display functionality ---
+// --- Item Log Display functionality (UPDATED to call updateExchangeDisplay) ---
 function updateItemsLogDisplay() {
   const logList = document.getElementById("item-log-list");
   logList.innerHTML = '';
@@ -222,6 +315,9 @@ function updateItemsLogDisplay() {
   });
   
   for (const [name, log] of sortedItems) {
+    // Only display if count > 0
+    if (log.count <= 0) continue; 
+    
     hasCatches = true;
     const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
     
@@ -240,6 +336,8 @@ function updateItemsLogDisplay() {
   if (!hasCatches) {
     logList.innerHTML = '<p class="no-catches">Recolecta ítems para verlos aquí.</p>';
   }
+  
+  updateExchangeDisplay(); // NEW: Refresh exchange panel visibility/count
 }
 
 // --- Game Logic Functions ---
@@ -258,6 +356,13 @@ function updateScore() {
   pokeballsDisplay.textContent = pokeballs;
   masterballsDisplay.textContent = masterballs; 
   streakDisplay.textContent = catchStreak;
+  
+  // Visual emphasis for high streak
+  if (catchStreak >= STREAK_BONUS_THRESHOLD) {
+      streakDisplay.parentElement.classList.add('active');
+  } else {
+      streakDisplay.parentElement.classList.remove('active');
+  }
 }
 
 function clearEntities() {
@@ -268,12 +373,10 @@ function clearEntities() {
   activeSpawns = [];
 }
 
-/** * Spawns a Mythic Pokémon if conditions are met.
- * Only called internally by checkAndSpawnMythic().
- */
+/** * Spawns a Mythic Pokémon if conditions are met. */
 function spawnOneMythic(poke) {
     const el = document.createElement("div");
-    el.className = "spawn-entity pokemon mythic"; // Added mythic class
+    el.className = "spawn-entity pokemon mythic"; 
 
     const countdownTime = 5; 
     let timeLeft = countdownTime;
@@ -372,9 +475,16 @@ function spawnEntities() {
   for (let i = 0; i < count; i++) {
     // 40% chance for pokémon, 60% for items
     if (Math.random() < 0.4) {
+      // Check if shiny streak is met
+      const forceShiny = catchStreak >= SHINY_STREAK_REQUIREMENT;
+
       const themePokemons = THEMES[currentThemeIndex].pokemons;
-      // Decide if this spawn is a shiny (from pool) or a regular theme poke
-      if (Math.random() < SHINY_CHANCE) {
+      
+      // Spawn logic: force shiny if condition met, otherwise check random chance
+      if (forceShiny || Math.random() < SHINY_CHANCE) {
+        if (forceShiny) {
+            displayGameMessage(`¡Racha de 8! ¡Apareció un Shiny garantizado!`, 'alert');
+        }
         spawnOneShiny();
       } else {
         spawnOnePokemon(themePokemons[randInt(0, themePokemons.length-1)]);
@@ -419,7 +529,12 @@ function handleCatch(entity, poke, xPos, yPos, isShiny = false) {
         regularCaughtCount += 1;
     }
 
-    catchStreak += 1; 
+    // Update streak: Reset streak if shiny was caught after guarantee. Otherwise, increment.
+    if (isShiny && catchStreak >= SHINY_STREAK_REQUIREMENT) {
+        catchStreak = 0;
+    } else {
+        catchStreak += 1; 
+    }
 
     // Update Log
     const pokeKey = poke.name;
@@ -500,6 +615,9 @@ function spawnOneShiny() {
   el.style.top = yPos + "px";
   el.style.left = xPos + "px";
   gameMap.appendChild(el);
+
+  // Play the shiny sound effect
+  playShinySound();
 
   const timerSpan = el.querySelector('.countdown-timer');
   
@@ -583,7 +701,7 @@ function spawnOneItem(item) {
     }
     itemsCollectedLog[itemKey].count += 1;
     itemsCollectedLog[itemKey].totalPoints += pointsGained;
-    updateItemsLogDisplay();
+    updateItemsLogDisplay(); // Calls updateExchangeDisplay internally
     // END LOGIC
     
     showScorePopup(pointsGained, xPos, yPos);
@@ -645,14 +763,23 @@ function endRound() {
   spawnBtn.textContent = "¡Spawnea Pokémons e ítems!";
   clearEntities();
   
+  // Save High Score
+  const newHighScore = saveHighScore();
+  
   // Summary Message Logic (Logs remain visible)
-  const summaryMessage = `
+  let summaryMessage = `
     <h4 style="color: #ffda79;">¡Ronda finalizada!</h4>
     <p>Puntaje total: <strong>${score}</strong></p>
     <p>Pokémon atrapados: <strong>${pokemonsCaught}</strong></p>
     <p>Racha final/máxima: <strong>${catchStreak}</strong></p>
-    <p>¡Vuelve a jugar para superar tu puntaje!</p>
   `;
+  if (newHighScore) {
+    summaryMessage += `<p style="color: gold; font-weight: bold;">¡NUEVO PUNTAJE MÁXIMO!</p>`;
+  } else {
+     summaryMessage += `<p>Máximo Puntaje: <strong>${highScore}</strong></p>`;
+  }
+  summaryMessage += `<p>¡Vuelve a jugar para superar tu puntaje!</p>`;
+  
   displayGameMessage(summaryMessage, 'summary'); 
   
   // Logs maintain their final state until startRound() is called again.
@@ -666,9 +793,12 @@ spawnBtn.addEventListener("click", function() {
 });
 
 window.onload = function() {
+  // Load high score on page load
+  loadHighScore();
+  
   gameMap.className = THEMES[currentThemeIndex].class;
   currentThemeDisplay.textContent = THEMES[currentThemeIndex].name;
   updateScore();
   updateCapturedLogDisplay(); 
-  updateItemsLogDisplay(); 
+  updateItemsLogDisplay(); // Initialize Exchange Display
 };

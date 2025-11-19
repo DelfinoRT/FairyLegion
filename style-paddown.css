@@ -13,7 +13,7 @@ header, footer {
   box-shadow: 0 2px 6px #1b18185a;
 }
 header .game-header {
-  max-width: 1080px; 
+  max-width: 1280px; 
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -32,30 +32,64 @@ footer a:hover {
   text-decoration: underline;
 }
 
-/* Prominent Score Display */
+/* Score Group Wrapper */
+.score-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Prominent Score Display (Current Score) */
 .main-score-display {
   font-size: 1.4em;
   font-weight: 500;
   color: #ffda79;
+  line-height: 1.2;
 }
 .main-score-display strong {
   font-weight: bold;
   color: #fff;
   margin-left: 5px;
 }
+/* High Score Display */
+.high-score-display {
+    font-size: 0.9em;
+    color: #9bb7c4;
+}
+.high-score-display strong {
+    color: #fff;
+}
 
 
-/* Game container */
+/* Game container (UPDATED max-width) */
 .game-container {
   display: flex;
-  max-width: 1080px; 
+  max-width: 1280px; /* INCREASED: To fit wider game area */
   margin: 30px auto;
   gap: 20px; 
   align-items: flex-start;
 }
 
-/* Panel Base Style */
-.item-inventory-panel,
+/* Panel Wrapper for Item Log & Exchange */
+.item-inventory-panel-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 200px;
+}
+
+/* Item Log Panel Style */
+.item-inventory-panel {
+  width: 200px; 
+  background: #2e3942;
+  box-shadow: 0 2px 16px #0004;
+  border-radius: 16px;
+  padding: 18px;
+  min-height: 150px; /* Reduced minimum height to allow space for the new panel */
+  flex-shrink: 0;
+}
+
+/* Capture Log Panel Style (remains 200px) */
 .capture-log-panel {
   width: 200px; 
   background: #2e3942;
@@ -65,6 +99,72 @@ footer a:hover {
   min-height: 370px;
   flex-shrink: 0;
 }
+
+/* NEW: Gemstone Exchange Panel Styling */
+.gemstone-exchange-panel {
+    width: 200px;
+    background: #1f252a;
+    box-shadow: 0 2px 8px #0004;
+    border-radius: 16px;
+    padding: 18px;
+    border: 2px solid #6de6ee;
+    text-align: center;
+    transition: opacity 0.3s;
+}
+
+.gemstone-exchange-panel.hidden {
+    display: none; /* Hide when player has no gemstones */
+}
+
+.gemstone-exchange-panel h4 {
+    margin-top: 0;
+    color: #6de6ee;
+    border-bottom: 1px solid #4a5966;
+    padding-bottom: 5px;
+}
+
+.gemstone-exchange-panel p {
+    font-size: 0.9em;
+    margin: 5px 0;
+}
+
+.gemstone-exchange-panel strong {
+    color: #ffe771;
+}
+
+.exchange-offer {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #4a5966;
+}
+
+.exchange-offer p {
+    font-size: 0.95em;
+    color: #a1ffcb;
+}
+
+.exchange-offer button {
+    margin-top: 8px;
+    padding: 6px 12px;
+    background: #57d785;
+    color: #1d2920;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.1s;
+}
+
+.exchange-offer button:hover:not(:disabled) {
+    background: #44be74;
+}
+
+.exchange-offer button:disabled {
+    background: #4a5966;
+    cursor: not-allowed;
+    color: #bbb;
+}
+
 
 /* Log Content Styling */
 .log-item {
@@ -116,11 +216,11 @@ footer a:hover {
 }
 
 
-/* Game area */
+/* Game area (WIDER) */
 .game-area {
   flex-grow: 1; 
   width: 100%;
-  max-width: 650px; 
+  max-width: 800px; /* INCREASED max width for central game area */
   margin: 0; 
   background: rgba(0,0,0,0.17);
   box-shadow: 0 2px 16px #0004;
@@ -163,57 +263,23 @@ footer a:hover {
   color: #7ecbff;
   margin-bottom: 15px;
   font-weight: 500;
+  transition: all 0.3s ease; 
 }
 .catch-streak-display strong {
   font-weight: bold;
   color: #fff;
 }
-
-/* NEW: Game Message Panel Styling */
-.game-message-panel {
-    background: #3a4753;
-    color: #fff;
-    padding: 8px 12px;
-    border-radius: 8px;
-    text-align: center;
-    min-height: 20px;
-    margin-bottom: 10px;
-    font-size: 0.95em;
-    transition: background 0.3s;
-}
-
-.game-message-panel p {
-    margin: 0;
-    line-height: 1.4;
-}
-.game-message-panel h4 {
-    margin: 5px 0;
-}
-.game-message-panel strong {
+/* Streak Visual Cue (Multiplier active) */
+.catch-streak-display.active {
     color: #ffda79;
+    font-size: 1.15em;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 218, 121, 0.8);
+    animation: streakGlow 1.5s infinite alternate;
 }
-
-/* Message Types */
-.message-error {
-    background: #c0392b;
-    color: #fff;
-}
-.message-success {
-    background: #2ecc71;
-}
-.message-alert {
-    background: #e67e22;
-}
-.message-bonus {
-    background: #9b59b6;
-}
-.message-start {
-    background: #3498db;
-}
-.message-summary {
-    background: #2c3e50;
-    color: #fff;
-    border: 1px solid #ffda79;
+@keyframes streakGlow {
+    from { box-shadow: 0 0 0px rgba(0,0,0,0); }
+    to { box-shadow: 0 0 10px rgba(255, 218, 121, 0.5); }
 }
 
 
@@ -231,7 +297,7 @@ footer a:hover {
   height: 320px;
   position: relative;
   border-radius: 12px;
-  margin-bottom: 16px; /* Reduced margin to fit message panel */
+  margin-bottom: 16px; 
   background: #cbe1f1;
   transition: background 0.6s;
   box-shadow: 0 1.5px 16px #1d23404c;
@@ -347,7 +413,7 @@ ul {
 }
 
 /* Instructions layout */
-@media (max-width: 1080px) {
+@media (max-width: 1280px) { /* Adjust breakpoint for larger map */
   .game-container {
     flex-direction: column;
     max-width: 650px;
@@ -357,15 +423,41 @@ ul {
     max-width: 100%;
     margin-bottom: 20px;
   }
-  .capture-log-panel,
-  .item-inventory-panel {
+  /* Stacking panels below the map */
+  .item-inventory-panel-wrapper {
+      width: 100%;
+      max-width: 650px;
+      flex-direction: row; /* Keep the item log and exchange side-by-side */
+      gap: 15px;
+      margin-bottom: 15px;
+  }
+  .capture-log-panel {
     width: 100%;
     min-height: auto;
     max-width: 650px;
     margin-bottom: 15px;
   }
+  .item-inventory-panel,
+  .gemstone-exchange-panel {
+      width: 50%;
+      min-height: auto;
+  }
   header .game-header {
     max-width: 650px;
+  }
+  /* Adjusted score group alignment for stacking */
+  .score-group {
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+      margin-right: 15px;
+  }
+  .main-score-display {
+      font-size: 1.2em;
+  }
+  .high-score-display {
+      font-size: 0.8em;
   }
 }
 
@@ -378,6 +470,15 @@ ul {
   #game-map {
     height: 42vw;
     min-height: 200px;
+  }
+  /* Force item panels to stack vertically on small screens */
+  .item-inventory-panel-wrapper {
+      flex-direction: column;
+      gap: 10px;
+  }
+  .item-inventory-panel,
+  .gemstone-exchange-panel {
+      width: 100%;
   }
 }
 @media (max-width: 520px) {
@@ -410,6 +511,53 @@ ul {
   font-weight: bold;
   box-shadow: 0 2px 4px rgba(0,0,0,0.3);
   z-index: 5;
+}
+
+/* Game Message Panel Styling */
+.game-message-panel {
+    background: #3a4753;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-align: center;
+    min-height: 20px;
+    margin-bottom: 10px;
+    font-size: 0.95em;
+    transition: background 0.3s;
+}
+
+.game-message-panel p {
+    margin: 0;
+    line-height: 1.4;
+}
+.game-message-panel h4 {
+    margin: 5px 0;
+}
+.game-message-panel strong {
+    color: #ffda79;
+}
+
+/* Message Types */
+.message-error {
+    background: #c0392b;
+    color: #fff;
+}
+.message-success {
+    background: #2ecc71;
+}
+.message-alert {
+    background: #e67e22;
+}
+.message-bonus {
+    background: #9b59b6;
+}
+.message-start {
+    background: #3498db;
+}
+.message-summary {
+    background: #2c3e50;
+    color: #fff;
+    border: 1px solid #ffda79;
 }
 
 /* Score Popup Styles */

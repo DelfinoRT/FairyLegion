@@ -1,77 +1,95 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pokémon Catch Mini-Game</title>
-  <link rel="stylesheet" href="style-paddown.css">
-  <link rel="icon" type="image/png" sizes="32x32" href="/PADDown/favicon-32x32.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokémon Catch Mini-Game</title>
+  <link rel="stylesheet" href="style-paddown.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="/PADDown/favicon-32x32.png">
 </head>
 <body>
-  <header>
-    <div class="game-header">
-      <div class="main-score-display">
-        Puntaje Total: <strong id="points">0</strong>
-      </div>
-      <button class="map-theme-btn" id="changeThemeBtn">Cambiar Mapa</button>
-      <span id="current-theme">Bosque</span>
-    </div>
-  </header>
-  <main>
-    <div class="game-container">
-      
-      <div class="item-inventory-panel">
-        <h3>Ítems Recolectados</h3>
-        <div id="item-log-list">
-          <p class="no-catches">Recolecta ítems para verlos aquí.</p>
-        </div>
-      </div>
-      
-      <div class="game-area">
-        <div class="pokeball-inventory-display">
-          <span>Pokéballs: <strong id="pokeballs-count">3</strong></span>
-          <img src="/PADDown/pokeball.png" width="20" height="20" title="Pokéballs normales">
-          
-          <span class="masterball-count-separator">|</span>
-          
-          <span>Masterballs: <strong id="masterballs-count">0</strong></span>
-          <img src="/PADDown/masterball.png" width="20" height="20" title="Masterballs (Solo para Míticos)">
-        </div>
-        
-        <div class="catch-streak-display">Racha: <strong id="catch-streak">0</strong></div>
-        
-        <div id="game-map" class="theme-forest">
+  <header>
+    <div class="game-header">
+      <div class="score-group">
+        <div class="main-score-display">
+          Puntaje Actual: <strong id="points">0</strong>
+        </div>
+        <div id="high-score-display" class="high-score-display">
+          Máximo Puntaje: <strong>0</strong>
+        </div>
+      </div>
+      <button class="map-theme-btn" id="changeThemeBtn">Cambiar Mapa</button>
+      <span id="current-theme">Bosque</span>
+    </div>
+  </header>
+  <section style="max-width:650px;margin:30px auto 0 auto;text-align:center;">
+      <h3>Instrucciones</h3>
+      <ul style="text-align:left;display:inline-block;margin:0 auto;">
+        <li>Haz click rápido sobre Pokémon o ítems cuando aparezcan en el mapa para capturarlos o recolectar puntos.</li>
+        <li><b>Racha de Captura:</b> Capturar Pokémon o ítems incrementa tu racha. Si la racha es alta, ¡obtienes un bonus de puntos!</li>
+        <li><b>Shiny Garantizado:</b> Si alcanzas una racha de <b>8</b> Pokémon/ítems sin fallar o dejar que un spawn desaparezca, el próximo Pokémon aparecerá como Shiny garantizado.</li>
+        <li><b>Encuentro Mítico:</b> Tras capturar <b>3 Shiny</b> y <b>6 Pokémon normales</b>, si tienes al menos una <b>Masterball</b> disponible, aparecerá un Pokémon Mítico.</li>
+        <li><b>Masterballs:</b> Solo pueden usarse para capturar Pokémon Míticos. ¡Recoge Masterballs de los spawns de ítems!</li>
+        <li><b>Bonus de Tiempo:</b> Capturar un Pokémon Mítico añade <b>+15 segundos</b> al reloj de la ronda.</li>
+        <li><b>Intercambio de Gemas (NUEVO):</b> Puedes intercambiar <b>1 Gema</b> (perdiendo sus puntos) por <b>2 Pokéballs</b> adicionales para continuar capturando.</li>
+        <li>Cambiar el tema del mapa (volcán, bosque, tundra) cambiará los tipos de Pokémon e ítems que pueden aparecer.</li>
+      </ul>
+    </section>
+  <main>
+    <div class="game-container">
+      
+      <div class="item-inventory-panel-wrapper">
+          <div class="item-inventory-panel">
+            <h3>Ítems Recolectados</h3>
+            <div id="item-log-list">
+              <p class="no-catches">Recolecta ítems para verlos aquí.</p>
+            </div>
           </div>
-
-        <div id="game-message-panel" class="game-message-panel">
-          <p id="game-message-text">¡Comienza la ronda para capturar Pokémon!</p>
-        </div>
-        
-        <button class="spawn-btn" id="spawnBtn">¡Spawnea Pokémons e ítems!</button>
+          <div id="gemstone-exchange-panel" class="gemstone-exchange-panel hidden">
+              <h4>Intercambio de Gemas</h4>
+              <p>Tienes <strong id="gemstone-count">0</strong> Gemas disponibles.</p>
+              <div class="exchange-offer">
+                  <p>1 Gema (<span class="point-loss-value">34 pts</span>) &rarr; 2 Pokéballs</p>
+                  <button id="exchange-btn" disabled>Intercambiar</button>
+              </div>
+          </div>
       </div>
+      
+      <div class="game-area">
+        <div class="pokeball-inventory-display">
+          <span>Pokéballs: <strong id="pokeballs-count">3</strong></span>
+          <img src="/PADDown/pokeball.png" width="20" height="20" title="Pokéballs normales">
+          
+          <span class="masterball-count-separator">|</span>
+          
+          <span>Masterballs: <strong id="masterballs-count">0</strong></span>
+          <img src="/PADDown/masterball.png" width="20" height="20" title="Masterballs (Solo para Míticos)">
+        </div>
+        
+        <div class="catch-streak-display">Racha: <strong id="catch-streak">0</strong></div>
+        
+        <div id="game-map" class="theme-forest">
+          </div>
 
-      <div class="capture-log-panel">
-        <h3>Pokémon Capturados (<strong id="pokemons-caught">0</strong>)</h3>
-        <div id="captured-log-list">
-          <p class="no-catches">¡Aún no has capturado ningún Pokémon en esta ronda!</p>
-        </div>
-      </div>
-    </div>
+        <div id="game-message-panel" class="game-message-panel">
+          <p id="game-message-text">¡Comienza la ronda para capturar Pokémon!</p>
+        </div>
+        
+        <button class="spawn-btn" id="spawnBtn">¡Spawnea Pokémons e ítems!</button>
+      </div>
 
-    <section style="max-width:650px;margin:30px auto 0 auto;text-align:center;">
-      <h3>Instrucciones</h3>
-      <ul style="text-align:left;display:inline-block;margin:0 auto;">
-        <li>Haz click rápido sobre Pokémon o ítems cuando aparezcan en el mapa para capturarlos o recolectar puntos.</li>
-        <li>**Encuentro Mítico:** Tras capturar **3 Shiny** y **6 Pokémon normales**, si tienes una **Masterball**, aparecerá un Pokémon Mítico.</li>
-        <li>**Masterballs:** Solo pueden usarse para capturar Pokémon Míticos. ¡Recoge Masterballs de los spawns de ítems!</li>
-        <li>**Bonus de Tiempo:** Capturar un Pokémon Mítico añade **+15 segundos** al reloj de la ronda.</li>
-        <li>**Racha de Captura:** Capturar Pokémon o ítems incrementa tu racha para obtener un bonus de puntos.</li>
-      </ul>
-    </section>
-  </main>
-  <footer>
-    <p>© 2025 PokéMiniGame <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in">/ Desarrollado por Silvarion</a></p>
-  </footer>
-  <script src="script-paddown.js"></script>
+      <div class="capture-log-panel">
+        <h3>Pokémon Capturados (<strong id="pokemons-caught">0</strong>)</h3>
+        <div id="captured-log-list">
+          <p class="no-catches">¡Aún no has capturado ningún Pokémon en esta ronda!</p>
+        </div>
+      </div>
+    </div>
+    <br>
+  </main>
+  <footer>
+    <p>© 2025 PokéMiniGame <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in">/ Desarrollado por Silvarion</a></p>
+  </footer>
+  <script src="script-paddown.js"></script>
 </body>
 </html>
