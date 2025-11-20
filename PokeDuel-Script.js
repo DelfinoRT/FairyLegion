@@ -1,5 +1,5 @@
 /* =========================================
-   POKEDUEL COMPLETE SCRIPT (FIXED DRAFT LOGIC)
+   POKEDUEL COMPLETE SCRIPT (FIXED WINRATE)
    ========================================= */
 
 /* --- 1. MAIN GAME DATA --- */
@@ -43,10 +43,71 @@ const pokemonData = [
     { name: "Excadrill", types: ["Ground", "Steel"], hp: 550, tms: ["Earthquake", "Iron Head", "Rock Slide", "X-Scissor", "Drill Run", "Slash", "Poison Jab", "Shadow Claw", "Smart Strike", "Skull Bash"] },
     { name: "Krookodile", types: ["Ground", "Dark"], hp: 475, tms: ["Earthquake", "Crunch", "Stone Edge", "Dragon Claw", "Fire Fang", "Thunder Fang", "Outrage", "Dark Pulse", "Foul Play", "Superpower"] },
     { name: "Zoroark", types: ["Dark"], hp: 300, tms: ["Dark Pulse", "Flamethrower", "Focus Blast", "Shadow Ball", "Grass Knot", "U-turn", "Extrasensory", "Sludge Bomb", "Night Daze", "Snarl"] },
-    { name: "Volcarona", types: ["Bug", "Fire"], hp: 425, tms: ["Bug Buzz", "Flamethrower", "Hurricane", "Psychic", "Giga Drain", "Solar Beam", "Silver Wind", "Fire Blast", "Heat Wave", "Overheat"] }
+    { name: "Volcarona", types: ["Bug", "Fire"], hp: 425, tms: ["Bug Buzz", "Flamethrower", "Hurricane", "Psychic", "Giga Drain", "Solar Beam", "Silver Wind", "Fire Blast", "Heat Wave", "Overheat"] },
+    { name: "Onix", types: ["Rock", "Ground"], hp: 500, tms: ["Stone Edge", "Earthquake", "Iron Head", "Rock Slide"] },
+    { name: "Golem", types: ["Rock", "Ground"], hp: 480, tms: ["Stone Edge", "Earthquake", "Explosion", "Heavy Slam"] },
+    { name: "Lycanroc", types: ["Rock"], hp: 400, tms: ["Stone Edge", "Crunch", "Brick Break", "Rock Slide"] },
+    { name: "Starmie", types: ["Water", "Psychic"], hp: 380, tms: ["Surf", "Psychic", "Ice Beam", "Thunderbolt"] },
+    { name: "Golduck", types: ["Water"], hp: 400, tms: ["Surf", "Psychic", "Ice Beam", "Hydro Pump"] },
+    { name: "Milotic", types: ["Water"], hp: 500, tms: ["Surf", "Ice Beam", "Hydro Pump", "Dragon Pulse"] },
+    { name: "Raichu", types: ["Electric"], hp: 350, tms: ["Thunderbolt", "Volt Switch", "Brick Break", "Thunder"] },
+    { name: "Jolteon", types: ["Electric"], hp: 350, tms: ["Thunderbolt", "Shadow Ball", "Volt Switch", "Signal Beam"] },
+    { name: "Vileplume", types: ["Grass", "Poison"], hp: 420, tms: ["Sludge Bomb", "Giga Drain", "Moonblast", "Energy Ball"] },
+    { name: "Tangrowth", types: ["Grass"], hp: 550, tms: ["Power Whip", "Earthquake", "Knock Off", "Rock Slide"] },
+    { name: "Leafeon", types: ["Grass"], hp: 400, tms: ["Leaf Blade", "X-Scissor", "Aerial Ace", "Knock Off"] },
+    { name: "Crobat", types: ["Poison", "Flying"], hp: 450, tms: ["Brave Bird", "Cross Poison", "X-Scissor", "U-turn"] },
+    { name: "Muk", types: ["Poison"], hp: 520, tms: ["Gunk Shot", "Ice Punch", "Fire Punch", "Shadow Sneak"] },
+    { name: "Espeon", types: ["Psychic"], hp: 350, tms: ["Psychic", "Shadow Ball", "Dazzling Gleam", "Psyshock"] },
+    { name: "Reuniclus", types: ["Psychic"], hp: 500, tms: ["Psychic", "Focus Blast", "Shadow Ball", "Energy Ball"] },
+    { name: "Rapidash", types: ["Fire"], hp: 380, tms: ["Flare Blitz", "Wild Charge", "Drill Run", "Megahorn"] },
+    { name: "Magmar", types: ["Fire"], hp: 380, tms: ["Flamethrower", "Psychic", "Thunder Punch", "Focus Blast"] },
+    { name: "Arcanine", types: ["Fire"], hp: 480, tms: ["Flare Blitz", "Wild Charge", "Close Combat", "Extreme Speed"] },
+    { name: "Nidoking", types: ["Poison", "Ground"], hp: 450, tms: ["Earth Power", "Sludge Bomb", "Ice Beam", "Thunderbolt"] },
+    { name: "Dugtrio", types: ["Ground"], hp: 280, tms: ["Earthquake", "Stone Edge", "Sucker Punch", "Aerial Ace"] },
+    { name: "Pidgeot", types: ["Normal", "Flying"], hp: 400, tms: ["Hurricane", "Heat Wave", "U-turn", "Hyper Voice"] },
+    { name: "Noctowl", types: ["Normal", "Flying"], hp: 450, tms: ["Air Slash", "Psychic", "Shadow Ball", "Moonblast"] },
+    { name: "Skarmory", types: ["Steel", "Flying"], hp: 400, tms: ["Brave Bird", "Iron Head", "Body Slam", "Night Slash"] },
+    { name: "Scizor", types: ["Bug", "Steel"], hp: 400, tms: ["Bullet Punch", "X-Scissor", "Superpower", "Aerial Ace"] },
+    { name: "Heracross", types: ["Bug", "Fighting"], hp: 420, tms: ["Megahorn", "Close Combat", "Stone Edge", "Brick Break"] },
+    { name: "Ariados", types: ["Bug", "Poison"], hp: 350, tms: ["Poison Jab", "Megahorn", "Sucker Punch", "Psychic"] },
+    { name: "Miltank", types: ["Normal"], hp: 480, tms: ["Body Slam", "Hammer Arm", "Zen Headbutt", "Ice Punch"] },
+    { name: "Wigglytuff", types: ["Normal", "Fairy"], hp: 600, tms: ["Hyper Voice", "Dazzling Gleam", "Flamethrower", "Thunderbolt"] },
+    { name: "Blissey", types: ["Normal"], hp: 900, tms: ["Hyper Voice", "Flamethrower", "Ice Beam", "Thunderbolt"] },
+    { name: "Mismagius", types: ["Ghost"], hp: 350, tms: ["Shadow Ball", "Mystical Fire", "Psychic", "Energy Ball"] },
+    { name: "Poliwrath", types: ["Water", "Fighting"], hp: 450, tms: ["Waterfall", "Close Combat", "Ice Punch", "Earthquake"] },
+    { name: "Steelix", types: ["Steel", "Ground"], hp: 500, tms: ["Heavy Slam", "Earthquake", "Stone Edge", "Crunch"] },
+    { name: "Magnezone", types: ["Electric", "Steel"], hp: 400, tms: ["Thunderbolt", "Flash Cannon", "Body Slam", "Tri Attack"] },
+    { name: "Empoleon", types: ["Water", "Steel"], hp: 450, tms: ["Hydro Pump", "Flash Cannon", "Ice Beam", "Drill Peck"] },
+    { name: "Mamoswine", types: ["Ice", "Ground"], hp: 500, tms: ["Earthquake", "Icicle Crash", "Superpower", "Ice Shard"] },
+    { name: "Cloyster", types: ["Water", "Ice"], hp: 350, tms: ["Icicle Spear", "Rock Blast", "Hydro Pump", "Ice Shard"] },
+    { name: "Froslass", types: ["Ice", "Ghost"], hp: 350, tms: ["Ice Beam", "Shadow Ball", "Thunderbolt", "Psychic"] },
+    { name: "Kingdra", types: ["Water", "Dragon"], hp: 400, tms: ["Hydro Pump", "Dragon Pulse", "Ice Beam", "Flash Cannon"] },
+    { name: "Druddigon", types: ["Dragon"], hp: 450, tms: ["Dragon Claw", "Superpower", "Gunk Shot", "Sucker Punch"] },
+    { name: "Manectric", types: ["Electric"], hp: 380, tms: ["Thunderbolt", "Flamethrower", "Volt Switch", "Snarl"] },
+    { name: "Magneton", types: ["Electric", "Steel"], hp: 350, tms: ["Thunderbolt", "Flash Cannon", "Tri Attack", "Volt Switch"] },
+    { name: "Electrode", types: ["Electric"], hp: 350, tms: ["Thunderbolt", "Volt Switch", "Foul Play", "Signal Beam"] },
+    { name: "Torkoal", types: ["Fire"], hp: 450, tms: ["Heat Wave", "Earth Power", "Body Slam", "Solar Beam"] },
+    { name: "Camerupt", types: ["Fire", "Ground"], hp: 450, tms: ["Earth Power", "Fire Blast", "Rock Slide", "Flash Cannon"] },
+    { name: "Houndoom", types: ["Dark", "Fire"], hp: 380, tms: ["Dark Pulse", "Flamethrower", "Sludge Bomb", "Solar Beam"] },
+    { name: "Slaking", types: ["Normal"], hp: 650, tms: ["Giga Impact", "Earthquake", "Play Rough", "Hammer Arm"] },
+    { name: "Zangoose", types: ["Normal"], hp: 380, tms: ["Close Combat", "Return", "Night Slash", "X-Scissor"] },
+    { name: "Ursaring", types: ["Normal"], hp: 500, tms: ["Return", "Close Combat", "Crunch", "Earthquake"] },
+    { name: "Altaria", types: ["Dragon", "Flying"], hp: 400, tms: ["Dragon Pulse", "Moonblast", "Flamethrower", "Hurricane"] },
+    { name: "Pelipper", types: ["Water", "Flying"], hp: 400, tms: ["Hurricane", "Surf", "Ice Beam", "Shock Wave"] },
+    { name: "Tropius", types: ["Grass", "Flying"], hp: 480, tms: ["Energy Ball", "Air Slash", "Earthquake", "Body Slam"] },
+    { name: "Lunatone", types: ["Rock", "Psychic"], hp: 400, tms: ["Psychic", "Power Gem", "Earth Power", "Moonblast"] },
+    { name: "Solrock", types: ["Rock", "Psychic"], hp: 400, tms: ["Zen Headbutt", "Rock Slide", "Flare Blitz", "Earthquake"] },
+    { name: "Ludicolo", types: ["Water", "Grass"], hp: 420, tms: ["Surf", "Giga Drain", "Ice Beam", "Focus Blast"] },
+    { name: "Bastiodon", types: ["Rock", "Steel"], hp: 500, tms: ["Iron Head", "Stone Edge", "Earthquake", "Heavy Slam"] },
+    { name: "Torterra", types: ["Grass", "Ground"], hp: 500, tms: ["Wood Hammer", "Earthquake", "Stone Edge", "Crunch"] },
+    { name: "Gallade", types: ["Psychic", "Fighting"], hp: 400, tms: ["Close Combat", "Psycho Cut", "Leaf Blade", "Night Slash"] },
+    { name: "Gyarados", types: ["Water", "Flying"], hp: 500, tms: ["Waterfall", "Earthquake", "Crunch", "Ice Fang"] },
+    { name: "Quagsire", types: ["Water", "Ground"], hp: 450, tms: ["Earthquake", "Waterfall", "Stone Edge", "Ice Punch"] },
+    { name: "Chandelure", types: ["Ghost", "Fire"], hp: 380, tms: ["Shadow Ball", "Fire Blast", "Energy Ball", "Psychic"] },
+    { name: "Haxorus", types: ["Dragon"], hp: 400, tms: ["Outrage", "Earthquake", "Poison Jab", "Close Combat"] },
+    { name: "Flygon", types: ["Ground", "Dragon"], hp: 420, tms: ["Earthquake", "Dragon Claw", "Fire Punch", "U-turn"] }
 ];
 
-// TM Database
 const tmDatabase = {
     "Flamethrower": { type: "Fire", power: 90, pp: 15 },
     "Air Slash": { type: "Flying", power: 75, pp: 15 },
@@ -330,7 +391,6 @@ const extraPokemonDB = {
     "Kingdra": { types: ["Water", "Dragon"], hp: 400, moves: ["Hydro Pump", "Dragon Pulse", "Ice Beam", "Flash Cannon"] },
     "Druddigon": { types: ["Dragon"], hp: 450, moves: ["Dragon Claw", "Superpower", "Gunk Shot", "Sucker Punch"] },
     "Manectric": { types: ["Electric"], hp: 380, moves: ["Thunderbolt", "Flamethrower", "Volt Switch", "Snarl"] },
-    "Magneton": { types: ["Electric", "Steel"], hp: 350, moves: ["Thunderbolt", "Flash Cannon", "Tri Attack", "Volt Switch"] },
     "Electrode": { types: ["Electric"], hp: 350, moves: ["Thunderbolt", "Volt Switch", "Foul Play", "Signal Beam"] },
     "Torkoal": { types: ["Fire"], hp: 450, moves: ["Heat Wave", "Earth Power", "Body Slam", "Solar Beam"] },
     "Camerupt": { types: ["Fire", "Ground"], hp: 450, moves: ["Earth Power", "Fire Blast", "Rock Slide", "Flash Cannon"] },
@@ -370,7 +430,10 @@ let gameState = {
     logs: [],
     playerSwapsLeft: 2,
     machineSwapsLeft: 2,
-    isGymBattle: false
+    isGymBattle: false,
+    // currently active single-type filter (null = no filter)
+    selectedTypeFilter: null
+    , trainerName: ''
 };
 
 let playerStats = {
@@ -399,6 +462,11 @@ const els = {
     profileBtn: document.getElementById('profileBtn'),
     profileModal: document.getElementById('profileModal'),
     closeProfileBtn: document.getElementById('closeProfileBtn'),
+    trainerNameDisplay: document.getElementById('trainer-name-display'),
+    trainerNameInput: document.getElementById('trainer-name-input'),
+    trainerEditBtn: document.getElementById('trainer-edit-btn'),
+    trainerSaveBtn: document.getElementById('trainer-save-btn'),
+    trainerCancelBtn: document.getElementById('trainer-cancel-btn'),
     badgeContainer: document.getElementById('badge-collection-container'),
     
     // Stats Elements
@@ -431,6 +499,7 @@ const els = {
 
     // Containers
     selectionGrid: document.getElementById('selection-grid'),
+    typeFilters: document.getElementById('type-filters'),
     starterGrid: document.getElementById('starter-selection-grid'),
     tmContainer: document.getElementById('tm-selection-container'),
     
@@ -472,6 +541,8 @@ const els = {
     
     resultText: document.getElementById('duel-result-text'),
     statusSpan: document.getElementById('current-status')
+    , recentDuelsPanel: document.getElementById('recent-duels-panel')
+    , recentDuelsList: document.getElementById('recent-duels-list')
 };
 
 /* =========================================
@@ -507,6 +578,70 @@ window.addEventListener('click', (event) => {
     if (event.target == els.gymModal) els.gymModal.classList.add('hidden');
 });
 
+// Trainer name edit handlers
+function setTrainerEditVisible(visible) {
+    const area = document.getElementById('trainer-edit-area');
+    if (!area) return;
+    area.style.display = visible ? '' : 'none';
+    if (els.trainerEditBtn) els.trainerEditBtn.style.display = visible ? 'none' : '';
+}
+
+function saveTrainerNameFromInput() {
+    if (!els.trainerNameInput) return;
+    const val = (els.trainerNameInput.value || '').trim();
+    if (val.length > 20) {
+        alert('El nombre solo puede tener hasta 20 caracteres.');
+        return;
+    }
+    // If a name was already set, prevent re-saving (shouldn't happen because edit button is hidden)
+    const alreadySet = !!(gameState.trainerName && gameState.trainerName.length > 0);
+    if (alreadySet) {
+        alert('El nombre ya ha sido establecido y no puede modificarse. Borra datos para cambiarlo.');
+        setTrainerEditVisible(false);
+        return;
+    }
+    // Only accept non-empty names as a first-time set
+    if (val.length === 0) {
+        alert('Introduce un nombre válido (no vacío).');
+        return;
+    }
+    gameState.trainerName = val;
+    if (els.trainerNameDisplay) els.trainerNameDisplay.innerText = val;
+    // Inform the player this is permanent until data is erased
+    alert('Has establecido tu Nombre de Entrenador. No podrás cambiarlo a menos que borres los datos del juego.');
+    // persist and disable further edits
+    saveStorage();
+    setTrainerEditVisible(false);
+    if (els.trainerEditBtn) els.trainerEditBtn.style.display = 'none';
+}
+
+if (els.trainerEditBtn) els.trainerEditBtn.addEventListener('click', () => {
+    if (els.trainerNameInput) els.trainerNameInput.value = gameState.trainerName || '';
+    setTrainerEditVisible(true);
+});
+if (els.trainerSaveBtn) els.trainerSaveBtn.addEventListener('click', saveTrainerNameFromInput);
+if (els.trainerCancelBtn) els.trainerCancelBtn.addEventListener('click', () => { setTrainerEditVisible(false); if (els.trainerNameInput) els.trainerNameInput.value = gameState.trainerName || ''; });
+
+// If the user refreshes or closes while a duel is active, count it as a forfeit (loss)
+window.addEventListener('beforeunload', (e) => {
+    try {
+        // Best-effort: on unload we only ensure the active flag/snapshot remain persisted.
+        // Do NOT attempt to compute or remove the forfeit summary here because many
+        // browsers restrict storage operations during unload and this can cause
+        // the active flag to be cleared leaving no record for recovery on next load.
+        if (gameState && gameState.duelActive) {
+            try { localStorage.setItem('pokeDuelDuelActive', '1'); } catch(e) {}
+            try {
+                const snap = {
+                    playerTeam: gameState.playerTeam.map(p => ({ name: p.name, currentHp: (typeof p.currentHp === 'number' ? p.currentHp : p.hp), hp: p.hp })),
+                    machineTeam: gameState.machineTeam.map(p => ({ name: p.name, currentHp: (typeof p.currentHp === 'number' ? p.currentHp : p.hp), hp: p.hp }))
+                };
+                localStorage.setItem('pokeDuelActiveSnapshot', JSON.stringify(snap));
+            } catch (e) { /* best-effort */ }
+        }
+    } catch (err) { /* best-effort */ }
+});
+
 /* =========================================
    6. STORAGE & HELPERS
    ========================================= */
@@ -515,6 +650,8 @@ function saveStorage() {
     localStorage.setItem('pokeDuelTokens', gameState.tokens);
     localStorage.setItem('pokeDuelBadges', JSON.stringify(myBadges));
     localStorage.setItem('pokeDuelStats', JSON.stringify(playerStats));
+    try { localStorage.setItem('pokeDuelTrainerName', gameState.trainerName || ''); } catch(e) {}
+    try { localStorage.setItem('pokeDuelRecentDuels', JSON.stringify(gameState.recentDuels || [])); } catch(e) {}
 }
 
 function loadStorage() {
@@ -527,12 +664,145 @@ function loadStorage() {
     if (t) gameState.tokens = parseInt(t);
     if (b) myBadges = JSON.parse(b);
     if (s) playerStats = JSON.parse(s);
+    // trainer name
+    try { gameState.trainerName = localStorage.getItem('pokeDuelTrainerName') || ''; } catch(e) { gameState.trainerName = ''; }
 
     if(els.winDisplay) els.winDisplay.innerText = gameState.wins;
     if(els.tokenDisplay) els.tokenDisplay.innerText = gameState.tokens;
     if(els.tokensAvailable) els.tokensAvailable.innerText = gameState.tokens;
+    // update trainer display if present
+    if (els.trainerNameDisplay && typeof gameState.trainerName === 'string' && gameState.trainerName.length > 0) {
+        els.trainerNameDisplay.innerText = gameState.trainerName;
+    } else if (els.trainerNameDisplay) {
+        els.trainerNameDisplay.innerText = '--';
+    }
+}
+    // If previous session left a duel active (crash/close), count it as a forfeit/loss
+    try {
+        const duelActiveFlag = localStorage.getItem('pokeDuelDuelActive');
+        if (duelActiveFlag === '1') {
+            // apply forfeit: increment games played (loss)
+            playerStats.gamesPlayed = (playerStats.gamesPlayed || 0) + 1;
+            // try to reconstruct a snapshot and add to in-memory recent duels
+            try {
+                const snapRaw = localStorage.getItem('pokeDuelActiveSnapshot');
+                const snap = snapRaw ? JSON.parse(snapRaw) : null;
+                const playerTeamDetailed = (snap && snap.playerTeam) ? snap.playerTeam.map(p => ({ name: p.name, defeated: (p.currentHp || 0) <= 0 })) : [];
+                const machineTeamDetailed = (snap && snap.machineTeam) ? snap.machineTeam.map(p => ({ name: p.name, defeated: (p.currentHp || 0) <= 0 })) : [];
+                const duelSummary = {
+                    when: new Date().toISOString(),
+                    result: 'loss',
+                    finishedBy: 'forfeit',
+                    playerTeamDetailed,
+                    machineTeamDetailed,
+                    playerDefeated: playerTeamDetailed.filter(x=>x.defeated).length,
+                    machineDefeated: machineTeamDetailed.filter(x=>x.defeated).length,
+                    winsAfter: gameState.wins,
+                    tokensAfter: gameState.tokens,
+                    gamesPlayedAfter: (playerStats.gamesPlayed || 0)
+                };
+                // Use addRecentDuel to update in-memory state, persist and render
+                try { addRecentDuel(duelSummary); } catch(e) {
+                    // Fallback: write directly to storage
+                    const raw = localStorage.getItem('pokeDuelRecentDuels');
+                    const arr = raw ? JSON.parse(raw) : [];
+                    arr.unshift(duelSummary);
+                    if (arr.length > 3) arr.splice(3);
+                    localStorage.setItem('pokeDuelRecentDuels', JSON.stringify(arr));
+                }
+            } catch (e) { /* ignore */ }
+            saveStorage();
+            localStorage.removeItem('pokeDuelDuelActive');
+            try { localStorage.removeItem('pokeDuelActiveSnapshot'); } catch(e) {}
+            console.info('Previous active duel detected — counted as forfeit.');
+        }
+    } catch (e) { console.warn('Error checking duel active flag', e); }
+
+// Load recent duels from storage (keep small history)
+try {
+    const rawRecent = localStorage.getItem('pokeDuelRecentDuels');
+    gameState.recentDuels = rawRecent ? JSON.parse(rawRecent) : [];
+} catch (e) { gameState.recentDuels = []; }
+
+function addRecentDuel(entry) {
+    if (!gameState.recentDuels) gameState.recentDuels = [];
+    gameState.recentDuels.unshift(entry);
+    if (gameState.recentDuels.length > 3) gameState.recentDuels = gameState.recentDuels.slice(0,3);
+    try { localStorage.setItem('pokeDuelRecentDuels', JSON.stringify(gameState.recentDuels)); } catch(e) {}
+    renderRecentDuels();
 }
 
+function renderRecentDuels() {
+    if (!els.recentDuelsList) return;
+    const list = gameState.recentDuels || [];
+    els.recentDuelsList.innerHTML = '';
+    list.forEach(d => {
+        const card = document.createElement('div');
+        card.className = 'recent-duel-card ' + (d.result === 'win' ? 'win' : 'loss');
+        const when = new Date(d.when).toLocaleString();
+        // Header: result + finishedBy
+        const header = document.createElement('div');
+        header.className = 'recent-duel-header';
+        const title = document.createElement('strong');
+        let titleText = d.result === 'win' ? 'Victoria' : (d.result === 'loss' ? 'Derrota' : 'Resultado');
+        if (d.finishedBy === 'forfeit') titleText += ' (Forfeit)';
+        title.innerText = titleText;
+        header.appendChild(title);
+        const time = document.createElement('div');
+        time.className = 'small-line';
+        time.innerText = when;
+        header.appendChild(time);
+        card.appendChild(header);
+
+        // Counts row
+        const counts = document.createElement('div');
+        counts.className = 'recent-duel-counts small-line';
+        const pDef = d.playerDefeated != null ? d.playerDefeated : (d.playerTeamDetailed ? d.playerTeamDetailed.filter(x=>x.defeated).length : 0);
+        const mDef = d.machineDefeated != null ? d.machineDefeated : (d.machineTeamDetailed ? d.machineTeamDetailed.filter(x=>x.defeated).length : 0);
+        counts.innerText = `Jugador derrotados: ${pDef} · Rival derrotados: ${mDef}`;
+        card.appendChild(counts);
+
+        // Player team
+        const pLabel = document.createElement('div'); pLabel.className = 'team-label'; pLabel.innerText = 'Jugador'; card.appendChild(pLabel);
+        const pTeam = document.createElement('div'); pTeam.className = 'recent-duel-team player-team';
+        const pArr = d.playerTeamDetailed || (d.playerTeam || []).map(n=>({ name: n, defeated: false }));
+        pArr.forEach(t => {
+            const wrap = document.createElement('div'); wrap.className = 'recent-duel-poke';
+            if (t.defeated) wrap.classList.add('defeated');
+            const img = document.createElement('img'); img.src = getImagePath(t.name); img.title = t.name;
+            wrap.appendChild(img);
+            pTeam.appendChild(wrap);
+        });
+        card.appendChild(pTeam);
+
+        card.appendChild(document.createElement('hr'));
+
+        // Machine team
+        const mLabel = document.createElement('div'); mLabel.className = 'team-label'; mLabel.innerText = 'Rival'; card.appendChild(mLabel);
+        const mTeam = document.createElement('div'); mTeam.className = 'recent-duel-team machine-team';
+        const mArr = d.machineTeamDetailed || (d.machineTeam || []).map(n=>({ name: n, defeated: false }));
+        mArr.forEach(t => {
+            const wrap = document.createElement('div'); wrap.className = 'recent-duel-poke';
+            if (t.defeated) wrap.classList.add('defeated');
+            const img = document.createElement('img'); img.src = getImagePath(t.name); img.title = t.name;
+            wrap.appendChild(img);
+            mTeam.appendChild(wrap);
+        });
+        card.appendChild(mTeam);
+
+        els.recentDuelsList.appendChild(card);
+    });
+}
+
+// initial render
+renderRecentDuels();
+// Show Recent Duels only when the main/start view is visible
+function setRecentDuelsVisible(visible) {
+    if (!els.recentDuelsPanel) return;
+    // use empty string to defer to stylesheet default when visible
+    els.recentDuelsPanel.style.display = visible ? '' : 'none';
+}
+setRecentDuelsVisible(!!(els.mainMsg && !els.mainMsg.classList.contains('hidden')));
 function resetData() {
     if(confirm("¿Borrar Victorias, Tokens, Medallas y Estadísticas?")) {
         localStorage.clear();
@@ -545,6 +815,8 @@ function resetUI() {
     els.duelStage.classList.add('hidden');
     els.mainMsg.classList.remove('hidden');
     els.startBtn.style.display = 'inline-block';
+    // When returning to the main screen, show Recent Duels
+    setRecentDuelsVisible(true);
     if(els.statusSpan) els.statusSpan.innerText = "ESPERANDO";
     gameState.playerTeam = [];
     gameState.machineTeam = [];
@@ -583,6 +855,10 @@ function initGame(isGym = false) {
     
     gameState.availablePokemon = JSON.parse(JSON.stringify(pokemonData));
     gameState.turn = 'player_select';
+    // clear any previous type filter when starting a new draft
+    gameState.selectedTypeFilter = null;
+    // ensure duelActive flag is reset when starting a new draft
+    gameState.duelActive = false;
     gameState.isSwitching = false;
     gameState.logs = [];
     gameState.playerSwapsLeft = 2;
@@ -595,6 +871,8 @@ function initGame(isGym = false) {
     els.playerPreview.innerHTML = '';
     els.machinePreview.innerHTML = '';
     els.confirmTeamBtn.disabled = true;
+    // hide recent duels while selecting
+    setRecentDuelsVisible(false);
     if(els.statusSpan) els.statusSpan.innerText = "FASE DE SELECCIÓN";
     
     if (gameState.tokens > 0 && els.shinyArea) {
@@ -605,21 +883,39 @@ function initGame(isGym = false) {
     }
 
     renderSelectionGrid();
+    renderTypeFilters();
     updatePreviews(); 
 }
 
 function renderSelectionGrid() {
     els.selectionGrid.innerHTML = '';
-    gameState.availablePokemon.forEach((poke, index) => {
+    // Build list of items to display (keep original indices so selection/machine pick works)
+    const displayed = gameState.availablePokemon
+        .map((p, i) => ({ p, i }))
+        .filter(item => {
+            if (!gameState.selectedTypeFilter) return true;
+            return item.p.types && item.p.types.includes(gameState.selectedTypeFilter);
+        });
+
+    displayed.forEach(item => {
+        const poke = item.p;
+        const originalIndex = item.i;
         const card = document.createElement('div');
         card.className = 'poke-card';
+        card.dataset.idx = originalIndex; // store original index
         card.innerHTML = `
             <img src="${getImagePath(poke.name)}" class="selection-sprite" alt="${poke.name}">
             <strong>${poke.name}</strong>
             <div class="type-badges-container">${renderTypeBadges(poke.types)}</div>
             <span style="color:#4caf50; font-size:0.9em;">HP: ${poke.hp}</span>
         `;
-        card.addEventListener('click', () => playerPick(index, card));
+        // reflect current pick state in the rendered card
+        const isPickedByPlayer = gameState.playerTeam.includes(gameState.availablePokemon[originalIndex]);
+        const isPickedByMachine = gameState.machineTeam.includes(gameState.availablePokemon[originalIndex]);
+        if (isPickedByPlayer) card.classList.add('selected-player', 'unavailable');
+        if (isPickedByMachine) card.classList.add('selected-machine', 'unavailable');
+
+        card.addEventListener('click', () => playerPick(originalIndex, card));
         els.selectionGrid.appendChild(card);
     });
 }
@@ -660,17 +956,20 @@ function playerPick(index, cardElement) {
 }
 
 function machinePick() {
-    const availableIndices = gameState.availablePokemon
-        .map((p, i) => ({ p, i }))
-        .filter(item => !els.selectionGrid.children[item.i].classList.contains('unavailable'));
-
+    // Choose among ALL available (not yet picked) pokemon, ignoring any player filter
+    const availableIndices = gameState.availablePokemon.map((p, i) => i)
+        .filter(i => !gameState.playerTeam.includes(gameState.availablePokemon[i]) && !gameState.machineTeam.includes(gameState.availablePokemon[i]));
     if (availableIndices.length > 0) {
-        const randomChoice = availableIndices[Math.floor(Math.random() * availableIndices.length)];
-        randomChoice.p.isShiny = false; 
-        gameState.machineTeam.push(randomChoice.p);
-        const card = els.selectionGrid.children[randomChoice.i];
-        card.classList.add('selected-machine', 'unavailable');
-        updatePreviews();
+        const idx = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+        const chosen = gameState.availablePokemon[idx];
+        if (chosen) {
+            chosen.isShiny = false;
+            gameState.machineTeam.push(chosen);
+            // If the chosen pokemon card is currently visible (not filtered out), mark it
+            const card = els.selectionGrid.querySelector(`.poke-card[data-idx="${idx}"]`);
+            if (card) card.classList.add('selected-machine', 'unavailable');
+            updatePreviews();
+        }
     }
 
     // After Machine Picks: Check State
@@ -687,7 +986,7 @@ function updatePreviews() {
     els.playerPreview.innerHTML = '';
     gameState.playerTeam.forEach((p, index) => {
         const item = document.createElement('div');
-        item.className = 'preview-item';
+        item.className = 'preview-item player-preview-item';
         if(p.isShiny) item.classList.add('shiny-active');
         const img = document.createElement('img');
         img.src = getImagePath(p.name, p.isShiny);
@@ -698,11 +997,12 @@ function updatePreviews() {
             star.innerHTML = '✨';
             item.appendChild(star);
         }
+        // Toggle shiny when clicking image area
         item.addEventListener('click', () => toggleShinyStatus(index));
         els.playerPreview.appendChild(item);
     });
 
-    els.machinePreview.innerHTML = gameState.machineTeam.map(p => `<div class="preview-item"><img src="${getImagePath(p.name)}" title="${p.name}" onerror="this.style.display='none'"></div>`).join('');
+    els.machinePreview.innerHTML = gameState.machineTeam.map(p => `<div class="preview-item machine-preview-item"><img src="${getImagePath(p.name)}" title="${p.name}" onerror="this.style.display='none'"></div>`).join('');
 }
 
 function toggleShinyStatus(teamIndex) {
@@ -735,6 +1035,8 @@ function confirmTeam() {
 function startTmSelection() {
     els.selectionStage.classList.add('hidden');
     els.tmStage.classList.remove('hidden');
+    // hide recent duels while in TM selection
+    setRecentDuelsVisible(false);
     if(els.statusSpan) els.statusSpan.innerText = "SELECCIÓN DE TMs";
     renderTmColumns();
     
@@ -795,6 +1097,8 @@ function checkAllTmsSelected() {
 function startStarterSelection() {
     els.tmStage.classList.add('hidden');
     els.starterStage.classList.remove('hidden');
+    // hide recent duels while choosing starter
+    setRecentDuelsVisible(false);
     if(els.statusSpan) els.statusSpan.innerText = "ELIGE TU LÍDER";
     els.starterGrid.innerHTML = '';
     gameState.playerTeam.forEach(poke => {
@@ -813,11 +1117,21 @@ function startStarterSelection() {
 function startDuel(starterPokemon) {
     els.starterStage.classList.add('hidden');
     els.duelStage.classList.remove('hidden');
+    // hide recent duels during an active duel
+    setRecentDuelsVisible(false);
     if(els.statusSpan) els.statusSpan.innerText = "EN COMBATE";
     
-    // Update stats
-    playerStats.gamesPlayed++;
-    saveStorage();
+    // Mark duel as active (persisted) so refresh/close counts as forfeit
+    gameState.duelActive = true;
+    try { localStorage.setItem('pokeDuelDuelActive', '1'); } catch(e) {}
+    // persist a small snapshot of teams so a forfeit can be recorded
+    try {
+        const snap = {
+            playerTeam: gameState.playerTeam.map(p => ({ name: p.name, currentHp: (typeof p.currentHp === 'number' ? p.currentHp : p.hp), hp: p.hp })),
+            machineTeam: gameState.machineTeam.map(p => ({ name: p.name, currentHp: (typeof p.currentHp === 'number' ? p.currentHp : p.hp), hp: p.hp }))
+        };
+        localStorage.setItem('pokeDuelActiveSnapshot', JSON.stringify(snap));
+    } catch(e) {}
 
     if(els.battleControlsWrapper) {
         els.battleControlsWrapper.innerHTML = `<h4 id="control-label">Elige tu ataque:</h4><div id="battle-controls" class="move-grid"></div>`;
@@ -1095,6 +1409,15 @@ function disableControls(disabled) {
 }
 
 function endDuel(playerWon) {
+    // Only resolve once per duel
+    if (!gameState.duelActive) return;
+    gameState.duelActive = false;
+    try { localStorage.removeItem('pokeDuelDuelActive'); } catch(e) {}
+    try { localStorage.removeItem('pokeDuelActiveSnapshot'); } catch(e) {}
+
+    // Count the finished duel as played
+    playerStats.gamesPlayed = (playerStats.gamesPlayed || 0) + 1;
+
     if (playerWon) {
         gameState.wins++;
         if (gameState.wins % 5 === 0) {
@@ -1102,6 +1425,24 @@ function endDuel(playerWon) {
             alert("¡Ganaste 1 Shiny Token!");
         }
     }
+    // Record recent duel summary
+    try {
+        const playerTeamDetailed = gameState.playerTeam.map(p => ({ name: p.name, defeated: (p.currentHp || 0) <= 0 }));
+        const machineTeamDetailed = gameState.machineTeam.map(p => ({ name: p.name, defeated: (p.currentHp || 0) <= 0 }));
+        const duelSummary = {
+            when: new Date().toISOString(),
+            result: playerWon ? 'win' : 'loss',
+            finishedBy: 'battle',
+            playerTeamDetailed,
+            machineTeamDetailed,
+            playerDefeated: playerTeamDetailed.filter(x=>x.defeated).length,
+            machineDefeated: machineTeamDetailed.filter(x=>x.defeated).length,
+            winsAfter: gameState.wins,
+            tokensAfter: gameState.tokens,
+            gamesPlayedAfter: playerStats.gamesPlayed
+        };
+        addRecentDuel(duelSummary);
+    } catch (e) {}
     saveStorage();
     
     // GYM LOGIC
@@ -1137,6 +1478,12 @@ function endDuel(playerWon) {
    9. EXTENSIONS (PROFILE & GYMS)
    ========================================= */
 function openProfile() {
+    // SANITY CHECK: Wins cannot exceed Games Played
+    if (gameState.wins > playerStats.gamesPlayed) {
+        playerStats.gamesPlayed = gameState.wins;
+        saveStorage();
+    }
+
     if(els.pWins) els.pWins.innerText = gameState.wins;
     if(els.pTokens) els.pTokens.innerText = gameState.tokens;
     if(els.pBadgesCount) els.pBadgesCount.innerText = myBadges.length;
@@ -1178,6 +1525,19 @@ function openProfile() {
         els.badgeContainer.appendChild(regionDiv);
     }
     els.profileModal.classList.remove('hidden');
+    // populate trainer name display / input
+    if (els.trainerNameDisplay) els.trainerNameDisplay.innerText = gameState.trainerName && gameState.trainerName.length > 0 ? gameState.trainerName : '--';
+    if (els.trainerNameInput) els.trainerNameInput.value = gameState.trainerName || '';
+    // ensure edit area hidden by default
+    try { setTrainerEditVisible(false); } catch(e) {}
+    // If a trainer name is already set, disable/hide the edit button (cannot edit until data is erased)
+    try {
+        if (gameState.trainerName && gameState.trainerName.length > 0) {
+            if (els.trainerEditBtn) els.trainerEditBtn.style.display = 'none';
+        } else {
+            if (els.trainerEditBtn) els.trainerEditBtn.style.display = '';
+        }
+    } catch (e) {}
 }
 
 function renderTopList(dataObj, listElement) {
@@ -1302,4 +1662,39 @@ function getRandomMoves(tmsList) {
     const pool = tmsList || ["Tackle"];
     const shuffled = [...pool].sort(() => 0.5 - Math.random());
     return mapMoves(shuffled.slice(0, 4));
+}
+
+/* --- TYPE FILTERS --- */
+function getAllTypes() {
+    const set = new Set();
+    pokemonData.forEach(p => (p.types || []).forEach(t => set.add(t)));
+    return Array.from(set).sort();
+}
+
+function renderTypeFilters() {
+    if(!els.typeFilters) return;
+    els.typeFilters.innerHTML = '';
+    const types = getAllTypes();
+    // Add an 'All' button (clear filter)
+    types.forEach(type => {
+        const btn = document.createElement('button');
+        btn.className = 'type-filter';
+        btn.innerText = type;
+        btn.dataset.type = type;
+        if (gameState.selectedTypeFilter === type) btn.classList.add('active');
+        btn.addEventListener('click', () => toggleTypeFilter(type));
+        els.typeFilters.appendChild(btn);
+    });
+}
+
+function toggleTypeFilter(type) {
+    if (gameState.selectedTypeFilter === type) {
+        // clicking same filter -> remove
+        gameState.selectedTypeFilter = null;
+    } else {
+        // select only this type
+        gameState.selectedTypeFilter = type;
+    }
+    renderTypeFilters();
+    renderSelectionGrid();
 }

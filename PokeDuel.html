@@ -40,6 +40,14 @@
             <p class="note">Gana 5 duelos para un Shiny Token. Gana 10 para retar a un Líder de Gimnasio.</p>
         </div>
 
+        <!-- Recent Duels Panel -->
+        <aside id="recent-duels-panel" class="recent-duels">
+            <h3>Últimos Duelo(s)</h3>
+            <div id="recent-duels-list" class="recent-duels-list">
+                <!-- JS will populate last 3 duel cards -->
+            </div>
+        </aside>
+
         <section id="selection-stage" class="game-stage hidden">
             <div class="stage-header">
                 <h2>Fase de Selección</h2>
@@ -62,6 +70,7 @@
             <div id="shiny-selector-area" class="shiny-controls hidden">
                 <p>Tienes <strong id="shiny-tokens-available">0</strong> Token(s). Haz clic en tus Pokémon para hacerlos Shiny.</p>
             </div>
+            <div id="type-filters" class="type-filters"></div>
             <div id="selection-grid" class="selection-grid"></div>
         </section>
 
@@ -137,7 +146,17 @@
         <div class="modal-content profile-content">
             <span class="close-modal" id="closeProfileBtn">&times;</span>
             <h2>Ficha de Entrenador</h2>
-            
+            <div class="trainer-header">
+                <label for="trainer-name-input" style="font-weight:700; margin-right:8px;">Entrenador:</label>
+                <span id="trainer-name-display" style="font-weight:700; color:var(--secondary);">--</span>
+                <button id="trainer-edit-btn" class="action-btn" style="margin-left:12px; padding:6px 10px; font-size:0.85rem;">Editar</button>
+                <div id="trainer-edit-area" style="display:none; margin-top:8px;">
+                    <input id="trainer-name-input" type="text" maxlength="20" placeholder="Nombre del entrenador (máx 20)" style="padding:6px; width:220px; margin-right:6px;">
+                    <button id="trainer-save-btn" class="action-btn" style="padding:6px 10px; font-size:0.85rem;">Guardar</button>
+                    <button id="trainer-cancel-btn" class="reset-btn" style="padding:6px 10px; font-size:0.85rem; margin-left:6px;">Cancelar</button>
+                </div>
+            </div>
+
             <div class="profile-stats">
                 <div class="stat-box"><h3>Victorias</h3><span id="profile-wins">0</span></div>
                 <div class="stat-box"><h3>Winrate</h3><span id="profile-winrate">0%</span></div>
