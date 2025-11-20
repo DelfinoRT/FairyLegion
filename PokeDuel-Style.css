@@ -583,6 +583,39 @@ main {
     font-size: 0.8em; 
 }
 
+/* Weather panel styling (light background for readability) */
+#weather-panel, .weather-panel {
+    background: rgba(255,255,255,0.92);
+    color: #111;
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    padding: 4px 6px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 8px;
+}
+
+.weather-panel .type-badge {
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 12px;
+    color: #fff;
+    display: inline-block;
+}
+
+.weather-badge {
+    background: #2b7a00;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin-left: 6px;
+}
+
 /* End Game Panel */
 .end-game-panel { 
     text-align: center; 

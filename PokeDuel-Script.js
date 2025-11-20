@@ -44,18 +44,18 @@ const pokemonData = [
     { name: "Krookodile", types: ["Ground", "Dark"], hp: 475, tms: ["Earthquake", "Crunch", "Stone Edge", "Dragon Claw", "Fire Fang", "Thunder Fang", "Outrage", "Dark Pulse", "Foul Play", "Superpower"] },
     { name: "Zoroark", types: ["Dark"], hp: 300, tms: ["Dark Pulse", "Flamethrower", "Focus Blast", "Shadow Ball", "Grass Knot", "U-turn", "Extrasensory", "Sludge Bomb", "Night Daze", "Snarl"] },
     { name: "Volcarona", types: ["Bug", "Fire"], hp: 425, tms: ["Bug Buzz", "Flamethrower", "Hurricane", "Psychic", "Giga Drain", "Solar Beam", "Silver Wind", "Fire Blast", "Heat Wave", "Overheat"] },
-    { name: "Onix", types: ["Rock", "Ground"], hp: 500, tms: ["Stone Edge", "Earthquake", "Iron Head", "Rock Slide"] },
-    { name: "Golem", types: ["Rock", "Ground"], hp: 480, tms: ["Stone Edge", "Earthquake", "Explosion", "Heavy Slam"] },
-    { name: "Lycanroc", types: ["Rock"], hp: 400, tms: ["Stone Edge", "Crunch", "Brick Break", "Rock Slide"] },
-    { name: "Starmie", types: ["Water", "Psychic"], hp: 380, tms: ["Surf", "Psychic", "Ice Beam", "Thunderbolt"] },
-    { name: "Golduck", types: ["Water"], hp: 400, tms: ["Surf", "Psychic", "Ice Beam", "Hydro Pump"] },
-    { name: "Milotic", types: ["Water"], hp: 500, tms: ["Surf", "Ice Beam", "Hydro Pump", "Dragon Pulse"] },
-    { name: "Raichu", types: ["Electric"], hp: 350, tms: ["Thunderbolt", "Volt Switch", "Brick Break", "Thunder"] },
-    { name: "Jolteon", types: ["Electric"], hp: 350, tms: ["Thunderbolt", "Shadow Ball", "Volt Switch", "Signal Beam"] },
+    { name: "Onix", types: ["Rock", "Ground"], hp: 500, tms: ["Stone Edge", "Earthquake", "Iron Head", "Rock Slide", "Rock Blast", "Rock Wrecker"] },
+    { name: "Golem", types: ["Rock", "Ground"], hp: 480, tms: ["Stone Edge", "Earthquake", "Explosion", "Heavy Slam", "Rock Blast", "Rock Wrecker"] },
+    { name: "Lycanroc", types: ["Rock"], hp: 400, tms: ["Stone Edge", "Crunch", "Brick Break", "Rock Slide", "Head Smash", "Rock Blast"] },
+    { name: "Starmie", types: ["Water", "Psychic"], hp: 380, tms: ["Surf", "Psychic", "Ice Beam", "Thunderbolt", "Hydro Pump", "Scald"] },
+    { name: "Golduck", types: ["Water"], hp: 400, tms: ["Surf", "Psychic", "Ice Beam", "Hydro Pump", "Scald", "Zen Headbutt"] },
+    { name: "Milotic", types: ["Water"], hp: 500, tms: ["Surf", "Ice Beam", "Hydro Pump", "Dragon Pulse", "Scald", "Return"] },
+    { name: "Raichu", types: ["Electric"], hp: 350, tms: ["Thunderbolt", "Volt Switch", "Brick Break", "Thunder", "Focus Blast", "Iron Tail"] },
+    { name: "Jolteon", types: ["Electric"], hp: 350, tms: ["Thunderbolt", "Shadow Ball", "Volt Switch", "Signal Beam", "Thunder", "Thunder Wave"] },
     { name: "Vileplume", types: ["Grass", "Poison"], hp: 420, tms: ["Sludge Bomb", "Giga Drain", "Moonblast", "Energy Ball"] },
-    { name: "Tangrowth", types: ["Grass"], hp: 550, tms: ["Power Whip", "Earthquake", "Knock Off", "Rock Slide"] },
-    { name: "Leafeon", types: ["Grass"], hp: 400, tms: ["Leaf Blade", "X-Scissor", "Aerial Ace", "Knock Off"] },
-    { name: "Crobat", types: ["Poison", "Flying"], hp: 450, tms: ["Brave Bird", "Cross Poison", "X-Scissor", "U-turn"] },
+    { name: "Tangrowth", types: ["Grass"], hp: 550, tms: ["Power Whip", "Giga Drain", "Leaf Blade", "Mega Drain", "Earthquake", "Knock Off", "Rock Slide"] },
+    { name: "Leafeon", types: ["Grass"], hp: 400, tms: ["Leaf Blade", "X-Scissor", "Aerial Ace", "Knock Off", "Giga Drain", "Synthesis"] },
+    { name: "Crobat", types: ["Poison", "Flying"], hp: 450, tms: ["Brave Bird", "Cross Poison", "X-Scissor", "U-turn", "Acrobatics", "Poison Jab"] },
     { name: "Muk", types: ["Poison"], hp: 520, tms: ["Gunk Shot", "Ice Punch", "Fire Punch", "Shadow Sneak"] },
     { name: "Espeon", types: ["Psychic"], hp: 350, tms: ["Psychic", "Shadow Ball", "Dazzling Gleam", "Psyshock"] },
     { name: "Reuniclus", types: ["Psychic"], hp: 500, tms: ["Psychic", "Focus Blast", "Shadow Ball", "Energy Ball"] },
@@ -72,7 +72,7 @@ const pokemonData = [
     { name: "Ariados", types: ["Bug", "Poison"], hp: 350, tms: ["Poison Jab", "Megahorn", "Sucker Punch", "Psychic"] },
     { name: "Miltank", types: ["Normal"], hp: 480, tms: ["Body Slam", "Hammer Arm", "Zen Headbutt", "Ice Punch"] },
     { name: "Wigglytuff", types: ["Normal", "Fairy"], hp: 600, tms: ["Hyper Voice", "Dazzling Gleam", "Flamethrower", "Thunderbolt"] },
-    { name: "Blissey", types: ["Normal"], hp: 900, tms: ["Hyper Voice", "Flamethrower", "Ice Beam", "Thunderbolt"] },
+    { name: "Blissey", types: ["Normal"], hp: 900, tms: ["Hyper Voice", "Flamethrower", "Ice Beam", "Thunderbolt", "Double-Edge", "Seismic Toss"] },
     { name: "Mismagius", types: ["Ghost"], hp: 350, tms: ["Shadow Ball", "Mystical Fire", "Psychic", "Energy Ball"] },
     { name: "Poliwrath", types: ["Water", "Fighting"], hp: 450, tms: ["Waterfall", "Close Combat", "Ice Punch", "Earthquake"] },
     { name: "Steelix", types: ["Steel", "Ground"], hp: 500, tms: ["Heavy Slam", "Earthquake", "Stone Edge", "Crunch"] },
@@ -101,12 +101,39 @@ const pokemonData = [
     { name: "Bastiodon", types: ["Rock", "Steel"], hp: 500, tms: ["Iron Head", "Stone Edge", "Earthquake", "Heavy Slam"] },
     { name: "Torterra", types: ["Grass", "Ground"], hp: 500, tms: ["Wood Hammer", "Earthquake", "Stone Edge", "Crunch"] },
     { name: "Gallade", types: ["Psychic", "Fighting"], hp: 400, tms: ["Close Combat", "Psycho Cut", "Leaf Blade", "Night Slash"] },
-    { name: "Gyarados", types: ["Water", "Flying"], hp: 500, tms: ["Waterfall", "Earthquake", "Crunch", "Ice Fang"] },
+    { name: "Gyarados", types: ["Water", "Flying"], hp: 500, tms: ["Waterfall", "Earthquake", "Crunch", "Ice Fang", "Outrage", "Stone Edge"] },
     { name: "Quagsire", types: ["Water", "Ground"], hp: 450, tms: ["Earthquake", "Waterfall", "Stone Edge", "Ice Punch"] },
     { name: "Chandelure", types: ["Ghost", "Fire"], hp: 380, tms: ["Shadow Ball", "Fire Blast", "Energy Ball", "Psychic"] },
     { name: "Haxorus", types: ["Dragon"], hp: 400, tms: ["Outrage", "Earthquake", "Poison Jab", "Close Combat"] },
-    { name: "Flygon", types: ["Ground", "Dragon"], hp: 420, tms: ["Earthquake", "Dragon Claw", "Fire Punch", "U-turn"] }
+    { name: "Flygon", types: ["Ground", "Dragon"], hp: 420, tms: ["Earthquake", "Dragon Claw", "Fire Punch", "U-turn"] },
+    { name: "Greninja", types: ["Water", "Dark"], hp: 360, tms: ["Surf", "Hydro Pump", "Ice Beam", "Dark Pulse", "Night Slash", "Acrobatics", "Aqua Tail", "U-turn"] },
+    { name: "Infernape", types: ["Fire", "Fighting"], hp: 420, tms: ["Flare Blitz", "Close Combat", "Earthquake", "Stone Edge", "Thunder Punch", "Fire Punch", "Facade", "Overheat"] },
+    { name: "Hawlucha", types: ["Fighting", "Flying"], hp: 360, tms: ["High Jump Kick", "Brave Bird", "Acrobatics", "U-turn", "Skull Bash", "Stone Edge"] },
+    { name: "Mienshao", types: ["Fighting"], hp: 340, tms: ["Close Combat", "Drain Punch", "Stone Edge", "Brick Break", "Poison Jab", "High Jump Kick"] },
+    { name: "Scrafty", types: ["Dark", "Fighting"], hp: 380, tms: ["Crunch", "Close Combat", "Poison Jab", "Brick Break", "Sucker Punch", "Dragon Claw"] },
+    { name: "Goodra", types: ["Dragon"], hp: 520, tms: ["Dragon Pulse", "Draco Meteor", "Flamethrower", "Hydro Pump", "Earthquake", "Thunderbolt"] }
 ];
+
+// Additional Pokémon added to expand choices (Fairy, Ghost, Ice additions)
+pokemonData.push(
+    { name: "Sylveon", types: ["Fairy"], hp: 325, tms: ["Moonblast", "Dazzling Gleam", "Hyper Voice", "Psychic", "Play Rough", "Return"] },
+    { name: "Granbull", types: ["Fairy"], hp: 460, tms: ["Play Rough", "Close Combat", "Crunch", "Earthquake", "Skull Bash", "Thunder Fang"] },
+    { name: "Mawile", types: ["Steel", "Fairy"], hp: 360, tms: ["Play Rough", "Iron Head", "Skull Bash", "Crunch", "Fire Fang", "Psychic"] },
+    { name: "Ribombee", types: ["Bug", "Fairy"], hp: 240, tms: ["Dazzling Gleam", "Bug Buzz", "Acrobatics", "Air Slash", "Giga Drain", "Aerial Ace"] },
+    { name: "Aromatisse", types: ["Fairy"], hp: 380, tms: ["Moonblast", "Dazzling Gleam", "Psychic", "Psychic", "Energy Ball", "Return"] },
+
+    { name: "Banette", types: ["Ghost"], hp: 330, tms: ["Shadow Ball", "Phantom Force", "Night Shade", "Flamethrower", "Dark Pulse", "Thunderbolt"] },
+    { name: "Mimikyu", types: ["Ghost", "Fairy"], hp: 280, tms: ["Shadow Ball", "Play Rough", "Flamethrower", "Drain Punch", "Shadow Claw", "Phantom Force"] },
+    { name: "Aegislash", types: ["Steel", "Ghost"], hp: 420, tms: ["Shadow Ball", "Iron Head", "Sacred Sword", "Phantom Force", "Psychic", "Skull Bash"] },
+    { name: "Dusknoir", types: ["Ghost"], hp: 520, tms: ["Shadow Ball", "Night Shade", "Earthquake", "Phantom Force", "Flamethrower", "Thunderbolt"] },
+
+    { name: "Glaceon", types: ["Ice"], hp: 330, tms: ["Ice Beam", "Blizzard", "Ice Shard", "Icy Wind", "Quick Attack", "Psychic"] },
+    { name: "Lapras", types: ["Water", "Ice"], hp: 600, tms: ["Surf", "Ice Beam", "Hydro Pump", "Blizzard", "Ice Shard", "Return"] },
+    { name: "Avalugg", types: ["Ice"], hp: 540, tms: ["Ice Beam", "Earthquake", "Stone Edge", "Avalanche", "Head Smash", "Ice Shard"] },
+    { name: "Walrein", types: ["Ice", "Water"], hp: 560, tms: ["Ice Beam", "Surf", "Blizzard", "Scald", "Earthquake", "Body Slam"] },
+    { name: "Frosmoth", types: ["Ice", "Bug"], hp: 360, tms: ["Ice Beam", "Bug Buzz", "Air Slash", "Icy Wind", "Acrobatics", "Giga Drain"] },
+    { name: "Glalie", types: ["Ice"], hp: 420, tms: ["Ice Beam", "Blizzard", "Crunch", "Head Smash", "Ice Shard", "Icy Wind"] }
+);
 
 const tmDatabase = {
     "Flamethrower": { type: "Fire", power: 90, pp: 15 },
@@ -219,16 +246,57 @@ const tmDatabase = {
     "Night Daze": { type: "Dark", power: 85, pp: 10 },
     "Snarl": { type: "Dark", power: 55, pp: 15 },
     "Bug Buzz": { type: "Bug", power: 90, pp: 10 },
-    "Silver Wind": { type: "Bug", power: 60, pp: 5 },
-    "Sucker Punch": { type: "Dark", power: 70, pp: 5 },
-    "Water Pulse": { type: "Water", power: 60, pp: 20 },
-    "Mud Shot": { type: "Ground", power: 55, pp: 15 },
-    "Acid Spray": { type: "Poison", power: 40, pp: 20 },
-    "Ancient Power": { type: "Rock", power: 60, pp: 5 },
-    "Shock Wave": { type: "Electric", power: 60, pp: 20 },
-    "Incinerate": { type: "Fire", power: 60, pp: 15 },
-    "Tackle": { type: "Normal", power: 50, pp: 35 }
+    "Draco Meteor": { type: "Dragon", power: 140, pp: 5 },
+    "Night Shade": { type: "Ghost", power: 60, pp: 15 },
+    "Night Shade": { type: "Ghost", power: 60, pp: 15 },
+    "Phantom Force": { type: "Ghost", power: 90, pp: 10 },
+    "Seismic Toss": { type: "Fighting", power: 100, pp: 20 },
+    "Aurora Beam": { type: "Ice", power: 65, pp: 20 },
+    "Sacred Sword": { type: "Fighting", power: 90, pp: 10 },
 };
+
+// Ensure every pokemon has at least 10 TM choices by filling from the tmDatabase
+function normalizePokemonTms() {
+    try {
+        const keys = Object.keys(tmDatabase || {});
+        if (!keys || keys.length === 0) return;
+        pokemonData.forEach(p => {
+            p.tms = Array.isArray(p.tms) ? [...p.tms] : [];
+            const set = new Set(p.tms);
+            // fill with random tm names until 10, avoid duplicates
+            let safety = 0;
+            while (set.size < 10 && safety < 1000) {
+                const candidate = keys[Math.floor(Math.random() * keys.length)];
+                set.add(candidate);
+                safety++;
+            }
+            p.tms = Array.from(set).slice(0, 10);
+        });
+    } catch (e) { console.warn('normalizePokemonTms failed', e); }
+}
+
+// normalize TMs now (includes pokemon added via pushes above)
+normalizePokemonTms();
+
+// Weather definitions and array of boosted types
+const weatherList = [
+    { id: 'lluvia', name: 'Lluvia', boosts: ['Water','Grass'] },
+    { id: 'tormenta_electrica', name: 'Tormenta Eléctrica', boosts: ['Electric','Steel'] },
+    { id: 'soleado', name: 'Soleado', boosts: ['Fire','Fighting'] },
+    { id: 'tormenta_arena', name: 'Tormenta de Arena', boosts: ['Ground','Rock'] },
+    { id: 'tormenta_nieve', name: 'Tormenta de Nieve', boosts: ['Ice'] },
+    { id: 'huracan', name: 'Huracán', boosts: ['Flying'] },
+    { id: 'nublado', name: 'Nublado', boosts: ['Normal','Bug'] },
+    { id: 'noche', name: 'Noche', boosts: ['Dark','Ghost'] },
+    { id: 'aurora', name: 'Aurora Boreal', boosts: ['Fairy','Psychic'] },
+    { id: 'crepuscular', name: 'Cielo Crepuscular', boosts: ['Dragon'] },
+    { id: 'smog', name: 'Smog', boosts: ['Poison'] }
+];
+
+function selectRandomWeather() {
+    const w = weatherList[Math.floor(Math.random() * weatherList.length)];
+    return JSON.parse(JSON.stringify(w));
+}
 
 const typeMatchups = {
     'Fire': { 'Grass': 2, 'Ice': 2, 'Bug': 2, 'Steel': 2, 'Water': 0.5, 'Rock': 0.5, 'Fire': 0.5, 'Dragon': 0.5 },
@@ -703,11 +771,11 @@ function loadStorage() {
                 };
                 // Use addRecentDuel to update in-memory state, persist and render
                 try { addRecentDuel(duelSummary); } catch(e) {
-                    // Fallback: write directly to storage
+                    // Fallback: write directly to storage (keep last 5)
                     const raw = localStorage.getItem('pokeDuelRecentDuels');
                     const arr = raw ? JSON.parse(raw) : [];
                     arr.unshift(duelSummary);
-                    if (arr.length > 3) arr.splice(3);
+                    if (arr.length > 5) arr.splice(5);
                     localStorage.setItem('pokeDuelRecentDuels', JSON.stringify(arr));
                 }
             } catch (e) { /* ignore */ }
@@ -727,7 +795,7 @@ try {
 function addRecentDuel(entry) {
     if (!gameState.recentDuels) gameState.recentDuels = [];
     gameState.recentDuels.unshift(entry);
-    if (gameState.recentDuels.length > 3) gameState.recentDuels = gameState.recentDuels.slice(0,3);
+    if (gameState.recentDuels.length > 5) gameState.recentDuels = gameState.recentDuels.slice(0,5);
     try { localStorage.setItem('pokeDuelRecentDuels', JSON.stringify(gameState.recentDuels)); } catch(e) {}
     renderRecentDuels();
 }
@@ -838,6 +906,48 @@ function getTypeColor(type) {
 function renderTypeBadges(types) {
     if(!types) return '';
     return types.map(t => `<span class="type-badge" style="background-color:${getTypeColor(t)}">${t}</span>`).join('');
+}
+
+// Render the current weather panel inside the duel UI
+function renderWeatherUI() {
+    try {
+        if (!gameState || !gameState.weather) return;
+        // Prefer inserting into the top of the duel stage so the panel appears above the log/TMs
+        const preferredContainers = [els.duelStage, document.getElementById('duel-stage'), els.battleControlsWrapper, document.getElementById('battle-controls-wrapper'), els.duelContainer, document.getElementById('duel-container')];
+        let container = null;
+        for (const c of preferredContainers) {
+            if (c) { container = c; break; }
+        }
+        if (!container) return;
+        let panel = document.getElementById('weather-panel');
+        if (!panel) {
+            panel = document.createElement('div');
+            panel.id = 'weather-panel';
+            // Compact inline style to reduce vertical space usage
+            panel.className = 'weather-panel';
+            panel.style.display = 'inline-flex';
+            panel.style.alignItems = 'center';
+            panel.style.gap = '6px';
+            panel.style.padding = '4px 6px';
+            panel.style.borderRadius = '6px';
+            panel.style.fontSize = '0.85rem';
+            panel.style.marginLeft = '8px';
+        }
+        const w = gameState.weather;
+        // Render small type badges inline
+        const badgeHtml = (w.boosts || []).map(t => `<span class="type-badge" style="background-color:${getTypeColor(t)}; font-size:0.75rem; padding:2px 6px; border-radius:12px; display:inline-block; color:#fff;">${t}</span>`).join(' ');
+        panel.innerHTML = `<span style="font-weight:600; margin-right:6px;">☼ ${w.name}</span><span style="opacity:0.85; font-size:0.82rem;">${badgeHtml}</span><span style="margin-left:6px; color:#2b7a00; font-weight:600; font-size:0.8rem;">+20%</span>`;
+        // Ensure the panel is placed as the first child of the chosen container
+        try {
+            if (panel.parentNode !== container) {
+                if (panel.parentNode) panel.parentNode.removeChild(panel);
+                container.insertBefore(panel, container.firstChild);
+            } else {
+                // already in the right container — ensure it's the first child
+                if (container.firstChild !== panel) container.insertBefore(panel, container.firstChild);
+            }
+        } catch (e) { if (!container.contains(panel)) container.appendChild(panel); }
+    } catch (e) { /* ignore */ }
 }
 
 /* =========================================
@@ -1133,11 +1243,19 @@ function startDuel(starterPokemon) {
         localStorage.setItem('pokeDuelActiveSnapshot', JSON.stringify(snap));
     } catch(e) {}
 
+    // Select a random weather for this duel (UI will be rendered after controls are created)
+    try {
+        gameState.weather = selectRandomWeather();
+    } catch (e) { gameState.weather = null; }
+
     if(els.battleControlsWrapper) {
         els.battleControlsWrapper.innerHTML = `<h4 id="control-label">Elige tu ataque:</h4><div id="battle-controls" class="move-grid"></div>`;
         els.controlLabel = document.getElementById('control-label');
         els.battleControls = document.getElementById('battle-controls');
     }
+
+    // Render weather UI after battle controls exist so it isn't removed by innerHTML assignments
+    try { renderWeatherUI(); } catch (e) {}
 
     const shiniesUsed = gameState.playerTeam.filter(p => p.isShiny).length;
     if (shiniesUsed > 0) {
@@ -1243,7 +1361,9 @@ function renderMoveButtons() {
         const btn = document.createElement('button');
         btn.className = 'move-btn';
         const typeColor = getTypeColor(move.type || 'Normal');
-        btn.innerHTML = `<strong>${move.name}</strong><div class="move-meta"><span class="move-type-text" style="color:${typeColor}">${move.type}</span><span>PP: ${move.currentPP}</span></div>`;
+        // detect if this move is boosted by current weather
+        const isBoosted = gameState.weather && Array.isArray(gameState.weather.boosts) && gameState.weather.boosts.includes(move.type || 'Normal');
+        btn.innerHTML = `<strong>${move.name}</strong><div class="move-meta"><span class="move-type-text" style="color:${typeColor}">${move.type}</span><span>PP: ${move.currentPP}</span>${isBoosted ? '<span class="weather-badge">+20%</span>' : ''}</div>`;
         btn.disabled = move.currentPP <= 0;
         btn.addEventListener('click', () => executeTurn(move));
         els.battleControls.appendChild(btn);
@@ -1341,7 +1461,15 @@ function performAttack(attacker, defender, move) {
     });
     let baseDmg = (move.power / 2) + (Math.random() * 15);
     if (attacker.isShiny) baseDmg *= 1.2;
-    const totalDmg = Math.floor(baseDmg * multiplier);
+    let totalDmg = Math.floor(baseDmg * multiplier);
+    // Apply weather boost (+20%) when move type is included in current weather boosts
+    let boostedByWeather = false;
+    try {
+        if (gameState.weather && Array.isArray(gameState.weather.boosts) && gameState.weather.boosts.includes(moveType)) {
+            totalDmg = Math.floor(totalDmg * 1.2);
+            boostedByWeather = true;
+        }
+    } catch (e) { /* ignore */ }
     defender.currentHp -= totalDmg;
     if(defender.currentHp < 0) defender.currentHp = 0;
     let effText = "";
@@ -1349,7 +1477,8 @@ function performAttack(attacker, defender, move) {
     else if (multiplier < 1 && multiplier > 0) effText = "No muy efectivo...";
     else if (multiplier === 0) effText = "¡No afecta!";
     let shinyText = attacker.isShiny ? " (Shiny!)" : "";
-    logBattle(`${attacker.name} usó ${move.name}.${shinyText} Daño: ${totalDmg}. ${effText}`);
+    const weatherText = boostedByWeather ? ' (Impulsado por clima +20%)' : '';
+    logBattle(`${attacker.name} usó ${move.name}.${shinyText} Daño: ${totalDmg}.${weatherText} ${effText}`);
 }
 
 function performTacticalSwap(newPokemon) {
@@ -1414,6 +1543,13 @@ function endDuel(playerWon) {
     gameState.duelActive = false;
     try { localStorage.removeItem('pokeDuelDuelActive'); } catch(e) {}
     try { localStorage.removeItem('pokeDuelActiveSnapshot'); } catch(e) {}
+
+    // clear weather UI for finished duel
+    try {
+        gameState.weather = null;
+        const panel = document.getElementById('weather-panel');
+        if (panel) panel.remove();
+    } catch (e) {}
 
     // Count the finished duel as played
     playerStats.gamesPlayed = (playerStats.gamesPlayed || 0) + 1;
