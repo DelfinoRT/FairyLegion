@@ -91,7 +91,9 @@ let masterballs = 0;
 let catchStreak = 0;
 let shiniesCaughtCount = 0; 
 let regularCaughtCount = 0; 
+let maxCatchStreak = 0; // track maximum streak during the round
 let roundTimeLeft = 0; 
+let totalExtraTimeAdded = 0; // tracks extra seconds added during the round (e.g., mythic bonuses)
 let highScore = 0; 
 let activeSpawns = [];
 let pokemonsCapturedLog = {}; 
@@ -153,6 +155,24 @@ const pokedexProgress = document.getElementById("pokedex-progress"); // NEW
 // --- Helper: Random integer ---
 function randInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// --- Helper: spawn position inside the visible game map ---
+function getSpawnPosition(entityWidth = 40, entityHeight = 40) {
+  const mapRect = gameMap.getBoundingClientRect();
+  // Use clientWidth/clientHeight to avoid page scroll offsets when placing elements absolutely inside the map
+  const mapWidth = gameMap.clientWidth;
+  const mapHeight = gameMap.clientHeight;
+
+  // Keep a small padding so elements don't stick to the edge
+  const padding = 6;
+
+  const maxX = Math.max(padding, Math.floor(mapWidth - entityWidth - padding));
+  const maxY = Math.max(padding, Math.floor(mapHeight - entityHeight - padding));
+
+  const x = randInt(padding, maxX);
+  const y = randInt(padding, maxY);
+  return { x, y };
 }
 
 // --- High Score Persistence ---
@@ -381,12 +401,18 @@ function updateItemsLogDisplay() {
 // --- Game Logic Functions ---
 
 function changeTheme() {
+  // Prevent changing the map while a round is active
+  if (roundActive) {
+    displayGameMessage("No puedes cambiar el mapa durante una ronda activa.", 'alert');
+    return;
+  }
+
   currentThemeIndex = (currentThemeIndex + 1) % THEMES.length;
   const themeData = THEMES[currentThemeIndex];
   gameMap.className = themeData.class;
   currentThemeDisplay.textContent = themeData.name;
   clearEntities();
-  
+
   renderMapPokedex(); // NEW: Update Pokedex when theme changes
 }
 changeThemeBtn.addEventListener("click", changeTheme);
@@ -405,6 +431,123 @@ function updateScore() {
   }
 }
 
+// --- Helper: center the game map in the viewport ---
+function centerMapInView(smooth = true) {
+  if (!gameMap) return;
+  // Prefer modern scrollIntoView with options; fallback to simple scroll if unavailable
+  try {
+    gameMap.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'center', inline: 'nearest' });
+  } catch (e) {
+    // Older browsers fallback: compute a scroll position that centers the map vertically
+    const rect = gameMap.getBoundingClientRect();
+    const absoluteTop = rect.top + window.pageYOffset;
+    const scrollToY = Math.max(0, absoluteTop - (window.innerHeight / 2) + (rect.height / 2));
+    window.scrollTo({ top: scrollToY, behavior: smooth ? 'smooth' : 'auto' });
+  }
+}
+
+// --- History UI functions ---
+function formatTimestamp(iso) {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleString();
+  } catch (e) { return iso; }
+}
+
+function renderHistory() {
+  const container = document.getElementById('history-list');
+  if (!container) return;
+  const key = 'pokeCatchHistory';
+  let history = [];
+  try { history = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { history = []; }
+
+  container.innerHTML = '';
+  if (!history || history.length === 0) {
+    container.innerHTML = '<p class="no-catches">No hay historial de partidas aún.</p>';
+    return;
+  }
+
+  history.forEach(entry => {
+    const card = document.createElement('div');
+    card.className = 'history-card';
+
+    const title = document.createElement('h4');
+    title.textContent = `${entry.theme} — ${formatTimestamp(entry.timestamp)}`;
+    card.appendChild(title);
+
+    const row1 = document.createElement('div'); row1.className='history-row';
+    row1.innerHTML = `<span class="history-label">Pokémon (normales):</span><span>${entry.regularCount}</span>`;
+    card.appendChild(row1);
+
+    const row2 = document.createElement('div'); row2.className='history-row';
+    const mythicCount = (entry.mythics || []).reduce((s,i)=>s+i.count,0);
+    row2.innerHTML = `<span class="history-label">Míticos:</span><span>${mythicCount}</span>`;
+    card.appendChild(row2);
+
+    if (entry.mythics && entry.mythics.length) {
+      const srow = document.createElement('div'); srow.className='history-row';
+      const label = document.createElement('span'); label.className='history-label'; label.textContent='Míticos (sprites):';
+      const box = document.createElement('span'); box.className='history-sprites';
+      entry.mythics.forEach(m => {
+        const img = document.createElement('img'); img.src = m.img || ('PADDown/'+m.name+'.png'); img.title = `${m.name} x${m.count}`;
+        box.appendChild(img);
+      });
+      srow.appendChild(label); srow.appendChild(box);
+      card.appendChild(srow);
+    }
+
+    const row3 = document.createElement('div'); row3.className='history-row';
+    const shinyCount = (entry.shinies || []).reduce((s,i)=>s+i.count,0);
+    row3.innerHTML = `<span class="history-label">Shinies:</span><span>${shinyCount}</span>`;
+    card.appendChild(row3);
+
+    if (entry.shinies && entry.shinies.length) {
+      const srow = document.createElement('div'); srow.className='history-row';
+      const label = document.createElement('span'); label.className='history-label'; label.textContent='Shinies (sprites):';
+      const box = document.createElement('span'); box.className='history-sprites';
+      entry.shinies.forEach(m => {
+        const img = document.createElement('img'); img.src = m.img || ('PADDown/'+m.name+'.png'); img.title = `${m.name} x${m.count}`;
+        box.appendChild(img);
+      });
+      srow.appendChild(label); srow.appendChild(box);
+      card.appendChild(srow);
+    }
+
+    const rowItems = document.createElement('div'); rowItems.className='history-row';
+    const itemsCount = Object.values(entry.items || {}).reduce((s,i)=>s + (i.count||0), 0);
+    rowItems.innerHTML = `<span class="history-label">Ítems recolectados:</span><span>${itemsCount}</span>`;
+    card.appendChild(rowItems);
+
+    const rowPoints = document.createElement('div'); rowPoints.className='history-row';
+    rowPoints.innerHTML = `<span class="history-label">Puntos totales:</span><span><strong>${entry.totalPoints}</strong></span>`;
+    card.appendChild(rowPoints);
+
+    const rowTime = document.createElement('div'); rowTime.className='history-row';
+    rowTime.innerHTML = `<span class="history-label">Tiempo (s):</span><span>${entry.totalTimeSeconds}</span>`;
+    card.appendChild(rowTime);
+
+    const rowPoke = document.createElement('div'); rowPoke.className='history-row';
+    rowPoke.innerHTML = `<span class="history-label">Pokédex map:</span><span>${entry.pokedexProgress}</span>`;
+    card.appendChild(rowPoke);
+
+    const rowMore = document.createElement('div'); rowMore.className='history-row';
+    rowMore.innerHTML = `<span class="history-label">Racha final:</span><span>${entry.finalStreak}</span>`;
+    card.appendChild(rowMore);
+
+    // Max streak
+    const rowMax = document.createElement('div'); rowMax.className='history-row';
+    rowMax.innerHTML = `<span class="history-label">Máx. racha:</span><span>${entry.maxStreak || 0}</span>`;
+    card.appendChild(rowMax);
+
+    container.appendChild(card);
+  });
+}
+
+function clearHistory() {
+  localStorage.removeItem('pokeCatchHistory');
+  renderHistory();
+}
+
 function clearEntities() {
   activeSpawns.forEach(e => {
     if (e.timer) clearInterval(e.timer);
@@ -421,8 +564,10 @@ function spawnOneMythic(poke) {
     const countdownTime = 5; 
     let timeLeft = countdownTime;
 
-    const xPos = randInt(25, 490);
-    const yPos = randInt(10, 220);
+    // compute position so the mythic stays inside the map
+    const pos = getSpawnPosition(38, 38);
+    const xPos = pos.x;
+    const yPos = pos.y;
 
     el.innerHTML = `
       <img src="${poke.img}" width="38" height="38">
@@ -459,7 +604,8 @@ function spawnOneMythic(poke) {
         pokemonsCaught += 1;
         
         // Extend game time
-        roundTimeLeft += TIME_BONUS_MYTHIC;
+           roundTimeLeft += TIME_BONUS_MYTHIC;
+           totalExtraTimeAdded += TIME_BONUS_MYTHIC;
         if (roundActive && roundTimer) {
              spawnBtn.textContent = `¡Ronda activa! (${roundTimeLeft}s)`;
         }
@@ -576,9 +722,14 @@ function handleCatch(entity, poke, xPos, yPos, isShiny = false) {
     if (isShiny && catchStreak >= SHINY_STREAK_REQUIREMENT) {
         catchStreak = 0;
     } else {
-        catchStreak += 1; 
+      catchStreak += 1; 
     }
 
+    // Update maximum streak seen during this round
+    if (catchStreak > maxCatchStreak) {
+      maxCatchStreak = catchStreak;
+    }
+    
     // Update Log
     const pokeKey = poke.name;
     if (!pokemonsCapturedLog[pokeKey]) {
@@ -604,8 +755,9 @@ function spawnOnePokemon(poke) {
   const countdownTime = randInt(3, 7);
   let timeLeft = countdownTime;
 
-  const xPos = randInt(25, 490); 
-  const yPos = randInt(10, 220); 
+  const pos = getSpawnPosition(38, 38);
+  const xPos = pos.x;
+  const yPos = pos.y;
   
   el.innerHTML = `
     <img src="/PADDown/${poke.name}.png" width="38" height="38">
@@ -646,8 +798,9 @@ function spawnOneShiny() {
   const countdownTime = randInt(3, 7);
   let timeLeft = countdownTime;
 
-  const xPos = randInt(25, 490); 
-  const yPos = randInt(10, 220); 
+  const pos = getSpawnPosition(38, 38);
+  const xPos = pos.x;
+  const yPos = pos.y;
   
   el.innerHTML = `
     <img src="${shiny.img}" width="38" height="38">
@@ -690,8 +843,10 @@ function spawnOneItem(item) {
   const countdownTime = randInt(3, 7);
   let timeLeft = countdownTime;
 
-  const xPos = randInt(35, 520); 
-  const yPos = randInt(20, 250); 
+  // items are slightly smaller
+  const pos = getSpawnPosition(30, 30);
+  const xPos = pos.x;
+  const yPos = pos.y;
   
   el.innerHTML = `
     <img src="${item.icon}" width="27" height="27">
@@ -771,6 +926,8 @@ function startRound() {
   pokeballs = 3; 
   masterballs = 0; 
   catchStreak = 0;
+  maxCatchStreak = 0;
+  totalExtraTimeAdded = 0;
   shiniesCaughtCount = 0; 
   regularCaughtCount = 0; 
   // RESET LOGS AND DISPLAYS ONLY AT START
@@ -788,6 +945,12 @@ function startRound() {
   roundTimeLeft = ROUND_DURATION; 
   spawnBtn.disabled = true;
   spawnBtn.textContent = `¡Ronda activa! (${roundTimeLeft}s)`;
+  // Disable map/theme changes while the round is active
+  if (changeThemeBtn) {
+    changeThemeBtn.disabled = true;
+  }
+  // Center the map in the user's viewport so they see it fully when the round begins
+  centerMapInView(true);
 
   // Auto-spawn entities continuously
   autoSpawnInterval = setInterval(() => {
@@ -809,7 +972,7 @@ function endRound() {
   clearInterval(roundTimer);
   clearInterval(autoSpawnInterval);
   spawnBtn.disabled = false;
-  spawnBtn.textContent = "¡Spawnea Pokémons e ítems!";
+  spawnBtn.textContent = "Iniciar Ronda";
   clearEntities();
   
   // Save High Score
@@ -833,6 +996,71 @@ function endRound() {
   
   // Logs maintain their final state until startRound() is called again.
   updateExchangeDisplay(); // Hide exchange button if round ends
+  // Re-enable map/theme changes when the round ends
+  if (changeThemeBtn) {
+    changeThemeBtn.disabled = false;
+  }
+
+  // --- Record this round into history (localStorage) ---
+  try {
+    const themeName = THEMES[currentThemeIndex].name;
+    const timestamp = new Date().toISOString();
+
+    // compute counts: regular, mythic, shiny
+    let regularCount = 0;
+    const mythicMap = {};
+    const shinyMap = {};
+
+    for (const [key, log] of Object.entries(pokemonsCapturedLog)) {
+      const count = log.count || 0;
+      const isShiny = key.startsWith('shiny-');
+      const isMythic = MYTHIC_POOL.some(m => m.name === key);
+      if (isShiny) {
+        shinyMap[key] = { name: key, count: count, img: (SHINY_POOL.find(s => s.name === key) || {}).img };
+      } else if (isMythic) {
+        mythicMap[key] = { name: key, count: count, img: (MYTHIC_POOL.find(m => m.name === key) || {}).img };
+      } else {
+        regularCount += count;
+      }
+    }
+
+    // items collected summary
+    const itemsSummary = {};
+    for (const [iname, ilog] of Object.entries(itemsCollectedLog)) {
+      itemsSummary[iname] = { count: ilog.count || 0, totalPoints: ilog.totalPoints || 0 };
+    }
+
+    const pokedexProg = (mapPokedexCaught[themeName] ? mapPokedexCaught[themeName].size : 0) + '/' + THEMES[currentThemeIndex].pokemons.length;
+
+    // total time = initial round duration + any added time bonuses - time left
+    const totalTime = (ROUND_DURATION + (totalExtraTimeAdded || 0)) - roundTimeLeft; // seconds elapsed
+
+    const historyEntry = {
+      theme: themeName,
+      timestamp,
+      regularCount,
+      mythics: Object.values(mythicMap),
+      shinies: Object.values(shinyMap),
+      items: itemsSummary,
+      totalPoints: score,
+      totalTimeSeconds: totalTime,
+      pokedexProgress: pokedexProg,
+      maxStreak: maxCatchStreak,
+      finalStreak: catchStreak,
+      remainingPokeballs: pokeballs
+    };
+
+    // Save to localStorage (keep last 6)
+    const key = 'pokeCatchHistory';
+    const existing = JSON.parse(localStorage.getItem(key) || '[]');
+    existing.unshift(historyEntry);
+    const sliced = existing.slice(0, 6);
+    localStorage.setItem(key, JSON.stringify(sliced));
+    // Update UI history
+    renderHistory();
+  } catch (e) {
+    console.error('Error saving round history', e);
+  }
 }
 
 spawnBtn.addEventListener("click", function() {
@@ -858,4 +1086,8 @@ window.onload = function() {
   updateCapturedLogDisplay(); 
   updateItemsLogDisplay(); 
   renderMapPokedex(); // NEW: Initial render
+  // Render history and wire clear button
+  renderHistory();
+  const clearBtn = document.getElementById('clear-history-btn');
+  if (clearBtn) clearBtn.addEventListener('click', function() { if (confirm('Borrar historial de partidas?')) clearHistory(); });
 };

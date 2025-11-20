@@ -372,22 +372,42 @@ footer a:hover {
 /* Map themes (backgrounds) */
 #game-map {
   width: 100%;
-  height: 320px;
+  height: 480px; /* increased map height for more spawn area */
   position: relative;
   border-radius: 12px;
   margin-bottom: 16px; 
-  background: #cbe1f1;
+  clear: both; /* ensure the map sits below floated controls like the start button */
+  margin-top: 12px; /* extra gap so the button doesn't overlap */
+  background-color: #cbe1f1; /* fallback color only */
   transition: background 0.6s;
   box-shadow: 0 1.5px 16px #1d23404c;
 }
-.theme-volcano {
-  background: linear-gradient(90deg, #e25822 70%, #ffbc5b);
+
+/* More specific selectors: target #game-map with the theme class to ensure higher specificity
+   and use relative paths so images load when opening the file locally. */
+#game-map.theme-volcano {
+  /* Volcano theme: lighter gradient overlay so the image shows through */
+  background-image: linear-gradient(90deg, rgba(226,88,34,0.18) 70%, rgba(255,188,91,0.18)), url('PADDown/volcan.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
 }
-.theme-forest {
-  background: linear-gradient(90deg, #67be72 80%, #aae2a1);
+#game-map.theme-forest {
+  /* Forest theme: lighter gradient overlay so the image shows through */
+  background-image: linear-gradient(90deg, rgba(103,190,114,0.16) 80%, rgba(170,226,161,0.16)), url('PADDown/bosque.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
 }
-.theme-tundra {
-  background: linear-gradient(90deg, #d6e7f8 80%, #8bbcfa);
+#game-map.theme-tundra {
+  /* Tundra theme: lighter gradient overlay so the image shows through */
+  background-image: linear-gradient(90deg, rgba(214,231,248,0.14) 80%, rgba(139,188,250,0.14)), url('PADDown/tundra.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
 }
 
 /* Buttons */
@@ -417,6 +437,56 @@ footer a:hover {
 }
 .spawn-btn:hover {
   background: #44be74;
+}
+
+/* Place spawn/start button above the map so it doesn't cover spawns */
+.game-area .spawn-btn {
+  /* default appearance when not inside the inline controls */
+  margin: 0 0 36px 12px; /* keep bottom spacing */
+  padding: 8px 14px;
+  font-size: 0.95em;
+  position: relative; /* ensure z-index applies */
+  z-index: 50; /* keep button visually above the map */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.22);
+}
+
+@media (max-width: 700px) {
+  .game-area .spawn-btn {
+    margin: 0 0 28px 8px;
+    padding: 7px 12px;
+    font-size: 0.92em;
+  }
+}
+
+/* Controls row above the map: streak + start button */
+.map-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.map-controls .catch-streak-display {
+  margin-bottom: 0; /* remove extra bottom margin inside the controls */
+}
+.map-controls .spawn-btn {
+  float: none; /* ensure button sits inline inside the flex container */
+  margin: 0; /* handled by flex gap */
+}
+
+/* Disabled state for map/theme button */
+.map-theme-btn:disabled,
+.map-theme-btn[disabled] {
+  background: #4a5966; /* muted grey */
+  color: #c9d6d9;
+  cursor: not-allowed;
+  opacity: 0.75;
+  transform: none; /* avoid hover transform */
+  box-shadow: none;
+}
+.map-theme-btn:disabled:hover,
+.map-theme-btn[disabled]:hover {
+  transform: none;
 }
 
 /* Game map entity spawns (pokemon or items) */
@@ -497,6 +567,41 @@ ul {
     text-align: center;
 }
 
+/* Collapsible instructions styling */
+.instructions-details {
+  max-width: 800px;
+  margin: 18px auto 0 auto;
+  text-align: left;
+}
+.instructions-summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #2e3942;
+  color: #a1ffcb;
+  display: block;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.instructions-summary h3 {
+  margin: 0;
+  font-size: 1.05em;
+  color: inherit;
+}
+.instructions-summary::-webkit-details-marker { /* hide default marker */
+  display: none;
+}
+.instructions-content {
+  margin-top: 8px;
+  background: #1f252a;
+  padding: 14px 18px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.instructions-content ul { /* keep original centered width */
+  margin: 0 auto;
+}
+
 /* Instructions layout */
 @media (max-width: 1280px) { /* Adjust breakpoint for larger map */
   .game-container {
@@ -556,7 +661,7 @@ ul {
     padding: 6vw 2vw;
   }
   #game-map {
-    height: 42vw;
+    height: 42vw; /* keep responsive scaling for smaller screens */
     min-height: 200px;
   }
   /* Force item panels to stack vertically on small screens */
@@ -688,4 +793,54 @@ ul {
     opacity: 0;
     transform: translate(-50%, -40px);
   }
+}
+
+/* History section styling */
+.game-history-section {
+  max-width: 1280px;
+  margin: 20px auto 30px auto;
+  background: #1f252a;
+  padding: 14px 18px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+}
+.game-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.history-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+.history-card {
+  background: #2e3942;
+  border-radius: 10px;
+  padding: 10px;
+  color: #e6f7f0;
+  font-size: 0.92em;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.2);
+}
+.history-card h4 {
+  margin: 0 0 6px 0;
+  font-size: 1em;
+  color: #a1ffcb;
+}
+.history-row { display:flex; align-items:center; justify-content:space-between; gap:8px; margin:6px 0; }
+.history-label { color:#9bb7c4; font-weight:600; }
+.history-sprites { display:flex; gap:6px; align-items:center; }
+.history-sprites img { width:28px; height:28px; border-radius:6px; background:#fff; padding:2px; }
+.history-small { font-size:0.85em; color:#cfeee6; }
+.history-empty { text-align:center; color:#9bb7c4; font-style:italic; }
+
+/* Row hover highlight for history cards */
+.history-card .history-row {
+  transition: background-color 0.15s ease, transform 0.08s ease;
+}
+.history-card .history-row:hover {
+  background-color: rgba(255,255,255,0.03);
+  cursor: pointer;
 }
