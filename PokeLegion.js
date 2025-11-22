@@ -637,6 +637,12 @@ function pickTileSprite(prefix, r, c){
 		return Math.max(0, req);
 	}
 
+// Global type colors used across Depot and Party cards
+const TYPE_COLORS_GLOBAL = {
+	'normal':'#A8A77A','fire':'#EE8130','fighting':'#C22E28','water':'#6390F0','flying':'#A98FF3','grass':'#7AC74C','poison':'#A33EA1','electric':'#F7D02C','ground':'#E2BF65','psychic':'#F95587','rock':'#B6A136','ice':'#96D9D6','bug':'#A6B91A','dragon':'#6F35FC','ghost':'#735797','dark':'#705746','steel':'#B7B7CE','fairy':'#D685AD'
+};
+function getTypeColor(t){ return TYPE_COLORS_GLOBAL[String(t||'').toLowerCase()] || '#666'; }
+
 	function grantRewards(rewards){
 		if(!rewards) return;
 		player.inventory = player.inventory || {};
@@ -652,6 +658,8 @@ function pickTileSprite(prefix, r, c){
 		});
 		addLog(`Rewards granted: ${JSON.stringify(rewards)}`);
 		savePlayer();
+		// Immediate inventory UI refresh for visibility after loot
+		try{ renderInventoryGrid(); updatePanels(); }catch(e){}
 	}
 
 	function onLevelUp(oldLevel, newLevel){
@@ -1213,6 +1221,10 @@ function pickTileSprite(prefix, r, c){
 				</div>
 				<div class="market-buy card">
 					<h1 style="margin:0 0 6px 0">Buy Items</h1>
+						<div style="margin:4px 0 10px 0;display:flex;gap:8px;align-items:center">
+							<input id="marketSearch" type="search" placeholder="Search items..." style="flex:1;padding:8px 10px;border-radius:8px;border:1px solid rgba(15,23,42,0.08);font-size:13px" />
+							<button id="marketSearchClear" class="btn secondary" style="white-space:nowrap">Clear</button>
+						</div>
 					<div class="top-controls" style="margin-top:8px;display:flex;align-items:center;gap:8px">
 						<div>Your current balance: <span id="marketBalance">$0</span></div>
 						<button id="buyBtn" class="btn">BUY</button>
@@ -1270,12 +1282,25 @@ function pickTileSprite(prefix, r, c){
 		const buyState = {};
 		catalog.forEach(it=> buyState[it.key] = 0);
 
+		let marketSearchQuery = '';
+		const searchInput = mr.querySelector('#marketSearch');
+		const searchClearBtn = mr.querySelector('#marketSearchClear');
+		if(searchInput){
+			searchInput.addEventListener('input', ()=>{ marketSearchQuery = (searchInput.value||'').toLowerCase().trim(); renderCatalog(); });
+		}
+		if(searchClearBtn){
+			searchClearBtn.addEventListener('click', ()=>{ marketSearchQuery=''; if(searchInput) searchInput.value=''; renderCatalog(); });
+		}
 		function renderCatalog(){
 			// preserve scroll position so users don't lose their place when quantities update
 			const prevScroll = marketItemsEl ? marketItemsEl.scrollTop : 0;
 			marketItemsEl.innerHTML = '';
 			const grid = document.createElement('div'); grid.className = 'catalog-grid';
 			catalog.forEach(it=>{
+				if(marketSearchQuery){
+					const hay = (it.label||'') + ' ' + (it.key||'') + ' ' + (it.desc||'');
+					if(hay.toLowerCase().indexOf(marketSearchQuery) === -1) return;
+				}
 				const card = document.createElement('div'); card.className = 'market-item';
 				const thumb = document.createElement('div'); thumb.className = 'thumb';
 				const img = document.createElement('img'); img.alt = it.key;
@@ -1500,128 +1525,113 @@ function pickTileSprite(prefix, r, c){
 
 	function renderPartyGrid(){
 		if(!partyList) return;
-		partyList.innerHTML = '';
-		const grid = document.createElement('div'); grid.className = 'party-grid';
-		const p = Array.isArray(player.party) ? player.party : [];
+		partyList.innerHTML='';
+		const list=document.createElement('div'); list.className='party-list';
+		const party = Array.isArray(player.party)?player.party:[];
 		for(let i=0;i<6;i++){
-			const slot = document.createElement('div'); slot.className = 'party-slot'; slot.dataset.index = String(i);
-			const member = p[i];
+			const slot=document.createElement('div'); slot.className='party-slot'; slot.dataset.index=String(i);
+			const member=party[i];
 			if(member){
-				const name = (member.name || member).toString();
-				const lvl = Number(member.level) || 1;
-				const exp = Number(member.exp) || 0;
+				try{ ensurePokemonHasTypes(member);}catch(e){}
+				const name=String(member.name||member);
+				const lvl=Number(member.level)||1; const exp=Number(member.exp)||0;
 				assignBallToPokemon(member);
+				if(typeof member.hp!=='number') member.hp=30+lvl*5;
+				if(typeof member.currentHp!=='number') member.currentHp=member.hp;
 
-				// Ensure HP fields exist
-				if(typeof member.hp !== 'number') member.hp = 30 + (member.level||1) * 5;
-				if(typeof member.currentHp !== 'number') member.currentHp = member.hp;
+				// Left column
+				const left=document.createElement('div'); left.className='left-col';
+				const ball=document.createElement('img'); ball.className='ball-img'; ball.alt=member.ball||'ball'; try{ setImageSrcWithFallback(ball,getBallImageCandidates(member.ball||'Poke Ball')); }catch(e){}
+				left.appendChild(ball);
+				const sprite=document.createElement('img'); sprite.className='sprite-img'; sprite.alt=name; sprite.dataset.index=String(i);
+				const fileKey=name.toLowerCase().replace(/[^a-z0-9]+/g,'_');
+				const candidates=[`PokeLegion/pokemon/${fileKey}.png`,`PokeLegion/Avatars/${fileKey}.png`,`PokeLegion/Items/${fileKey}.png`];
+				let ci=0; sprite.onerror=function(){ci++; if(ci<candidates.length) sprite.src=candidates[ci]; else { sprite.remove(); const fallback=document.createElement('div'); fallback.textContent=name.charAt(0).toUpperCase(); fallback.style.fontSize='28px'; left.appendChild(fallback);} };
+				sprite.src=candidates[0]; left.appendChild(sprite); slot.appendChild(left);
 
-				// Build new card layout: name row, icons row (ball + level + heal), EXP row (label left + bar), HP row (label left + bar + numbers)
-				const nm = document.createElement('div'); nm.className = 'pname'; nm.textContent = name; nm.style.marginBottom = '6px'; slot.appendChild(nm);
+				// Middle column
+				const mid=document.createElement('div'); mid.className='mid-col';
+				const header=document.createElement('div'); header.className='header-row';
+				const nameBanner=document.createElement('div'); nameBanner.className='name-banner'; nameBanner.textContent=name; header.appendChild(nameBanner);
+				const typesRow=document.createElement('div'); typesRow.className='types-row';
+				const types=Array.isArray(member.types)?member.types:['normal'];
+				types.forEach(tp=>{ const tb=document.createElement('span'); tb.className='type-badge'; tb.textContent=String(tp).charAt(0).toUpperCase()+String(tp).slice(1); tb.style.background=getTypeColor(tp); tb.style.color='#fff'; tb.style.border='1px solid rgba(0,0,0,0.15)'; typesRow.appendChild(tb); });
+				header.appendChild(typesRow);
+				const lvlBadge=document.createElement('div'); lvlBadge.className='level-badge'; lvlBadge.textContent='Lv '+lvl; header.appendChild(lvlBadge);
+				mid.appendChild(header);
 
-				const iconsRow = document.createElement('div'); iconsRow.className = 'p-icons'; iconsRow.style.justifyContent = 'space-between'; iconsRow.style.alignItems = 'center';
-				const leftIcons = document.createElement('div'); leftIcons.style.display='flex'; leftIcons.style.alignItems='center'; leftIcons.style.gap='8px';
-				const ballIcon = document.createElement('div'); ballIcon.className = 'ball-icon';
-				const ballImgEl = document.createElement('img'); ballImgEl.alt = member.ball || 'ball'; ballImgEl.style.width = '20px'; ballImgEl.style.height = '20px'; ballIcon.appendChild(ballImgEl); leftIcons.appendChild(ballIcon);
-				try{ setImageSrcWithFallback(ballImgEl, getBallImageCandidates(member.ball || 'Poke Ball')); }catch(e){}
-				const levelEl = document.createElement('span'); levelEl.className = 'plevel'; levelEl.textContent = 'Lv ' + lvl; leftIcons.appendChild(levelEl);
-				iconsRow.appendChild(leftIcons);
+				const bars=document.createElement('div'); bars.className='bars';
+				const barsRow=document.createElement('div'); barsRow.className='bars-row';
+				// HP bar group
+				const hpRow=document.createElement('div'); hpRow.className='bar-row hp-row';
+				const hpLabel=document.createElement('div'); hpLabel.className='label'; hpLabel.textContent='HP'; hpRow.appendChild(hpLabel);
+				const hpBar=document.createElement('div'); hpBar.className='bar hp'; hpBar.dataset.kind='hp';
+				const hpFill=document.createElement('div'); hpFill.className='fill'; hpFill.style.width=Math.max(0,Math.min(100,Math.round(member.currentHp/member.hp*100)))+'%';
+				const hpVal=document.createElement('div'); hpVal.className='value'; hpVal.textContent=`${member.currentHp}/${member.hp}`;
+				hpBar.appendChild(hpFill); hpBar.appendChild(hpVal); hpRow.appendChild(hpBar);
+				barsRow.appendChild(hpRow);
+				// EXP bar group
+				const expNeed=xpForNextLevel(lvl); const expPct=Math.max(0,Math.min(100,Math.round(exp/Math.max(1,expNeed)*100)));
+				const expRow=document.createElement('div'); expRow.className='bar-row exp-row';
+				const expLabel=document.createElement('div'); expLabel.className='label'; expLabel.textContent='EXP'; expRow.appendChild(expLabel);
+				const expBar=document.createElement('div'); expBar.className='bar exp'; expBar.dataset.kind='exp';
+				const expFill=document.createElement('div'); expFill.className='fill'; expFill.style.width=expPct+'%';
+				const expVal=document.createElement('div'); expVal.className='value'; expVal.textContent=`${exp}/${expNeed}`;
+				expBar.appendChild(expFill); expBar.appendChild(expVal); expRow.appendChild(expBar);
+				barsRow.appendChild(expRow);
+				bars.appendChild(barsRow); mid.appendChild(bars); slot.appendChild(mid);
 
-				// heal button
-				const healBtn = document.createElement('button'); healBtn.className = 'btn small'; healBtn.textContent = 'Heal'; healBtn.title = 'Use a potion on this Pokémon';
-				healBtn.addEventListener('click', ()=>{ showHealModal(i); });
-				iconsRow.appendChild(healBtn);
-				slot.appendChild(iconsRow);
+				// Right column
+				const right=document.createElement('div'); right.className='right-col';
+				const healBtn=document.createElement('button'); healBtn.type='button'; healBtn.className='heal-btn'; healBtn.textContent='HEAL'; healBtn.addEventListener('click',()=>{ showHealModal(i); }); right.appendChild(healBtn); slot.appendChild(right);
 
-				// EXP row
-				try{
-					const need = xpForNextLevel(lvl);
-					const pct = Math.max(0, Math.min(100, Math.round((Number(exp) / Math.max(1, need)) * 100)));
-					const expRow = document.createElement('div'); expRow.className = 'p-exp-row';
-					const expLabel = document.createElement('div'); expLabel.className = 'p-exp-label'; expLabel.textContent = 'EXP'; expRow.appendChild(expLabel);
-					const expBarWrap = document.createElement('div'); expBarWrap.className = 'p-exp-bar';
-					const expInner = document.createElement('div'); expInner.className = 'p-inner p-exp-inner'; expInner.style.width = pct + '%'; expBarWrap.appendChild(expInner);
-					expRow.appendChild(expBarWrap);
-					slot.appendChild(expRow);
-				}catch(e){}
-
-				// HP row
-				try{
-					const hpRow = document.createElement('div'); hpRow.className = 'p-hp-row';
-					const hpLabel = document.createElement('div'); hpLabel.className = 'p-hp-label'; hpLabel.textContent = 'HP'; hpRow.appendChild(hpLabel);
-					const hpBarWrap = document.createElement('div'); hpBarWrap.className = 'p-hp-bar';
-					const hpPct = Math.max(0, Math.min(100, Math.round((Number(member.currentHp) / Math.max(1, Number(member.hp))) * 100)));
-					const hpInner = document.createElement('div'); hpInner.className = 'p-inner p-hp-inner'; hpInner.style.width = hpPct + '%'; hpBarWrap.appendChild(hpInner);
-					const hpText = document.createElement('div'); hpText.className = 'p-hp-text'; hpText.textContent = `${member.currentHp}/${member.hp}`;
-					hpBarWrap.appendChild(hpText);
-					hpRow.appendChild(hpBarWrap);
-					slot.appendChild(hpRow);
-				}catch(e){}
-
-				// now the sprite image
-				const img = document.createElement('img'); img.className = 'p-sprite'; img.alt = name; img.style.marginTop = '8px'; img.dataset.index = String(i);
-				const fileKey = name.toLowerCase().replace(/[^a-z0-9]+/g,'_');
-				const candidates = [
-					`PokeLegion/pokemon/${fileKey}.png`,
-					`PokeLegion/Avatars/${fileKey}.png`,
-					`PokeLegion/Items/${fileKey}.png`
-				];
-				let ci = 0;
-				img.onerror = function(){ ci++; if(ci < candidates.length) img.src = candidates[ci]; else { img.remove(); const t = document.createElement('div'); t.textContent = name.charAt(0).toUpperCase(); t.style.fontSize='22px'; slot.appendChild(t); } };
-				img.src = candidates[0];
-				slot.appendChild(img);
-				// bottom-right ball icon removed — top-left ball in the icons row is used instead
-
-				// tooltip on hover shows exact EXP numbers
-				slot.addEventListener('mouseenter', (e)=>{ const need = xpForNextLevel(lvl); showExpTooltip(slot, `${exp}/${need} EXP`, e); });
-				slot.addEventListener('mousemove', moveExpTooltip);
-				slot.addEventListener('mouseleave', hideExpTooltip);
-			} else {
-				slot.classList.add('empty');
-				slot.innerHTML = '<div>—</div>';
-			}
-			grid.appendChild(slot);
+				slot.addEventListener('mouseenter',(e)=>{ const need2=xpForNextLevel(lvl); showExpTooltip(slot,`${exp}/${need2} EXP`,e); });
+				slot.addEventListener('mousemove',moveExpTooltip); slot.addEventListener('mouseleave',hideExpTooltip);
+			} else { slot.classList.add('empty'); slot.innerHTML='<div style="font-weight:600;font-size:14px;opacity:.5">(empty)</div>'; }
+			list.appendChild(slot);
 		}
-		partyList.appendChild(grid);
+		partyList.appendChild(list);
 	}
 
 // Update a single party slot DOM to reflect current data for that index.
 function updatePartySlot(idx){
 	try{
 		if(!partyList) { updatePanels(); return; }
-		const slot = partyList.querySelector('.party-grid .party-slot[data-index="' + String(idx) + '"]');
+		const slot = partyList.querySelector('.party-list .party-slot[data-index="' + String(idx) + '"]');
 		const member = (Array.isArray(player.party) ? player.party[idx] : null);
-		if(!slot){
-			// slot not present (e.g., party panel not rendered) — fallback to full render
-			renderPartyGrid(); return;
-		}
-		// If no member, render empty
-		if(!member){ slot.classList.add('empty'); slot.innerHTML = '<div>—</div>'; return; }
-
-		// ensure fields exist
+		if(!slot){ renderPartyGrid(); return; }
+		if(!member){ slot.classList.add('empty'); slot.innerHTML = '<div style="font-weight:700;font-size:18px;opacity:.4">(empty)</div>'; return; }
+		try{ ensurePokemonHasTypes(member); }catch(e){}
 		if(typeof member.hp !== 'number') member.hp = 30 + (member.level||1) * 5;
 		if(typeof member.currentHp !== 'number') member.currentHp = member.hp;
-
-		// update level
-		const lvl = Number(member.level) || 1;
-		const plevel = slot.querySelector('.plevel'); if(plevel) plevel.textContent = 'Lv ' + lvl;
-		// update ball image (try multiple filename variants)
-		const ballImg = slot.querySelector('.ball-icon img'); if(ballImg) try{ setImageSrcWithFallback(ballImg, getBallImageCandidates(member.ball || 'Poke Ball')); }catch(e){}
-		// update exp bar
-		const exp = Number(member.exp) || 0; const need = xpForNextLevel(lvl);
-		const pct = Math.max(0, Math.min(100, Math.round((exp / Math.max(1, need)) * 100)));
-		const expInner = slot.querySelector('.p-exp-inner'); if(expInner) expInner.style.width = pct + '%';
-		// update hp bar and text
-		const hpPct = Math.max(0, Math.min(100, Math.round((Number(member.currentHp) / Math.max(1, Number(member.hp))) * 100)));
-		const hpInner = slot.querySelector('.p-hp-inner'); if(hpInner) hpInner.style.width = hpPct + '%';
-		const hpText = slot.querySelector('.p-hp-text'); if(hpText) hpText.textContent = `${member.currentHp}/${member.hp}`;
-		// update sprite if present
-		const sprite = slot.querySelector('.p-sprite'); if(sprite){
-			try{
-				const fileKey = String(member.name || '').toLowerCase().replace(/[^a-z0-9]+/g,'_');
-				const src = `PokeLegion/pokemon/${fileKey}.png`;
-				if(sprite.src !== src) sprite.src = src;
-			}catch(e){}
+		const lvl = Number(member.level)||1; const exp = Number(member.exp)||0; const need = xpForNextLevel(lvl);
+		// level badge
+		// level badge
+		const lvlBadge = slot.querySelector('.level-badge'); if(lvlBadge) lvlBadge.textContent = 'Lv ' + lvl;
+		// ball image
+		const ballImg = slot.querySelector('.ball-img'); if(ballImg) try{ setImageSrcWithFallback(ballImg, getBallImageCandidates(member.ball || 'Poke Ball')); }catch(e){}
+		// hp
+		const hpBar = slot.querySelector('.bar.hp'); if(hpBar){
+			const fill = hpBar.querySelector('.fill'); const val = hpBar.querySelector('.value');
+			const hpPct = Math.max(0,Math.min(100,Math.round((member.currentHp/member.hp)*100)));
+			if(fill) fill.style.width = hpPct + '%'; if(val) val.textContent = `${member.currentHp}/${member.hp}`;
+		}
+		// exp
+		const expBar = slot.querySelector('.bar.exp'); if(expBar){
+			const fill = expBar.querySelector('.fill'); const val = expBar.querySelector('.value');
+			const expPct = Math.max(0,Math.min(100,Math.round((exp/Math.max(1,need))*100)));
+			if(fill) fill.style.width = expPct + '%'; if(val) val.textContent = `${exp}/${need}`;
+		}
+		// sprite
+		const spriteImg = slot.querySelector('.sprite-img'); if(spriteImg){
+			const fileKey = String(member.name||'').toLowerCase().replace(/[^a-z0-9]+/g,'_');
+			const src = `PokeLegion/pokemon/${fileKey}.png`;
+			if(!spriteImg.src.includes(src)) spriteImg.src = src;
+		}
+		// types
+		const typesRow = slot.querySelector('.types-row'); if(typesRow){
+			typesRow.innerHTML=''; const types = Array.isArray(member.types)?member.types:['normal'];
+			types.forEach(tp=>{ const tb=document.createElement('span'); tb.className='type-badge'; tb.textContent = String(tp).charAt(0).toUpperCase()+String(tp).slice(1); tb.style.background=getTypeColor(tp); tb.style.color='#fff'; tb.style.border='1px solid rgba(0,0,0,0.15)'; typesRow.appendChild(tb); });
 		}
 	}catch(e){ console.warn('updatePartySlot failed', e); try{ renderPartyGrid(); }catch(err){} }
 }
@@ -1727,17 +1737,25 @@ function applyStoredProgressToPokemon(p){
 	const stored = pokeProgress[key];
 	if(!stored) return;
 	try{
-		const baseHp = Number(p.hp) || 0;
 		const lvl = Number(stored.level) || 1;
 		const exp = Number(stored.exp) || 0;
-		const per = Math.max(1, Math.floor(baseHp * 0.05));
 		p.level = lvl;
 		p.exp = exp;
-		// add slightly more HP per level for a noticeable increase
-		p.hp = baseHp + (lvl - 1) * per;
-		p.currentHp = Math.min(p.currentHp || p.hp, p.hp);
-		// restore power stat (ensure minimum scaling with level)
-		if(typeof p.power !== 'number') p.power = Math.max(0, Math.floor(p.level / 2));
+		// If hp was persisted use it; otherwise fall back to base species hp without extra scaling
+		if(typeof stored.hp === 'number'){
+			p.hp = Math.max(1, Number(stored.hp));
+		}else{
+			// keep existing p.hp (species base) if present
+			p.hp = Math.max(1, Number(p.hp) || 30 + (lvl||1)*5);
+		}
+		// Ensure currentHp does not exceed hp
+		p.currentHp = Math.min(Number(p.currentHp) || p.hp, p.hp);
+		// Restore power if stored, else derive minimally from level
+		if(typeof stored.power === 'number'){
+			p.power = Number(stored.power);
+		}else if(typeof p.power !== 'number'){
+			p.power = Math.max(0, Math.floor(p.level / 2));
+		}
 	}catch(e){}
 }
 
@@ -1762,18 +1780,29 @@ function findTypesForName(name){
 
 function ensurePokemonHasTypes(p){
 	if(!p) return;
-	// if already an array, normalize entries to strings
+	// Normalize existing array; if it's only 'normal' we will attempt enrichment
 	if(Array.isArray(p.types)){
-		p.types = p.types.map(t=> String(t||'').toString());
-		if(p.types.length > 0) return;
+		p.types = p.types.map(t=> String(t||'').toLowerCase());
+		const nonNormal = p.types.filter(t=> t && t.toLowerCase() !== 'normal');
+		if(nonNormal.length > 0) return; // already has at least one real type
+		// else continue to attempt improved inference
 	}
+	// Starter canonical types (base forms only)
+	const STARTER_TYPE_MAP = {
+		bulbasaur:['grass','poison'],
+		charmander:['fire'], squirtle:['water'],
+		chikorita:['grass'], cyndaquil:['fire'], totodile:['water'],
+		treecko:['grass'], torchic:['fire'], mudkip:['water']
+	};
+	const nameKey = String(p.name||p.species||p.id||'').toLowerCase();
+	if(STARTER_TYPE_MAP[nameKey]){ p.types = STARTER_TYPE_MAP[nameKey].slice(); return; }
 	// if old single-key `type` exists, convert to array
 	if(p.type && !Array.isArray(p.types)){
-		try{ p.types = [String(p.type)]; return; }catch(e){}
+		try{ p.types = [String(p.type).toLowerCase()]; return; }catch(e){}
 	}
 	// try to find via spawn tables
 	const found = findTypesForName(p.name || p.species || p.id || '');
-	if(found && found.length) { p.types = found.slice(); return; }
+	if(found && found.length) { p.types = found.slice().map(x=>String(x).toLowerCase()); return; }
 	// last-resort default
 	p.types = ['normal'];
 }
@@ -1801,7 +1830,13 @@ function addPokemonExpTo(poke, amount){
 		poke.power = Number(poke.power) + 1;
 		addLog(`${poke.name} subió de nivel: ${old} → ${poke.level}`);
 	}
-	try{ if(poke && poke.name){ pokeProgress = pokeProgress || {}; pokeProgress[poke.name] = { level: poke.level, exp: poke.exp }; savePokeProgress(); } }catch(e){}
+	try{
+		if(poke && poke.name){
+			pokeProgress = pokeProgress || {};
+			pokeProgress[poke.name] = { level: poke.level, exp: poke.exp, hp: poke.hp, power: poke.power };
+			savePokeProgress();
+		}
+	}catch(e){}
 }
 
 function assignBallToPokemon(p){
@@ -1869,6 +1904,33 @@ function getBallImageCandidates(ballName){
 		if(underscored && underscored !== joined) candidates.push(`PokeLegion/Items/${underscored}.png`);
 		if(dashed && dashed !== joined && dashed !== underscored) candidates.push(`PokeLegion/Items/${dashed}.png`);
 		if(spaced && spaced !== joined && spaced !== underscored && spaced !== dashed) candidates.push(`PokeLegion/Items/${spaced}.png`);
+		// Common explicit synonyms that differ in repository naming
+		const SYNONYMS = {
+			'poke ball':['pokeball','poke ball'],
+			'pokeball':['pokeball','poke ball'],
+			'great ball':['greatball','great ball'],
+			'ultra ball':['ultraball','ultra ball'],
+			'master ball':['masterball','master ball'],
+			'friend ball':['friendball','friend ball'],
+			'heal ball':['healball','heal ball'],
+			'dive ball':['diveball','dive ball'],
+			'quick ball':['quickball','quick ball'],
+			'net ball':['netball','net ball'],
+			'love ball':['loveball','love ball'],
+			'moon ball':['moonball','moon ball'],
+			'safari ball':['safariball','safari ball'],
+			'dusk ball':['duskball','dusk ball'],
+			'premier ball':['premierball','premier ball'],
+			'ancient ball':['ancientball','ancient ball'],
+			'crystal ball':['crystalball','crystal ball'],
+			'heavy ball':['heavyball','heavy ball'],
+			'beast ball':['beastball','beast ball'],
+			'fast ball':['fastball','fast ball'],
+			'dream ball':['dreamball','dream ball']
+		};
+		if(SYNONYMS[cleaned]){
+			SYNONYMS[cleaned].forEach(syn=>{ const synClean = syn.toLowerCase(); if(synClean && candidates.indexOf(`PokeLegion/Items/${synClean}.png`) < 0) candidates.push(`PokeLegion/Items/${synClean}.png`); });
+		}
 		// also try the pretty name produced by niceItemName
 		try{
 			const pretty = (niceItemName(ballName) || '').toLowerCase().replace(/[^a-z0-9 ]+/g,' ').replace(/\s+/g,' ').trim();
@@ -2170,35 +2232,93 @@ function runDuel(partyIdx, wild){
 				drops.forEach(d => { try{ player.inventory[d.key] = (Number(player.inventory[d.key])||0) + (Number(d.qty)||0); }catch(e){} });
 			}
 			savePlayer();
-			// show win modal with options to catch or run (include drops for display)
-			showDuelResultModal(true, wild, partyIdx, damage, coins, drops);
+			// Immediate inventory + panels refresh (coins & drops) before showing modal
+			try{ renderInventoryGrid(); updatePanels(); }catch(e){}
+			// show win modal with options to catch or run (include drops + exp gain for display)
+			showDuelResultModal(true, wild, partyIdx, damage, coins, drops, expGain);
 		} else {
 			// loss: minor penalty and no loot
 			const coins = 0;
 			savePlayer();
-			showDuelResultModal(false, wild, partyIdx, damage, coins, []);
+			showDuelResultModal(false, wild, partyIdx, damage, coins, [], 0);
 		}
 	}catch(e){ console.warn('runDuel failed', e); setBattleActive(false); }
 }
 
-function showDuelResultModal(playerWon, wild, partyIdx, damage, coins, drops){
+function showDuelResultModal(playerWon, wild, partyIdx, damage, coins, drops, expGain){
 	drops = Array.isArray(drops) ? drops : [];
+	expGain = Number(expGain) || 0;
 	const overlay = document.createElement('div'); overlay.style.position='fixed'; overlay.style.left=0; overlay.style.top=0; overlay.style.right=0; overlay.style.bottom=0; overlay.style.background='rgba(0,0,0,0.4)'; overlay.style.display='flex'; overlay.style.alignItems='center'; overlay.style.justifyContent='center'; overlay.style.zIndex=20000;
 	const box = document.createElement('div'); box.style.background='#fff'; box.style.padding='18px'; box.style.borderRadius='10px'; box.style.minWidth='420px'; box.style.boxShadow='0 10px 30px rgba(0,0,0,0.25)';
 	if(playerWon){
 		// build a clearer summary of the outcome
 		const name = escapeHtml(player.party && player.party[partyIdx] ? player.party[partyIdx].name : '(your Pokémon)');
-		let html = `<h3>You WON!</h3>`;
+		// Enhanced header includes defeated wild name + level
+		let html = `<h3>You WON! ${escapeHtml(wild && wild.name ? wild.name : 'Wild Pokémon')} Lvl.${wild && wild.level ? wild.level : '?'} was defeated!</h3>`;
 		html += `<div style="margin-top:6px">Result summary:</div>`;
 		html += `<ul style="margin:8px 0 0 18px;padding:0;color:var(--muted)">`;
 		html += `<li>Auto-sold loot: <strong>$${coins}</strong></li>`;
+		if(expGain > 0) html += `<li>${name} +<strong>${expGain}</strong> ExpPoints</li>`;
 		html += `<li>${name} took <strong>${damage}</strong> damage</li>`;
-		if(drops.length){
-			const parts = drops.map(d=> `${d.qty}x ${escapeHtml(niceItemName(d.key) || d.key)}`);
-			html += `<li>Items found: <strong>${escapeHtml(parts.join(', '))}</strong></li>`;
-		}
 		html += `</ul>`;
 		box.innerHTML = html;
+		// If there are drops, show them with icons
+		if(drops.length){
+			const dropRow = document.createElement('div');
+			dropRow.style.display = 'flex';
+			dropRow.style.gap = '16px';
+			dropRow.style.margin = '12px 0 0 0';
+			dropRow.style.alignItems = 'center';
+			drops.forEach(d => {
+				const itemBox = document.createElement('div');
+				itemBox.style.display = 'flex';
+				itemBox.style.flexDirection = 'column';
+				itemBox.style.alignItems = 'center';
+				itemBox.style.minWidth = '56px';
+				// Create icon with fallback attempts (reuse inventory logic)
+				const img = document.createElement('img');
+				img.alt = d.key;
+				img.style.width = '36px';
+				img.style.height = '36px';
+				img.style.marginBottom = '2px';
+				// Use same candidate logic as inventory
+				const candidates = [
+					`PokeLegion/Items/${d.key}.png`,
+					`PokeLegion/Items/${d.key.replace(/\s+/g,'_')}.png`,
+					`PokeLegion/Items/${d.key.replace(/\s+/g,'-')}.png`,
+					`PokeLegion/Items/${d.key.replace(/\s+/g,'')}.png`,
+					`PokeLegion/Items/${d.key.replace(/([a-z])([A-Z])/g,'$1_$2').toLowerCase()}.png`,
+					`PokeLegion/Items/${d.key.replace(/pokeball/i,'poke ball')}.png`,
+					`PokeLegion/Items/${d.key.replace(/greatball/i,'great ball')}.png`,
+					`PokeLegion/Items/${d.key.replace(/ultraball/i,'ultra ball')}.png`
+				];
+				let ci = 0;
+				img.onerror = function(){
+					ci++;
+					if(ci < candidates.length) img.src = candidates[ci]; else {
+						img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"></svg>';
+					}
+				};
+				img.src = candidates[0];
+				itemBox.appendChild(img);
+				// Label and quantity
+				const label = document.createElement('div');
+				label.style.fontSize = '13px';
+				label.style.textAlign = 'center';
+				label.style.marginTop = '2px';
+				label.textContent = `${d.qty}x ${niceItemName(d.key) || d.key}`;
+				itemBox.appendChild(label);
+				dropRow.appendChild(itemBox);
+			});
+			// Add a heading for items found
+			const foundTitle = document.createElement('div');
+			foundTitle.textContent = 'Items found:';
+			foundTitle.style.margin = '10px 0 2px 0';
+			foundTitle.style.fontWeight = 'bold';
+			foundTitle.style.color = 'var(--muted)';
+			box.appendChild(foundTitle);
+			box.appendChild(dropRow);
+		}
 		const controls = document.createElement('div'); controls.style.marginTop='12px'; controls.style.display='flex'; controls.style.gap='8px';
 		const catchBtn = document.createElement('button'); catchBtn.className='btn'; catchBtn.textContent='CATCH'; catchBtn.addEventListener('click', ()=>{ overlay.remove(); showCatchModal(wild); });
 		const runBtn = document.createElement('button'); runBtn.className='btn secondary'; runBtn.textContent='RUN'; runBtn.addEventListener('click', ()=>{ overlay.remove(); setBattleActive(false); clearWildSpawns(); });
@@ -2206,8 +2326,9 @@ function showDuelResultModal(playerWon, wild, partyIdx, damage, coins, drops){
 		// log a concise, human-friendly line to the encounter log
 		try{
 			const parts = [];
-			parts.push(`Won duel vs ${wild && wild.name ? wild.name : 'wild Pokémon'}`);
+			parts.push(`Won duel! Defeated ${wild && wild.name ? wild.name : 'wild Pokémon'} Lvl.${wild && wild.level ? wild.level : '?'}`);
 			parts.push(`+$${coins}`);
+			if(expGain > 0) parts.push(`${name} +${expGain} ExpPoints`);
 			parts.push(`${name} -${damage} HP`);
 			if(drops.length){ parts.push(`Found: ${drops.map(d=> `${d.qty}x ${niceItemName(d.key)}`).join(', ')}`); }
 			addLog(parts.join(' • '), 'success');
@@ -2530,7 +2651,6 @@ function showDepot(){
 			const ballImgWrap = document.createElement('div'); ballImgWrap.className = 'ball-icon';
 			const ballImg = document.createElement('img'); ballImg.alt = p.ball || 'ball'; ballImg.style.width = '20px'; ballImg.style.height = '20px';
 			try{ setImageSrcWithFallback(ballImg, getBallImageCandidates(p.ball || 'Poke Ball')); }catch(e){ ballImg.src = ''; }
-			ballImg.onerror = function(){ this.style.display = 'none'; };
 			ballImgWrap.appendChild(ballImg);
 			leftIcons.appendChild(ballImgWrap);
 
@@ -2546,7 +2666,7 @@ function showDepot(){
 
 			// action button
 			const btn = document.createElement('button'); btn.className='btn small'; btn.textContent='To Depot'; btn.style.marginTop='8px'; btn.addEventListener('click', ()=>{
-				const moved = player.party.splice(idx,1)[0]; player.depot.push(moved); savePlayer(); updatePanels(); renderPartyList(); renderDepotList(); addLog(`${moved.name} moved to Depot.`); showMessage('Moved to depot.', 'info');
+				const moved = player.party.splice(idx,1)[0]; player.depot.push(moved); savePlayer(); updatePanels(); renderPartyList(); renderDepotList(); showMessage('Moved to depot.', 'info');
 			});
 
 			iconsRow.appendChild(leftIcons); iconsRow.appendChild(btn);
@@ -2674,7 +2794,6 @@ function showDepot(){
 			try{ assignBallToPokemon(p); }catch(e){}
 			const ballImg = document.createElement('img'); ballImg.alt = p.ball || 'ball'; ballImg.style.width='24px'; ballImg.style.height='24px'; ballImg.style.objectFit='contain';
 			try{ setImageSrcWithFallback(ballImg, getBallImageCandidates(p.ball || 'Poke Ball')); }catch(e){ ballImg.src=''; }
-			ballImg.onerror = function(){ this.style.display='none'; };
 			ballWrap.appendChild(ballImg);
 			header.appendChild(nameWrap); header.appendChild(ballWrap);
 			card.appendChild(header);
@@ -2701,7 +2820,7 @@ function showDepot(){
 			actions.style.flexWrap = 'wrap';
 			actions.style.alignItems = 'center';
 			const toParty = document.createElement('button'); toParty.className='btn small'; toParty.textContent='To Party'; toParty.style.marginTop = '6px'; toParty.addEventListener('click', ()=>{
-				if(player.party.length < 6){ const moved = player.depot.splice(idx,1)[0]; player.party.push(moved); savePlayer(); updatePanels(); renderPartyList(); renderDepotList(); addLog(`${moved.name} moved to Party.`); showMessage('Moved to party.', 'info'); }
+				if(player.party.length < 6){ const moved = player.depot.splice(idx,1)[0]; player.party.push(moved); savePlayer(); updatePanels(); renderPartyList(); renderDepotList(); showMessage('Moved to party.', 'info'); }
 				else showMessage('Party full. Free a slot first.', 'warn');
 			});
 			const sellBtn = document.createElement('button'); sellBtn.className='btn secondary small'; sellBtn.textContent='SELL - $'; sellBtn.style.marginTop = '6px'; sellBtn.addEventListener('click', ()=>{
