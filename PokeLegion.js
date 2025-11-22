@@ -1148,8 +1148,10 @@ function getTypeColor(t){ return TYPE_COLORS_GLOBAL[String(t||'').toLowerCase()]
 		const note = tasksListEl.querySelector('.tasks-note') ? tasksListEl.querySelector('.tasks-note').outerHTML : '<div class="tasks-note">You can have up to <strong>2</strong> active tasks.</div>';
 		tasksListEl.innerHTML = note;
 		const tasks = (player.tasks && Array.isArray(player.tasks)) ? player.tasks.slice(0,2) : [];
+		// ensure daily tasks regenerate if 24h passed
+		try{ ensureDailyTasks(); }catch(e){}
 		if(tasks.length===0){
-			const p = document.createElement('div'); p.className = 'task-item'; p.textContent = '(no active tasks)'; tasksListEl.appendChild(p); return;
+			const p = document.createElement('div'); p.className = 'task-item'; p.textContent = '(no active tasks)'; tasksListEl.appendChild(p);
 		}
 		tasks.forEach(t=>{
 			const item = document.createElement('div'); item.className = 'task-item';
@@ -1165,9 +1167,273 @@ function getTypeColor(t){ return TYPE_COLORS_GLOBAL[String(t||'').toLowerCase()]
 			const lbl = document.createElement('div'); lbl.className = 'label'; lbl.textContent = `${prog}/${goal}`;
 			progressWrap.appendChild(bar); progressWrap.appendChild(lbl);
 			item.appendChild(title); item.appendChild(progressWrap);
+			if(prog >= goal && !t.claimed){
+				const claim = document.createElement('button'); claim.className='btn small'; claim.textContent='REPORT';
+				claim.addEventListener('click', ()=>{ claimTaskReward(t.id); });
+				item.appendChild(claim);
+			}
 			tasksListEl.appendChild(item);
 		});
+		// management button
+		const manageBtn = document.createElement('button'); manageBtn.className='btn small secondary'; manageBtn.style.marginTop='6px'; manageBtn.textContent='Manage Tasks'; manageBtn.addEventListener('click', ()=>{ showTasksModal(); }); tasksListEl.appendChild(manageBtn);
 	}
+
+// ---- Daily Tasks System ----
+function ensureDailyTasks(){
+	if(!player) return;
+	const now = Date.now();
+	const DAY_MS = 86400000;
+	player.dailyTasksGeneratedAt = player.dailyTasksGeneratedAt || 0;
+	// regenerate candidate task list every 24h
+	if(!player.availableTasks || !Array.isArray(player.availableTasks) || player.availableTasks.length===0 || (now - player.dailyTasksGeneratedAt) > DAY_MS){
+		generateDailyTasks();
+	}
+	player.tasks = Array.isArray(player.tasks) ? player.tasks : [];
+	// Remove individually expired tasks (24h after their own acceptance time)
+	let changed = false;
+	player.tasks = player.tasks.filter(t=>{
+		if(!t.acceptedAt) return true; // legacy tasks without timestamp kept
+		if(now - t.acceptedAt > DAY_MS){
+			if(!t.claimed && t.progress < t.goal){ try{ addLog(`Task expired: ${t.pokemon}`,'warn'); }catch(e){} }
+			changed = true; return false; // drop expired
+		}
+		return true;
+	});
+	if(changed) savePlayer();
+	// Initialize or reset selection window counters
+	if(typeof player.tasksChosenCount !== 'number') player.tasksChosenCount = player.tasks.length; // legacy init
+	// If selection window has elapsed (24h since first selection), and either no tasks remain OR window elapsed, unlock new selections
+	if(player.tasksCycleStartedAt && (now - player.tasksCycleStartedAt) > DAY_MS){
+		// Reset window only if player is allowed to pick again (rules: window lasts 24h regardless of task completion)
+		if(player.tasks.length === 0){
+			player.tasksCycleStartedAt = 0; player.tasksChosenCount = 0; savePlayer();
+		} else {
+			// Keep tasks active aligned to their own counters; window still considered expired so allow new picks once space (<2) is available
+			player.tasksCycleStartedAt = 0; player.tasksChosenCount = player.tasks.length; savePlayer();
+		}
+	}
+}
+
+function getUnlockedSpawnPokemon(){
+	const names = new Set();
+	try{
+		(player.unlockedMaps||[]).forEach(idx=>{
+			const m = MAPS[idx]; if(!m) return; const spawns = WILD_SPAWNS[m.name] || []; spawns.forEach(s=>{ if(s && s.name) names.add(s.name); });
+		});
+	}catch(e){}
+	return Array.from(names);
+}
+
+function generateDailyTasks(){
+	if(!player) return;
+	const pool = getUnlockedSpawnPokemon();
+	if(pool.length===0) return;
+	const candidates = [];
+	const TARGETS = [50,60,70];
+	const used = new Set();
+	for(let i=0;i<pool.length && candidates.length<5;i++){
+		const pick = pool[Math.floor(Math.random()*pool.length)];
+		if(used.has(pick)) continue; used.add(pick);
+		const goal = TARGETS[Math.floor(Math.random()*TARGETS.length)];
+		// capture baseLevel reference (approximate) for reward calculation later
+		const entry = findSpawnEntry(pick);
+		const baseLevel = entry && typeof entry.baseLevel === 'number' ? entry.baseLevel : 1;
+		candidates.push({ id: 'task_'+Date.now()+'_'+i, pokemon: pick, goal, progress:0, claimed:false, baseLevel });
+	}
+	player.availableTasks = candidates;
+	player.dailyTasksGeneratedAt = Date.now();
+	savePlayer();
+}
+
+// helper: find first spawn table entry by pokemon name across unlocked maps
+function findSpawnEntry(name){
+	if(!name) return null;
+	try{
+		for(const mapName in WILD_SPAWNS){
+			const arr = WILD_SPAWNS[mapName] || [];
+			for(const e of arr){ if(e && e.name && e.name.toLowerCase() === name.toLowerCase()) return e; }
+		}
+	}catch(e){ return null; }
+	return null;
+}
+
+function showTasksModal(){
+	ensureDailyTasks();
+	const overlay = document.createElement('div'); overlay.style.position='fixed'; overlay.style.left=0; overlay.style.top=0; overlay.style.right=0; overlay.style.bottom=0; overlay.style.background='rgba(0,0,0,0.4)'; overlay.style.display='flex'; overlay.style.alignItems='center'; overlay.style.justifyContent='center'; overlay.style.zIndex=21000;
+	const box = document.createElement('div'); box.style.background='#fff'; box.style.padding='16px'; box.style.borderRadius='10px'; box.style.minWidth='380px'; box.style.boxShadow='0 10px 30px rgba(0,0,0,0.25)';
+	box.innerHTML = '<h3 style="margin:0 0 8px 0">Daily Tasks</h3><div style="font-size:12px;color:var(--muted);margin-bottom:4px">Select up to 2 tasks every 24h. Defeat the listed Pokémon.</div>';
+	// Rules summary (concise)
+	const rules = document.createElement('div'); rules.style.fontSize='11px'; rules.style.lineHeight='1.4'; rules.style.background='linear-gradient(180deg,#f8fff8,#eef9ee)'; rules.style.border='1px solid rgba(0,0,0,0.07)'; rules.style.borderRadius='6px'; rules.style.padding='8px'; rules.style.marginBottom='8px';
+	rules.innerHTML = '<strong>Rules:</strong><br>1) Max 2 active tasks.<br>2) You can only SELECT 2 tasks in any 24h window.<br>3) Completing early does NOT let you pick more until window ends.<br>4) Task list refreshes every 24h.<br>5) Active tasks persist across refresh & expire 24h after acceptance.';
+	box.appendChild(rules);
+	// countdown container
+	const timerEl = document.createElement('div'); timerEl.style.fontSize='12px'; timerEl.style.fontWeight='600'; timerEl.style.marginBottom='8px'; timerEl.style.color='#2a572a'; box.appendChild(timerEl);
+	function formatDur(ms){
+		ms = Math.max(0, ms);
+		const sec = Math.floor(ms/1000);
+		const h = Math.floor(sec/3600);
+		const m = Math.floor((sec%3600)/60);
+		const s = sec%60;
+		return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+	}
+	const DAY_MS = 86400000;
+	const cycleStart = player.tasksCycleStartedAt || player.dailyTasksGeneratedAt || Date.now();
+	function updateTimer(){
+		let remaining = (cycleStart + DAY_MS) - Date.now();
+		if(remaining <= 0){ timerEl.textContent = 'Cycle expired — new tasks will generate soon.'; return; }
+		timerEl.textContent = 'Time left: ' + formatDur(remaining);
+	}
+	updateTimer();
+	// task list container (declare before timer functions to avoid reference errors)
+	const list = document.createElement('div'); list.style.display='flex'; list.style.flexDirection='column'; list.style.gap='6px';
+	function updatePerTaskTimers(){
+		const DAY_MS_LOCAL = 86400000;
+		if(!list) return; // safety guard
+		(player.tasks||[]).forEach(t=>{
+			if(!t.acceptedAt){
+				const fallback = player.tasksCycleStartedAt || player.dailyTasksGeneratedAt || cycleStart || Date.now();
+				try{ t.acceptedAt = fallback; savePlayer(); }catch(e){}
+			}
+			const taskRow = list.querySelector(`[data-task-id="${t.id}"]`);
+			if(!taskRow) return;
+			const el = taskRow.querySelector('.task-timer');
+			if(!el) return;
+			let remaining = (t.acceptedAt + DAY_MS_LOCAL) - Date.now();
+			if(remaining <= 0){ el.textContent = 'Expired'; el.style.color = '#a33'; return; }
+			const sec = Math.floor(remaining/1000);
+			const h = Math.floor(sec/3600);
+			const m = Math.floor((sec%3600)/60);
+			const s = sec%60;
+			el.textContent = `Time left: ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+			if(remaining < 1800000){
+				el.style.color = '#a33';
+			}else if(remaining < 7200000){
+				el.style.color = '#b55';
+			}else{
+				el.style.color = '#2a572a';
+			}
+		});
+	}
+	let timerInt = null;
+	// start interval only after list is populated
+	const activeTasks = Array.isArray(player.tasks) ? player.tasks : [];
+	const maxSelected = activeTasks.length >= 2;
+	// If selection window locked, show remaining time until unlock
+	(function showSelectionLock(){
+		if(player.tasksCycleStartedAt && typeof player.tasksChosenCount === 'number' && player.tasksChosenCount >= 2){
+			const now = Date.now(); const DAY_MS = 86400000; const elapsed = now - player.tasksCycleStartedAt;
+			if(elapsed < DAY_MS){
+				const remain = DAY_MS - elapsed; const sec = Math.floor(remain/1000); const h = Math.floor(sec/3600); const m = Math.floor((sec%3600)/60); const s = sec%60;
+				const lockNotice = document.createElement('div'); lockNotice.style.fontSize='11px'; lockNotice.style.fontWeight='600'; lockNotice.style.color='#a33'; lockNotice.style.margin='4px 0 8px 0'; lockNotice.textContent = `Selection locked: ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')} until new picks`; box.appendChild(lockNotice);
+				// update every second
+				setInterval(()=>{ const now2 = Date.now(); const el2 = lockNotice; if(!el2) return; const elapsed2 = now2 - player.tasksCycleStartedAt; if(elapsed2 >= DAY_MS){ el2.textContent = 'Selection window ended.'; el2.style.color = '#2a572a'; return; } const remain2 = DAY_MS - elapsed2; const sec2 = Math.floor(remain2/1000); const h2 = Math.floor(sec2/3600); const m2 = Math.floor((sec2%3600)/60); const s2 = sec2%60; el2.textContent = `Selection locked: ${h2.toString().padStart(2,'0')}:${m2.toString().padStart(2,'0')}:${s2.toString().padStart(2,'0')} until new picks`; }, 1000);
+			}
+		}
+	})();
+	(player.availableTasks||[]).forEach(t=>{
+		const row = document.createElement('div'); row.style.display='flex'; row.style.justifyContent='space-between'; row.style.alignItems='center'; row.style.padding='6px 8px'; row.style.background='linear-gradient(180deg,#f9fff9,#f2fff2)'; row.style.borderRadius='6px';
+		const statusWrap = document.createElement('div'); statusWrap.style.display='flex'; statusWrap.style.flexDirection='column';
+		const name = document.createElement('div'); name.textContent = `${t.pokemon} • ${t.goal}`; name.style.fontWeight='600'; name.style.fontSize='13px'; statusWrap.appendChild(name);
+		// If already selected, show progress below
+		const active = activeTasks.find(x=>x.id===t.id);
+		if(active){
+			const progLine = document.createElement('div'); progLine.style.fontSize='11px'; progLine.style.color='var(--muted)'; progLine.textContent = `Progress: ${active.progress}/${active.goal}`;
+			statusWrap.appendChild(progLine);
+			// per-task timer line (individual expiry 24h after acceptance)
+			const timerLine = document.createElement('div'); timerLine.style.fontSize='11px'; timerLine.style.color='#2a572a'; timerLine.className='task-timer'; statusWrap.appendChild(timerLine);
+			row.dataset.taskId = active.id;
+		}
+		row.appendChild(statusWrap);
+		const btn = document.createElement('button'); btn.className='btn small';
+		if(active){
+			btn.textContent = 'Selected'; btn.disabled = true; btn.classList.add('secondary');
+		} else if(maxSelected){
+			btn.textContent = 'Max Reached'; btn.disabled = true; btn.classList.add('secondary');
+		} else {
+			btn.textContent = 'Choose';
+			btn.addEventListener('click', ()=>{ chooseTask(t.id); btn.textContent='Selected'; btn.disabled = true; btn.classList.add('secondary'); const progLine = document.createElement('div'); progLine.style.fontSize='11px'; progLine.style.color='var(--muted)'; progLine.textContent = `Progress: 0/${t.goal}`; statusWrap.appendChild(progLine); const timerLine = document.createElement('div'); timerLine.style.fontSize='11px'; timerLine.style.color='#2a572a'; timerLine.className='task-timer'; statusWrap.appendChild(timerLine); row.dataset.taskId = t.id; if(typeof updatePerTaskTimers==='function') updatePerTaskTimers(); });
+		}
+		row.appendChild(btn);
+		list.appendChild(row);
+	});
+	box.appendChild(list);
+	// Kick off timers now that list (and potential rows) exist
+	updatePerTaskTimers();
+	timerInt = setInterval(()=>{ updateTimer(); updatePerTaskTimers(); }, 1000);
+	// clear timer on close
+	box.addEventListener('remove', ()=>{ try{ clearInterval(timerInt); }catch(e){} });
+	const close = document.createElement('button'); close.className='btn secondary'; close.textContent='Close'; close.style.marginTop='12px'; close.addEventListener('click', ()=>{ overlay.remove(); renderTasks(); }); box.appendChild(close);
+	// ensure interval cleared when overlay removed
+	overlay.addEventListener('remove', ()=>{ try{ clearInterval(timerInt); }catch(e){} });
+	overlay.appendChild(box); document.body.appendChild(overlay);
+}
+
+function chooseTask(id){
+	if(!player) return;
+	player.tasks = Array.isArray(player.tasks) ? player.tasks : [];
+	const now = Date.now();
+	const DAY_MS = 86400000;
+	if(typeof player.tasksChosenCount !== 'number') player.tasksChosenCount = player.tasks.length;
+	// If within active selection window and already picked 2 tasks, block
+	if(player.tasksCycleStartedAt && (now - player.tasksCycleStartedAt) < DAY_MS && player.tasksChosenCount >= 2){
+		showMessage('You already selected 2 tasks in this 24h window.', 'warn');
+		return;
+	}
+	// Enforce max 2 active tasks overall
+	if(player.tasks.length >= 2){ showMessage('Maximum 2 active tasks active.', 'warn'); return; }
+	const found = (player.availableTasks||[]).find(t=>t.id===id); if(!found) return;
+	if(!found.acceptedAt) found.acceptedAt = now;
+	player.tasks.push(found);
+	// Start or update selection window
+	if(!player.tasksCycleStartedAt || (now - player.tasksCycleStartedAt) >= DAY_MS){
+		player.tasksCycleStartedAt = now; player.tasksChosenCount = 1;
+	} else {
+		player.tasksChosenCount = (player.tasksChosenCount||0) + 1;
+	}
+	savePlayer();
+	addLog(`Task accepted: Defeat ${found.goal} ${found.pokemon}`,'info');
+	renderTasks();
+}
+
+function updateTaskProgress(pokemonName){
+	if(!player || !pokemonName) return;
+	const tasks = player.tasks || [];
+	let changed = false;
+	tasks.forEach(t=>{
+		if(!t.claimed && (t.pokemon||'').toLowerCase() === (pokemonName||'').toLowerCase()){
+			if(t.progress < t.goal){ t.progress++; changed = true; if(t.progress >= t.goal){ addLog(`Task completed: ${t.pokemon}`,'success'); } }
+		}
+	});
+	if(changed){ savePlayer(); renderTasks(); }
+}
+
+function claimTaskReward(id){
+	if(!player) return;
+	const tasks = player.tasks || [];
+	const t = tasks.find(x=>x.id===id); if(!t || t.claimed || t.progress < t.goal){ return; }
+	// reward logic: exp equal to total player experience gained from defeating all task Pokémon
+	// Approximate each encounter wild level as player.level + baseLevel - 1 (average of random offset)
+	const baseLevel = typeof t.baseLevel === 'number' ? t.baseLevel : (findSpawnEntry(t.pokemon)?.baseLevel || 1);
+	const expectedWildLevel = Math.max(1, (player.level || 1) + baseLevel - 1);
+	// Per-win player XP: addExp called with Math.max(5, floor((10 + wildLevel*6)/3))
+	const perWinPlayerXp = Math.max(5, Math.floor((10 + expectedWildLevel * 6) / 3));
+	const expReward = perWinPlayerXp * t.goal;
+	// money scaling: keep prior formula but proportional to goal and wild level
+	const moneyReward = Math.round(t.goal * (2 + expectedWildLevel * 0.5));
+	const ballsTotal = Math.max(3, Math.min(10, Math.floor(Math.random()*8)+3));
+	const ballTypes = ['pokeball','greatball','ultraball'];
+	const ballDist = {};
+	for(let i=0;i<ballsTotal;i++){ const bt = ballTypes[Math.floor(Math.random()*ballTypes.length)]; ballDist[bt] = (ballDist[bt]||0)+1; }
+	// apply rewards
+	try{ addExp(expReward); }catch(e){ player.exp = (player.exp||0) + expReward; }
+	player.money = (Number(player.money)||0) + moneyReward;
+	player.inventory = player.inventory || {};
+	Object.keys(ballDist).forEach(k=>{ player.inventory[k] = (Number(player.inventory[k])||0) + ballDist[k]; });
+	t.claimed = true;
+	savePlayer();
+	addLog(`Task reward claimed: +${expReward} XP, +$${moneyReward}, Balls: ${Object.entries(ballDist).map(([k,v])=> v+'x '+niceItemName(k)).join(', ')}`,'success');
+	renderInventoryGrid(); updatePanels(); renderTasks();
+}
 
 	function renderBallGrid(){
 		if(!ballGrid) return;
@@ -2234,6 +2500,8 @@ function runDuel(partyIdx, wild){
 			savePlayer();
 			// Immediate inventory + panels refresh (coins & drops) before showing modal
 			try{ renderInventoryGrid(); updatePanels(); }catch(e){}
+			// Update task progress if applicable
+			try{ updateTaskProgress(wild.name); }catch(e){}
 			// show win modal with options to catch or run (include drops + exp gain for display)
 			showDuelResultModal(true, wild, partyIdx, damage, coins, drops, expGain);
 		} else {
