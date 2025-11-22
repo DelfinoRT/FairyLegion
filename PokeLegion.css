@@ -1,0 +1,286 @@
+:root{
+	/* left and right panel widths — map width calculated to fill remaining space */
+	--left-panel-width: 20%;
+	--right-panel-width: 26%;
+	--map-width: calc(100% - var(--left-panel-width) - var(--right-panel-width));
+	/* GameBoy retro palette */
+	--gb-bg: linear-gradient(180deg,#9dbf6a,#8fb05e);
+	--gb-screen: linear-gradient(180deg,#e9fbe8,#dff7d8);
+	--panel-bg: #b7d087;
+	--panel-contrast: #d6e8b7;
+	--accent: #2b6e2b;
+	--muted: #3b4b2b;
+	--card-shadow: inset 0 2px 0 rgba(255,255,255,0.25), 0 6px 12px rgba(2,6,23,0.06);
+}
+*{box-sizing:border-box}
+.hidden{display:none}
+html,body{height:100%;margin:0;font-family: 'Courier New', Courier, monospace;background:var(--gb-bg);color:var(--muted)}
+.gameboy-frame{background:linear-gradient(180deg,#c6e3a8,#9fbf77);}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;z-index:9999}
+.modal-content{background:var(--panel-bg);padding:20px;border-radius:12px;min-width:360px;box-shadow:var(--card-shadow)}
+.modal-close{position:absolute;right:18px;top:12px;border:none;background:transparent;font-size:18px;cursor:pointer}
+.avatar-preview{width:96px;height:96px;border-radius:12px;border:2px solid rgba(42,122,226,0.1);display:flex;align-items:center;justify-content:center;font-size:44px;margin:8px 0;background:linear-gradient(180deg,#fff,#fbfdff)}
+.modal-actions button{margin-left:8px}
+.modal-actions .secondary{background:#f3f3f3;color:#333}
+.modal-content input[type=text]{width:100%;padding:8px;margin:8px 0;border:1px solid #ddd;border-radius:4px}
+.sex-row{display:flex;gap:12px;margin-bottom:8px}
+.avatar-choices{display:flex;gap:8px;flex-wrap:wrap}
+.avatar-choice{font-size:22px;padding:8px;border-radius:6px;border:1px solid #ddd;background:#fff;cursor:pointer}
+.avatar-choice img{width:40px;height:40px;object-fit:contain;border-radius:6px;display:block}
+.avatar-choice.selected{outline:3px solid var(--accent);}
+
+.starter-choices{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.starter-choice{padding:8px 10px;border-radius:6px;border:1px solid #ddd;background:#fff;cursor:pointer}
+.starter-choice.selected{outline:3px solid var(--accent)}
+.modal-actions{display:flex;justify-content:flex-end;margin-top:12px}
+#createBtn{background:var(--accent);color:#fff;padding:10px 14px;border:none;border-radius:8px;cursor:pointer;box-shadow:0 4px 10px rgba(42,122,226,0.18)}
+
+#gameRoot{display:flex;height:100vh;position:relative;z-index:1}
+.panel{padding:18px;background:transparent;overflow:auto}
+/* left/right panel specific widths so we can give the right panel more room */
+#leftPanel{width:var(--left-panel-width)}
+#rightPanel{width:var(--right-panel-width)}
+#centerArea{width:var(--map-width);display:flex;align-items:center;justify-content:center;padding:18px}
+
+/* When the Market is open, align its content to the top so it lines up with side panels */
+#centerArea.market-open{align-items:flex-start}
+#mapArea{position:relative;background:linear-gradient(180deg,#eaf6ff,#d8f0ff);width:100%;height:calc(100vh - 36px);border-radius:14px;box-shadow:inset 0 0 0 2px rgba(255,255,255,0.6)}
+.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;text-shadow:0 1px 0 rgba(0,0,0,0.4);pointer-events:none}
+.overlay.hidden{display:none}
+.player{position:absolute;width:48px;height:48px;display:flex;align-items:center;justify-content:center;font-size:32px;transform:translate(-50%,-50%);transition:left 0.08s linear, top 0.08s linear;filter:drop-shadow(0 6px 10px rgba(15,23,42,0.12))}
+.log{max-height:240px;overflow:auto;background:linear-gradient(180deg,#ffffff,#fbfdff);padding:10px;border-radius:10px;border:1px solid rgba(15,23,42,0.04);box-shadow:var(--card-shadow)}
+.ball-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.ball-cell{background:linear-gradient(180deg,#fff,#fbfdff);padding:10px;border-radius:8px;border:1px solid rgba(15,23,42,0.04);display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 12px rgba(2,6,23,0.06)}
+
+/* Map grid and tiles */
+.map-grid{
+	/* Center the tile grid within the map area and make it responsive.
+	   Use smaller padding to reduce vertical gap between the top-bar
+	   and the tiles; scrolling is still supported when the grid is large. */
+	position:relative;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	padding:6px;
+	height:100%;
+	box-sizing:border-box;
+	overflow:auto;
+	border-radius:12px;
+}
+.map-grid .tiles{
+	/* Keep the tiles as a grid, let JS set the column count. Center the
+	   grid block and allow it to grow naturally; scrolling will be handled
+	   by the parent `.map-grid`. */
+	margin:auto;
+	display:grid;
+	grid-auto-rows:var(--tile-size);
+	grid-gap:0;
+}
+.tile{width:var(--tile-size);height:var(--tile-size);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.03)}
+.tile.tile-grass{background:linear-gradient(#9ee77b,#6fc24f)}
+.tile.tile-road{background:linear-gradient(#d2b48c,#b5896f)}
+.tile.tile-mountain-border{background:#444}
+.tile.tile-shallow{background:linear-gradient(#bfe9ff,#95d3ff)}
+.tile.tile-water{background:linear-gradient(#4aa0ff,#1f6fd6)}
+.tile.tile-mountain-floor{background:#6b4b2a}
+.tile.tile-cave{background:#5a1f1f}
+.tile.tile-darkred{background:#6b1212}
+
+/* ensure map area scrolls if large */
+.map-grid .tiles{overflow:auto}
+
+/* small utility for selected starter/avatar */
+.selected{outline:3px solid var(--accent)}
+
+/* small screens */
+@media (max-width:900px){
+	:root{--left-panel-width:0;--right-panel-width:0;--map-width:100%}
+	.panel{display:none}
+	#centerArea{width:100%}
+	#gameRoot{flex-direction:column}
+}
+
+/* Panel card wrappers */
+.panel .card{background:linear-gradient(180deg,#cfe7a8,#bfe09a);border-radius:6px;padding:10px;margin-bottom:12px;box-shadow:var(--card-shadow);border:3px solid #324b1f}
+.panel h3{margin:0 0 8px 0;font-size:16px;color:var(--muted);letter-spacing:0.6px}
+.panel h4{margin:10px 0 6px 0;font-size:13px;color:var(--muted)}
+.card-header{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.btn.small{padding:6px 8px;font-size:12px;border-radius:8px}
+.profile-header{display:flex;gap:12px;align-items:center}
+.profile-avatar{width:64px;height:64px;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,#fff,#f6fbff);display:flex;align-items:center;justify-content:center;font-size:28px;border:1px solid rgba(15,23,42,0.04)}
+.profile-meta{flex:1}
+.profile-meta .name{font-weight:600;font-size:16px}
+.profile-meta .sub{color:var(--muted);font-size:13px}
+.profile-name{font-size:16px}
+.profile-starter{font-size:13px;color:var(--muted);margin-top:4px}
+.profile-level{margin-top:8px;font-size:13px;color:var(--muted)}
+.exp-wrap{display:flex;align-items:center;gap:8px;margin-top:8px}
+.exp-bar{flex:1;height:10px;background:linear-gradient(180deg,#f3f3f3,#eee);border-radius:6px;overflow:hidden;border:1px solid rgba(15,23,42,0.03)}
+.exp-inner{height:100%;background:linear-gradient(90deg,#2a7ae2,#4fb3ff);width:0%}
+.exp-label{width:56px;text-align:right;font-size:12px;color:var(--muted)}
+.next-ach{margin-top:8px;font-size:12px;color:#0f1724;background:linear-gradient(180deg,#fff,#fbfdff);padding:6px;border-radius:8px;display:inline-block;border:1px solid rgba(15,23,42,0.04)}
+.btn{display:inline-block;padding:8px 10px;border-radius:6px;border:none;background:#3f6b3f;color:#fff;cursor:pointer;font-size:13px;box-shadow:inset 0 -2px 0 rgba(0,0,0,0.12)}
+.btn.secondary{background:#dfeecd;color:var(--muted);border:2px solid #8aa06a}
+.controls{display:flex;gap:8px;align-items:center;margin-top:8px}
+
+/* Money pouch */
+.money-pouch{font-weight:700;font-size:14px;padding:6px 8px;border-radius:8px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid rgba(15,23,42,0.04);display:inline-block;min-width:64px;text-align:center}
+/* money pouch split: coin + gems */
+.money-pouch{display:flex;gap:12px;align-items:center}
+.money-item{display:flex;align-items:center;gap:8px;padding:6px;background:linear-gradient(180deg,#fff,#fcfeff);border-radius:8px;border:1px solid rgba(15,23,42,0.04);box-shadow:0 6px 12px rgba(2,6,23,0.04)}
+.money-item img{width:22px;height:22px;object-fit:contain}
+.money-amount{font-weight:800;background:#fff;padding:6px 8px;border-radius:8px;border:1px solid rgba(15,23,42,0.04);font-size:14px}
+
+/* Inventory grid: 5 columns x 10 rows (50 slots) */
+.inventory-grid{display:grid;grid-template-columns:repeat(5,1fr);grid-auto-rows:56px;gap:8px;margin-top:8px}
+.inv-slot{background:linear-gradient(180deg,#fff,#fcfeff);border:1px solid rgba(15,23,42,0.04);border-radius:10px;display:flex;align-items:center;justify-content:center;padding:6px;position:relative;box-shadow:0 6px 12px rgba(2,6,23,0.04)}
+.inv-slot img{max-width:36px;max-height:36px;display:block}
+.inv-slot .count{position:absolute;right:6px;bottom:6px;background:#fff;padding:2px 6px;border-radius:999px;font-weight:700;color:var(--accent);font-size:12px;border:1px solid rgba(15,23,42,0.04)}
+.inv-slot.empty{opacity:0.35}
+
+/* tooltip hint uses native title; optionally add subtle cursor */
+.inv-slot{cursor:default}
+
+/* Held items: compact 1x3 row under profile */
+.held-grid{display:flex;gap:8px;margin-top:8px}
+.held-slot{width:56px;height:56px;border-radius:8px;background:linear-gradient(180deg,#fff,#fcfeff);border:1px solid rgba(15,23,42,0.04);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 6px 12px rgba(2,6,23,0.04)}
+.held-slot img{max-width:40px;max-height:40px}
+.held-slot.empty{opacity:0.35}
+
+
+/* Tasks */
+.tasks-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.tasks-note{font-size:12px;color:var(--muted);margin-bottom:6px}
+.task-item{background:linear-gradient(180deg,#fff,#fbfdff);padding:8px;border-radius:8px;border:1px solid rgba(15,23,42,0.04);display:flex;flex-direction:column;gap:6px}
+.task-title{font-weight:600;font-size:13px}
+.task-progress{display:flex;align-items:center;gap:8px}
+.task-progress .bar{flex:1;height:10px;background:linear-gradient(180deg,#f3f3f3,#eee);border-radius:6px;overflow:hidden;border:1px solid rgba(15,23,42,0.03)}
+.task-progress .bar-inner{height:100%;background:linear-gradient(90deg,#2a7ae2,#4fb3ff);width:0%}
+.task-progress .label{width:56px;text-align:right;font-size:12px;color:var(--muted)}
+
+/* Party grid (2 columns x 3 rows) */
+#partyList{padding:6px}
+.party-grid{display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:180px;gap:8px}
+.party-slot{background:#eef7df;border:2px solid #7aa05a;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;position:relative;padding:6px;overflow:visible;min-height:120px}
+.party-slot img{max-width:56px;max-height:56px;display:block}
+.party-slot.empty{opacity:0.4}
+.party-slot .pname{font-size:11px;color:#2f4a26;background:rgba(255,255,255,0.95);padding:1px 6px;border-radius:6px;border:1px solid rgba(15,23,42,0.04);max-width:100%;width:100%;box-sizing:border-box;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;text-align:center;margin:0}
+
+/* header structure: name, icons row, exp */
+.party-slot .p-header{width:100%;display:flex;flex-direction:column;align-items:center;gap:4px}
+.party-slot .p-icons{width:100%;display:flex;align-items:center;justify-content:space-between;padding:0 6px;min-height:22px}
+.party-slot .plevel{font-size:11px;color:#fff;background:#2b6e2b;padding:2px 6px;border-radius:999px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 2px 4px rgba(0,0,0,0.08);min-width:32px;text-align:center}
+.party-slot .ball-icon{width:22px;height:22px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#fff,#f6fbff);border:1px solid rgba(15,23,42,0.06)}
+.party-slot .ball-icon img{width:18px;height:18px;object-fit:contain;display:block}
+
+/* Small EXP progress bar inside each party slot */
+.party-slot .p-exp{position:relative;width:calc(100% - 16px);height:8px;background:linear-gradient(180deg,#f3f3f3,#edeff0);border-radius:6px;border:1px solid rgba(15,23,42,0.03);overflow:hidden}
+.party-slot .p-exp .p-inner{height:100%;background:linear-gradient(90deg,#2a7ae2,#4fb3ff);width:0%;transition:width .24s ease}
+.party-slot .p-exp .p-inner.low{background:linear-gradient(90deg,#f59e0b,#fb923c)}
+.party-slot .p-exp .p-inner.full{background:linear-gradient(90deg,#34d399,#10b981)}
+.party-slot .p-exp .p-label{position:absolute;right:6px;top:-10px;font-size:11px;color:#35522a;background:rgba(255,255,255,0.9);padding:2px 6px;border-radius:6px;border:1px solid rgba(15,23,42,0.03)}
+
+.party-slot .p-sprite{margin-top:6px;max-width:64px;max-height:64px;align-self:center}
+
+/* Improved party card layout */
+.party-slot{padding:12px 10px;min-height:150px;border-radius:12px}
+.party-slot .pname{background:#fff;padding:6px 12px;border-radius:999px;margin:-18px auto 6px;font-weight:700;box-shadow:inset 0 -2px 0 rgba(0,0,0,0.03);font-size:16px}
+.party-slot .p-icons{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.party-slot .p-icons .ball-icon img{width:30px;height:30px}
+.party-slot .plevel{font-size:13px;background:#2b6e2b;color:#fff;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.08)}
+
+.p-exp-row{display:flex;align-items:center;gap:8px;width:100%;margin-top:6px}
+.p-exp-label{width:36px;font-size:13px;font-weight:700;text-align:right;padding-right:6px;color:#0f1724}
+.p-exp-bar{flex:1;height:12px;background:linear-gradient(180deg,#edeff0,#f7f9fb);border-radius:8px;overflow:hidden;border:1px solid rgba(15,23,42,0.06)}
+.p-exp-bar .p-inner{height:100%;background:linear-gradient(90deg,#2a7ae2,#4fb3ff);width:0%;transition:width .24s ease}
+
+.p-hp-row{display:flex;align-items:center;gap:8px;width:100%;margin-top:8px}
+.p-hp-label{width:36px;font-size:13px;font-weight:700;text-align:right;padding-right:6px;color:#0f1724}
+.p-hp-bar{flex:1;height:18px;background:linear-gradient(180deg,#f1f1f1,#efeef0);border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(15,23,42,0.06)}
+.p-hp-bar .p-inner{height:100%;background:linear-gradient(90deg,#a3e635,#84cc16);width:0%;transition:width .18s ease}
+.p-hp-bar .p-hp-text{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#0f1724}
+
+/* place sprite bottom-left and assigned ball bottom-right */
+.party-slot .p-sprite{position:absolute;left:12px;bottom:10px;max-width:64px;max-height:64px}
+.party-slot .ball-bottom{position:absolute;right:12px;bottom:10px;width:40px;height:40px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#fff,#f6fbff);border:1px solid rgba(15,23,42,0.04)}
+
+/* Encounter log — matrix style */
+#encounterLog{background:#08120a;color:#8ff28a;font-family:monospace;padding:8px;border-radius:8px;max-height:240px;overflow:auto;border:2px solid #123016}
+.matrix-line{font-size:12px;padding:2px 0;white-space:pre-wrap}
+.matrix-line.log-info{color:#8ff28a}
+.matrix-line.log-battle{color:#34ff6a;font-weight:700}
+.matrix-line.log-reward{color:#ffe77a}
+.matrix-line.log-warning{color:#ffb86b}
+
+/* subtle retro outline for panel headers */
+.panel h3, .panel h4{text-shadow:0 1px 0 rgba(255,255,255,0.2)}
+
+/* player sprite canvas styling */
+.player-sprite{display:block;pointer-events:none;image-rendering:pixelated;border-radius:4px}
+
+/* Market styles (polished) */
+/* Centering wrapper to constrain the Market area and prevent it from dominating the page */
+.market-root-wrapper{width:100%;max-width:1100px;margin:0 auto;padding:8px;box-sizing:border-box}
+#marketRoot{width:100%;max-width:1100px;margin:0 auto;padding:8px;box-sizing:border-box}
+.market-root{display:grid;grid-template-columns:300px minmax(360px, 1fr);gap:12px;padding:8px;align-items:start;min-height:420px;box-sizing:border-box}
+.market-root .card{padding:10px;border-radius:8px;background:linear-gradient(180deg,#f7fff7,#f1fff1);box-shadow:0 6px 12px rgba(8,12,8,0.05);border:1px solid rgba(10,20,10,0.05)}
+.market-sell{width:300px;min-width:240px;flex:0 0 300px}
+.market-sell h2{font-family:inherit;font-size:16px;margin:0 0 8px 0;color:var(--muted)}
+.market-sell-list{display:flex;flex-direction:column;gap:8px;max-height:420px;overflow:auto;padding-right:6px}
+.sell-row{display:flex;gap:8px;align-items:center}
+.sell-toggle{width:28px;height:28px;border-radius:6px}
+.sell-confirm-overlay{position:fixed;inset:0;background:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45));display:flex;align-items:center;justify-content:center;z-index:100000}
+.sell-confirm{background:linear-gradient(180deg,#fff,#fbfffb);padding:18px;border-radius:12px;min-width:320px;box-shadow:0 14px 40px rgba(5,10,5,0.25);border:1px solid rgba(10,20,10,0.06)}
+.market-sell-basket{display:flex;flex-direction:column;gap:8px;padding:8px;border-radius:8px;background:linear-gradient(180deg,#fff,#fbfff7);margin-bottom:8px;min-height:72px;border:1px dashed rgba(30,60,30,0.06)}
+.market-sell-basket.basket-highlight{box-shadow:0 8px 28px rgba(30,80,30,0.12);border-color:rgba(40,120,40,0.16);transform:translateY(-2px);transition:all .18s ease}
+.sell-basket-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px;border-bottom:1px dashed rgba(0,0,0,0.03);background:linear-gradient(180deg,#ffffff,#f7fff7);border-radius:6px}
+.sell-basket-row .sell-qty-controls{display:flex;align-items:center;gap:6px}
+.sell-basket-row button{width:30px;height:26px;border-radius:6px;border:1px solid rgba(0,0,0,0.06);background:#fff}
+.market-buy{flex:1 1 auto;min-width:300px}
+.market-buy h1{font-family:inherit;font-size:22px;margin:0 0 6px 0;color:var(--muted);letter-spacing:0.4px}
+.market-buy .catalog-grid{display:flex;flex-direction:column;gap:8px;margin-top:10px;max-height:calc(15 * 64px);overflow:auto;padding-right:6px}
+
+/* Top controls inside the buy column (balance, buy/reset, estimated) */
+.market-buy .top-controls{padding:6px 8px;border-radius:6px;background:transparent}
+.market-buy .top-controls button{box-shadow:0 6px 14px rgba(10,30,10,0.08)}
+
+/* tighten scroll appearance inside market */
+.market-buy .catalog-grid::-webkit-scrollbar{width:10px}
+.market-buy .catalog-grid::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#cfe7a8,#bfe09a);border-radius:8px;border:2px solid rgba(255,255,255,0.6)}
+.market-buy .catalog-grid::-webkit-scrollbar-track{background:transparent}
+.market-item{display:flex;align-items:center;gap:8px;padding:4px 6px;border-radius:6px;background:linear-gradient(180deg,#ffffff,#fbfffb);border:1px solid rgba(0,0,0,0.03);box-shadow:0 3px 8px rgba(2,6,8,0.02);transition:transform .12s ease, box-shadow .12s ease}
+.market-item:hover{transform:translateY(-2px);box-shadow:0 8px 16px rgba(6,12,6,0.07)}
+.market-item .thumb{width:36px;height:36px;border-radius:6px;background:linear-gradient(180deg,#f3f3f3,#fff);display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid rgba(0,0,0,0.03)}
+.market-item .thumb img{width:28px;height:28px;object-fit:contain}
+.market-item .meta{flex:1;display:flex;flex-direction:column;gap:4px}
+.market-item .meta .market-item-name{font-weight:700;color:#264626;font-size:13px}
+.market-item .meta .market-item-desc{font-size:11px;color:var(--muted)}
+.market-item .actions{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.market-item .market-item-price{font-weight:700;color:#1f6a1f;font-size:13px}
+.market-item .market-item-qty{display:flex;align-items:center;gap:6px}
+.market-item .market-item-qty button{width:24px;height:22px;border-radius:6px;border:1px solid rgba(0,0,0,0.06);background:#fff;font-size:12px}
+/* `.market-right` removed: layout is now two columns (sell + buy). */
+
+/* Ensure on narrow screens the market stacks for usability */
+@media (max-width:900px){
+	.market-root{grid-template-columns:1fr;grid-auto-rows:auto}
+	#marketRoot{padding:6px}
+	.market-sell{width:100%;min-width:0}
+	.market-buy{min-width:0}
+	.market-right{width:100%;min-width:0}
+}
+
+/* Add-to-basket flying animation */
+.fly-clone{position:fixed;width:48px;height:48px;pointer-events:none;z-index:120000;transition:transform .6s cubic-bezier(.2,.9,.2,1),opacity .4s ease}
+
+/* polished buttons */
+.btn{display:inline-block;padding:8px 12px;border-radius:10px;border:none;background:linear-gradient(180deg,#2b6e2b,#1f5a1f);color:#fff;cursor:pointer;font-size:13px;box-shadow:0 6px 14px rgba(10,30,10,0.12);transition:transform .08s ease}
+.btn:active{transform:translateY(1px)}
+.btn.secondary{background:linear-gradient(180deg,#f0f6ea,#e6f0d9);color:var(--muted);border:1px solid rgba(20,60,20,0.06)}
+
+/* small UI messages style */
+.ui-msg{border-radius:8px;padding:8px 10px;font-size:13px}
+.ui-msg-info{background:#e6f7e9;color:#163a1a}
+.ui-msg-warn{background:#fff4d6;color:#5b4200}
+.ui-msg-error{background:#fbeaea;color:#4a1a1a}
+

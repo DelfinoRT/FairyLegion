@@ -864,33 +864,23 @@ function spawnOneItem(item) {
     timerSpan.textContent = timeLeft;
     if (timeLeft <= 0) {
       removeEntity(entityData);
-      catchStreak = 0;
+      // Items disappearing should not reset the Pokémon catch streak
       updateScore();
-      displayGameMessage(`¡${item.name.toUpperCase()} desapareció! Racha perdida.`, 'error');
+      displayGameMessage(`¡${item.name.toUpperCase()} desapareció!`, 'error');
     }
   }, 1000);
 
   el.addEventListener("click", function() {
     let pointsGained = item.points;
 
-    // Apply Streak Bonus to item points
-    if (catchStreak > 0) {
-        const streakBonus = Math.floor(catchStreak / 5) * 5; 
-        pointsGained += streakBonus;
-        if (streakBonus > 0) {
-             displayGameMessage(`¡Racha de ${catchStreak}! +${streakBonus} pts de bonus.`, 'bonus');
-        }
-    }
-    
     // If it's a pokéball item, add to inventory. Masterballs are separate.
     if (item.name === "masterball") {
         masterballs += 1;
     } else if (item.type === "pokeball") {
       pokeballs += 1;
     }
-    
+    // Items contribute points but do NOT affect the Pokémon catch streak
     score += pointsGained;
-    catchStreak += 1;
     
     // LOGIC: Update item log
     const itemKey = item.name; 

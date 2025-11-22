@@ -1,0 +1,231 @@
+/* Gameboy retro theme for PokeLegion
+   Apply by adding `gameboy` class to <body> or <html>.
+   Designed to approximate a green Game Boy look from the provided screenshot.
+*/
+
+body.gameboy, body.gameboy * { box-sizing: border-box; font-family: 'Courier New', Courier, monospace; image-rendering: pixelated; }
+body.gameboy { background: #9fbf6f url('') repeat; color: #0a1606; }
+
+/* Panels */
+body.gameboy #leftPanel, body.gameboy #centerArea, body.gameboy #rightPanel, body.gameboy .card {
+  background: linear-gradient(#b7d07f, #9fbf6f);
+  border: 3px solid #324212;
+  border-radius: 6px;
+  box-shadow: inset 0 4px 0 rgba(255,255,255,0.12), 0 6px 0 rgba(0,0,0,0.12);
+  color: #081204;
+}
+
+/* Buttons: flat rounded with big pixel text */
+body.gameboy .btn {
+  background: linear-gradient(#cfe79a, #9fbf6f);
+  border: 2px solid #324212;
+  padding: 6px 10px; margin: 2px;
+  border-radius: 6px;
+  font-weight: 700; font-size: 13px;
+  color: #062004;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+body.gameboy .btn.secondary { background: linear-gradient(#dfeeb2,#b7d07f); }
+body.gameboy .btn.small { padding: 4px 6px; font-size:12px; }
+
+/* Clear focus outlines but provide high-contrast focus ring */
+body.gameboy .btn:focus, body.gameboy button:focus, body.gameboy input:focus { outline: none; box-shadow: 0 0 0 3px rgba(50,66,18,0.18); }
+
+/* Left panel avatar/profile styling */
+body.gameboy #profileAvatar { border-radius:6px; border:2px solid #324212; background: linear-gradient(#cfe79a,#b0d07a); }
+body.gameboy #player { border:none; background:none; box-shadow:none; }
+body.gameboy #player .player-avatar-img, body.gameboy #player .player-sprite { border:none; background:none; box-shadow:none; border-radius:0; }
+
+/* Inventory grid and party grid */
+body.gameboy .party-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+body.gameboy .party-slot {
+  background: linear-gradient(#e7f6c9,#cfe79a);
+  border: 2px solid #324212;
+  padding: 8px;
+  min-height: 120px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+body.gameboy .inv-slot, body.gameboy .held-slot { background: linear-gradient(#e7f6c9,#cfe79a); border:2px solid #324212; }
+
+/* party slot small pieces */
+body.gameboy .pname { font-weight:800; color:#062004; font-size:14px; }
+body.gameboy .p-icons { display:flex; justify-content:space-between; align-items:center; }
+body.gameboy .ball-icon img { width:20px; height:20px; object-fit:contain; }
+
+/* Make small icons look pixelated and framed */
+body.gameboy img { image-rendering: pixelated; image-rendering: crisp-edges; }
+body.gameboy .p-sprite, body.gameboy .player-avatar-img, body.gameboy img.p-sprite { width:48px; height:48px; object-fit:contain; display:block; }
+
+/* Log styling */
+body.gameboy #encounterLog { font-family: 'Courier New', monospace; font-size:12px; background: linear-gradient(#dfeeb2,#cfe79a); border:2px solid #324212; padding:8px; max-height:260px; overflow:auto; }
+body.gameboy .matrix-line { padding:6px 8px; border-bottom:1px dashed rgba(50,66,18,0.12); }
+body.gameboy .log-ts { color: #44551f; font-size:11px; margin-right:6px; }
+
+/* Make log entries more readable with clearer color coding */
+body.gameboy .log-info { color: #06300a; }
+body.gameboy .log-warn { color: #6a3d00; }
+body.gameboy .log-success { color: #064b10; font-weight:800; }
+
+/* Overlays */
+
+/* Overlays: dim the background but style the inner modal box for readability */
+body.gameboy .pl-confirm-overlay, body.gameboy .sell-confirm-overlay, body.gameboy #nurseHealingOverlay, body.gameboy #battleOverlay { background: rgba(6,10,6,0.72) !important; z-index: 30000; }
+body.gameboy .pl-confirm-overlay > div, body.gameboy .sell-confirm-overlay > div, body.gameboy #nurseHealingOverlay > div { background: linear-gradient(#f8fbe8,#e7f6c9); border:3px solid #324212; padding:14px; border-radius:8px; color:#062004; min-width:320px; box-shadow: 0 8px 24px rgba(0,0,0,0.28); }
+body.gameboy .sell-confirm { max-height: 60vh; overflow:auto; }
+
+/* Buttons inside overlays should be bold and high-contrast */
+body.gameboy .pl-confirm-overlay .btn, body.gameboy .sell-confirm-overlay .btn, body.gameboy #nurseHealingOverlay .btn { font-weight:900; color:#062004; }
+
+/* Progress bar in nurse healing */
+body.gameboy #nurseHealingOverlay .prog-wrap { width:360px; max-width:80vw; background:#cfe79a; border:2px solid #324212; padding:6px; border-radius:8px; }
+body.gameboy #nurseHealingOverlay .prog { height:14px; background: linear-gradient(#7fd175,#4f9a3e); border-radius:6px; transition: width .2s linear; }
+body.gameboy #nurseHealingOverlay .prog-label { margin-top:8px; font-size:13px; text-align:center; }
+
+/* Market and depot layouts small tweaks */
+body.gameboy .market-root, body.gameboy .market-sell, body.gameboy .market-buy { background: linear-gradient(#dff0b8,#cfe79a); border:2px solid #324212; }
+
+/* Make form inputs match theme */
+body.gameboy input, body.gameboy select, body.gameboy textarea { background:#eef7d6; border:2px solid #324212; padding:6px; border-radius:6px; color:#071703; }
+
+/* Small quantity buttons and inline controls */
+body.gameboy .market-item .actions button, body.gameboy .sell-basket-row button, body.gameboy .sell-qty-controls button { background: linear-gradient(#cfe79a,#9fbf6f); border:2px solid #324212; padding:4px 6px; border-radius:4px; font-weight:700; }
+
+/* Market / Depot cards adjustments */
+body.gameboy .market-item { border:2px solid #324212; background:linear-gradient(#f6ffef,#e7f6c9); padding:8px; border-radius:8px; }
+body.gameboy .sell-basket-row { border-bottom:1px dashed rgba(50,66,18,0.08); padding-bottom:6px; }
+
+/* Depot/Pokemon card styling */
+body.gameboy .depot-card, body.gameboy .party-card { border:2px solid #324212; background:linear-gradient(#f6ffef,#e7f6c9); border-radius:8px; padding:8px; }
+
+/* High contrast badges */
+body.gameboy .count { background:#234013; color:#dff2c7; border-radius:4px; padding:2px 6px; font-weight:700; }
+
+/* Tiny responsiveness for narrow screens */
+@media (max-width:1100px) {
+  body.gameboy #centerArea, body.gameboy #rightPanel, body.gameboy #leftPanel {
+    min-width: 0;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+  body.gameboy .party-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width:700px) {
+  body.gameboy #centerArea, body.gameboy #rightPanel, body.gameboy #leftPanel {
+    min-width: 0;
+    width: 100vw;
+    max-width: 100vw;
+    box-sizing: border-box;
+    padding: 0 2vw;
+  }
+  body.gameboy .party-grid {
+    grid-template-columns: 1fr;
+  }
+  body.gameboy .party-slot { min-height: 90px; }
+}
+
+/* Additional small touches */
+body.gameboy .exp-bar .exp-inner, body.gameboy .p-hp-inner { background: linear-gradient(#7fd175,#4f9a3e); }
+
+/* Provide a retro border for the main map area */
+body.gameboy #mapArea { border: 4px solid #324212; background: linear-gradient(#e0f0c7,#cfe79a); }
+
+/* ensure buttons and overlays remain readable */
+body.gameboy .ui-msg { font-family: 'Courier New', monospace; }
+
+/* Ensure modals are above other UI elements */
+body.gameboy .pl-confirm-overlay, body.gameboy .sell-confirm-overlay, body.gameboy #nurseHealingOverlay { z-index: 40000; }
+
+/* Small screens tweaks to keep overlay content readable */
+@media (max-width:600px){
+  body.gameboy .pl-confirm-overlay > div, body.gameboy .sell-confirm-overlay > div, body.gameboy #nurseHealingOverlay > div { width: calc(100% - 32px); min-width: auto; }
+  body.gameboy .party-slot { min-height: 100px; }
+}
+
+/* Center area: ensure map and log stack vertically (map on top, log below) */
+body.gameboy #centerArea {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 12px;
+}
+
+/* Make map take full width of center area and allow it to shrink/grow naturally */
+body.gameboy #mapArea {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+  position: relative !important;
+}
+
+/* Wild spawns box should appear as a block under the map, not absolutely positioned */
+body.gameboy #wildSpawns {
+  position: static !important;
+  transform: none !important;
+  left: auto !important;
+  bottom: auto !important;
+  margin: 8px 0 0 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Ensure encounter log sits full width under the map */
+body.gameboy #encounterLog, body.gameboy #encounterLog + .clear-log-btn, body.gameboy .clear-log-btn { width: 100% !important; max-width: 100%; }
+
+/* If the log is wrapped in another container, make it also full width */
+body.gameboy #centerArea > div { box-sizing: border-box; }
+
+/* Keep the map a fixed visual area so adding encounters doesn't shrink it.
+   The center column becomes scrollable so the log can be scrolled to view older entries. */
+body.gameboy #centerArea {
+  /* allow vertical scrolling if content exceeds available space */
+  overflow-y: auto !important;
+  max-height: calc(100vh - 80px); /* leave some room for side panels and header */
+}
+
+/* Make map fixed height and non-shrinking */
+body.gameboy #mapArea {
+  flex: 0 0 420px !important; /* fixed 420px height */
+  height: 420px !important;
+  min-height: 320px !important;
+  /* keep map fully visible when center column scrolls */
+  position: sticky !important;
+  top: 12px !important;
+  z-index: 2 !important;
+  overflow: visible !important;
+}
+
+/* Ensure wildSpawns appears as block under map without affecting map size */
+body.gameboy #wildSpawns { margin-top: 12px !important; }
+
+/* Safety: make wild spawn box render above the map when inserted after it.
+   The map uses z-index:2 so give the spawn box a higher stacking context. */
+body.gameboy .wild-spawns-box, body.gameboy #wildSpawns {
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+/* Make encounter log scrollable when long; it will be below wildSpawns */
+body.gameboy #encounterLog {
+  max-height: 36vh !important;
+  overflow-y: auto !important;
+  padding: 8px !important;
+}
+
+/* Keep clear log button visually above the log but inside centerArea flow */
+body.gameboy .clear-log-btn { display: block !important; width: auto; margin: 8px auto; }

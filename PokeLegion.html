@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>PokeLegion</title>
+	<link rel="stylesheet" href="PokeLegion.css">
+</head>
+<body>
+
+	<!-- Profile creation modal -->
+	<div id="profileModal" class="modal">
+		<div class="modal-content">
+			<button id="modalClose" class="modal-close" aria-label="Close profile dialog">✕</button>
+			<h2>Create your Trainer</h2>
+			<div id="avatarPreview" class="avatar-preview">🙂</div>
+			<label>Name</label>
+			<input id="playerName" type="text" placeholder="Trainer name" maxlength="20">
+			<div>
+				<p>Choose an avatar</p>
+				<div id="avatarChoices" class="avatar-choices">
+					<button class="avatar-choice" data-avatar="🧑‍🌾">🧑‍🌾</button>
+					<button class="avatar-choice" data-avatar="🧑‍🔬">🧑‍🔬</button>
+					<button class="avatar-choice" data-avatar="🧑‍🚀">🧑‍🚀</button>
+					<button class="avatar-choice" data-avatar="🧑‍🎨">🧑‍🎨</button>
+					<button class="avatar-choice" data-avatar="🧑‍⚕️">🧑‍⚕️</button>
+				</div>
+			</div>
+			<div>
+				<p>Choose a starter Pokémon</p>
+				<div id="starterChoices" class="starter-choices">
+					<button class="starter-choice" data-starter="Bulbasaur">Bulbasaur</button>
+					<button class="starter-choice" data-starter="Charmander">Charmander</button>
+					<button class="starter-choice" data-starter="Squirtle">Squirtle</button>
+					<button class="starter-choice" data-starter="Chikorita">Chikorita</button>
+					<button class="starter-choice" data-starter="Cyndaquil">Cyndaquil</button>
+					<button class="starter-choice" data-starter="Totodile">Totodile</button>
+					<button class="starter-choice" data-starter="Treecko">Treecko</button>
+					<button class="starter-choice" data-starter="Torchic">Torchic</button>
+					<button class="starter-choice" data-starter="Mudkip">Mudkip</button>
+				</div>
+			</div>
+			<div class="modal-actions">
+				<button id="cancelBtn" class="secondary">Cancel</button>
+				<button id="createBtn">Create Trainer</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Main layout -->
+	<div id="gameRoot" class="hidden">
+		<div class="panel left" id="leftPanel">
+			<div class="card">
+				<h3>Profile</h3>
+				<div class="profile-header">
+					<div class="profile-avatar" id="profileAvatar">🙂</div>
+					<div class="profile-meta">
+						<div id="profileSummary"></div>
+						<div class="controls">
+							<button id="deleteProfile" class="btn secondary">Delete</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<h4>Held Items</h4>
+				<div id="heldItems" class="held-grid" aria-label="Held items (3 slots)">
+					<!-- 3 held slots rendered here -->
+				</div>
+			</div>
+			<div class="card">
+				<div id="moneyPouch" class="money-pouch">
+					<div class="money-item">
+						<img id="moneyIcon" src="PokeLegion/Items/coin.png" alt="coins">
+						<span id="moneyAmount" class="money-amount">$0</span>
+					</div>
+					<div class="money-item">
+						<img id="gemsIcon" src="PokeLegion/Items/gem.png" alt="gems">
+						<span id="gemsAmount" class="money-amount">0</span>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<h4 class="card-header">Inventory <button id="openBackpack" class="btn small">Collapse</button></h4>
+				<div id="inventorySummary" class="inventory-summary"></div>
+				<div id="inventoryGrid" class="inventory-grid" aria-label="Inventory grid"></div>
+			</div>
+			<div class="card">
+				<h4>Tasks</h4>
+				<div id="tasksList" class="tasks-list">
+					<div class="tasks-note">You can have up to <strong>2</strong> active tasks.</div>
+					<!-- Task items will be rendered here -->
+				</div>
+			</div>
+		</div>
+
+		<div id="centerArea">
+			<div id="mapArea">
+				<div id="mapOverlay" class="overlay">Select your avatar to start the adventure</div>
+				<!-- Map top bar: map selector and unlock control (moved from right panel) -->
+				<div id="mapTopBar" style="position:absolute;left:50%;transform:translateX(-50%);top:6px;z-index:2000;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.92);padding:3px 6px;border-radius:8px;box-shadow:0 6px 12px rgba(2,6,23,0.06);">
+					<strong style="color:var(--muted);margin-right:6px">Map:</strong>
+					<select id="mapSelector" style="min-width:160px"></select>
+					<button id="unlockMap" class="btn secondary">Unlock</button>
+				</div>
+				<div id="mapGrid" class="map-grid"></div>
+				<div id="player" class="player" tabindex="0">🙂</div>
+			</div>
+		</div>
+
+		<div class="panel right" id="rightPanel">
+            <div class="card">
+				<div class="controls">
+					<button id="depotBtn" class="btn secondary">Pokémon Depot</button>
+					<button id="marketBtn" class="btn secondary">Items Market</button>
+				</div>
+			</div>
+			<div class="card">
+				<h3>Party</h3>
+				<div id="partyList">(empty)</div>
+			</div>
+
+			<div class="card">
+				<h4>Game Log</h4>
+				<div id="encounterLog" class="log"></div>
+			</div>
+		</div>
+	</div>
+
+	<script src="PokeLegion.js" defer></script>
+</body>
+</html>
+
