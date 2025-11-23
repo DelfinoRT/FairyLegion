@@ -358,7 +358,38 @@
 	]
 };
 
-	function rarityWeight(r){ if(r==='common') return 70; if(r==='uncommon') return 25; return 5 }
+	function rarityWeight(r){ if(r==='common') return 60; if(r==='uncommon') return 25; if(r==='rare') return 10; if(r==='super_rare') return 3; return 1 }
+
+	// Return ordered sprite candidate URLs for a pokemon, prioritizing shiny if requested.
+	function getPokemonSpriteCandidates(name, shiny){
+		const folder = 'PokeLegion/Pokemon/';
+		if(!name) return [];
+		// original filenames sometimes contain spaces or hyphens (e.g. 'alolan sandshrew')
+		const raw = String(name).toLowerCase();
+		const normalized = raw.replace(/[^a-z0-9]+/g,'_');
+		const candidates = [];
+		if(shiny){
+			// Observed naming pattern: 'shiny-<original>.png' including spaces; also try normalized variants
+			candidates.push(folder + 'shiny-' + raw + '.png'); // keep spaces
+			candidates.push(folder + 'shiny-' + normalized + '.png');
+			// fallback alternate suffix styles (future-proof)
+			candidates.push(folder + normalized + '_shiny.png');
+			candidates.push(folder + normalized + '-shiny.png');
+		}
+		// non-shiny base sprite (space and normalized variants)
+		candidates.push(folder + raw + '.png');
+		candidates.push(folder + normalized + '.png');
+		// dedupe while preserving order
+		const seen = new Set();
+		return candidates.filter(c=>{ if(seen.has(c)) return false; seen.add(c); return true; });
+	}
+
+	function setImageSrcFromCandidates(img, candidates){
+		if(!img || !candidates || !candidates.length) return;
+		let idx = 0;
+		img.onerror = function(){ idx++; if(idx < candidates.length){ img.src = candidates[idx]; } };
+		img.src = candidates[0];
+	}
 
 	function pickRandomFromWeighted(list){
 		const total = list.reduce((s,i)=>s + rarityWeight(i.rarity), 0);
@@ -1155,12 +1186,62 @@ function getTypeColor(t){ return TYPE_COLORS_GLOBAL[String(t||'').toLowerCase()]
 			return null;
 		})();
 
-		let profHtml = `<div class="profile-name"><strong>${escapeHtml(player.name)}</strong></div>`;
-		profHtml += `<div class="profile-starter">Starter: ${escapeHtml(player.starter || '(none)')}</div>`;
-		profHtml += `<div class="profile-level">Level: <strong>${level}</strong></div>`;
-		profHtml += `<div class="exp-wrap" aria-hidden="false"><div class="exp-bar"><div class="exp-inner" style="width:${pct}%"></div></div><div class="exp-label">${exp}/${nextXp}</div></div>`;
-		if(nextAch){ profHtml += `<div class="next-ach">Next reward at level ${nextAch.level}: ${escapeHtml(nextAch.desc)}</div>`; }
+		// Ensure profile creation timestamp
+		if(!player.createdAt){ try{ player.createdAt = new Date().toISOString(); savePlayer(); }catch(e){} }
+
+		// Aggregate capture stats (party + depot)
+		const allCaught = [];
+		try{ if(Array.isArray(player.party)) allCaught.push(...player.party); }catch(e){}
+		try{ if(Array.isArray(player.depot)) allCaught.push(...player.depot); }catch(e){}
+		// Unique species (by normalized name)
+		const uniqueSet = new Map(); // map normalized -> original display name
+		allCaught.forEach(p=>{ const nm = (p && p.name) ? p.name : ''; const key = normalizeName(nm); if(key) { if(!uniqueSet.has(key)) uniqueSet.set(key, nm); } });
+		// Rarity + shiny counts (use stored rarity, fallback to spawn table lookup)
+		let commonCnt=0, uncommonCnt=0, rareCnt=0, superRareCnt=0, shinyCnt=0;
+		allCaught.forEach(p=>{
+			if(!p) return;
+			if(p.shiny) shinyCnt++;
+			let r = p.rarity;
+			if(!r){ try{ r = (findSpawnEntry(p.name)||{}).rarity; }catch(e){ r = null; } }
+			if(r==='common') commonCnt++; else if(r==='uncommon') uncommonCnt++; else if(r==='rare') rareCnt++; else if(r==='super_rare') superRareCnt++; 
+		});
+		const uniqueSpeciesCount = uniqueSet.size;
+		// Format creation date
+		let createdDisplay = '';
+		try{ if(player.createdAt){ const d = new Date(player.createdAt); if(!isNaN(d.getTime())) createdDisplay = d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}); } }catch(e){}
+
+		let profHtml = `<div class=\"profile-name\"><strong>${escapeHtml(player.name)}</strong> <span style=\"font-size:14px;font-weight:500;margin-left:8px;color:var(--muted)\">Level ${level}</span></div>`;
+		profHtml += `<div class=\"exp-wrap\" aria-hidden=\"false\"><div class=\"exp-bar\"><div class=\"exp-inner\" style=\"width:${pct}%\"></div></div><div class=\"exp-label\">${exp}/${nextXp}</div></div>`;
+		profHtml += `<div style=\"margin-top:4px;font-size:12px\">Created: <strong>${escapeHtml(createdDisplay || '—')}</strong></div>`;
+		profHtml += `<div style=\"margin-top:2px;font-size:12px\">Starter: <strong>${escapeHtml(player.starter || '(none)')}</strong></div>`;
+		if(nextAch){ profHtml += `<div class=\"next-ach\" style=\"margin-top:6px\">Next reward at level ${nextAch.level}: ${escapeHtml(nextAch.desc)}</div>`; }
+		profHtml += `<div style=\"margin-top:6px;font-size:12px\">Pokemon Caught: <strong>${uniqueSpeciesCount}</strong> Different Species</div>`;
+		// Rarity breakdown panel
+		profHtml += `<div style=\"margin-top:8px;padding:6px 10px;border:1px solid rgba(0,0,0,0.15);background:#e5f8d2;border-radius:6px;font-size:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px\">`+
+			`<div><strong>Common:</strong> ${commonCnt}</div>`+
+			`<div><strong>Uncommon:</strong> ${uncommonCnt}</div>`+
+			`<div><strong>Rare:</strong> ${rareCnt}</div>`+
+			`<div><strong>Super Rare:</strong> ${superRareCnt}</div>`+
+			`<div style=\"grid-column:1 / span 2\"><strong>Shiny:</strong> ${shinyCnt}</div>`+
+		`</div>`;
+		// Delete character button (avoid duplicates)
+		profHtml += `<div style=\"margin-top:10px\"><button id=\"deleteCharacterBtn\" class=\"btn secondary\" style=\"background:#fff;color:#333;border:1px solid #b33;font-size:11px;padding:6px 10px\">DELETE CHARACTER</button></div>`;
 		profileSummary.innerHTML = profHtml;
+		// Wire delete button
+		try{
+			const delBtn = document.getElementById('deleteCharacterBtn');
+			if(delBtn && !delBtn._wired){
+				delBtn._wired = true;
+				delBtn.addEventListener('click', ()=>{
+					showConfirm('Delete character and all progress? This cannot be undone.', ()=>{
+						try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+						player = null;
+						showMessage('Character deleted. Reload to start fresh.', 'warn', 4000);
+						try{ location.reload(); }catch(e){}
+					}, ()=>{});
+				});
+			}
+		}catch(e){}
 		// update left panel avatar display if present (show animated front-cycle)
 		const profAv = document.getElementById('profileAvatar');
 		if(profAv){
@@ -1981,15 +2062,24 @@ function claimTaskReward(id){
 				const ball=document.createElement('img'); ball.className='ball-img'; ball.alt=member.ball||'ball'; try{ setImageSrcWithFallback(ball,getBallImageCandidates(member.ball||'Poke Ball')); }catch(e){}
 				left.appendChild(ball);
 				const sprite=document.createElement('img'); sprite.className='sprite-img'; sprite.alt=name; sprite.dataset.index=String(i);
-				const fileKey=name.toLowerCase().replace(/[^a-z0-9]+/g,'_');
-				const candidates=[`PokeLegion/pokemon/${fileKey}.png`,`PokeLegion/Avatars/${fileKey}.png`,`PokeLegion/Items/${fileKey}.png`];
-				let ci=0; sprite.onerror=function(){ci++; if(ci<candidates.length) sprite.src=candidates[ci]; else { sprite.remove(); const fallback=document.createElement('div'); fallback.textContent=name.charAt(0).toUpperCase(); fallback.style.fontSize='28px'; left.appendChild(fallback);} };
-				sprite.src=candidates[0]; left.appendChild(sprite); slot.appendChild(left);
+				try{
+					setImageSrcFromCandidates(sprite, getPokemonSpriteCandidates(name, !!member.shiny));
+					// fallback chain to avatar/items if pokemon sprite missing entirely
+					const originalOnError = sprite.onerror;
+					sprite.onerror = function(){
+						if(originalOnError){ originalOnError(); return; }
+						const altKey = name.toLowerCase().replace(/[^a-z0-9]+/g,'_');
+						const alts=[`PokeLegion/Avatars/${altKey}.png`,`PokeLegion/Items/${altKey}.png`];
+						let ai=0; sprite.onerror=function(){ ai++; if(ai<alts.length) sprite.src=alts[ai]; else { sprite.remove(); const fb=document.createElement('div'); fb.textContent=name.charAt(0).toUpperCase(); fb.style.fontSize='28px'; left.appendChild(fb);} };
+						sprite.src = alts[0];
+					};
+				}catch(e){ sprite.src=`PokeLegion/Pokemon/${name.toLowerCase()}.png`; sprite.onerror=function(){ sprite.remove(); const fb=document.createElement('div'); fb.textContent=name.charAt(0).toUpperCase(); fb.style.fontSize='28px'; left.appendChild(fb);} }
+				left.appendChild(sprite); slot.appendChild(left);
 
 				// Middle column
 				const mid=document.createElement('div'); mid.className='mid-col';
 				const header=document.createElement('div'); header.className='header-row';
-				const nameBanner=document.createElement('div'); nameBanner.className='name-banner'; nameBanner.textContent=name; header.appendChild(nameBanner);
+				const nameBanner=document.createElement('div'); nameBanner.className='name-banner'; nameBanner.textContent=name + (member.shiny ? ' ★' : ''); if(member.shiny){ nameBanner.style.color='#d4af37'; nameBanner.title='Shiny'; } header.appendChild(nameBanner);
 				const typesRow=document.createElement('div'); typesRow.className='types-row';
 				const types=Array.isArray(member.types)?member.types:['normal'];
 				types.forEach(tp=>{ const tb=document.createElement('span'); tb.className='type-badge'; tb.textContent=String(tp).charAt(0).toUpperCase()+String(tp).slice(1); tb.style.background=getTypeColor(tp); tb.style.color='#fff'; tb.style.border='1px solid rgba(0,0,0,0.15)'; typesRow.appendChild(tb); });
@@ -2571,12 +2661,16 @@ function attemptWildSpawnOnStep(r,c){
 		if(roll > 0.2) return; // nothing this step
 		// choose up to 2 spawns (no duplicates)
 		const count = Math.random() < 0.3 ? 2 : 1;
+		// shiny spawn probability (independent per generated wild)
+		const SHINY_PROB = 1/2048; // ~0.0488% chance
 		const chosen = [];
 		for(let i=0;i<count;i++){
 			const pick = pickRandomFromWeighted(pool);
 			// create a runtime wild object with level and id
 			const level = Math.max(1, (player.level || 1) + Math.floor((Math.random()*2) - 1) + (pick.baseLevel || 1));
-			const wild = { id: 'w_' + Date.now() + '_' + i, name: pick.name, types: pick.types || [], rarity: pick.rarity, level, power: Math.max(0, Math.floor(level/2)) };
+			const wild = { id: 'w_' + Date.now() + '_' + i, name: pick.name, types: pick.types || [], rarity: pick.rarity, level, power: Math.max(0, Math.floor(level/2)), shiny: false };
+			// roll shiny
+			if(Math.random() < SHINY_PROB){ wild.shiny = true; }
 			// avoid duplicates by name
 			if(!chosen.find(x=>x.name === wild.name)) chosen.push(wild);
 		}
@@ -2597,8 +2691,10 @@ function renderWildSpawns(){
 	currentWildSpawns.forEach(w=>{
 		const row = document.createElement('div'); row.style.display='flex'; row.style.alignItems='center'; row.style.justifyContent='space-between'; row.style.padding='8px'; row.style.borderRadius='6px'; row.style.background='linear-gradient(180deg,#f7fff7,#f1fff1)';
 		const left = document.createElement('div'); left.style.display='flex'; left.style.alignItems='center'; left.style.gap='10px';
-		const img = document.createElement('img'); img.src = `PokeLegion/Pokemon/${w.name.toLowerCase()}.png`; img.alt = w.name; img.style.width='40px'; img.style.height='40px'; img.style.objectFit='contain'; img.onerror = ()=>{ img.style.display='none'; };
-		const meta = document.createElement('div'); meta.innerHTML = `<div style="font-weight:700">${escapeHtml(w.name)}</div><div style="font-size:12px;color:var(--muted)">Lv.${w.level} • ${w.rarity}</div>`;
+		const img = document.createElement('img'); img.alt = w.name; img.style.width='40px'; img.style.height='40px'; img.style.objectFit='contain';
+		try{ setImageSrcFromCandidates(img, getPokemonSpriteCandidates(w.name, w.shiny)); }catch(e){ img.src = `PokeLegion/Pokemon/${w.name.toLowerCase()}.png`; img.onerror = ()=>{ img.style.display='none'; }; }
+			const shinyBadge = w.shiny ? ' <span style="color:#d4af37;" title="Shiny">★</span>' : '';
+			const meta = document.createElement('div'); meta.innerHTML = `<div style="font-weight:700">${escapeHtml(w.name)}${shinyBadge}</div><div style="font-size:12px;color:var(--muted)">Lv.${w.level} • ${w.rarity}${w.shiny? ' • Shiny':''}</div>`;
 		left.appendChild(img); left.appendChild(meta);
 		const right = document.createElement('div'); right.style.display='flex'; right.style.alignItems='center'; right.style.gap='8px';
 		const fight = document.createElement('button'); fight.className='btn small'; fight.textContent='⚔️ Fight'; fight.addEventListener('click', ()=>{ selectWildToFight(w); });
@@ -2662,7 +2758,8 @@ function startDuelWithSelected(partyIdx, wild){
 const WILD_DROP_TABLE = {
 	common: { chance: 0.15, items: ['pokeball','potion'] },
 	uncommon: { chance: 0.35, items: ['greatball','super-potion'] },
-	rare: { chance: 0.6, items: ['ultraball','hyper-potion','amulet-coin'] }
+	rare: { chance: 0.6, items: ['ultraball','hyper-potion','amulet-coin'] },
+	super_rare: { chance: 0.8, items: ['ultraball','hyper-potion','amulet-coin','gem'] }
 };
 
 // Roll occasional item drops for a wild pokemon after a win. Returns array of {key, qty}
@@ -2740,7 +2837,8 @@ function showDuelResultModal(playerWon, wild, partyIdx, damage, coins, drops, ex
 		// build a clearer summary of the outcome
 		const name = escapeHtml(player.party && player.party[partyIdx] ? player.party[partyIdx].name : '(your Pokémon)');
 		// Enhanced header includes defeated wild name + level
-		let html = `<h3>You WON! ${escapeHtml(wild && wild.name ? wild.name : 'Wild Pokémon')} Lvl.${wild && wild.level ? wild.level : '?'} was defeated!</h3>`;
+		let shinyStar = wild && wild.shiny ? ' ★' : '';
+		let html = `<h3>You WON! ${escapeHtml(wild && wild.name ? wild.name : 'Wild Pokémon')}${shinyStar} Lvl.${wild && wild.level ? wild.level : '?'} was defeated!</h3>`;
 		html += `<div style="margin-top:6px">Result summary:</div>`;
 		html += `<ul style="margin:8px 0 0 18px;padding:0;color:var(--muted)">`;
 		html += `<li>Auto-sold loot: <strong>$${coins}</strong></li>`;
@@ -2806,7 +2904,7 @@ function showDuelResultModal(playerWon, wild, partyIdx, damage, coins, drops, ex
 			box.appendChild(dropRow);
 		}
 		const controls = document.createElement('div'); controls.style.marginTop='12px'; controls.style.display='flex'; controls.style.gap='8px';
-		const catchBtn = document.createElement('button'); catchBtn.className='btn'; catchBtn.textContent='🔴 CATCH'; catchBtn.addEventListener('click', ()=>{ overlay.remove(); showCatchModal(wild); });
+		const catchBtn = document.createElement('button'); catchBtn.className='btn'; catchBtn.textContent= wild && wild.shiny ? '🌟 CATCH' : '🔴 CATCH'; catchBtn.addEventListener('click', ()=>{ overlay.remove(); showCatchModal(wild); });
 		const runBtn = document.createElement('button'); runBtn.className='btn secondary'; runBtn.textContent='🏃🏻‍➡️ RUN'; runBtn.addEventListener('click', ()=>{ overlay.remove(); setBattleActive(false); clearWildSpawns(); });
 		controls.appendChild(catchBtn); controls.appendChild(runBtn); box.appendChild(controls);
 		// log a concise, human-friendly line to the encounter log
@@ -2916,12 +3014,16 @@ function attemptCatchWithBall(wild, ballKey){
 	const mod = modifiers[ballKey] || 1.0;
 	// level penalty
 	const lvlFactor = Math.max(0.25, 1 - ((wild.level || 1) - (player.level || 1)) * 0.05);
-	const chance = Math.min(0.99, base * mod * lvlFactor);
+	const rarityFactors = { common:1.0, uncommon:0.85, rare:0.65, super_rare:0.45 };
+	let rarityFactor = rarityFactors[wild.rarity] || 1.0;
+	// shiny penalty (harder to catch)
+	if(wild.shiny) rarityFactor *= 0.6; // additional difficulty for shiny variants
+	const chance = Math.min(0.99, base * mod * lvlFactor * rarityFactor);
 	const roll = Math.random();
 	const caught = roll < chance;
 	if(caught){
 		// add pokemon to party if space (<6) else depot
-		const pkm = { name: wild.name, level: wild.level, exp:0, hp: 30 + wild.level*5, currentHp: 30 + wild.level*5, power: Math.max(0, Math.floor((wild.level||1)/2)) };
+		const pkm = { name: wild.name, level: wild.level, exp:0, hp: 30 + wild.level*5, currentHp: 30 + wild.level*5, power: Math.max(0, Math.floor((wild.level||1)/2)), shiny: !!wild.shiny, rarity: wild.rarity };
 		// ensure types and ball assignment so UI and filters work correctly
 		try{ pkm.types = Array.isArray(wild.types) ? wild.types.slice() : (findTypesForName(wild.name) || ['normal']); }catch(e){ pkm.types = ['normal']; }
 		try{ ensurePokemonHasTypes(pkm); }catch(e){}
@@ -2933,11 +3035,11 @@ function attemptCatchWithBall(wild, ballKey){
 		if(!Array.isArray(player.party)) player.party = [];
 			if(player.party.length < 6){
 				player.party.push(pkm);
-				showMessage(`${wild.name} was caught and added to party!`, 'info', 4000);
+				showMessage(`${wild.shiny? 'Shiny ': ''}${wild.name} was caught and added to party!`, 'info', 5000);
 			} else {
 				player.depot = player.depot || [];
 				player.depot.push(pkm);
-				showMessage(`${wild.name} was caught and sent to Depot.`, 'info', 4000);
+				showMessage(`${wild.shiny? 'Shiny ': ''}${wild.name} was caught and sent to Depot.`, 'info', 5000);
 			}
 		// log final usage summary for this encounter (before clearing)
 		try{
