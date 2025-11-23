@@ -164,6 +164,8 @@ html,body{height:100%;margin:0;font-family: 'Courier New', Courier, monospace;ba
 .party-list{display:flex;flex-direction:column;gap:14px}
 .party-slot{display:flex;gap:16px;align-items:stretch;background:linear-gradient(180deg,#eef7df,#e0f1d2);border:2px solid #274927;border-radius:16px;padding:14px 18px;box-shadow:0 4px 10px rgba(10,30,10,0.08)}
 .party-slot.empty{opacity:.4}
+.party-slot.drag-over{outline:3px dashed #2b6e2b;background:linear-gradient(180deg,#f2ffe8,#e6f9dc)}
+.party-slot.dragging{opacity:.5;filter:grayscale(.3)}
 
 /* Left column: ball + sprite */
 .party-slot .left-col{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:64px}
@@ -288,6 +290,7 @@ html,body{height:100%;margin:0;font-family: 'Courier New', Courier, monospace;ba
 .market-item .thumb img{width:28px;height:28px;object-fit:contain}
 .market-item .meta{flex:1;display:flex;flex-direction:column;gap:4px}
 .market-item .meta .market-item-name{font-weight:700;color:#264626;font-size:13px}
+.market-item .meta .market-item-name .inv-count{margin-left:8px;font-weight:600;font-size:12px;color:#5b6d5b;background:#eef3eb;padding:2px 6px;border-radius:10px;border:1px solid rgba(20,40,20,0.08)}
 .market-item .meta .market-item-desc{font-size:11px;color:var(--muted)}
 .market-item .actions{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
 .market-item .market-item-price{font-weight:700;color:#1f6a1f;font-size:13px}
@@ -353,10 +356,22 @@ html,body{height:100%;margin:0;font-family: 'Courier New', Courier, monospace;ba
 .btn{display:inline-block;padding:8px 12px;border-radius:10px;border:none;background:linear-gradient(180deg,#2b6e2b,#1f5a1f);color:#fff;cursor:pointer;font-size:13px;box-shadow:0 6px 14px rgba(10,30,10,0.12);transition:transform .08s ease}
 .btn:active{transform:translateY(1px)}
 .btn.secondary{background:linear-gradient(180deg,#f0f6ea,#e6f0d9);color:var(--muted);border:1px solid rgba(20,60,20,0.06)}
+.btn:disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.3);box-shadow:none;transform:none}
+.btn:disabled:hover{transform:none;box-shadow:none}
 
 /* small UI messages style */
 .ui-msg{border-radius:8px;padding:8px 10px;font-size:13px}
 .ui-msg-info{background:#e6f7e9;color:#163a1a}
 .ui-msg-warn{background:#fff4d6;color:#5b4200}
 .ui-msg-error{background:#fbeaea;color:#4a1a1a}
+
+/* Catch modal ball choice grid enhancements */
+.ball-choice{background:linear-gradient(180deg,#f9fbff,#f1f5f9);border:1px solid rgba(30,60,30,0.10);border-radius:12px;cursor:pointer;position:relative;transition:.15s transform,.15s box-shadow,.15s background,.15s border-color;box-shadow:0 4px 12px rgba(10,30,10,0.06);color:#1f5a1f;}
+.ball-choice:hover,.ball-choice:focus{background:#ffffff;box-shadow:0 8px 20px rgba(10,30,10,0.12);transform:translateY(-3px);border-color:rgba(40,90,40,0.28);outline:none;}
+.ball-choice:active{transform:translateY(-1px);box-shadow:0 6px 14px rgba(10,30,10,0.16)}
+.ball-choice .ball-count{font-size:11px;color:#fff;font-weight:700;background:#2b6e2b;padding:2px 8px;border-radius:14px;box-shadow:0 2px 6px rgba(0,0,0,0.18);min-width:40px;text-align:center;letter-spacing:.4px}
+.ball-choice .ball-count[data-low]{background:#b91c1c}
+.ball-choice .ball-count[data-mid]{background:#f59e0b}
+.ball-choice .ball-count[data-high]{background:#2b6e2b}
+
 

@@ -18,6 +18,8 @@
  	const mapOverlay = document.getElementById('mapOverlay');
  	const mapGridEl = document.getElementById('mapGrid');
  	const playerEl = document.getElementById('player');
+	// sequence counter to prevent stale async avatar loads from inserting duplicate sprites
+	let _playerRenderSeq = 0;
 	const leftPanel = document.getElementById('leftPanel');
 	const profileSummary = document.getElementById('profileSummary');
 	const inventorySummary = document.getElementById('inventorySummary');
@@ -63,7 +65,7 @@
 			if(!leftPanel) return;
 			if(document.getElementById('nurseJoeyBtn')) return;
 			const wrap = document.createElement('div'); wrap.style.marginTop = '12px'; wrap.style.display = 'flex'; wrap.style.justifyContent = 'center';
-			const btn = document.createElement('button'); btn.id = 'nurseJoeyBtn'; btn.className = 'btn'; btn.textContent = 'Nurse Joey'; btn.style.marginBottom = '8px';
+			const btn = document.createElement('button'); btn.id = 'nurseJoeyBtn'; btn.className = 'btn'; btn.textContent = '❤️‍🩹 Nurse Joey'; btn.style.marginBottom = '8px';
 			btn.title = 'Heal party over time (10 levels/sec)';
 			btn.addEventListener('click', ()=>{
 				const party = Array.isArray(player && player.party) ? player.party : [];
@@ -861,6 +863,9 @@ function getTypeColor(t){ return TYPE_COLORS_GLOBAL[String(t||'').toLowerCase()]
 	}
 
 	function renderPlayer(){
+		// increment render sequence and capture local token
+		_playerRenderSeq++;
+		const seqToken = _playerRenderSeq;
 		// Render avatar: if it's an image (sprite sheet) use the shared animator helpers,
 		// otherwise show emoji/text.
 		const av = player.avatar || '🙂';
@@ -868,6 +873,8 @@ function getTypeColor(t){ return TYPE_COLORS_GLOBAL[String(t||'').toLowerCase()]
 		if(typeof av === 'string' && av !== '🙂'){
 			// try multiple candidate paths for avatars (names, filenames, or paths)
 			loadImageAny(av).then(img=>{
+				// skip if a newer renderPlayer call happened since this async started
+				if(seqToken !== _playerRenderSeq) return;
 				if(player._sprite && player._sprite.stop) try{ player._sprite.stop(); }catch(e){}
 				const animator = createPlayerAnimatorFromImage(img, { cols: 3, rows: 4, fps: 8 });
 				player._sprite = animator;
@@ -879,6 +886,7 @@ function getTypeColor(t){ return TYPE_COLORS_GLOBAL[String(t||'').toLowerCase()]
 				try{ playerEl.style.transition = `left ${MOVE_MS}ms linear, top ${MOVE_MS}ms linear`; }catch(e){}
 				animator.idle(player.facing || 'south');
 			}).catch(err=>{
+				if(seqToken !== _playerRenderSeq) return; // stale
 				// fallback: insert an <img> so the browser shows a broken-image icon instead of printing the path text
 				const imgEl = document.createElement('img');
 				imgEl.src = String(av);
@@ -1451,6 +1459,22 @@ function claimTaskReward(id){
 	// Right panel buttons: Depot and Market (placeholders)
 	const depotBtn = document.getElementById('depotBtn');
 	const marketBtn = document.getElementById('marketBtn');
+	function updateFeatureToggleButtons(){
+		try{
+			const dBtn = document.getElementById('depotBtn');
+			const mBtn = document.getElementById('marketBtn');
+			if(depotOpen){
+				if(mBtn) mBtn.disabled = true;
+				if(dBtn) dBtn.disabled = true; // active feature locked; use Back button inside view
+			} else if(marketOpen){
+				if(dBtn) dBtn.disabled = true;
+				if(mBtn) mBtn.disabled = true;
+			} else {
+				if(dBtn) dBtn.disabled = false;
+				if(mBtn) mBtn.disabled = false;
+			}
+		}catch(e){}
+	}
 	if(depotBtn) depotBtn.addEventListener('click', ()=>{ if(battleActive){ return showMessage('Cannot open Depot during a battle.', 'warn'); } showDepot(); });
 	if(marketBtn) marketBtn.addEventListener('click', ()=>{ if(battleActive){ return showMessage('Cannot open Market during a battle.', 'warn'); } showMarket(); });
 
@@ -1459,6 +1483,7 @@ function claimTaskReward(id){
 	function showMarket(){
 		if(marketOpen) return;
 		marketOpen = true;
+		updateFeatureToggleButtons();
 		// cancel any active wild encounter(s) when entering the market view
 		try{ clearWildSpawns(); }catch(e){}
 		try{ catchUsage = {}; }catch(e){}
@@ -1576,7 +1601,12 @@ function claimTaskReward(id){
 				thumb.appendChild(img);
 
 				const meta = document.createElement('div'); meta.className = 'meta';
-				const title = document.createElement('div'); title.className = 'market-item-name'; title.textContent = it.label || niceItemName(it.key);
+				const title = document.createElement('div'); title.className = 'market-item-name';
+				const nameSpan = document.createElement('span'); nameSpan.textContent = it.label || niceItemName(it.key);
+				const countSpan = document.createElement('span'); countSpan.className = 'inv-count';
+				const currentCount = Number(player.inventory && player.inventory[it.key] || 0);
+				countSpan.textContent = `x${currentCount}`;
+				title.appendChild(nameSpan); title.appendChild(countSpan);
 				const desc = document.createElement('div'); desc.className = 'market-item-desc'; desc.textContent = it.desc || (it.help || '');
 				meta.appendChild(title); if(desc.textContent) meta.appendChild(desc);
 
@@ -1766,7 +1796,7 @@ function claimTaskReward(id){
 					}
 					// clear basket
 					for(const k in sellState) delete sellState[k];
-					overlay.remove(); renderSellInventory(); renderSellBasket(); renderInventoryGrid(); updatePanels();
+					overlay.remove(); renderSellInventory(); renderSellBasket(); renderInventoryGrid(); updatePanels(); renderCatalog();
 				});
 		});
 
@@ -1787,6 +1817,7 @@ function claimTaskReward(id){
 		const center = document.getElementById('centerArea'); if(center && center.classList.contains('market-open')) center.classList.remove('market-open');
 		// re-render map and panels
 		renderMap(); renderPlayer(); updatePanels();
+		updateFeatureToggleButtons();
 	}
 
 	function renderPartyGrid(){
@@ -1851,8 +1882,32 @@ function claimTaskReward(id){
 				const right=document.createElement('div'); right.className='right-col';
 				const healBtn=document.createElement('button'); healBtn.type='button'; healBtn.className='heal-btn'; healBtn.textContent='HEAL'; healBtn.addEventListener('click',()=>{ showHealModal(i); }); right.appendChild(healBtn); slot.appendChild(right);
 
+				// Hover EXP tooltip
 				slot.addEventListener('mouseenter',(e)=>{ const need2=xpForNextLevel(lvl); showExpTooltip(slot,`${exp}/${need2} EXP`,e); });
 				slot.addEventListener('mousemove',moveExpTooltip); slot.addEventListener('mouseleave',hideExpTooltip);
+				// Drag & drop reorder support
+				slot.draggable = true;
+				slot.addEventListener('dragstart', (e)=>{
+					try{ e.dataTransfer.setData('text/plain', String(i)); }catch(err){}
+					slot.classList.add('dragging');
+				});
+				slot.addEventListener('dragend', ()=>{ slot.classList.remove('dragging'); });
+				slot.addEventListener('dragover', (e)=>{ e.preventDefault(); if(!slot.classList.contains('drag-over')) slot.classList.add('drag-over'); });
+				slot.addEventListener('dragleave', ()=>{ slot.classList.remove('drag-over'); });
+				slot.addEventListener('drop', (e)=>{
+					e.preventDefault();
+					const fromIdx = Number(e.dataTransfer.getData('text/plain'));
+					const toIdx = Number(slot.dataset.index);
+					slot.classList.remove('drag-over');
+					if(isNaN(fromIdx) || isNaN(toIdx) || fromIdx === toIdx) return;
+					const arr = Array.isArray(player.party) ? player.party : [];
+					if(fromIdx < 0 || fromIdx >= arr.length) return;
+					const moving = arr.splice(fromIdx,1)[0];
+					if(!moving) return;
+					if(toIdx >= arr.length) arr.push(moving); else arr.splice(toIdx,0,moving);
+					try{ savePlayer(); }catch(err){}
+					try{ renderPartyGrid(); updatePanels(); }catch(err){}
+				});
 			} else { slot.classList.add('empty'); slot.innerHTML='<div style="font-weight:600;font-size:14px;opacity:.5">(empty)</div>'; }
 			list.appendChild(slot);
 		}
@@ -2166,10 +2221,17 @@ function getBallImageCandidates(ballName){
 		const dashed = parts.join('-');
 		const spaced = parts.join(' ');
 		const candidates = [];
-		if(joined) candidates.push(`PokeLegion/Items/${joined}.png`);
-		if(underscored && underscored !== joined) candidates.push(`PokeLegion/Items/${underscored}.png`);
-		if(dashed && dashed !== joined && dashed !== underscored) candidates.push(`PokeLegion/Items/${dashed}.png`);
-		if(spaced && spaced !== joined && spaced !== underscored && spaced !== dashed) candidates.push(`PokeLegion/Items/${spaced}.png`);
+		const push = (tag)=>{ if(tag && candidates.indexOf(`PokeLegion/Items/${tag}.png`) < 0) candidates.push(`PokeLegion/Items/${tag}.png`); };
+		// Prefer the spaced variant first (matches repository naming like "ultra ball.png")
+		if(spaced) push(spaced);
+		// Heuristic: if single token ending with 'ball', generate spaced form before other variants (e.g. 'greatball' -> 'great ball')
+		if(parts.length === 1 && cleaned.endsWith('ball')){
+			const stem = cleaned.slice(0, cleaned.length - 4).trim();
+			if(stem){ push(stem + ' ball'); }
+		}
+		if(joined && joined !== spaced) push(joined);
+		if(underscored && underscored !== joined && underscored !== spaced) push(underscored);
+		if(dashed && dashed !== joined && dashed !== underscored && dashed !== spaced) push(dashed);
 		// Common explicit synonyms that differ in repository naming
 		const SYNONYMS = {
 			'poke ball':['pokeball','poke ball'],
@@ -2192,19 +2254,35 @@ function getBallImageCandidates(ballName){
 			'heavy ball':['heavyball','heavy ball'],
 			'beast ball':['beastball','beast ball'],
 			'fast ball':['fastball','fast ball'],
-			'dream ball':['dreamball','dream ball']
+			'dream ball':['dreamball','dream ball'],
+			'cherish ball':['cherishball','cherish ball']
 		};
 		if(SYNONYMS[cleaned]){
-			SYNONYMS[cleaned].forEach(syn=>{ const synClean = syn.toLowerCase(); if(synClean && candidates.indexOf(`PokeLegion/Items/${synClean}.png`) < 0) candidates.push(`PokeLegion/Items/${synClean}.png`); });
+			SYNONYMS[cleaned].forEach(syn=>{ const synClean = syn.toLowerCase(); push(synClean); });
 		}
+		// TitleCase variants for servers with case-sensitive asset names (defensive)
+		try{
+			if(parts.length){
+				const titleParts = parts.map(w=> w.charAt(0).toUpperCase() + w.slice(1));
+				const titleSpaced = titleParts.join(' ');
+				const titleJoined = titleParts.join('');
+				const titleUnderscored = titleParts.join('_');
+				const titleDashed = titleParts.join('-');
+				[titleSpaced,titleJoined,titleUnderscored,titleDashed].forEach(v=> push(v));
+			}
+		}catch(e){}
 		// also try the pretty name produced by niceItemName
 		try{
 			const pretty = (niceItemName(ballName) || '').toLowerCase().replace(/[^a-z0-9 ]+/g,' ').replace(/\s+/g,' ').trim();
 			const pjoined = pretty.replace(/\s+/g,'');
-			if(pjoined && candidates.indexOf(`PokeLegion/Items/${pjoined}.png`) < 0) candidates.push(`PokeLegion/Items/${pjoined}.png`);
+			if(pjoined) push(pjoined);
 		}catch(e){}
 		// final fallback: original normalized string
-		candidates.push(getBallImagePath(ballName));
+		push(String(getBallImagePath(ballName)).replace(/^PokeLegion\/Items\//,'')); // avoid duplicate push logic; path already standardized
+		// Re-expand any entries that were added without prefix due to last push normalization
+		for(let i=0;i<candidates.length;i++){
+			if(!/^PokeLegion\/Items\//.test(candidates[i])) candidates[i] = `PokeLegion/Items/${candidates[i]}`;
+		}
 		return candidates.filter(Boolean);
 	}catch(e){ return [getBallImagePath(ballName)]; }
 }
@@ -2383,7 +2461,7 @@ function renderWildSpawns(){
 		const meta = document.createElement('div'); meta.innerHTML = `<div style="font-weight:700">${escapeHtml(w.name)}</div><div style="font-size:12px;color:var(--muted)">Lv.${w.level} • ${w.rarity}</div>`;
 		left.appendChild(img); left.appendChild(meta);
 		const right = document.createElement('div'); right.style.display='flex'; right.style.alignItems='center'; right.style.gap='8px';
-		const fight = document.createElement('button'); fight.className='btn small'; fight.textContent='Fight'; fight.addEventListener('click', ()=>{ selectWildToFight(w); });
+		const fight = document.createElement('button'); fight.className='btn small'; fight.textContent='⚔️ Fight'; fight.addEventListener('click', ()=>{ selectWildToFight(w); });
 		const ignore = document.createElement('button'); ignore.className='btn secondary small'; ignore.textContent='Ignore'; ignore.addEventListener('click', ()=>{ /* remove this spawn */ currentWildSpawns = currentWildSpawns.filter(x=>x.id !== w.id); try{ if(catchUsage && catchUsage[w.id]) delete catchUsage[w.id]; }catch(e){} if(currentWildSpawns.length===0) clearWildSpawns(); else renderWildSpawns(); });
 		right.appendChild(fight); right.appendChild(ignore);
 		row.appendChild(left); row.appendChild(right);
@@ -2588,8 +2666,8 @@ function showDuelResultModal(playerWon, wild, partyIdx, damage, coins, drops, ex
 			box.appendChild(dropRow);
 		}
 		const controls = document.createElement('div'); controls.style.marginTop='12px'; controls.style.display='flex'; controls.style.gap='8px';
-		const catchBtn = document.createElement('button'); catchBtn.className='btn'; catchBtn.textContent='CATCH'; catchBtn.addEventListener('click', ()=>{ overlay.remove(); showCatchModal(wild); });
-		const runBtn = document.createElement('button'); runBtn.className='btn secondary'; runBtn.textContent='RUN'; runBtn.addEventListener('click', ()=>{ overlay.remove(); setBattleActive(false); clearWildSpawns(); });
+		const catchBtn = document.createElement('button'); catchBtn.className='btn'; catchBtn.textContent='🔴 CATCH'; catchBtn.addEventListener('click', ()=>{ overlay.remove(); showCatchModal(wild); });
+		const runBtn = document.createElement('button'); runBtn.className='btn secondary'; runBtn.textContent='🏃🏻‍➡️ RUN'; runBtn.addEventListener('click', ()=>{ overlay.remove(); setBattleActive(false); clearWildSpawns(); });
 		controls.appendChild(catchBtn); controls.appendChild(runBtn); box.appendChild(controls);
 		// log a concise, human-friendly line to the encounter log
 		try{
@@ -2615,7 +2693,14 @@ function showCatchModal(wild){
 	const overlay = document.createElement('div'); overlay.style.position='fixed'; overlay.style.left=0; overlay.style.top=0; overlay.style.right=0; overlay.style.bottom=0; overlay.style.background='rgba(0,0,0,0.4)'; overlay.style.display='flex'; overlay.style.alignItems='center'; overlay.style.justifyContent='center'; overlay.style.zIndex=20000;
 	const box = document.createElement('div'); box.style.background='#fff'; box.style.padding='16px'; box.style.borderRadius='10px'; box.style.minWidth='360px'; box.style.boxShadow='0 10px 30px rgba(0,0,0,0.25)';
 	box.innerHTML = `<h3>Choose a ball to try catching ${escapeHtml(wild.name)}</h3>`;
-	const row = document.createElement('div'); row.style.display='flex'; row.style.gap='8px';
+	// grid container for ball choices (5 columns)
+	const row = document.createElement('div');
+	row.style.display = 'grid';
+	row.style.gridTemplateColumns = 'repeat(5, minmax(0, 1fr))';
+	row.style.gap = '10px';
+	row.style.marginTop = '8px';
+	row.style.alignItems = 'stretch';
+	row.style.justifyItems = 'stretch';
 	// gather all ball-type items from player's inventory (any item name containing 'ball')
 	const inv = player.inventory || {};
 	const allBallKeys = Object.keys(inv || {}).filter(k => {
@@ -2634,9 +2719,21 @@ function showCatchModal(wild){
 	const finalCandidates = allBallKeys.length > 0 ? allBallKeys : fallback.filter(x => Number(player.inventory[x] || 0) > 0);
 	finalCandidates.forEach(key=>{
 		const cnt = Number(player.inventory[key] || 0);
-		if(cnt<=0) return; // only show available balls
-		const b = document.createElement('button'); b.className='btn'; b.textContent = `${niceItemName(key)} (${cnt})`;
-		b.addEventListener('click', ()=>{ overlay.remove(); attemptCatchWithBall(wild, key); }); row.appendChild(b);
+		if(cnt<=0) return;
+		const b = document.createElement('button'); b.className='btn ball-choice';
+		b.style.display='flex'; b.style.flexDirection='column'; b.style.alignItems='center'; b.style.justifyContent='center'; b.style.padding='8px 6px'; b.style.gap='6px'; b.style.minHeight='90px';
+		// image
+		const imgWrap = document.createElement('div'); imgWrap.style.display='flex'; imgWrap.style.alignItems='center'; imgWrap.style.justifyContent='center'; imgWrap.style.width='42px'; imgWrap.style.height='42px'; imgWrap.style.flex='0 0 auto'; imgWrap.style.borderRadius='8px'; imgWrap.style.background='linear-gradient(180deg,#ffffff,#f2f8f2)';
+		const img = document.createElement('img'); img.alt = niceItemName(key); img.style.width='40px'; img.style.height='40px'; img.style.objectFit='contain';
+		try{ setImageSrcWithFallback(img, getBallImageCandidates(key)); }catch(e){ img.style.display='none'; }
+		imgWrap.appendChild(img); b.appendChild(imgWrap);
+		// label + count
+		const label = document.createElement('div'); label.style.fontSize='12px'; label.style.fontWeight='600'; label.style.textAlign='center'; label.textContent = niceItemName(key);
+		const countEl = document.createElement('div'); countEl.className='ball-count'; countEl.textContent = `x${cnt}`;
+		b.appendChild(label); b.appendChild(countEl);
+		b.title = `${niceItemName(key)} (${cnt})`;
+		b.addEventListener('click', ()=>{ overlay.remove(); attemptCatchWithBall(wild, key); });
+		row.appendChild(b);
 	});
 	// if no balls, show message
 	if(row.children.length === 0){ const p = document.createElement('div'); p.style.marginTop='8px'; p.textContent='No balls in inventory.'; box.appendChild(p); const ok = document.createElement('button'); ok.className='btn'; ok.style.marginTop='12px'; ok.textContent='OK'; ok.addEventListener('click', ()=>{ overlay.remove(); setBattleActive(false); clearWildSpawns(); }); box.appendChild(ok); overlay.appendChild(box); document.body.appendChild(overlay); return; }
@@ -2866,20 +2963,33 @@ function applyPotionToPokemon(partyIdx, potionKey){
 	showMessage(`${poke.name} healed (${potionKey.replace(/-/g,' ')})`, 'info');
 }
 
-// Simple Depot modal used to view stored Pokemon and move them to party if space
+// Full-screen Depot view (replaces map similar to Market)
+let depotOpen = false;
 function showDepot(){
-	const overlay = document.createElement('div'); overlay.style.position='fixed'; overlay.style.left=0; overlay.style.top=0; overlay.style.right=0; overlay.style.bottom=0; overlay.style.background='rgba(0,0,0,0.4)'; overlay.style.display='flex'; overlay.style.alignItems='center'; overlay.style.justifyContent='center'; overlay.style.zIndex=20000;
-	const box = document.createElement('div'); box.style.background='#fff'; box.style.padding='20px'; box.style.borderRadius='10px'; box.style.minWidth='1100px'; box.style.maxWidth='98%'; box.style.boxShadow='0 10px 30px rgba(0,0,0,0.25)';
-	box.innerHTML = '<h3>Pokemon Depot</h3>';
-
-	// three-column layout: Party | Controls (search/filter) | Depot
-	const cols = document.createElement('div'); cols.style.display = 'flex'; cols.style.gap = '18px'; cols.style.marginTop = '8px';
-	const partyCol = document.createElement('div'); partyCol.style.flex = '0 0 220px'; partyCol.style.minWidth = '160px'; partyCol.style.maxHeight = '520px'; partyCol.style.overflow = 'auto';
-	const controlsCol = document.createElement('div'); controlsCol.style.flex = '0 0 180px'; controlsCol.style.minWidth = '140px'; controlsCol.style.maxHeight = '520px'; controlsCol.style.overflow = 'auto';
-	const depotCol = document.createElement('div'); depotCol.style.flex = '1'; depotCol.style.minWidth = '560px'; depotCol.style.maxHeight = '520px'; depotCol.style.overflow = 'hidden'; depotCol.style.display = 'flex'; depotCol.style.flexDirection = 'column';
-
+	if(depotOpen) return;
+	depotOpen = true;
+	updateFeatureToggleButtons();
 	player.depot = player.depot || [];
 	player.party = player.party || [];
+	// Hide map area
+	const mapAreaEl = document.getElementById('mapArea'); if(mapAreaEl) mapAreaEl.style.display = 'none';
+	const center = document.getElementById('centerArea'); if(center && !center.classList.contains('depot-open')) center.classList.add('depot-open');
+	if(!center) return;
+	const root = document.createElement('div'); root.id = 'depotRoot';
+	root.innerHTML = `<div style="width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+		<div style="display:flex;flex-direction:column"><h1 style="margin:0">Depot</h1><div style="font-size:13px;color:var(--muted)">Store, filter and manage Pokémon</div></div>
+		<div><button id="depotBackTop" class="btn secondary">Back to Map</button></div>
+	</div>`;
+	const layout = document.createElement('div'); layout.style.display='flex'; layout.style.gap='18px'; layout.className='depot-layout';
+	const partyCol = document.createElement('div'); partyCol.style.flex='0 0 220px'; partyCol.style.minWidth='160px'; partyCol.style.maxHeight='520px'; partyCol.style.overflow='auto'; partyCol.className='depot-party-col';
+	const controlsCol = document.createElement('div'); controlsCol.style.flex='0 0 180px'; controlsCol.style.minWidth='140px'; controlsCol.style.maxHeight='520px'; controlsCol.style.overflow='auto'; controlsCol.className='depot-controls-col';
+	const depotCol = document.createElement('div'); depotCol.style.flex='1'; depotCol.style.minWidth='560px'; depotCol.style.maxHeight='520px'; depotCol.style.overflow='hidden'; depotCol.style.display='flex'; depotCol.style.flexDirection='column'; depotCol.className='depot-main-col';
+	layout.appendChild(partyCol); layout.appendChild(controlsCol); layout.appendChild(depotCol); root.appendChild(layout); center.appendChild(root);
+
+	// Back button handler
+	const backBtn = root.querySelector('#depotBackTop'); if(backBtn) backBtn.addEventListener('click', ()=>{ hideDepot(); });
+
+	// three-column layout logic continues below
 
 	// state for search and type filters
 	let searchQuery = '';
@@ -3145,15 +3255,20 @@ function showDepot(){
 		}catch(e){}
 	}
 
-	cols.appendChild(partyCol);
-	cols.appendChild(controlsCol);
-	cols.appendChild(depotCol);
-	box.appendChild(cols);
-
 	renderPartyList(); renderControls(); renderDepotList();
+}
 
-	const close = document.createElement('div'); close.style.marginTop='12px'; const cbtn = document.createElement('button'); cbtn.className='btn secondary'; cbtn.textContent='Close'; cbtn.addEventListener('click', ()=>{ try{ if(depotCol && depotCol._adjustDepotGridColumns) window.removeEventListener('resize', depotCol._adjustDepotGridColumns); }catch(e){} overlay.remove(); }); close.appendChild(cbtn); box.appendChild(close);
-	overlay.appendChild(box); document.body.appendChild(overlay);
+function hideDepot(){
+	if(!depotOpen) return;
+	depotOpen = false;
+	const root = document.getElementById('depotRoot'); if(root && root.parentNode) root.parentNode.removeChild(root);
+	const mapAreaEl = document.getElementById('mapArea'); if(mapAreaEl) mapAreaEl.style.display='';
+	const center = document.getElementById('centerArea'); if(center && center.classList.contains('depot-open')) center.classList.remove('depot-open');
+	// remove resize listener if stored
+	try{ const depotCol = document.querySelector('#depotRoot .depot-main-col'); if(depotCol && depotCol._adjustDepotGridColumns) window.removeEventListener('resize', depotCol._adjustDepotGridColumns); }catch(e){}
+	// re-render panels/map
+	try{ renderMap(); renderPlayer(); updatePanels(); }catch(e){}
+	updateFeatureToggleButtons();
 }
 
 	// tracks whether the global keydown handler is currently attached
