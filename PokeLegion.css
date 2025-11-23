@@ -1,3 +1,17 @@
+.heal-btn.btn.small {
+	background: linear-gradient(180deg, #2b6e2b, #1f5a1f) !important;
+	color: #fff !important;
+	border: none;
+	font-weight: 700;
+	font-size: 13px;
+	padding: 6px 14px;
+	border-radius: 8px;
+	box-shadow: 0 2px 6px rgba(10,30,10,0.10);
+	transition: background .12s, color .12s;
+}
+.heal-btn.btn.small:active {
+	background: #256325 !important;
+}
 :root{
 	/* left and right panel widths — map width calculated to fill remaining space */
 	--left-panel-width: 20%;
@@ -172,7 +186,7 @@ html,body{height:100%;margin:0;font-family: 'Courier New', Courier, monospace;ba
 /* Party list simplified layout */
 #partyList{padding:6px}
 .party-list{display:flex;flex-direction:column;gap:14px}
-.party-slot{display:flex;gap:16px;align-items:stretch;background:linear-gradient(180deg,#eef7df,#e0f1d2);border:2px solid #274927;border-radius:16px;padding:14px 18px;box-shadow:0 4px 10px rgba(10,30,10,0.08)}
+.party-slot{display:flex;gap:16px;align-items:stretch;background:linear-gradient(180deg,#eef7df,#e0f1d2);border:2px solid #274927;border-radius:16px;padding:10px 16px 6px 16px;box-shadow:0 4px 10px rgba(10,30,10,0.08);min-height:unset}
 .party-slot.empty{opacity:.4}
 .party-slot.drag-over{outline:3px dashed #2b6e2b;background:linear-gradient(180deg,#f2ffe8,#e6f9dc)}
 .party-slot.dragging{opacity:.5;filter:grayscale(.3)}
@@ -368,6 +382,17 @@ html,body{height:100%;margin:0;font-family: 'Courier New', Courier, monospace;ba
 .btn.secondary{background:linear-gradient(180deg,#f0f6ea,#e6f0d9);color:var(--muted);border:1px solid rgba(20,60,20,0.06)}
 .btn:disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.3);box-shadow:none;transform:none}
 .btn:disabled:hover{transform:none;box-shadow:none}
+
+/* Heal modal styles */
+.heal-hp-bar{position:relative;width:240px;max-width:80%;height:20px;background:#d5d8d2;border-radius:12px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#0f1724;margin-top:4px}
+.heal-hp-bar .fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#34c759,#2e8b37);width:0%;transition:width .25s ease}
+.heal-hp-bar .value{position:relative;z-index:2;text-shadow:0 1px 0 rgba(255,255,255,0.5)}
+.heal-options{display:flex;flex-wrap:wrap;gap:28px;align-items:stretch;justify-content:center;margin-top:12px}
+.heal-option-btn{background:#0f4f0f;color:#fff;font-weight:600;border:none;padding:10px 16px;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:140px;box-shadow:0 6px 16px rgba(10,30,10,0.25);font-size:14px;letter-spacing:.4px}
+.heal-option-btn img{width:44px;height:44px;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(0 3px 4px rgba(0,0,0,0.25))}
+.heal-option-btn:hover:not(:disabled){background:#146b14}
+.heal-option-btn:active:not(:disabled){transform:translateY(1px)}
+.heal-option-btn:disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.4)}
 
 /* small UI messages style */
 .ui-msg{border-radius:8px;padding:8px 10px;font-size:13px}
