@@ -1,9 +1,3 @@
-// Returns true if the given species name (case-insensitive) is in the player's pokedex
-function isSpeciesCaught(speciesName) {
-	if (!player || !player.pokedex) return false;
-	const key = normalizeName(String(speciesName||''));
-	return player.pokedex.indexOf(key) !== -1;
-}
 // Simple PokeLegion game logic: profile creation, layout updates and arrow-key movement
 (function(){
 	const STORAGE_KEY = 'pokel_legion_player_v1';
@@ -1492,6 +1486,19 @@ function findSpawnEntry(name){
 	return null;
 }
 
+function isPokemonCaught(pokemonName) {
+    if (!player || !pokemonName) return false;
+    const normalizedNameToFind = normalizeName(pokemonName);
+
+    const inParty = (player.party || []).some(p => normalizeName(p.name) === normalizedNameToFind);
+    if (inParty) return true;
+
+    const inDepot = (player.depot || []).some(p => normalizeName(p.name) === normalizedNameToFind);
+    if (inDepot) return true;
+
+    return false;
+}
+
 function showTasksModal(){
 	ensureDailyTasks();
 	const overlay = document.createElement('div'); overlay.style.position='fixed'; overlay.style.left=0; overlay.style.top=0; overlay.style.right=0; overlay.style.bottom=0; overlay.style.background='rgba(0,0,0,0.4)'; overlay.style.display='flex'; overlay.style.alignItems='center'; overlay.style.justifyContent='center'; overlay.style.zIndex=21000;
@@ -2115,8 +2122,20 @@ function claimTaskReward(id){
 				bars.appendChild(barsRow); mid.appendChild(bars); slot.appendChild(mid);
 
 				// Right column
+
 				const right=document.createElement('div'); right.className='right-col';
-				const healBtn=document.createElement('button'); healBtn.type='button'; healBtn.className='heal-btn'; healBtn.textContent='HEAL'; healBtn.addEventListener('click',()=>{ showHealModal(i); }); right.appendChild(healBtn); slot.appendChild(right);
+				// Only show HEAL if not at full HP
+				const cur = typeof member.currentHp === 'number' ? member.currentHp : member.hp;
+				const max = typeof member.hp === 'number' ? member.hp : 1;
+				if(cur < max){
+					const healBtn=document.createElement('button');
+					healBtn.type='button';
+					healBtn.className='heal-btn btn small';
+					healBtn.textContent='HEAL';
+					healBtn.addEventListener('click',()=>{ showHealModal(i); });
+					right.appendChild(healBtn);
+				}
+				slot.appendChild(right);
 
 				// Hover EXP tooltip
 				slot.addEventListener('mouseenter',(e)=>{ const need2=xpForNextLevel(lvl); showExpTooltip(slot,`${exp}/${need2} EXP`,e); });
@@ -2124,6 +2143,7 @@ function claimTaskReward(id){
 				// Drag & drop reorder support
 				slot.draggable = true;
 				slot.addEventListener('dragstart', (e)=>{
+					try{ e.dataTransfer.setData('text/plain', String(i)); }catch(err){}
 					slot.classList.add('dragging');
 				});
 				slot.addEventListener('dragend', ()=>{ slot.classList.remove('dragging'); });
@@ -2693,40 +2713,21 @@ function renderWildSpawns(){
 	box.style.position = 'absolute'; box.style.left = '50%'; box.style.transform = 'translateX(-50%)'; box.style.bottom = '40px'; box.style.minWidth = '480px'; box.style.background = 'linear-gradient(180deg,#fff,#fbfffb)'; box.style.border = '1px solid rgba(0,0,0,0.06)'; box.style.padding = '14px'; box.style.borderRadius = '8px'; box.style.boxShadow = '0 8px 30px rgba(0,0,0,0.12)'; box.style.zIndex = 1200; box.style.textAlign = 'left';
 	const title = document.createElement('div'); title.style.fontSize='20px'; title.style.fontWeight='700'; title.style.marginBottom='8px'; title.textContent = 'Wild Pokemon Found!'; box.appendChild(title);
 	const list = document.createElement('div'); list.style.display='flex'; list.style.flexDirection='column'; list.style.gap='8px';
-	   currentWildSpawns.forEach(w=>{
-		   const row = document.createElement('div'); row.style.display='flex'; row.style.alignItems='center'; row.style.justifyContent='space-between'; row.style.padding='8px'; row.style.borderRadius='6px'; row.style.background='linear-gradient(180deg,#f7fff7,#f1fff1)';
-		   const left = document.createElement('div'); left.style.display='flex'; left.style.alignItems='center'; left.style.gap='10px';
-		   const img = document.createElement('img'); img.alt = w.name; img.style.width='40px'; img.style.height='40px'; img.style.objectFit='contain';
-		   try{ setImageSrcFromCandidates(img, getPokemonSpriteCandidates(w.name, w.shiny)); }catch(e){ img.src = `PokeLegion/Pokemon/${w.name.toLowerCase()}.png`; img.onerror = ()=>{ img.style.display='none'; }; }
-
-		   // --- POKEDEX ICON ---
-		   const pokedexIcon = document.createElement('span');
-		   pokedexIcon.style.display = 'inline-block';
-		   pokedexIcon.style.width = '18px';
-		   pokedexIcon.style.height = '18px';
-		   pokedexIcon.style.marginRight = '4px';
-		   pokedexIcon.style.verticalAlign = 'middle';
-		   if (isSpeciesCaught(w.name)) {
-			   // Pokeball icon (SVG)
-			   pokedexIcon.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#fff" stroke="#222" stroke-width="2"/><path d="M1 8h14" stroke="#222" stroke-width="2"/><circle cx="8" cy="8" r="3" fill="#e53" stroke="#222" stroke-width="1.5"/></svg>';
-			   pokedexIcon.title = 'Species caught';
-		   } else {
-			   // Gray circle
-			   pokedexIcon.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#ccc" stroke="#888" stroke-width="2"/></svg>';
-			   pokedexIcon.title = 'Not yet caught';
-		   }
-
-		   const shinyBadge = w.shiny ? ' <span style="color:#d4af37;" title="Shiny">★</span>' : '';
-		   const meta = document.createElement('div');
-		   meta.innerHTML = `<div style="font-weight:700;display:flex;align-items:center;gap:2px;">${pokedexIcon.outerHTML}${escapeHtml(w.name)}${shinyBadge}</div><div style="font-size:12px;color:var(--muted)">Lv.${w.level} • ${w.rarity}${w.shiny? ' • Shiny':''}</div>`;
-		   left.appendChild(img); left.appendChild(meta);
-		   const right = document.createElement('div'); right.style.display='flex'; right.style.alignItems='center'; right.style.gap='8px';
-		   const fight = document.createElement('button'); fight.className='btn small'; fight.textContent='⚔️ Fight'; fight.addEventListener('click', ()=>{ selectWildToFight(w); });
-		   const ignore = document.createElement('button'); ignore.className='btn secondary small'; ignore.textContent='Ignore'; ignore.addEventListener('click', ()=>{ /* remove this spawn */ currentWildSpawns = currentWildSpawns.filter(x=>x.id !== w.id); try{ if(catchUsage && catchUsage[w.id]) delete catchUsage[w.id]; }catch(e){} if(currentWildSpawns.length===0) clearWildSpawns(); else renderWildSpawns(); });
-		   right.appendChild(fight); right.appendChild(ignore);
-		   row.appendChild(left); row.appendChild(right);
-		   list.appendChild(row);
-	   });
+	currentWildSpawns.forEach(w=>{
+		const row = document.createElement('div'); row.style.display='flex'; row.style.alignItems='center'; row.style.justifyContent='space-between'; row.style.padding='8px'; row.style.borderRadius='6px'; row.style.background='linear-gradient(180deg,#f7fff7,#f1fff1)';
+		const left = document.createElement('div'); left.style.display='flex'; left.style.alignItems='center'; left.style.gap='10px';
+		const img = document.createElement('img'); img.alt = w.name; img.style.width='40px'; img.style.height='40px'; img.style.objectFit='contain';
+		try{ setImageSrcFromCandidates(img, getPokemonSpriteCandidates(w.name, w.shiny)); }catch(e){ img.src = `PokeLegion/Pokemon/${w.name.toLowerCase()}.png`; img.onerror = ()=>{ img.style.display='none'; }; }
+			const shinyBadge = w.shiny ? ' <span style="color:#d4af37;" title="Shiny">★</span>' : '';
+			const meta = document.createElement('div'); meta.innerHTML = `<div style="font-weight:700">${escapeHtml(w.name)}${shinyBadge}</div><div style="font-size:12px;color:var(--muted)">Lv.${w.level} • ${w.rarity}${w.shiny? ' • Shiny':''}</div>`;
+		left.appendChild(img); left.appendChild(meta);
+		const right = document.createElement('div'); right.style.display='flex'; right.style.alignItems='center'; right.style.gap='8px';
+		const fight = document.createElement('button'); fight.className='btn small'; fight.textContent='⚔️ Fight'; fight.addEventListener('click', ()=>{ selectWildToFight(w); });
+		const ignore = document.createElement('button'); ignore.className='btn secondary small'; ignore.textContent='Ignore'; ignore.addEventListener('click', ()=>{ /* remove this spawn */ currentWildSpawns = currentWildSpawns.filter(x=>x.id !== w.id); try{ if(catchUsage && catchUsage[w.id]) delete catchUsage[w.id]; }catch(e){} if(currentWildSpawns.length===0) clearWildSpawns(); else renderWildSpawns(); });
+		right.appendChild(fight); right.appendChild(ignore);
+		row.appendChild(left); row.appendChild(right);
+		list.appendChild(row);
+	});
 	box.appendChild(list);
 	// attach below the map area: use mapArea's parent (centerArea)
 	const centerEl = document.getElementById('centerArea'); if(centerEl) centerEl.appendChild(box);
@@ -3056,19 +3057,15 @@ function attemptCatchWithBall(wild, ballKey){
 		try{ pkm.ball = niceItemName(ballKey); }catch(e){}
 		// record capture timestamp so depot always has a date to show
 		try{ pkm.capturedAt = (new Date()).toISOString(); }catch(e){}
-		   if(!Array.isArray(player.party)) player.party = [];
-			   if(player.party.length < 6){
-				   player.party.push(pkm);
-				   showMessage(`${wild.shiny? 'Shiny ': ''}${wild.name} was caught and added to party!`, 'info', 5000);
-			   } else {
-				   player.depot = player.depot || [];
-				   player.depot.push(pkm);
-				   showMessage(`${wild.shiny? 'Shiny ': ''}${wild.name} was caught and sent to Depot.`, 'info', 5000);
-			   }
-		   // --- POKEDEX TRACKING ---
-		   if(!player.pokedex) player.pokedex = [];
-		   const speciesKey = normalizeName(String(wild && wild.name ? wild.name : (wild && wild.id) || 'unknown'));
-		   if(player.pokedex.indexOf(speciesKey) === -1) player.pokedex.push(speciesKey);
+		if(!Array.isArray(player.party)) player.party = [];
+			if(player.party.length < 6){
+				player.party.push(pkm);
+				showMessage(`${wild.shiny? 'Shiny ': ''}${wild.name} was caught and added to party!`, 'info', 5000);
+			} else {
+				player.depot = player.depot || [];
+				player.depot.push(pkm);
+				showMessage(`${wild.shiny? 'Shiny ': ''}${wild.name} was caught and sent to Depot.`, 'info', 5000);
+			}
 		// log final usage summary for this encounter (before clearing)
 		try{
 			const rawId = wild && (wild.id || (wild.name + '_' + wild.level));
@@ -3188,31 +3185,101 @@ function attemptCatchWithBall(wild, ballKey){
 function showHealModal(partyIdx){
 	const poke = (Array.isArray(player.party) && player.party[partyIdx]) ? player.party[partyIdx] : null;
 	if(!poke) return showMessage('No Pokémon selected.', 'error');
-	// Present available potions
-	const overlay = document.createElement('div'); overlay.style.position='fixed'; overlay.style.left=0; overlay.style.top=0; overlay.style.right=0; overlay.style.bottom=0; overlay.style.background='rgba(0,0,0,0.4)'; overlay.style.display='flex'; overlay.style.alignItems='center'; overlay.style.justifyContent='center'; overlay.style.zIndex=20000;
-	const box = document.createElement('div'); box.style.background='#fff'; box.style.padding='16px'; box.style.borderRadius='10px'; box.style.minWidth='320px'; box.style.boxShadow='0 10px 30px rgba(0,0,0,0.25)';
-	box.innerHTML = `<h3>Use a potion on ${escapeHtml(poke.name)}</h3><div style="margin-top:8px;font-size:13px;color:var(--muted)">Choose a potion to heal HP</div>`;
-	const list = document.createElement('div'); list.style.display='flex'; list.style.gap='8px'; list.style.marginTop='12px';
-	const POTIONS = [{k:'potion',label:'Potion'},{k:'super-potion',label:'Super Potion'},{k:'hyper-potion',label:'Hyper Potion'},{k:'max-potion',label:'Max Potion'}];
+	// ensure hp fields present
+	if(typeof poke.hp !== 'number') poke.hp = 30 + (poke.level||1)*5;
+	if(typeof poke.currentHp !== 'number') poke.currentHp = poke.hp;
+	const percent = poke.hp>0 ? Math.min(100, Math.max(0, (poke.currentHp / poke.hp) * 100)) : 0;
+
+	// Overlay root (reuse global modal feel)
+	const overlay = document.createElement('div'); overlay.className='modal';
+	const content = document.createElement('div'); content.className='modal-content'; content.style.maxWidth='640px'; content.style.textAlign='center';
+
+	// Header
+	const title = document.createElement('h2'); title.style.marginTop='0'; title.innerHTML = `Use a potion on <strong>${escapeHtml(poke.name)}</strong>`; content.appendChild(title);
+
+	// Pokémon sprite (fallback attempts if poke.sprite not already set)
+	(function renderHealSprite(){
+		const wrap = document.createElement('div'); wrap.style.display='flex'; wrap.style.alignItems='center'; wrap.style.justifyContent='center'; wrap.style.margin='6px 0 10px 0';
+		const img = document.createElement('img'); img.alt = poke.name; img.style.width='72px'; img.style.height='72px'; img.style.imageRendering='pixelated'; img.style.filter='drop-shadow(0 4px 8px rgba(0,0,0,0.35))'; img.style.transition='opacity .25s'; img.style.opacity='0';
+		// candidate list
+		const nameRaw = String(poke.name||'');
+		function norm(s){ return s.toLowerCase().replace(/[^a-z0-9]/g,''); }
+		const base = norm(nameRaw);
+		const candidates = [];
+		if(poke.sprite) candidates.push(poke.sprite);
+		candidates.push(`PokeLegion/Pokemon/${base}.png`);
+		candidates.push(`PokeLegion/Pokemon/${base}.gif`);
+		// also attempt original name with dashes and without normalization
+		const dashed = nameRaw.toLowerCase().replace(/\s+/g,'-');
+		if(dashed !== base) candidates.push(`PokeLegion/Pokemon/${dashed}.png`);
+		candidates.push(`PokeLegion/Pokemon/${nameRaw}.png`);
+		let idx = 0;
+		function tryNext(){
+			if(idx >= candidates.length){ img.style.opacity='0'; return; }
+			img.src = candidates[idx++];
+		}
+		img.onload = ()=>{ img.style.opacity='1'; };
+		img.onerror = ()=>{ tryNext(); };
+		tryNext();
+		wrap.appendChild(img); content.appendChild(wrap);
+	})();
+
+	// HP row
+	const hpRow = document.createElement('div'); hpRow.style.display='flex'; hpRow.style.flexDirection='column'; hpRow.style.alignItems='center'; hpRow.style.gap='6px'; hpRow.style.marginBottom='12px';
+	const hpLabel = document.createElement('div'); hpLabel.style.fontWeight='800'; hpLabel.style.fontSize='20px'; hpLabel.textContent='HP'; hpRow.appendChild(hpLabel);
+	const hpBarWrap = document.createElement('div'); hpBarWrap.className='heal-hp-bar';
+	const hpFill = document.createElement('div'); hpFill.className='fill'; hpFill.style.width = percent + '%'; hpBarWrap.appendChild(hpFill);
+	const hpValue = document.createElement('div'); hpValue.className='value'; hpValue.textContent = `${Math.floor(poke.currentHp)} / ${Math.floor(poke.hp)}`; hpBarWrap.appendChild(hpValue);
+	hpRow.appendChild(hpBarWrap); content.appendChild(hpRow);
+
+	// Potions config (heals per screenshot: 10 / 50 / 120 / full)
+	const POTIONS = [
+		{k:'potion', label:'Potion', heal:10},
+		{k:'super-potion', label:'Super Potion', heal:50},
+		{k:'hyper-potion', label:'Hyper Potion', heal:120},
+		{k:'max-potion', label:'Max Potion', heal:Infinity}
+	];
+	const optionsRow = document.createElement('div'); optionsRow.className='heal-options';
 	let any = false;
-	POTIONS.forEach(it=>{
-		const cnt = Number(player.inventory[it.k] || 0);
-		if(cnt <= 0) return;
+	POTIONS.forEach(pot=>{
+		const count = Number(player.inventory && player.inventory[pot.k] || 0);
+		if(count <= 0) return; // skip unavailable
 		any = true;
-		const b = document.createElement('button'); b.className='btn'; b.textContent = `${it.label} (${cnt})`;
-		b.addEventListener('click', ()=>{ overlay.remove(); applyPotionToPokemon(partyIdx, it.k); });
-		list.appendChild(b);
+		const btn = document.createElement('button'); btn.type='button'; btn.className='heal-option-btn';
+		// inner HTML structure: image + label lines
+		const img = document.createElement('img'); img.src = `PokeLegion/Items/${pot.k}.png`; img.alt = pot.label;
+		btn.appendChild(img);
+		const line1 = document.createElement('div'); line1.style.fontWeight='700'; line1.textContent = pot.label; btn.appendChild(line1);
+		const line2 = document.createElement('div'); line2.style.fontSize='13px'; line2.textContent = (isFinite(pot.heal) ? `+ ${pot.heal} HP` : 'Full HP'); btn.appendChild(line2);
+		// disabled if already full HP
+		if(poke.currentHp >= poke.hp) btn.disabled = true;
+		btn.addEventListener('click', ()=>{ overlay.remove(); applyPotionToPokemon(partyIdx, pot.k); });
+		optionsRow.appendChild(btn);
 	});
-	box.appendChild(list);
-	if(!any){ const p = document.createElement('div'); p.style.marginTop='12px'; p.textContent = 'No potions available.'; box.appendChild(p); const ok = document.createElement('button'); ok.className='btn'; ok.style.marginTop='12px'; ok.textContent='OK'; ok.addEventListener('click', ()=>{ overlay.remove(); }); box.appendChild(ok); }
-	const cancel = document.createElement('div'); cancel.style.marginTop='12px'; const cbtn = document.createElement('button'); cbtn.className='btn secondary'; cbtn.textContent='Cancel'; cbtn.addEventListener('click', ()=>{ overlay.remove(); }); cancel.appendChild(cbtn); box.appendChild(cancel);
-	overlay.appendChild(box); document.body.appendChild(overlay);
+	content.appendChild(optionsRow);
+
+	if(!any){
+		const none = document.createElement('div'); none.style.marginTop='14px'; none.style.fontSize='14px'; none.style.color='var(--muted)'; none.textContent = 'No potions available.'; content.appendChild(none);
+	}
+
+	// Cancel button row
+	const cancelRow = document.createElement('div'); cancelRow.style.marginTop='22px';
+	const cancelBtn = document.createElement('button'); cancelBtn.className='btn secondary'; cancelBtn.textContent='Cancel'; cancelBtn.addEventListener('click', ()=>{ overlay.remove(); }); cancelRow.appendChild(cancelBtn);
+	content.appendChild(cancelRow);
+
+	// Close on backdrop click
+	overlay.addEventListener('click', e=>{ if(e.target === overlay) overlay.remove(); });
+	// ESC close
+	window.addEventListener('keydown', function escHandler(ev){ if(ev.key==='Escape'){ try{ overlay.remove(); }catch(e){} window.removeEventListener('keydown', escHandler); } });
+
+	overlay.appendChild(content); document.body.appendChild(overlay);
 }
 
 function applyPotionToPokemon(partyIdx, potionKey){
 	const poke = (Array.isArray(player.party) && player.party[partyIdx]) ? player.party[partyIdx] : null;
 	if(!poke) return showMessage('No Pokémon selected.', 'error');
-	const healMap = { 'potion': 20, 'super-potion': 50, 'hyper-potion': 120, 'max-potion': Infinity };
+	// Updated heal amounts to match UI (+10/+50/+120/full)
+	const healMap = { 'potion': 10, 'super-potion': 50, 'hyper-potion': 120, 'max-potion': Infinity };
 	const available = Number(player.inventory[potionKey] || 0);
 	if(available <= 0) return showMessage('No potions of that type available.', 'warn');
 	// consume
@@ -4036,4 +4103,3 @@ try{
 }catch(e){ console.warn('Could not expose debug API', e); }
 
 })();
-
