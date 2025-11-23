@@ -280,21 +280,21 @@
 	"Frostpeak Tundra": [
 		// Common (4)
 		{name:"Swinub", rarity:"common", types:["ice","ground"], baseLevel:2},
-		{name:"Snorunt", rarity:"common", types:["ice"], baseLevel:2},
-		{name:"Cubchoo", rarity:"common", types:["ice"], baseLevel:3},
-		{name:"Vanillite", rarity:"common", types:["ice"], baseLevel:3},
+		{name:"Spheal", rarity:"common", types:["ice"], baseLevel:2},
+		{name:"Bergmite", rarity:"common", types:["ice"], baseLevel:3},
+		{name:"Snover", rarity:"common", types:["ice"], baseLevel:3},
 		// Uncommon (6)
-		{name:"Spheal", rarity:"uncommon", types:["ice","water"], baseLevel:4},
-		{name:"Deerling (Winter)", rarity:"uncommon", types:["normal","grass"], baseLevel:4},
-		{name:"Snover", rarity:"uncommon", types:["grass","ice"], baseLevel:4},
-		{name:"Bergmite", rarity:"uncommon", types:["ice"], baseLevel:4},
-		{name:"Amaura", rarity:"uncommon", types:["rock","ice"], baseLevel:5},
+		{name:"Snorunt", rarity:"uncommon", types:["ice","water"], baseLevel:4},
+		{name:"Deerling (winter)", rarity:"uncommon", types:["normal","grass"], baseLevel:4},
+		{name:"Vanillite", rarity:"uncommon", types:["grass","ice"], baseLevel:4},
+		{name:"Cubchoo", rarity:"uncommon", types:["ice"], baseLevel:4},
+		{name:"Cubone", rarity:"uncommon", types:["ground"], baseLevel:5},
 		{name:"Alolan Sandshrew", rarity:"uncommon", types:["ice","steel"], baseLevel:5},
 		// Rare (2)
-		{name:"Cryogonal", rarity:"rare", types:["ice"], baseLevel:7},
+		{name:"Amaura", rarity:"rare", types:["rock","ice"], baseLevel:7},
 		{name:"Galarian Darumaka", rarity:"rare", types:["ice"], baseLevel:7},
 		// Super Rare
-		{name:"Cubone", rarity:"super_rare", types:["ground"], baseLevel:8}
+		{name:"Cryogonal", rarity:"super_rare", types:["ice"], baseLevel:8}
 	],
 
 	"Ember Crater": [
@@ -312,9 +312,9 @@
 		{name:"Growlithe", rarity:"uncommon", types:["fire"], baseLevel:4},
 		// Rare (2)
 		{name:"Litwick", rarity:"rare", types:["ghost","fire"], baseLevel:6},
-		{name:"Larvesta", rarity:"rare", types:["bug","fire"], baseLevel:7},
+		{name:"Heatmor", rarity:"rare", types:["fire"], baseLevel:7},
 		// Super Rare
-		{name:"Heatmor", rarity:"super_rare", types:["fire"], baseLevel:8}
+		{name:"Larvesta", rarity:"super_rare", types:["bug","fire"], baseLevel:8}
 	],
 
 	"Dune Expanse": [
@@ -351,10 +351,10 @@
 		{name:"Stunfisk", rarity:"uncommon", types:["ground","electric"], baseLevel:5},
 		{name:"Pachirisu", rarity:"uncommon", types:["electric"], baseLevel:5},
 		// Rare (2)
-		{name:"Rotom", rarity:"rare", types:["electric","ghost"], baseLevel:7},
+		{name:"Togedemaru", rarity:"rare", types:["electric","steel"], baseLevel:7},
 		{name:"Dedenne", rarity:"rare", types:["electric","fairy"], baseLevel:6},
 		// Super Rare
-		{name:"Togedemaru", rarity:"super_rare", types:["electric","steel"], baseLevel:8}
+		{name:"Rotom", rarity:"super_rare", types:["electric","ghost"], baseLevel:8}
 	]
 };
 
@@ -1484,6 +1484,19 @@ function findSpawnEntry(name){
 		}
 	}catch(e){ return null; }
 	return null;
+}
+
+function isPokemonCaught(pokemonName) {
+    if (!player || !pokemonName) return false;
+    const normalizedNameToFind = normalizeName(pokemonName);
+
+    const inParty = (player.party || []).some(p => normalizeName(p.name) === normalizedNameToFind);
+    if (inParty) return true;
+
+    const inDepot = (player.depot || []).some(p => normalizeName(p.name) === normalizedNameToFind);
+    if (inDepot) return true;
+
+    return false;
 }
 
 function showTasksModal(){
