@@ -175,10 +175,6 @@
 			{
 				name: 'Starting Meadow', cols: 15, rows: 11,
 				tiles: [] // will be filled below
-			},
-			{
-				name: 'Coastal Road', cols: 18, rows: 12,
-				tiles: []
 			}
 		];
 
@@ -198,17 +194,6 @@
 		for(let c=2;c<MAPS[0].cols-2;c++) MAPS[0].tiles[5][c] = 'road';
 		// pond
 		for(let r=2;r<=3;r++) for(let c=2;c<=4;c++) MAPS[0].tiles[r][c] = (r===2&&c===4)?'shallow':'water';
-
-		// coastal road map with shallow shore
-		makeEmptyMap(MAPS[1], 'grass');
-		for(let r=0;r<MAPS[1].rows;r++){
-			MAPS[1].tiles[r][0] = 'mountain-border';
-			MAPS[1].tiles[r][MAPS[1].cols-1] = 'mountain-border';
-		}
-		for(let c=0;c<MAPS[1].cols;c++){
-			MAPS[1].tiles[2][c] = 'road';
-			if(c>8 && c<13) MAPS[1].tiles[6][c] = 'water';
-		}
 
 		let currentMapIndex = 0;
 		let unlockedMaps = [0];
@@ -252,20 +237,126 @@
 
 	// Spawn tables per map (simple examples). Each entry: { name, rarity: 'common'|'uncommon'|'rare', types:[], baseLevel }
 	const WILD_SPAWNS = {
-		'Starting Meadow': [
-			{name: 'Caterpie', rarity: 'common', types: ['bug'], baseLevel: 1},
-			{name: 'Weedle', rarity: 'common', types: ['bug','poison'], baseLevel: 1},
-			{name: 'Pidgey', rarity: 'uncommon', types: ['flying'], baseLevel: 2},
-			{name: 'Diglett', rarity: 'uncommon', types: ['ground'], baseLevel: 2},
-			{name: 'Dratini', rarity: 'rare', types: ['dragon'], baseLevel: 5}
-		],
-		'Coastal Road': [
-			{name: 'Poliwag', rarity: 'common', types: ['water'], baseLevel:1},
-			{name: 'Magikarp', rarity: 'common', types: ['water'], baseLevel:1},
-			{name: 'Psyduck', rarity: 'uncommon', types: ['water'], baseLevel:3},
-			{name: 'Lapras', rarity: 'rare', types: ['water','ice'], baseLevel:6}
-		]
-	};
+	"Starting Meadow": [
+		// Common (4)
+		{name: "Caterpie", rarity: "common", types: ["bug"], baseLevel: 1},
+		{name: "Weedle", rarity: "common", types: ["bug","poison"], baseLevel: 1},
+		{name: "Pidgey", rarity: "common", types: ["normal","flying"], baseLevel: 2},
+		{name: "Rattata", rarity: "common", types: ["normal"], baseLevel: 2},
+		// Uncommon (6)
+		{name: "Hoppip", rarity: "uncommon", types: ["grass","flying"], baseLevel: 3},
+		{name: "Buneary", rarity: "uncommon", types: ["normal"], baseLevel: 3},
+		{name: "Sentret", rarity: "uncommon", types: ["normal"], baseLevel: 3},
+		{name: "Bellsprout", rarity: "uncommon", types: ["grass","poison"], baseLevel: 3},
+		{name: "Nincada", rarity: "uncommon", types: ["bug","ground"], baseLevel: 4},
+		{name: "Doduo", rarity: "uncommon", types: ["normal","flying"], baseLevel: 4},
+		// Rare (2)
+		{name: "Eevee", rarity: "rare", types: ["normal"], baseLevel: 5},
+		{name: "Smeargle", rarity: "rare", types: ["normal"], baseLevel: 5},
+		// Super Rare (first form only)
+		{name: "Riolu", rarity: "super_rare", types: ["fighting"], baseLevel: 6}
+	],
+
+	"Verdant Forest": [
+		// Common (4)
+		{name:"Oddish", rarity:"common", types:["grass","poison"], baseLevel:2},
+		{name:"Shroomish", rarity:"common", types:["grass"], baseLevel:2},
+		{name:"Wurmple", rarity:"common", types:["bug"], baseLevel:2},
+		{name:"Sewaddle", rarity:"common", types:["bug","grass"], baseLevel:2},
+		// Uncommon (6)
+		{name:"Seedot", rarity:"uncommon", types:["grass"], baseLevel:3},
+		{name:"Spinarak", rarity:"uncommon", types:["bug","poison"], baseLevel:3},
+		{name:"Teddiursa", rarity:"uncommon", types:["normal"], baseLevel:4},
+		{name:"Phantump", rarity:"uncommon", types:["ghost","grass"], baseLevel:5},
+		{name:"Paras", rarity:"uncommon", types:["bug","grass"], baseLevel:4},
+		{name:"Venonat", rarity:"uncommon", types:["bug","poison"], baseLevel:4},
+		// Rare (2)
+		{name:"Skiddo", rarity:"rare", types:["grass"], baseLevel:6},
+		{name:"Fomantis", rarity:"rare", types:["grass"], baseLevel:6},
+		// Super Rare
+		{name:"Zorua", rarity:"super_rare", types:["dark"], baseLevel:8}
+	],
+
+	"Frostpeak Tundra": [
+		// Common (4)
+		{name:"Swinub", rarity:"common", types:["ice","ground"], baseLevel:2},
+		{name:"Snorunt", rarity:"common", types:["ice"], baseLevel:2},
+		{name:"Cubchoo", rarity:"common", types:["ice"], baseLevel:3},
+		{name:"Vanillite", rarity:"common", types:["ice"], baseLevel:3},
+		// Uncommon (6)
+		{name:"Spheal", rarity:"uncommon", types:["ice","water"], baseLevel:4},
+		{name:"Deerling (Winter)", rarity:"uncommon", types:["normal","grass"], baseLevel:4},
+		{name:"Snover", rarity:"uncommon", types:["grass","ice"], baseLevel:4},
+		{name:"Bergmite", rarity:"uncommon", types:["ice"], baseLevel:4},
+		{name:"Amaura", rarity:"uncommon", types:["rock","ice"], baseLevel:5},
+		{name:"Alolan Sandshrew", rarity:"uncommon", types:["ice","steel"], baseLevel:5},
+		// Rare (2)
+		{name:"Cryogonal", rarity:"rare", types:["ice"], baseLevel:7},
+		{name:"Galarian Darumaka", rarity:"rare", types:["ice"], baseLevel:7},
+		// Super Rare
+		{name:"Cubone", rarity:"super_rare", types:["ground"], baseLevel:8}
+	],
+
+	"Ember Crater": [
+		// Common (4)
+		{name:"Slugma", rarity:"common", types:["fire"], baseLevel:2},
+		{name:"Numel", rarity:"common", types:["fire","ground"], baseLevel:3},
+		{name:"Houndour", rarity:"common", types:["dark","fire"], baseLevel:3},
+		{name:"Magby", rarity:"common", types:["fire"], baseLevel:3},
+		// Uncommon (6)
+		{name:"Darumaka", rarity:"uncommon", types:["fire"], baseLevel:4},
+		{name:"Salandit", rarity:"uncommon", types:["poison","fire"], baseLevel:4},
+		{name:"Ponyta", rarity:"uncommon", types:["fire"], baseLevel:4},
+		{name:"Torkoal", rarity:"uncommon", types:["fire"], baseLevel:5},
+		{name:"Vulpix", rarity:"uncommon", types:["fire"], baseLevel:3},
+		{name:"Growlithe", rarity:"uncommon", types:["fire"], baseLevel:4},
+		// Rare (2)
+		{name:"Litwick", rarity:"rare", types:["ghost","fire"], baseLevel:6},
+		{name:"Larvesta", rarity:"rare", types:["bug","fire"], baseLevel:7},
+		// Super Rare
+		{name:"Heatmor", rarity:"super_rare", types:["fire"], baseLevel:8}
+	],
+
+	"Dune Expanse": [
+		// Common (4)
+		{name:"Sandshrew", rarity:"common", types:["ground"], baseLevel:2},
+		{name:"Trapinch", rarity:"common", types:["ground"], baseLevel:3},
+		{name:"Hippopotas", rarity:"common", types:["ground"], baseLevel:3},
+		{name:"Cacnea", rarity:"common", types:["grass"], baseLevel:3},
+		// Uncommon (6)
+		{name:"Baltoy", rarity:"uncommon", types:["ground","psychic"], baseLevel:4},
+		{name:"Helioptile", rarity:"uncommon", types:["electric","normal"], baseLevel:4},
+		{name:"Sandile", rarity:"uncommon", types:["ground","dark"], baseLevel:4},
+		{name:"Gible", rarity:"uncommon", types:["dragon","ground"], baseLevel:5},
+		{name:"Yamask", rarity:"uncommon", types:["ghost"], baseLevel:5},
+		{name:"Dwebble", rarity:"uncommon", types:["bug","rock"], baseLevel:4},
+		// Rare (2)
+		{name:"Skorupi", rarity:"rare", types:["poison","bug"], baseLevel:6},
+		{name:"Axew", rarity:"rare", types:["dragon"], baseLevel:6},
+		// Super Rare
+		{name:"Gible (Shiny chance?)", rarity:"super_rare", types:["dragon","ground"], baseLevel:8}
+	],
+
+	"Storm Highlands": [
+		// Common (4)
+		{name:"Pikachu", rarity:"common", types:["electric"], baseLevel:3},
+		{name:"Shinx", rarity:"common", types:["electric"], baseLevel:2},
+		{name:"Mareep", rarity:"common", types:["electric"], baseLevel:2},
+		{name:"Electrike", rarity:"common", types:["electric"], baseLevel:3},
+		// Uncommon (6)
+		{name:"Joltik", rarity:"uncommon", types:["bug","electric"], baseLevel:4},
+		{name:"Blitzle", rarity:"uncommon", types:["electric"], baseLevel:4},
+		{name:"Helioptile", rarity:"uncommon", types:["electric","normal"], baseLevel:4},
+		{name:"Tynamo", rarity:"uncommon", types:["electric"], baseLevel:4},
+		{name:"Stunfisk", rarity:"uncommon", types:["ground","electric"], baseLevel:5},
+		{name:"Pachirisu", rarity:"uncommon", types:["electric"], baseLevel:5},
+		// Rare (2)
+		{name:"Rotom", rarity:"rare", types:["electric","ghost"], baseLevel:7},
+		{name:"Dedenne", rarity:"rare", types:["electric","fairy"], baseLevel:6},
+		// Super Rare
+		{name:"Togedemaru", rarity:"super_rare", types:["electric","steel"], baseLevel:8}
+	]
+};
 
 	function rarityWeight(r){ if(r==='common') return 70; if(r==='uncommon') return 25; return 5 }
 
@@ -281,7 +372,6 @@
 		function setCurrentMap(index){
 			currentMapIndex = Math.max(0, Math.min(index, MAPS.length-1));
 			renderMap();
-			try{ renderMapSpeciesGrid(); }catch(e){}
 		}
 
 		function unlockNextMap(){
@@ -323,7 +413,7 @@ MB,S,S,W,W,S,W,W,S,G,G,MF,MB,MB,MB
 MB,S,S,S,W,W,W,W,S,S,G,MF,MF,MF,MB
 MB,MB,MB,MB,W,W,MB,MB,MB,MB,MB,MB,MB,MB,MB`,
 
-	'coastal_road.csv':
+	'Verdant Forest.csv':
 `S,S,MB,MB,MB,MB,MB,MB,MB,MB,MB,MB,MB,MB,MB
 S,S,S,MB,MF,MF,G,G,G,G,G,G,G,G,G
 S,S,S,MF,MF,G,R,R,R,R,R,R,W,W,W
@@ -333,7 +423,55 @@ MB,G,S,S,S,G,G,S,S,R,R,MF,MF,MB,MB
 MB,G,S,W,W,W,W,S,S,R,G,MF,MB,MB,MB
 MB,S,S,W,W,W,W,W,S,G,G,MF,MB,MB,MB
 MB,S,S,S,W,W,W,W,S,S,G,MF,MF,MF,MB
-MB,MB,MB,MB,W,W,W,W,MB,MB,MB,MB,MB,MB,MB`
+MB,MB,MB,MB,W,W,W,W,MB,MB,MB,MB,MB,MB,MB`,
+
+	'Frostpeak Tundra.csv':
+`MB,MB,MB,MB,MB,MB,MB,MB,MB,MB,MB,MB,MB,MB,MB
+MB,MF,MF,MF,MF,MF,MF,MB,W,W,W,W,MB,MB,MB
+MB,MF,W,W,W,MF,MF,MF,MF,MF,MF,MF,MB,MB,MB
+MB,W,W,W,W,MF,W,W,W,W,W,W,MB,MB,MB
+MB,MF,W,W,W,MF,MF,W,W,W,W,W,MB,MB,MB
+MB,MF,MF,MF,MF,MF,MF,MF,MF,MF,W,W,MB,MB,MB
+MB,W,MF,MF,W,W,W,W,W,MF,MF,MB,MB,MB,MB
+MB,W,MF,MF,W,W,W,W,W,MF,MF,MB,MB,MB,MB
+MB,MB,MF,MF,MF,MF,MF,MF,MF,MF,MF,MB,MB,MB,MB
+MB,MB,MB,MB,MB,MB,MB,MB,MB,MB,MB,MB,MB,MB,MB`,
+
+	'Ember Crater.csv':
+`MF,MF,R,R,R,MF,MF,MF,MF,MF,MF,MF,R,R,R
+MF,R,R,R,R,R,MF,R,R,R,R,R,R,R,R
+R,R,R,R,R,R,R,R,R,R,R,R,R,R,R
+R,R,R,R,R,R,R,R,R,R,R,R,R,R,R
+MF,R,R,R,R,R,R,R,R,R,R,R,R,R,MF
+MF,R,R,R,R,R,R,R,R,R,R,R,R,R,MF
+R,R,R,R,R,R,R,R,R,R,R,R,R,R,R
+R,R,R,R,R,R,R,R,R,R,R,R,R,R,R
+R,R,R,R,R,R,R,MF,R,R,R,R,R,R,MF
+MF,MF,R,R,R,MF,MF,MF,MF,MF,MF,MF,R,R,R`,
+
+	'Dune Expanse.csv':
+`S,S,S,S,S,S,S,S,S,S,S,S,S,S,S
+S,S,S,S,S,S,S,S,S,S,S,S,S,S,S
+S,S,S,S,S,S,G,G,G,S,S,S,S,S,S
+S,S,S,S,S,S,G,G,G,S,S,S,S,S,S
+S,S,S,S,S,S,S,S,S,S,S,S,S,S,S
+S,S,S,S,S,S,S,S,S,S,S,S,S,S,S
+S,S,S,S,S,S,S,S,S,S,S,S,G,G,S
+S,S,S,S,S,S,S,S,S,S,S,S,G,G,S
+S,S,S,S,S,S,S,S,S,S,S,S,S,S,S
+S,S,S,S,S,S,S,S,S,S,S,S,S,S,S`,
+
+	'Storm Highlands.csv':
+`G,G,MF,MF,MF,MF,MF,MF,MF,MF,MF,MF,R,R,R
+G,G,G,MF,MF,MF,G,G,G,G,G,G,R,R,R
+G,G,G,MF,MF,G,R,R,R,R,R,R,R,R,R
+MF,G,G,G,G,R,R,G,G,G,G,G,R,R,MF
+MF,G,G,G,G,G,G,G,G,G,R,R,R,MF,MF
+MF,G,G,G,G,G,G,G,G,R,R,MF,MF,MF,MF
+MF,G,G,W,W,W,W,G,G,R,G,MF,MF,MF,MF
+MF,G,G,W,W,W,W,W,G,G,G,MF,MF,MF,MF
+MF,G,G,G,W,W,W,W,G,G,G,MF,MF,MF,MF
+MF,MF,MF,MF,W,W,W,W,MF,MF,MF,MF,MF,MF,MF`
 };
 
 // Map CSV parsing and loading
@@ -1003,53 +1141,6 @@ function getTypeColor(t){ return TYPE_COLORS_GLOBAL[String(t||'').toLowerCase()]
 			});
 		}
 		// refresh species availability grid
-		try{ renderMapSpeciesGrid(); }catch(e){ console.warn('renderMapSpeciesGrid failed', e); }
-	}
-
-	function renderMapSpeciesGrid(){
-		const wrap = document.getElementById('mapSpecies'); if(!wrap) return;
-		const map = MAPS[currentMapIndex]; if(!map){ wrap.innerHTML=''; return; }
-		let spawns = WILD_SPAWNS[map.name] || [];
-		// If direct key failed, try normalized (case / spacing) match
-		if(!spawns.length){
-			const target = map.name.toLowerCase().replace(/[^a-z0-9]/g,'');
-			for(const key in WILD_SPAWNS){
-				if(key.toLowerCase().replace(/[^a-z0-9]/g,'') === target){ spawns = WILD_SPAWNS[key] || []; break; }
-			}
-		}
-		wrap.innerHTML = '';
-		if(spawns.length === 0){ const em = document.createElement('div'); em.textContent = 'No wild Pokémon data for this map'; em.style.fontSize='12px'; em.style.color='var(--muted)'; wrap.appendChild(em); return; }
-		const grid = document.createElement('div'); grid.className = 'map-species-grid';
-		spawns.forEach(s=>{
-			const cell = document.createElement('div'); cell.className = 'map-species-cell';
-			const nameEl = document.createElement('div'); nameEl.className = 'sp-name'; nameEl.textContent = s.name; cell.appendChild(nameEl);
-			// sprite attempts (lightweight)
-			try{
-				const fileKey = String(s.name||'').toLowerCase().replace(/[^a-z0-9]+/g,'_');
-				const img = document.createElement('img');
-				const candidates = [
-					`PokeLegion/Pokemon/${fileKey}.png`,
-					`PokeLegion/pokemon/${fileKey}.png`,
-					`PokeLegion/Pokemon/${s.name}.png`,
-					`PokeLegion/pokemon/${s.name}.png`
-				];
-				let ci=0; img.onerror=function(){ ci++; if(ci<candidates.length) img.src=candidates[ci]; else img.remove(); };
-				img.src=candidates[0]; cell.appendChild(img);
-			}catch(e){/* ignore */}
-			// type badges
-			try{
-				const types = Array.isArray(s.types) ? s.types : [];
-				if(types.length){
-					const typesRow = document.createElement('div'); typesRow.className = 'types-row';
-					types.forEach(tp=>{ const t = document.createElement('span'); t.className = 'sp-type-badge'; t.textContent = String(tp).charAt(0).toUpperCase()+String(tp).slice(1); t.style.background = getTypeColor(tp); typesRow.appendChild(t); });
-					cell.appendChild(typesRow);
-				}
-			}catch(e){}
-			const r = String(s.rarity||'common');
-			const rEl = document.createElement('div'); rEl.className = 'sp-rarity sp-rarity-' + r; rEl.textContent = r; cell.appendChild(rEl);
-			grid.appendChild(cell);
-		});
-		wrap.appendChild(grid);
 	}
 
 	function updatePanels(){
