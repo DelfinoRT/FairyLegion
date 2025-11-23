@@ -281,6 +281,7 @@
 		function setCurrentMap(index){
 			currentMapIndex = Math.max(0, Math.min(index, MAPS.length-1));
 			renderMap();
+			try{ renderMapSpeciesGrid(); }catch(e){}
 		}
 
 		function unlockNextMap(){
@@ -1001,6 +1002,54 @@ function getTypeColor(t){ return TYPE_COLORS_GLOBAL[String(t||'').toLowerCase()]
 				sel.appendChild(opt);
 			});
 		}
+		// refresh species availability grid
+		try{ renderMapSpeciesGrid(); }catch(e){ console.warn('renderMapSpeciesGrid failed', e); }
+	}
+
+	function renderMapSpeciesGrid(){
+		const wrap = document.getElementById('mapSpecies'); if(!wrap) return;
+		const map = MAPS[currentMapIndex]; if(!map){ wrap.innerHTML=''; return; }
+		let spawns = WILD_SPAWNS[map.name] || [];
+		// If direct key failed, try normalized (case / spacing) match
+		if(!spawns.length){
+			const target = map.name.toLowerCase().replace(/[^a-z0-9]/g,'');
+			for(const key in WILD_SPAWNS){
+				if(key.toLowerCase().replace(/[^a-z0-9]/g,'') === target){ spawns = WILD_SPAWNS[key] || []; break; }
+			}
+		}
+		wrap.innerHTML = '';
+		if(spawns.length === 0){ const em = document.createElement('div'); em.textContent = 'No wild Pokémon data for this map'; em.style.fontSize='12px'; em.style.color='var(--muted)'; wrap.appendChild(em); return; }
+		const grid = document.createElement('div'); grid.className = 'map-species-grid';
+		spawns.forEach(s=>{
+			const cell = document.createElement('div'); cell.className = 'map-species-cell';
+			const nameEl = document.createElement('div'); nameEl.className = 'sp-name'; nameEl.textContent = s.name; cell.appendChild(nameEl);
+			// sprite attempts (lightweight)
+			try{
+				const fileKey = String(s.name||'').toLowerCase().replace(/[^a-z0-9]+/g,'_');
+				const img = document.createElement('img');
+				const candidates = [
+					`PokeLegion/Pokemon/${fileKey}.png`,
+					`PokeLegion/pokemon/${fileKey}.png`,
+					`PokeLegion/Pokemon/${s.name}.png`,
+					`PokeLegion/pokemon/${s.name}.png`
+				];
+				let ci=0; img.onerror=function(){ ci++; if(ci<candidates.length) img.src=candidates[ci]; else img.remove(); };
+				img.src=candidates[0]; cell.appendChild(img);
+			}catch(e){/* ignore */}
+			// type badges
+			try{
+				const types = Array.isArray(s.types) ? s.types : [];
+				if(types.length){
+					const typesRow = document.createElement('div'); typesRow.className = 'types-row';
+					types.forEach(tp=>{ const t = document.createElement('span'); t.className = 'sp-type-badge'; t.textContent = String(tp).charAt(0).toUpperCase()+String(tp).slice(1); t.style.background = getTypeColor(tp); typesRow.appendChild(t); });
+					cell.appendChild(typesRow);
+				}
+			}catch(e){}
+			const r = String(s.rarity||'common');
+			const rEl = document.createElement('div'); rEl.className = 'sp-rarity sp-rarity-' + r; rEl.textContent = r; cell.appendChild(rEl);
+			grid.appendChild(cell);
+		});
+		wrap.appendChild(grid);
 	}
 
 	function updatePanels(){
