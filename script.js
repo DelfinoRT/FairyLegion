@@ -85,6 +85,7 @@ setInterval(sprinkleFairyDusty, 500);
     }
 
     const minMargin = 12;
+    const closeButton = floatingEvents.querySelector('.floating-events__close');
     let pointerId = null;
     let startX = 0;
     let startY = 0;
@@ -95,9 +96,18 @@ setInterval(sprinkleFairyDusty, 500);
     let dragging = false;
 
     const clamp = (value, min, max) => Math.min(Math.max(value, min), Math.max(min, max));
+    const cleanupPointerListeners = () => {
+        window.removeEventListener('pointermove', onPointerMove);
+        window.removeEventListener('pointerup', onPointerUp);
+        window.removeEventListener('pointercancel', onPointerUp);
+    };
 
     const onPointerDown = (evt) => {
         if (evt.pointerType === 'mouse' && evt.button !== 0) {
+            return;
+        }
+
+        if (evt.target.closest('.floating-events__close')) {
             return;
         }
 
@@ -176,12 +186,31 @@ setInterval(sprinkleFairyDusty, 500);
 
         pointerId = null;
         dragging = false;
-        window.removeEventListener('pointermove', onPointerMove);
-        window.removeEventListener('pointerup', onPointerUp);
-        window.removeEventListener('pointercancel', onPointerUp);
+        cleanupPointerListeners();
     };
 
     floatingEvents.addEventListener('pointerdown', onPointerDown);
+
+    if (closeButton) {
+        const suppressDrag = (evt) => {
+            evt.stopPropagation();
+        };
+
+        const onClose = (evt) => {
+            evt.preventDefault();
+            cleanupPointerListeners();
+            floatingEvents.classList.remove('floating-events--dragging');
+            pointerId = null;
+            dragging = false;
+            floatingEvents.removeEventListener('pointerdown', onPointerDown);
+            closeButton.removeEventListener('pointerdown', suppressDrag);
+            closeButton.removeEventListener('click', onClose);
+            floatingEvents.remove();
+        };
+
+        closeButton.addEventListener('pointerdown', suppressDrag);
+        closeButton.addEventListener('click', onClose);
+    }
 })();
 
 // Data for fishing information

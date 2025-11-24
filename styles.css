@@ -712,6 +712,9 @@ footer a.linked-in:hover {
   box-shadow: 0 12px 24px rgba(83, 45, 100, 0.22);
   padding: 18px 20px;
   border: 2px solid rgba(124, 58, 237, 0.15);
+  border-image-slice: 1;
+  border-image-source: linear-gradient(90deg, rgba(124, 58, 237, 0.15), rgba(124, 58, 237, 0.15));
+  --border-angle: 0deg;
   animation: guildVibrate 3s ease-in-out infinite;
   opacity: 0.85;
   cursor: grab;
@@ -719,9 +722,11 @@ footer a.linked-in:hover {
 }
 
 .floating-events:hover {
-  animation-play-state: paused;
+  animation-play-state: paused, running;
   box-shadow: 0 14px 28px rgba(83, 45, 100, 0.28);
   opacity: 1;
+  border-image-source: linear-gradient(var(--border-angle), #ff2d55, #ffcc00, #28cd41, #0a84ff, #bf5af2, #ff2d55);
+  animation: guildVibrate 3s ease-in-out infinite, borderRGBSpin 5s linear infinite;
 }
 
 .floating-events--dragging,
@@ -729,10 +734,41 @@ footer a.linked-in:hover {
   cursor: grabbing;
 }
 
+
+.floating-events__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.7);
+  color: #5b21b6;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(83, 45, 100, 0.2);
+  transition: transform 0.2s ease, background 0.2s ease;
+  z-index: 2;
+}
+
+.floating-events__close:hover {
+  background: #ffffff;
+  transform: scale(1.05);
+}
+
+.floating-events__close:focus-visible {
+  outline: 2px solid #7c3aed;
+  outline-offset: 2px;
+}
+
 .floating-events__content {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  position: relative;
+  z-index: 1;
 }
 
 .floating-events__label {
@@ -769,6 +805,21 @@ footer a.linked-in:hover {
 .floating-events__cta:hover {
   background-color: #5b21b6;
   transform: translateY(-1px);
+}
+
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes borderRGBSpin {
+  from {
+    --border-angle: 0deg;
+  }
+  to {
+    --border-angle: 360deg;
+  }
 }
 
 @keyframes guildVibrate {
