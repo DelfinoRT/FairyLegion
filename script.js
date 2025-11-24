@@ -78,6 +78,112 @@ function sprinkleFairyDusty() {
 
 setInterval(sprinkleFairyDusty, 500);
 
+(function enableFloatingEventsDrag() {
+    const floatingEvents = document.querySelector('.floating-events');
+    if (!floatingEvents) {
+        return;
+    }
+
+    const minMargin = 12;
+    let pointerId = null;
+    let startX = 0;
+    let startY = 0;
+    let offsetX = 0;
+    let offsetY = 0;
+    let initialLeft = 0;
+    let initialTop = 0;
+    let dragging = false;
+
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), Math.max(min, max));
+
+    const onPointerDown = (evt) => {
+        if (evt.pointerType === 'mouse' && evt.button !== 0) {
+            return;
+        }
+
+        pointerId = evt.pointerId;
+        startX = evt.clientX;
+        startY = evt.clientY;
+
+        const rect = floatingEvents.getBoundingClientRect();
+        offsetX = startX - rect.left;
+        offsetY = startY - rect.top;
+        initialLeft = rect.left;
+        initialTop = rect.top;
+        dragging = false;
+
+        window.addEventListener('pointermove', onPointerMove);
+        window.addEventListener('pointerup', onPointerUp);
+        window.addEventListener('pointercancel', onPointerUp);
+    };
+
+    const onPointerMove = (evt) => {
+        if (pointerId === null || evt.pointerId !== pointerId) {
+            return;
+        }
+
+        const deltaX = evt.clientX - startX;
+        const deltaY = evt.clientY - startY;
+
+        if (!dragging) {
+            if (Math.abs(deltaX) < 4 && Math.abs(deltaY) < 4) {
+                return;
+            }
+
+            dragging = true;
+            floatingEvents.classList.add('floating-events--dragging');
+            floatingEvents.style.right = 'auto';
+            floatingEvents.style.bottom = 'auto';
+            floatingEvents.style.left = initialLeft + 'px';
+            floatingEvents.style.top = initialTop + 'px';
+
+            if (floatingEvents.setPointerCapture) {
+                try {
+                    floatingEvents.setPointerCapture(pointerId);
+                } catch (err) {
+                    /* ignore capture errors */
+                }
+            }
+        }
+
+        const newLeft = evt.clientX - offsetX;
+        const newTop = evt.clientY - offsetY;
+        const maxLeft = window.innerWidth - floatingEvents.offsetWidth - minMargin;
+        const maxTop = window.innerHeight - floatingEvents.offsetHeight - minMargin;
+
+        floatingEvents.style.left = clamp(newLeft, minMargin, maxLeft) + 'px';
+        floatingEvents.style.top = clamp(newTop, minMargin, maxTop) + 'px';
+    };
+
+    const onPointerUp = (evt) => {
+        if (pointerId === null || evt.pointerId !== pointerId) {
+            return;
+        }
+
+        if (dragging) {
+            evt.preventDefault();
+        }
+
+        floatingEvents.classList.remove('floating-events--dragging');
+
+        if (floatingEvents.releasePointerCapture) {
+            try {
+                floatingEvents.releasePointerCapture(pointerId);
+            } catch (err) {
+                /* ignore release errors */
+            }
+        }
+
+        pointerId = null;
+        dragging = false;
+        window.removeEventListener('pointermove', onPointerMove);
+        window.removeEventListener('pointerup', onPointerUp);
+        window.removeEventListener('pointercancel', onPointerUp);
+    };
+
+    floatingEvents.addEventListener('pointerdown', onPointerDown);
+})();
+
 // Data for fishing information
 const fishingData = {
     "Old Rod": {

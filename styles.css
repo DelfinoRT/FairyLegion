@@ -701,6 +701,105 @@ footer a.linked-in:hover {
   border-top: 1px solid #ccc;
 }
 
+.floating-events {
+  position: fixed;
+  right: 24px;
+  bottom: 120px;
+  z-index: 1000;
+  max-width: 280px;
+  border-radius: 14px;
+  background: linear-gradient(160deg, #f7e9ff 0%, #f1f5ff 100%);
+  box-shadow: 0 12px 24px rgba(83, 45, 100, 0.22);
+  padding: 18px 20px;
+  border: 2px solid rgba(124, 58, 237, 0.15);
+  animation: guildVibrate 3s ease-in-out infinite;
+  opacity: 0.85;
+  cursor: grab;
+  user-select: none;
+}
+
+.floating-events:hover {
+  animation-play-state: paused;
+  box-shadow: 0 14px 28px rgba(83, 45, 100, 0.28);
+  opacity: 1;
+}
+
+.floating-events--dragging,
+.floating-events:active {
+  cursor: grabbing;
+}
+
+.floating-events__content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.floating-events__label {
+  margin: 0 0 6px;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #7c3aed;
+}
+
+.floating-events__title {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  color: #411f50;
+}
+
+.floating-events__description {
+  margin: 0 0 14px;
+  font-size: 0.95rem;
+  color: #4a4a4a;
+}
+
+.floating-events__cta {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #7c3aed;
+  color: #fff;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.floating-events__cta:hover {
+  background-color: #5b21b6;
+  transform: translateY(-1px);
+}
+
+@keyframes guildVibrate {
+  0%, 88%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  90% {
+    transform: translate3d(-2px, 0, 0);
+  }
+  92% {
+    transform: translate3d(2px, 0, 0);
+  }
+  94% {
+    transform: translate3d(-2px, 0, 0);
+  }
+  96% {
+    transform: translate3d(2px, 0, 0);
+  }
+  98% {
+    transform: translate3d(-1px, 0, 0);
+  }
+}
+
+@media (max-width: 768px) {
+  .floating-events {
+    left: 16px;
+    right: 16px;
+    bottom: 90px;
+  }
+}
+
 .collapsible-header {
   width: 90%;
   cursor: pointer;
