@@ -1,3 +1,35 @@
+.collection-section.looking-for {
+  margin-top: 48px;
+  background: #fffbe7;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+.looking-title {
+  text-align: center;
+  color: #b60000;
+  font-size: 1.3em;
+  margin: 0 0 18px 0;
+}
+.looking-list {
+  list-style: none;
+  padding: 0 0 24px 0;
+  margin: 0 auto;
+  max-width: 400px;
+}
+.looking-list li {
+  display: flex;
+  align-items: center;
+  font-size: 1.1em;
+  margin-bottom: 12px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  padding: 8px 16px;
+}
+.looking-list .pokeball-img {
+  width: 28px;
+  height: 28px;
+  margin-right: 14px;
+}
 .collection-section.blue .collapsible-header {
   background: #b2ebf2;
   color: #0077b6;
