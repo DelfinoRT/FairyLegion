@@ -7,6 +7,10 @@
   background: #a3ccd1;
   color: #f0f0f0;
 }
+.collection-section.white .collapsible-header {
+  background: #2e2e2e;
+  color: #f0f0f0;
+}
 .collection-section.red .collapsible-header {
   background: #ffb2b2;
   color: #b60000;
