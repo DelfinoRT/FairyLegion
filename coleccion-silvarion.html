@@ -4,6 +4,32 @@
                 <meta charset="UTF-8">
                 <title>Colección Silvarion</title>
                 <link rel="stylesheet" href="coleccion-silvarion.css">
+                 <style>
+                      /* Add transparency to Pokémon collection sections */
+                      .collection-section {
+                        background: rgba(255,255,255,0.85);
+                        border-radius: 16px;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                      }
+                    /* Add transparency to main content sections */
+                    .transparent-section {
+                      background: rgba(255,255,255,0.85); /* white with 85% opacity */
+                      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                      border-radius: 16px;
+                    }
+                   body {
+                     background-image: url('ColeccionSilvarion/background.png');
+                     background-repeat: repeat-y;
+                     background-size: contain;
+                     background-attachment: scroll;
+                     background-position: center top;
+                     background-color: #000;
+                     min-height: 100vh;
+                     width: 100vw;
+                     margin: 0;
+                     padding: 0;
+                   }
+                 </style>
               </head>
               <body>
 
@@ -608,9 +634,13 @@
                   <h2 class="looking-title">Buscando estos Pokémon</h2>
                   <p class="desc">
                   Dejo la lista de los Pokémon que sigo buscando y la ball en la que me interesan. Entiendo que algunos no son 
-                  capturables de momento pero puede que hayan salido anteriormente en lotería , o puede que salgan en un futuro. 
-                  Si tienes alguno de estos y quieres negociar, no dudes en contactarme dentro del juego.
-                </p>
+                  capturables de momento pero puede que hayan salido anteriormente en lotería, o puede que salgan en un futuro.
+                  </p>
+                  <div class="looking-note">
+                    <strong>¿Tienes alguno de estos Pokémon y quieres negociar?</strong><br>
+                    Por favor, contacta a <b>Silvarion</b> en el juego (World: Diamond, Character: Silvarion).
+                  </div>
+                  <br>
                   <ul class="looking-list">
                     <li><img class="pokeball-img" src="ColeccionSilvarion/mossBall.gif" alt="Moss Ball"> Cloned Parasect</li>
                     <li><img class="pokeball-img" src="ColeccionSilvarion/mossBall.gif" alt="Moss Ball"> Cloned Pinsir</li>
