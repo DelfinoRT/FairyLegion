@@ -30,8 +30,29 @@
                      padding: 0;
                    }
                  </style>
+                </style>
+                <style>
+                  /* Hide all serials by default */
+                  .pokemon-serial { display: none; }
+                  body.serials-visible .pokemon-serial { display: block; }
+                  /* Invisible button fixed at top-left */
+                  #toggle-serial-btn {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 40px;
+                    height: 40px;
+                    opacity: 0;
+                    z-index: 9999;
+                    cursor: pointer;
+                    border: none;
+                    background: transparent;
+                  }
+                </style>
               </head>
               <body>
+
+                <button id="toggle-serial-btn" aria-label="Mostrar seriales"></button>
 
                 <h1>Colección Silvarion</h1>
                 <div class="banner-silvarion-container">
@@ -53,16 +74,19 @@
                         <img class="pokeball-img" src="ColeccionSilvarion/pokeBall.png" alt="Poke Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyMarshadow.gif" alt="Shiny Marshadow">
                         <div class="pokemon-name">Shiny Marshadow</div>
+                        <div class="pokemon-serial">Serial: OJ-8790</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/pokeBall.png" alt="Poke Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/eliteBisharp.gif" alt="Elite Bisharp">
                         <div class="pokemon-name">Elite Bisharp</div>
+                        <div class="pokemon-serial">Serial: NT-1012</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/pokeBall.png" alt="Poke Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyChiYu.png" alt="Shiny Chi-Yu">
                         <div class="pokemon-name">Shiny Chi-Yu</div>
+                        <div class="pokemon-serial">Serial: OQ-3922</div>
                       </div>
                     </div>
                   </div>
@@ -79,6 +103,7 @@
                         <img class="pokeball-img" src="ColeccionSilvarion/prismBall.png" alt="Poke Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyArcanine.png">
                         <div class="pokemon-name">Shiny Arcanine</div>
+                        <div class="pokemon-serial">Serial: OQ-2474</div>
                       </div>
                   </div>
                 </section>
@@ -94,6 +119,7 @@
                         <img class="pokeball-img" src="ColeccionSilvarion/sunriseBall.png" alt="Sunrise Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinySpectrier.png">
                         <div class="pokemon-name">Shiny Spectrier</div>
+                        <div class="pokemon-serial">Serial: OP-4553</div>
                       </div>
                     </div>
                   </div>
@@ -110,101 +136,121 @@
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedBlastoise.gif" alt="Cloned Blastoise">
                         <div class="pokemon-name">Cloned Blastoise</div>
+                        <div class="pokemon-serial">Serial: OE-1695</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyFeraligatr.gif" alt="Shiny Feraligatr">
                         <div class="pokemon-name">Shiny Feraligatr</div>
+                        <div class="pokemon-serial">Serial: OE-5670</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/redGyarados.gif" alt="Red Gyarados">
                         <div class="pokemon-name">Red Gyarados</div>
+                        <div class="pokemon-serial">Serial: NZ-5647</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyKingdra.png" alt="Shiny Kingdra">
                         <div class="pokemon-name">Shiny Kingdra</div>
+                        <div class="pokemon-serial">Serial: MX-694</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/walkingWake.gif" alt="Walking Wake">
                         <div class="pokemon-name">Walking Wake</div>
+                        <div class="pokemon-serial">Serial: NT-4603</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/ashGreninja.gif" alt="Ash's Greninja">
                         <div class="pokemon-name">Ash's Greninja</div>
+                        <div class="pokemon-serial">Serial: OQ-2475</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyGreninja.gif" alt="Shiny Greninja">
                         <div class="pokemon-name">Shiny Greninja</div>
+                        <div class="pokemon-serial">Serial: KN-9972</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedVaporeon.gif" alt="Cloned Vaporeon">
                         <div class="pokemon-name">Cloned Vaporeon</div>
+                        <div class="pokemon-serial">Serial: XX-0123 (daycare)</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedKingler.gif" alt="Cloned Kingler">
                         <div class="pokemon-name">Cloned Kingler</div>
+                        <div class="pokemon-serial">Serial: NS-2970</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyCorsola.png" alt="Shiny Corsola">
                         <div class="pokemon-name">Shiny Corsola</div>
+                        <div class="pokemon-serial">Serial: MT-3962</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyPoliwrath.png" alt="Siny Polirath">
                         <div class="pokemon-name">Siny Poliwrath</div>
+                        <div class="pokemon-serial">Serial: OF-9640</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyFinizen.gif" alt="Shiny Finizen">
                         <div class="pokemon-name">Shiny Finizen</div>
+                        <div class="pokemon-serial">Serial: OC-3824</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyPalafin.gif" alt="Shiny Finizen">
                         <div class="pokemon-name">Shiny Palafin</div>
+                        <div class="pokemon-serial">Serial: NX-5413</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyPolitoed.gif" alt="Shiny Politoed">
                         <div class="pokemon-name">Shiny Politoed</div>
+                        <div class="pokemon-serial">Serial: XX-0123 (daycare)</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyQuagsire.png" alt="Shiny Politoed">
                         <div class="pokemon-name">Shiny Quagsire</div>
+                        <div class="pokemon-serial">Serial: NP-7791</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyEmpoleon.gif" alt="Shiny Empoleon">
                         <div class="pokemon-name">Shiny Empoleon</div>
+                        <div class="pokemon-serial">Serial: OC-7412</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyLudicolo.gif" alt="Shiny Ludicolo">
                         <div class="pokemon-name">Shiny Ludicolo</div>
+                        <div class="pokemon-serial">Serial: XX-0123 (daycare)</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyMilotic.gif" alt="Shiny Milotic">
                         <div class="pokemon-name">Shiny Milotic</div>
+                        <div class="pokemon-serial">Serial: NQ-8398</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyBigMagikarp.gif" alt="Shiny Big Magikarp">
                         <div class="pokemon-name">Shiny Big Magikarp</div>
+                        <div class="pokemon-serial">Serial: OG-786</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyAraquanid.png" alt="Shiny Araquanid">
                         <div class="pokemon-name">Shiny Araquanid</div>
+                        <div class="pokemon-serial">Serial: OJ-7998</div>
                       </div>
                     </div>
                   </div>
@@ -221,91 +267,103 @@
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedNinetales.gif" alt="Cloned Ninetales">
                         <div class="pokemon-name">Cloned Ninetales</div>
+                        <div class="pokemon-serial">Serial: OE-5426</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/ironHands.gif" alt="Iron Hands">
                         <div class="pokemon-name">Iron Hands</div>
+                        <div class="pokemon-serial">Serial: NE-6739</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/elderCharizard.gif" alt="Elder Charizard">
                         <div class="pokemon-name">Elder Charizard</div>
+                        <div class="pokemon-serial">Serial: OF-9638</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/gougingFire.gif" alt="Gouging Fire">
                         <div class="pokemon-name">Gouging Fire</div>
+                        <div class="pokemon-serial">Serial: OF-7688</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedHitmonchan.gif" alt="Cloned Hitmonchan">
                         <div class="pokemon-name">Cloned Hitmonchan</div>
+                        <div class="pokemon-serial">Serial: OJ-4368 (falta evo)</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedCharizard.gif" alt="Cloned Charizard">
                         <div class="pokemon-name">Cloned Charizard</div>
+                        <div class="pokemon-serial">Serial: OE-5422</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedHitmonlee.gif" alt="Cloned Hitmonlee">
                         <div class="pokemon-name">Cloned Hitmonlee</div>
+                        <div class="pokemon-serial">Serial: OC-3813</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedHitmontop.gif" alt="Cloned Hitmontop">
                         <div class="pokemon-name">Cloned Hitmontop</div>
+                        <div class="pokemon-serial">Serial: NP-4203</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedPrimeape.gif" alt="Cloned Primeape">
                         <div class="pokemon-name">Cloned Primeape</div>
+                        <div class="pokemon-serial">Serial: OG-777</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedFlareon.gif" alt="Cloned Flareon">
                         <div class="pokemon-name">Cloned Flareon</div>
+                        <div class="pokemon-serial">Serial: NN-6876</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedMachamp.gif" alt="Cloned Machamp">
                         <div class="pokemon-name">Cloned Machamp</div>
+                        <div class="pokemon-serial">Serial: OE-5431</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedArcanine.gif" alt="Cloned Arcanine">
                         <div class="pokemon-name">Cloned Arcanine</div>
+                        <div class="pokemon-serial">Serial: NM-5409</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyIncineroar.gif" alt="Shiny Incineroar">
                         <div class="pokemon-name">Shiny Incineroar</div>
-                      </div>
-                      <div class="pokemon-card">
-                        <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
-                        <img class="pokemon-img" src="ColeccionSilvarion/shinyCinderace.gif" alt="Shiny Cinderace">
-                        <div class="pokemon-name">Shiny Cinderace</div>
+                        <div class="pokemon-serial">Serial: OO-2634</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyTyphlosion.png" alt="Shiny Typhlosion">
                         <div class="pokemon-name">Shiny Typhlosion</div>
+                        <div class="pokemon-serial">Serial: NP-8884</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyGrapploct.gif" alt="Shiny Grapploct">
                         <div class="pokemon-name">Shiny Grapploct</div>
+                        <div class="pokemon-serial">Serial: OF-9880</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyDelphox.gif" alt="Shiny Delphox">
                         <div class="pokemon-name">Shiny Delphox</div>
+                        <div class="pokemon-serial">Serial: OA-118</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedMagma.gif" alt="Cloned Magmar">
                         <div class="pokemon-name">Cloned Magmar</div>
+                        <div class="pokemon-serial">Serial: OC-3802</div>
                       </div>
                     </div>
                   </div>
@@ -322,16 +380,19 @@
                         <img class="pokeball-img" src="ColeccionSilvarion/phantomBall.gif" alt="Phantom Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyShedinja.png" alt="Shiny Shedinja">
                         <div class="pokemon-name">Shiny Shedinja</div>
+                        <div class="pokemon-serial">Serial: NZ-7391</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/phantomBall.gif" alt="Phantom Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinySpiritomb.gif" alt="Shiny Spiritomb">
                         <div class="pokemon-name">Shiny Spiritomb</div>
+                        <div class="pokemon-serial">Serial: OI-7742</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/phantomBall.gif" alt="Phantom Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyDragapult.png" alt="Shiny Dragapult">
                         <div class="pokemon-name">Shiny Dragapult</div>
+                        <div class="pokemon-serial">Serial: OI-7739</div>
                       </div>
                     </div>
                   </div>
@@ -348,21 +409,25 @@
                         <img class="pokeball-img" src="ColeccionSilvarion/mossBall.gif" alt="Moss Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyShedinja.png" alt="Cloned Scyther">
                         <div class="pokemon-name">Shiny Shedinja</div>
+                        <div class="pokemon-serial">Serial: NZ-7554</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/mossBall.gif" alt="Moss Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedScyther.gif" alt="Cloned Scyther">
                         <div class="pokemon-name">Cloned Scyther</div>
+                        <div class="pokemon-serial">Serial: XX-0123 (daycare)</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/mossBall.gif" alt="Moss Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedPinsir.gif" alt="Cloned Pinsir">
                         <div class="pokemon-name">Cloned Pinsir</div>
+                        <div class="pokemon-serial">Serial: OQ-72</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/mossBall.gif" alt="Moss Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinySunflora.png" alt="Shiny Sunflora">
                         <div class="pokemon-name">Shiny Sunflora</div>
+                        <div class="pokemon-serial">Serial: NP-7980</div>
                       </div>
                     </div>
                   </div>
@@ -379,51 +444,55 @@
                         <img class="pokeball-img" src="ColeccionSilvarion/crystalBall.gif" alt="Crystal Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyCetitan.gif" alt="Bulbasaur">
                         <div class="pokemon-name">Shiny Cetitan</div>
+                        <div class="pokemon-serial">Serial: OC-4729</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/crystalBall.gif" alt="Crystal Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/crystalOnix.gif" alt="Crystal Onix">
                         <div class="pokemon-name">Crystal Onix</div>
+                        <div class="pokemon-serial">Serial: OF-9910</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/crystalBall.gif" alt="Crystal Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyGlastrier.gif" alt="Shiny Glastrier">
                         <div class="pokemon-name">Shiny Glastrier</div>
+                        <div class="pokemon-serial">Serial: NQ-8425</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/crystalBall.gif" alt="Crystal Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedFroslass.gif" alt="Cloned Froslass">
                         <div class="pokemon-name">Cloned Froslass</div>
+                        <div class="pokemon-serial">Serial: OJ-816</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/crystalBall.gif" alt="Crystal Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyCrabominable.png" alt="Shiny Crabominable">
                         <div class="pokemon-name">Shiny Crabominable</div>
+                        <div class="pokemon-serial">Serial: NB-2859</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/crystalBall.gif" alt="Crystal Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyQuagsire.png" alt="Shiny Quagsire">
                         <div class="pokemon-name">Shiny Quagsire</div>
+                        <div class="pokemon-serial">Serial: NA-9243</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/crystalBall.gif" alt="Crystal Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedLapras.gif" alt="Cloned Lapras">
                         <div class="pokemon-name">Cloned Lapras</div>
+                        <div class="pokemon-serial">Serial: MP-6051</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/crystalBall.gif" alt="Crystal Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedDewong.gif" alt="Cloned Dewong">
                         <div class="pokemon-name">Cloned Dewong</div>
-                      </div>
-                      <div class="pokemon-card">
-                        <img class="pokeball-img" src="ColeccionSilvarion/crystalBall.gif" alt="Crystal Ball">
-                        <img class="pokemon-img" src="ColeccionSilvarion/shinyFrosmoth.gif" alt="Shiny Frosmoth">
-                        <div class="pokemon-name">Shiny Frosmoth</div>
+                        <div class="pokemon-serial">Serial: KX-8221</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/crystalBall.gif" alt="Crystal Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyMamoswine.png" alt="Shiny Mamoswine">
                         <div class="pokemon-name">Shiny Mamoswine</div>
+                        <div class="pokemon-serial">Serial: OH-3829</div>
                       </div>
                     </div>
                   </div>
@@ -440,26 +509,31 @@
                         <img class="pokeball-img" src="ColeccionSilvarion/heavyBall.gif" alt="Heavy Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyMetagross.gif" alt="Metagross">
                         <div class="pokemon-name">Shiny Metagross</div>
+                        <div class="pokemon-serial">Serial: NY-4877</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/heavyBall.gif" alt="Heavy Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyCopperajah.gif" alt="Copperajah">
                         <div class="pokemon-name">Shiny Copperajah</div>
+                        <div class="pokemon-serial">Serial: OE-7344</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/heavyBall.gif" alt="Heavy Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyGolem.gif" alt="Golem">
                         <div class="pokemon-name">Shiny Golem</div>
+                        <div class="pokemon-serial">Serial: XX-0123 (daycare)</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/heavyBall.gif" alt="Heavy Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/melmetal.gif" alt="Melmetal">
                         <div class="pokemon-name">Melmetal</div>
+                        <div class="pokemon-serial">Serial: NX-1674</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/heavyBall.gif" alt="Heavy Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedScizor.gif" alt="cloned Scizor">
                         <div class="pokemon-name">Cloned Scizor</div>
+                        <div class="pokemon-serial">Serial: OP-9818</div>
                       </div>
                     </div>
                   </div>
@@ -476,21 +550,25 @@
                         <img class="pokeball-img" src="ColeccionSilvarion/ancientBall.gif" alt="Ancient Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedOnix.gif" alt="Onix">
                         <div class="pokemon-name">Cloned Onix</div>
+                        <div class="pokemon-serial">Serial: OC-3811</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/ancientBall.gif" alt="Ancient Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedSandslash.png" alt="Sandslash">
                         <div class="pokemon-name">Cloned Sandslash</div>
+                        <div class="pokemon-serial">Serial: OK-4698</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/ancientBall.gif" alt="Ancient Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyQuagsire.png" alt="Sandslash">
                         <div class="pokemon-name">Shiny Quagsire</div>
+                        <div class="pokemon-serial">Serial: NU-9430 (daycare)</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/ancientBall.gif" alt="Ancient Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/carbink.gif" alt="Carbink">
                         <div class="pokemon-name">Carbink</div>
+                        <div class="pokemon-serial">Serial: XX-0123 (daycare)</div>
                       </div>
                     </div>
                   </div>
@@ -507,26 +585,31 @@
                         <img class="pokeball-img" src="ColeccionSilvarion/aerialBall.gif" alt="Aerial Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyCorviknight.gif" alt="Shiny Corviknight">
                         <div class="pokemon-name">Shiny Corviknight</div>
+                        <div class="pokemon-serial">Serial: NH-1691</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/aerialBall.gif" alt="Aerial Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyStaraptor.gif" alt="Shiny Staraptor">
                         <div class="pokemon-name">Shiny Staraptor</div>
+                        <div class="pokemon-serial">Serial: NU-6112</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/aerialBall.gif" alt="Aerial Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyFlygon.gif" alt="Shiny Flygon">
                         <div class="pokemon-name">Shiny Flygon</div>
+                        <div class="pokemon-serial">Serial: NX-8927</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/aerialBall.gif" alt="Aerial Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyKingdra.png" alt="Shiny Kingdra">
                         <div class="pokemon-name">Shiny Kingdra</div>
+                        <div class="pokemon-serial">Serial: NT-7502</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/aerialBall.gif" alt="Aerial Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedDragonite.gif" alt="Shiny Dragonite">
                         <div class="pokemon-name">Cloned Dragonite</div>
+                        <div class="pokemon-serial">Serial: OQ-71</div>
                       </div>
                     </div>
                   </div>
@@ -543,6 +626,7 @@
                         <img class="pokeball-img" src="ColeccionSilvarion/fastBall.gif" alt="Fast Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/zeraora.gif" alt="Zeraora">
                         <div class="pokemon-name">Zeraora</div>
+                        <div class="pokemon-serial">Serial: MO-1000</div>
                       </div>
                     </div>
                   </div>
@@ -559,21 +643,31 @@
                         <img class="pokeball-img" src="ColeccionSilvarion/moonBall.gif" alt="Moon Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyAegislash.gif" alt="Shiny Aegislash">
                         <div class="pokemon-name">Shiny Aegislash</div>
+                        <div class="pokemon-serial">Serial: OB-7940</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/moonBall.gif" alt="Moon Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/roaringMoon.gif" alt="Roaring Moon">
                         <div class="pokemon-name">Roaring Moon</div>
+                        <div class="pokemon-serial">Serial: OD-1420</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/moonBall.gif" alt="Moon Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyMightyena.gif" alt="Shiny Mightyena">
                         <div class="pokemon-name">Shiny Mightyena</div>
+                        <div class="pokemon-serial">Serial: LT-5283</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/moonBall.gif" alt="Moon Ball">
-                        <img class="pokemon-img" src="ColeccionSilvarion/shinyBisharp.png" alt="Shiny Mightyena">
+                        <img class="pokemon-img" src="ColeccionSilvarion/shinyMightyena.gif" alt="Shiny Krookodile">
+                        <div class="pokemon-name">Shiny Krookodile</div>
+                        <div class="pokemon-serial">Serial: NT-5224</div>
+                      </div>
+                      <div class="pokemon-card">
+                        <img class="pokeball-img" src="ColeccionSilvarion/moonBall.gif" alt="Moon Ball">
+                        <img class="pokemon-img" src="ColeccionSilvarion/shinyBisharp.png" alt="Shiny Bisharp">
                         <div class="pokemon-name">Shiny Bisharp</div>
+                        <div class="pokemon-serial">Serial: OE-9514</div>
                       </div>
                     </div>
                   </div>
@@ -590,146 +684,113 @@
                         <img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyMrMime.gif" alt="Shiny Mr Mime">
                         <div class="pokemon-name">Shiny Mr Mime</div>
+                        <div class="pokemon-serial">Serial: OC-3821</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyKlefki.gif" alt="Shiny Klefki">
                         <div class="pokemon-name">Shiny Klefki</div>
+                        <div class="pokemon-serial">Serial: OD-6584</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyHeliolisk.gif" alt="Shiny Heliolisk">
                         <div class="pokemon-name">Shiny Heliolisk</div>
+                        <div class="pokemon-serial">Serial: LI-4655</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/diancie.gif" alt="Diancie">
                         <div class="pokemon-name">Diancie</div>
+                        <div class="pokemon-serial">Serial: XX-0123 (daycare)</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
-                        <img class="pokemon-img" src="ColeccionSilvarion/shinyEnamorus.gif" alt="Shiny Mr Mime">
+                        <img class="pokemon-img" src="ColeccionSilvarion/shinyEnamorus.gif" alt="Shiny Mr Enamorus">
                         <div class="pokemon-name">Shiny Enamorus</div>
+                        <div class="pokemon-serial">Serial: OC-4718</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
-                        <img class="pokemon-img" src="ColeccionSilvarion/shinyGardevoir.gif" alt="Shiny Mr Mime">
+                        <img class="pokemon-img" src="ColeccionSilvarion/shinyGardevoir.gif" alt="Shiny Mr Enamorus">
                         <div class="pokemon-name">Shiny Gardevoir</div>
+                        <div class="pokemon-serial">Serial: NT-8578</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyMimikyu.gif" alt="Shiny Mimikyu">
                         <div class="pokemon-name">Shiny Mimikyu</div>
+                        <div class="pokemon-serial">Serial: OL-5788</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyNoctowl.gif" alt="Shiny Noctowl">
                         <div class="pokemon-name">Shiny Noctowl</div>
+                        <div class="pokemon-serial">Serial: NT-5420</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/screamTail.gif" alt="Scream Tail">
                         <div class="pokemon-name">Scream Tail</div>
+                        <div class="pokemon-serial">Serial: XX-0123 (daycare)</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyMetagross.gif" alt="Shiny Metagross">
                         <div class="pokemon-name">Shiny Metagross</div>
+                        <div class="pokemon-serial">Serial: NZ-8569</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyGranbull.gif" alt="Shiny Granbull">
                         <div class="pokemon-name">Shiny Granbull</div>
+                        <div class="pokemon-serial">Serial: MA-7373</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/clonedTogekiss.gif" alt="Shiny Mimikyu">
                         <div class="pokemon-name">Cloned Togekiss</div>
+                        <div class="pokemon-serial">Serial: NV-9580</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinySlurpuff.gif" alt="Shiny Slurpuff">
                         <div class="pokemon-name">Shiny Slurpuff</div>
+                        <div class="pokemon-serial">Serial: OK-6688</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/carbink.gif" alt="Carbink">
                         <div class="pokemon-name">Carbink</div>
+                        <div class="pokemon-serial">Serial: XX-0123 (daycare)</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyTinkaton.gif" alt="Shiny Tinkaton">
                         <div class="pokemon-name">Shiny Tinkaton</div>
+                        <div class="pokemon-serial">Serial: OD-7038</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyClefable.png" alt="Shiny Clefable">
                         <div class="pokemon-name">Shiny Clefable</div>
+                        <div class="pokemon-serial">Serial: NT-2670</div>
                       </div>
                     </div>
                   </div>
                 </section>
 
-                <section class="collection-section looking-for">
-                  <h2 class="looking-title">Buscando estos Pokémon</h2>
-                  <p class="desc">
-                  Dejo la lista de los Pokémon que sigo buscando y la ball en la que me interesan. Entiendo que algunos no son 
-                  capturables de momento pero puede que hayan salido anteriormente en lotería, o puede que salgan en un futuro.
-                  </p>
-                  <div class="looking-note">
-                    <strong>¿Tienes alguno de estos Pokémon y quieres negociar?</strong><br>
-                    Por favor, contacta a <b>Silvarion</b> en el juego (World: Diamond, Character: Silvarion).
-                  </div>
-                  <br>
-                  <ul class="looking-list">
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/mossBall.gif" alt="Moss Ball"> Cloned Parasect</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/mossBall.gif" alt="Moss Ball"> Cloned Vileplume</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/mossBall.gif" alt="Moss Ball"> Shiny Rillaboom</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/mossBall.gif" alt="Moss Ball"> Shiny Garbodor</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/mossBall.gif" alt="Moss Ball"> Shiny Drapion</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/mossBall.gif" alt="Moss Ball"> Zarude</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/mossBall.gif" alt="Moss Ball"> Shiny Ariados</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball"> Champion Primeape</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball"> Shiny Volcarona</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball"> Shiny Paldean Tauros</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball"> Shiny Torkoal</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball"> Shiny Lucario</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball"> Shiny Pyroar</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/moonBall.gif" alt="Moon Ball"> Shiny Roaring Moon</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/crystalBall.gif" alt="Crystal Ball"> Snowlax</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/crystalBall.gif" alt="Crystal Ball"> Shiny Glaceon</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/crystalBall.gif" alt="Crystal Ball"> Shiny Baxcalibur</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/crystalBall.gif" alt="Crystal Ball"> Shiny Cryogonal</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/crystalBall.gif" alt="Crystal Ball"> Shiny Vanilluxe</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/crystalBall.gif" alt="Crystal Ball"> Shiny Glalie</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/crystalBall.gif" alt="Crystal Ball"> Shiny Froslass</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball"> Shiny Mawile</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball"> Shiny Gallade</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/ancientBall.gif" alt="Ancient Ball"> Shiny Solrock</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/ancientBall.gif" alt="Ancient Ball"> Shiny Lunatone</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/ancientBall.gif" alt="Ancient Ball"> Golden Rhydon</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/ancientBall.gif" alt="Ancient Ball"> Shiny Kleavor</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/ancientBall.gif" alt="Ancient Ball"> Shiny Klawf</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/ancientBall.gif" alt="Ancient Ball"> Shiny Aerodactyl</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball"> Shiny Dodonzo</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball"> Shiny Wugtrio</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball"> Shiny Inteleon</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball"> Cloned Tentacruel</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball"> Shiny Swanna</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball"> Shiny Golisopod</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball"> Cloned Lapras</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/phantomBall.gif" alt="Phantom Ball"> Cloned Gengar</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/phantomBall.gif" alt="Phantom Ball"> Shiny Ceruledge</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/phantomBall.gif" alt="Phantom Ball"> Shiny Golurk</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/aerialBall.gif" alt="Aerial Ball"> Shiny Drampa</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/aerialBall.gif" alt="Aerial Ball"> Shiny Hydreigon</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/aerialBall.gif" alt="Aerial Ball"> Shiny Druddigon</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/aerialBall.gif" alt="Aerial Ball"> Shiny Toucannon</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/fastBall.gif" alt="Fast Ball"> Shiny Heliolisk</li>
-                    <li><img class="pokeball-img" src="ColeccionSilvarion/fastBall.gif" alt="Fast Ball"> Shiny Manetric</li>
-                  </ul>
-                </section>
-
                 <script src="coleccion-silvarion.js"></script>
+                <script>
+                  // Toggle visibility of all .pokemon-serial tags using a class on body
+                  (function() {
+                    var btn = document.getElementById('toggle-serial-btn');
+                    if (btn) {
+                      btn.addEventListener('click', function() {
+                        document.body.classList.toggle('serials-visible');
+                      });
+                    }
+                  })();
+                </script>
               </body>
               </html>
