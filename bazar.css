@@ -1,0 +1,100 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f7f8fa;
+    color: #222;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #6e4aff;
+    color: #fff;
+    padding: 1.5rem 0 1rem 0;
+    text-align: center;
+    box-shadow: 0 2px 8px #0001;
+}
+
+header nav {
+    margin-top: 0.5rem;
+}
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 1rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+header nav a:hover {
+    color: #ffd700;
+}
+
+main {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px #0002;
+}
+
+h1, h2 {
+    color: #6e4aff;
+}
+
+#filtros {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+#filtros input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+#tabla-pokemon {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+#tabla-pokemon th, #tabla-pokemon td {
+    border: 1px solid #e0e0e0;
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+}
+#tabla-pokemon th {
+    background: #ece7ff;
+    color: #4a3b8c;
+}
+#tabla-pokemon tr:nth-child(even) {
+    background: #f4f2fa;
+}
+
+#actualizacion-info {
+    font-size: 0.95rem;
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+#ranking, #reglas, #historial {
+    margin-top: 2.5rem;
+}
+
+#tabla-ranking, #historial-bazares {
+    background: #f7f8fa;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 4px #0001;
+    margin-top: 1rem;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem 0;
+    background: #ece7ff;
+    color: #4a3b8c;
+    margin-top: 2rem;
+    border-top: 1px solid #e0e0e0;
+}

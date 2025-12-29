@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bazar de Pokémon - Fairy Legion</title>
+    <link rel="stylesheet" href="bazar.css">
+</head>
+<body>
+    <header>
+        <h1>Bazar de Pokémon</h1>
+    </header>
+    <main>
+        <section id="siguiente-bazar">
+            <h2>Siguiente bazar</h2>
+            <p id="proxima-fecha">Próxima fecha: <span id="fecha-bazar">Por anunciar</span></p>
+        </section>
+        <section id="reglas">
+            <h2>Reglas</h2>
+            <ul>
+                <li>Solo pueden reclamar Pokémon los donadores y/o miembros activos.</li>
+                <li>Límite de Pokémon por jugador según reglas del evento.</li>
+                <li>Prohibido apartar Pokémon por mensaje o cualquier medio fuera del evento.</li>
+                <li>Pokémon no reclamados se guardan para el siguiente mes.</li>
+                <li>Todo el proceso es público y visible para evitar favoritismos.</li>
+            </ul>
+        </section>
+        <section id="tabla-bazar">
+            <h2>Pokémon disponibles para reclamar</h2>
+            <table id="tabla-pokemon">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Nivel</th>
+                        <th>Habilidad</th>
+                        <th>Pokéball</th>
+                        <th>Donador</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- JS insertará filas aquí -->
+                </tbody>
+            </table>
+            <p id="actualizacion-info">La tabla se actualiza conforme se reciben donaciones, hasta la fecha límite antes del evento.</p>
+        </section>
+        <section id="ranking">
+            <h2>Ranking de selección</h2>
+            <div id="tabla-ranking">
+                <!-- JS insertará ranking aquí -->
+            </div>
+        </section>
+        <section id="historial">
+            <h2>Historial de bazares pasados</h2>
+            <div id="historial-bazares">
+                <!-- JS insertará historial aquí -->
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Fairy Legion &copy; 2025</p>
+    </footer>
+    <script src="bazar.js"></script>
+</body>
+</html>
