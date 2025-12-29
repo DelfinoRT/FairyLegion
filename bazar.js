@@ -1,34 +1,196 @@
 // Datos de ejemplo para la tabla de Pokémon
 const pokemons = [
     {
-        nombre: "Bulbasaur",
-        nivel: 15,
-        habilidad: "Clorofila",
-        pokeball: "Pokéball",
-        donador: "Ash",
-        fecha: "2025-12-10"
+        nombre: "Mime Jr",
+        nivel: 9,
+        habilidad: "Soundproof",
+        pokeball: "Prism Ball",
+        sexo: "M",
+        donador: "Mickell"
     },
     {
-        nombre: "Charmander",
-        nivel: 20,
-        habilidad: "Mar Llamas",
-        pokeball: "Superball",
-        donador: "Misty",
-        fecha: "2025-12-12"
+        nombre: "Hisuian Zorua",
+        nivel: 17,
+        habilidad: "Scrappy",
+        pokeball: "Prism Ball",
+        sexo: "F",
+        donador: "Mickell"
     },
     {
-        nombre: "Squirtle",
+        nombre: "Pawniard",
+        nivel: 14,
+        habilidad: "Inner Focus",
+        pokeball: "Moon Ball",
+        sexo: "F",
+        donador: "Mickell"
+    },
+    {
+        nombre: "Vanilluxe",
+        nivel: 82,
+        habilidad: "Weak Armor",
+        pokeball: "Crystal Ball",
+        sexo: "F",
+        donador: "Mickell"
+    },
+    {
+        nombre: "Quaxwell",
+        nivel: 51,
+        habilidad: "Moxie",
+        pokeball: "Dive Ball",
+        sexo: "M",
+        donador: "Mickell"
+    },
+    {
+        nombre: "Mime Jr",
+        nivel: 8,
+        habilidad: "Filter",
+        pokeball: "Dream Ball",
+        sexo: "M",
+        donador: "Mickell"
+    },
+    {
+        nombre: "Lopunny",
+        nivel: 88,
+        habilidad: "Scrappy",
+        pokeball: "Safari Ball",
+        sexo: "F",
+        donador: "Mickell"
+    },
+    {
+        nombre: "Greninja",
+        nivel: 86,
+        habilidad: "Torrent",
+        pokeball: "Dive Ball",
+        sexo: "M",
+        donador: "Mickell"
+    },
+    {
+        nombre: "Gengar",
+        nivel: 70,
+        habilidad: "Levitate",
+        pokeball: "Moon Ball",
+        sexo: "M",
+        donador: "Mickell"
+    },
+    {
+        nombre: "Froslass",
+        nivel: 50,
+        habilidad: "Snow Cloak",
+        pokeball: "Rocket Ball",
+        sexo: "F",
+        donador: "Mickell"
+    },
+    {
+        nombre: "Tentacruel",
+        nivel: 40,
+        habilidad: "Rain Dish",
+        pokeball: "Dive Ball",
+        sexo: "M",
+        donador: "Mickell"
+    },
+    {
+        nombre: "Gyarados",
+        nivel: 64,
+        habilidad: "Moxie",
+        pokeball: "Dive Ball",
+        sexo: "M",
+        donador: "Mickell"
+    },
+    {
+        nombre: "Blastoise",
+        nivel: 81,
+        habilidad: "Rain Dish",
+        pokeball: "Dive Ball",
+        sexo: "M",
+        donador: "Mickell"
+    },
+    {
+        nombre: "Finizen",
+        nivel: 10,
+        habilidad: "Reckless",
+        pokeball: "Sunrise Ball",
+        sexo: "M",
+        donador: "Mickell"
+    },
+    {
+        nombre: "Kingler",
+        nivel: 110,
+        habilidad: "Shell Armor",
+        pokeball: "Crystal Ball",
+        sexo: "M",
+        donador: "Mickell"
+    },
+    {
+        nombre: "Cubchoo",
+        nivel: 13,
+        habilidad: "Rattled",
+        pokeball: "Sunrise Ball",
+        sexo: "M",
+        donador: "Silvarion"
+    },
+    {
+        nombre: "Mime Jr",
+        nivel: 40,
+        habilidad: "Soundproof",
+        pokeball: "Dream Ball",
+        sexo: "M",
+        donador: "Silvarion"
+    },
+    {
+        nombre: "Cubchoo",
+        nivel: 12,
+        habilidad: "Snow Cloak",
+        pokeball: "Sunrise Ball",
+        sexo: "F",
+        donador: "Silvarion"
+    },
+    {
+        nombre: "Cubchoo",
         nivel: 18,
-        habilidad: "Torrente",
-        pokeball: "Ultraball",
-        donador: "Brock",
-        fecha: "2025-12-15"
+        habilidad: "Rattled",
+        pokeball: "Sunrise Ball",
+        sexo: "M",
+        donador: "Silvarion"
+    },
+    {
+        nombre: "Ralts",
+        nivel: 20,
+        habilidad: "Trace",
+        pokeball: "Sunrise Ball",
+        sexo: "F",
+        donador: "Silvarion"
+    },
+    {
+        nombre: "Geodude",
+        nivel: 11,
+        habilidad: "?",
+        pokeball: "Crystal Ball",
+        sexo: "?",
+        donador: "Silvarion"
+    },
+    {
+        nombre: "Tinkatink",
+        nivel: 15,
+        habilidad: "Mold Breaker",
+        pokeball: "Dream Ball",
+        sexo: "F",
+        donador: "Silvarion"
+    },
+    {
+        nombre: "Swirlix",
+        nivel: 15,
+        habilidad: "?",
+        pokeball: "Dream Ball",
+        sexo: "?",
+        donador: "Silvarion"
     }
-    // ...más datos reales desde backend o Google Sheets
-];
-
+   /*
+You see a dream ball.
+Swirlix's [15] pokeball.
+*/
+]
 const ranking = [
-    { puesto: 1, jugador: "Ash", puntos: 120 },
+    { puesto: 1, jugador: "Mickell", puntos: 15 },
     { puesto: 2, jugador: "Misty", puntos: 110 },
     { puesto: 3, jugador: "Brock", puntos: 90 }
     // ...más datos
@@ -51,6 +213,7 @@ function renderTablaPokemons() {
             <td>${p.nivel}</td>
             <td>${p.habilidad}</td>
             <td>${p.pokeball}</td>
+            <td>${p.sexo || '-'}</td>
             <td>${p.donador || '-'}</td>
         `;
         tbody.appendChild(tr);
