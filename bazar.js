@@ -257,11 +257,17 @@ function renderTablaPokemons() {
     tbody.innerHTML = '';
     pokemons.forEach(p => {
         const tr = document.createElement('tr');
+        // Normalize pokeball name to match file naming
+        let ballFile = p.pokeball.replace(/ /g, '').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u').replace('ñ', 'n');
+        // Try .gif first, then .png fallback
+        let imgPathGif = `ColeccionSilvarion/${ballFile.charAt(0).toLowerCase() + ballFile.slice(1)}.gif`;
+        let imgPathPng = `ColeccionSilvarion/${ballFile.charAt(0).toLowerCase() + ballFile.slice(1)}.png`;
+        let imgTag = `<img src="${imgPathGif}" alt="${p.pokeball}" style="height:28px;vertical-align:middle;" onerror=\"this.onerror=null;this.src='${imgPathPng}'\">`;
         tr.innerHTML = `
             <td>${p.nombre}</td>
             <td>${p.nivel}</td>
             <td>${p.habilidad}</td>
-            <td>${p.pokeball}</td>
+            <td>${imgTag}</td>
             <td>${p.sexo || '-'}</td>
             <td>${p.donador || '-'}</td>
         `;
