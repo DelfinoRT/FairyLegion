@@ -93,6 +93,10 @@
   background: #ffd6f9;
   color: #c2185b;
 }
+.collection-section.goldwhite .collapsible-header {
+  background: #ad8e04;
+  color: #f4f3f5;
+}
 body {
   font-family: Arial, sans-serif;
   background: #f8f8fc;
