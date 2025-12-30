@@ -12,17 +12,26 @@
     </header>
     <main>
         <section id="siguiente-bazar">
-            <h2>Siguiente bazar</h2>
-            <p id="proxima-fecha">Próxima fecha: <span id="fecha-bazar">Por anunciar</span></p>
+            <h2 style="text-align:center;">Siguiente bazar</h2>
+            <div class="bazar-fecha-hora">
+                <span class="icono-calendario" title="Fecha del bazar" aria-label="Fecha">📅</span>
+                <span id="bazar-dia" class="bazar-dia">Fecha</span>
+                <span class="icono-reloj" title="Hora del bazar" aria-label="Hora">⏰</span>
+                <span id="bazar-hora" class="bazar-hora">Hora</span>
+            </div>
         </section>
         <section id="reglas">
             <h2>Reglas</h2>
             <ul>
-                <li>Solo pueden reclamar Pokémon los donadores y/o miembros activos</li>
-                <li>Límite de Pokémon por jugador según reglas del evento</li>
-                <li>Prohibido apartar Pokémon por mensaje o cualquier medio fuera del evento</li>
+                <li>Solo pueden reclamar Pokémon los donadores y miembros activos de la guild que sean autorizados para reclamar Pokémon</li>
+                <li>Límite de 2 Pokémon por jugador</li>
+                <li>El ranking de selección se basa en la cantidad de Pokémon donados</li>
+                <li>En el caso de los jugadores que no hayan donado, su ranking se basa en su actividad reciente en la guild a criterio de los organizadores</li>
+                <li>En caso de empate en el ranking, se prioriza al jugador que haya donado primero</li>
+                <li>No se permite apartar Pokémon por mensaje o cualquier medio fuera del evento</li>
                 <li>Pokémon no reclamados se guardan para el siguiente mes</li>
                 <li>Todo el proceso es público y visible para evitar favoritismos</li>
+                <li> Si quieres donar, contacta a Silvarion dentro del juego</li>
             </ul>
         </section>
         <section id="tabla-bazar">

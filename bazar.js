@@ -220,15 +220,20 @@ function renderTablaPokemons() {
     });
 }
 
-// Puedes cambiar esta variable para mostrar la próxima fecha del bazar
-const proximaFechaBazar = "25 de enero de 2026, 18:00 hrs";
+
+// Puedes cambiar estas variables para mostrar la próxima fecha y hora del bazar
+const proximaFechaBazarDia = "25 de enero de 2026";
+const proximaFechaBazarHora = "18:00 hrs";
 
 document.addEventListener('DOMContentLoaded', () => {
     renderTablaPokemons();
     renderRanking();
     renderHistorial();
-    const fechaSpan = document.getElementById('fecha-bazar');
-    if (fechaSpan) fechaSpan.textContent = proximaFechaBazar;
+    // Siguiente Bazar section
+    const diaSpan = document.getElementById('bazar-dia');
+    const horaSpan = document.getElementById('bazar-hora');
+    if (diaSpan) diaSpan.textContent = proximaFechaBazarDia;
+    if (horaSpan) horaSpan.textContent = proximaFechaBazarHora;
 });
 
 function renderRanking() {
