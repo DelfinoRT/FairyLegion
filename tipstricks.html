@@ -55,6 +55,21 @@
           <p>Aquí te ofrecemos una lista de consejos y trucos para que puedas sacar el mayor provecho de tu experiencia en el juego. Desde configuraciones óptimas hasta estrategias, estos tips seguramente te ayudarán a mejorar.</p>
 
         <div>
+          <!-- Level to 100 Calculator Section -->
+          <div>
+            <button type="button" class="collapsiblegi">Calculadora: ¿Cuándo tu Pokémon llegará a nivel 100 en la Nursery?</button>
+            <div class="content">
+              <p>
+                Selecciona el nivel actual de tu Pokémon y descubre cuánto tiempo le tomará llegar a nivel 100 en la Nursery, y la fecha estimada en que lo logrará.
+              </p>
+              <label for="level-select">Nivel actual:</label>
+              <select id="level-select">
+                <option value="">Selecciona un nivel</option>
+              </select>
+              <div id="level-result" style="margin-top:10px; font-weight:bold;"></div>
+              <p style="font-size:small; color:#888;">* Basado en los datos de experiencia y tiempo de la Nursery.</p>
+            </div>
+          </div>
 
           <div>
             <button type="button" class="collapsiblegi">Pokémon Boxes - Finder</button>
@@ -265,6 +280,9 @@
   <script src="script.js"></script>
   <script src="pagination.js"></script>
   <script src="pokeboxes.js"></script>
+
+  <!-- Level to 100 Calculator Script -->
+  <script src="nursery-level-calc.js"></script>
 
 </body>
 </html>

@@ -215,11 +215,27 @@ const pokemons = [
         pokeball: "Ancient Ball",
         sexo: "F",
         donador: "Silvarion"
+    },
+    {
+        nombre: "Mr Mime",
+        nivel: 60,
+        habilidad: "Technician",
+        pokeball: "Dream Ball",
+        sexo: "F",
+        donador: "Silvarion"
+    },
+    {
+        nombre: "Aromatisse",
+        nivel: 71,
+        habilidad: "Aroma Veil",
+        pokeball: "Dream Ball",
+        sexo: "F",
+        donador: "Silvarion"
     }
 /*
-You see an ancient ball.
-Bastiodon [84][F]
-Ability: Soundproof
+You see a dream ball.
+Aromatisse [71][F]
+Ability: Aroma Veil
 */
 ]
 const ranking = [
