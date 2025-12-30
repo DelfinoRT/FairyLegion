@@ -1,3 +1,21 @@
+/* Back button below logo */
+.back-btn-container {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+.back-btn img {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    transition: transform 0.18s cubic-bezier(.4,2,.6,1);
+    vertical-align: middle;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+.back-btn img:hover {
+    transform: scale(1.15);
+}
 /* Siguiente Bazar section */
 #siguiente-bazar {
     margin: 2rem auto 2.5rem auto;
@@ -34,7 +52,7 @@ body {
 header {
     background: #a97ac7;
     color: #fff;
-    padding: 1.5rem 0 1rem 0;
+    padding: 1.5rem 0 0.3rem 0;
     text-align: center;
     box-shadow: 0 2px 8px #c9a4e6;
 }
