@@ -191,11 +191,35 @@ const pokemons = [
         pokeball: "Dive Ball",
         sexo: "F",
         donador: "Silvarion"
+    },
+    {
+        nombre: "Grapploct",
+        nivel: 60,
+        habilidad: "Technician",
+        pokeball: "Cherish Ball",
+        sexo: "M",
+        donador: "Silvarion"
+    },
+    {
+        nombre: "Krokorok",
+        nivel: 51,
+        habilidad: "Moxie",
+        pokeball: "Phantom Ball",
+        sexo: "M",
+        donador: "Silvarion"
+    },
+    {
+        nombre: "Bastiodon",
+        nivel: 84,
+        habilidad: "Soundproof",
+        pokeball: "Ancient Ball",
+        sexo: "F",
+        donador: "Silvarion"
     }
 /*
-17:24 You see a dive ball.
-Drizzile [40][F]
-Ability: Torrent
+You see an ancient ball.
+Bastiodon [84][F]
+Ability: Soundproof
 */
 ]
 const ranking = [
