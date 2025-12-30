@@ -183,10 +183,19 @@ const pokemons = [
         pokeball: "Dream Ball",
         sexo: "?",
         donador: "Silvarion"
+    },
+    {
+        nombre: "Drizzile",
+        nivel: 40,
+        habilidad: "Torrent",
+        pokeball: "Dive Ball",
+        sexo: "F",
+        donador: "Silvarion"
     }
-   /*
-You see a dream ball.
-Swirlix's [15] pokeball.
+/*
+17:24 You see a dive ball.
+Drizzile [40][F]
+Ability: Torrent
 */
 ]
 const ranking = [
