@@ -217,6 +217,22 @@ const pokemons = [
         donador: "Silvarion"
     },
     {
+        nombre: "Machop",
+        nivel: 10,
+        habilidad: "No Guard",
+        pokeball: "Prism Ball",
+        sexo: "M",
+        donador: "Silvarion"
+    },
+    {
+        nombre: "Machop",
+        nivel: 15,
+        habilidad: "No Guard",
+        pokeball: "Sunrise Ball",
+        sexo: "M",
+        donador: "Silvarion"
+    },
+    {
         nombre: "Mr Mime",
         nivel: 60,
         habilidad: "Technician",
