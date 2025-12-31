@@ -97,6 +97,14 @@
   background: #ad8e04;
   color: #f4f3f5;
 }
+.collection-section.prism .collapsible-header {
+  background: #130747;
+  color: #b1a508;
+}
+.collection-section.sunrise .collapsible-header {
+  background: #a5387b;
+  color: #cabf20;
+}
 body {
   font-family: Arial, sans-serif;
   background: #f8f8fc;
