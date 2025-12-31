@@ -302,12 +302,23 @@ Prinplup [88][M]
 Ability: Torrent
 */
 ]
-const ranking = [
-    { puesto: 1, jugador: "Mickell", puntos: 15 },
-    { puesto: 2, jugador: "Misty", puntos: 110 },
-    { puesto: 3, jugador: "Brock", puntos: 90 }
-    // ...más datos
-];
+// Generar ranking dinámicamente según los donadores y cantidad de pokémon donados
+function getRankingFromPokemons(pokemons) {
+    // Contar pokémon por donador
+    const counts = {};
+    pokemons.forEach(p => {
+        if (!p.donador) return;
+        counts[p.donador] = (counts[p.donador] || 0) + 1;
+    });
+    // Convertir a array y ordenar por cantidad descendente
+    const rankingArr = Object.entries(counts)
+        .map(([jugador, puntos]) => ({ jugador, puntos }))
+        .sort((a, b) => b.puntos - a.puntos)
+        .map((item, idx) => ({ puesto: idx + 1, ...item }));
+    return rankingArr;
+}
+
+let ranking = getRankingFromPokemons(pokemons);
 
 const historial = [
     { mes: "Noviembre 2025", pokemons: 12, reclamados: 10 },
@@ -356,6 +367,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function renderRanking() {
+    // Actualizar ranking dinámicamente antes de renderizar
+    ranking = getRankingFromPokemons(pokemons);
     const div = document.getElementById('tabla-ranking');
     div.innerHTML = '<table><thead><tr><th>Puesto</th><th>Jugador</th><th>Puntos</th></tr></thead><tbody>' +
         ranking.map(r => `<tr><td>${r.puesto}</td><td>${r.jugador}</td><td>${r.puntos}</td></tr>`).join('') +
