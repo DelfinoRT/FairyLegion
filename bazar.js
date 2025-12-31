@@ -231,11 +231,59 @@ const pokemons = [
         pokeball: "Dream Ball",
         sexo: "F",
         donador: "Silvarion"
+    },
+    {
+        nombre: "Magikarp",
+        nivel: 104,
+        habilidad: "Rattled",
+        pokeball: "Ancient Ball",
+        sexo: "F",
+        donador: "Killerintek"
+    },
+    {
+        nombre: "Magikarp",
+        nivel: 100,
+        habilidad: "Swift Swim",
+        pokeball: "Crystal Ball",
+        sexo: "F",
+        donador: "Killerintek"
+    },
+    {
+        nombre: "Salandit",
+        nivel: 100,
+        habilidad: "Oblivious",
+        pokeball: "Prism Ball",
+        sexo: "F",
+        donador: "Killerintek"
+    },
+    {
+        nombre: "Brionne",
+        nivel: 92,
+        habilidad: "Torrent",
+        pokeball: "Sunrise Ball",
+        sexo: "M",
+        donador: "Killerintek"
+    },
+    {
+        nombre: "Monferno",
+        nivel: 97,
+        habilidad: "Blaze",
+        pokeball: "Heavy Ball",
+        sexo: "M",
+        donador: "Killerintek"
+    },
+    {
+        nombre: "Prinplup",
+        nivel: 88,
+        habilidad: "Torrent",
+        pokeball: "Moss Ball",
+        sexo: "M",
+        donador: "Killerintek"
     }
 /*
-You see a dream ball.
-Aromatisse [71][F]
-Ability: Aroma Veil
+moss ball.
+Prinplup [88][M]
+Ability: Torrent
 */
 ]
 const ranking = [
