@@ -295,11 +295,123 @@ const pokemons = [
         pokeball: "Moss Ball",
         sexo: "M",
         donador: "Killerintek"
+    },
+    {
+        nombre: "Hisuian Zorua",
+        nivel: 13,
+        habilidad: "Intimidate",
+        pokeball: "Prism Ball",
+        sexo: "M",
+        donador: "Mamerto"
+    },
+    {
+        nombre: "Hisuian Zorua",
+        nivel: 15,
+        habilidad: "Scrappy",
+        pokeball: "Prism Ball",
+        sexo: "M",
+        donador: "Mamerto"
+    },
+    {
+        nombre: "Hisuian Zorua",
+        nivel: 11,
+        habilidad: "Illusion",
+        pokeball: "Prism Ball",
+        sexo: "F",
+        donador: "Mamerto"
+    },
+    {
+        nombre: "Sandile",
+        nivel: 17,
+        habilidad: "Anger Point",
+        pokeball: "Sunrise Ball",
+        sexo: "M",
+        donador: "Mamerto"
+    },
+    {
+        nombre: "Wigglytuff",
+        nivel: 30,
+        habilidad: "Cute Charm",
+        pokeball: "Prism Ball",
+        sexo: "M",
+        donador: "Mamerto"
+    },
+    {
+        nombre: "Wigglytuff",
+        nivel: 30,
+        habilidad: "Frisk",
+        pokeball: "Prism Ball",
+        sexo: "M",
+        donador: "Mamerto"
+    },
+    {
+        nombre: "Wigglytuff",
+        nivel: 30,
+        habilidad: "Cute Charm",
+        pokeball: "Prism Ball",
+        sexo: "M",
+        donador: "Mamerto"
+    },
+    {
+        nombre: "Wigglytuff",
+        nivel: 31,
+        habilidad: "Cute Charm",
+        pokeball: "Prism Ball",
+        sexo: "M",
+        donador: "Mamerto"
+    },
+    {
+        nombre: "Sobble",
+        nivel: 11,
+        habilidad: "Sniper",
+        pokeball: "Dive Ball",
+        sexo: "F",
+        donador: "Mamerto"
+    },
+    {
+        nombre: "Shuppet",
+        nivel: 12,
+        habilidad: "Cursed Body",
+        pokeball: "Moon Ball",
+        sexo: "M",
+        donador: "Mamerto"
+    },
+    {
+        nombre: "Victreebel",
+        nivel: 51,
+        habilidad: "Chlorophyll",
+        pokeball: "Moss Ball",
+        sexo: "M",
+        donador: "Mamerto"
+    },
+    {
+        nombre: "Quaxly",
+        nivel: 10,
+        habilidad: "Moxie",
+        pokeball: "Dive Ball",
+        sexo: "M",
+        donador: "Mamerto"
+    },
+    {
+        nombre: "Obstagoon",
+        nivel: 130,
+        habilidad: "Reckless [Reset x 2]",
+        pokeball: "Moon Ball",
+        sexo: "M",
+        donador: "Mamerto"
+    },
+    {
+        nombre: "Obstagoon",
+        nivel: 130,
+        habilidad: "Reckless",
+        pokeball: "Moon Ball",
+        sexo: "M",
+        donador: "Mamerto"
     }
 /*
-moss ball.
-Prinplup [88][M]
-Ability: Torrent
+moon ball.
+Obstagoon [130][M]
+Ability: Reckless
 */
 ]
 // Generar ranking dinámicamente según los donadores y cantidad de pokémon donados
