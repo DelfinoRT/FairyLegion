@@ -63,6 +63,34 @@
                   Capturando, comprando o intercambiando, especialmente cloned, shiny, legendarios, raros, de evento y miticos.
                 </p>
 
+                <div class="total-pokemon-btn-container">
+                  <button id="total-pokemon-btn">Pokemon in this collection: 0</button>
+                </div>
+                <style>
+                  .total-pokemon-btn-container {
+                    display: flex;
+                    justify-content: center;
+                    margin: 18px 0 28px 0;
+                  }
+                  #total-pokemon-btn {
+                    background: linear-gradient(90deg, #f7e6ff 0%, #e0f7fa 100%);
+                    border: 2px solid #b39ddb;
+                    border-radius: 18px;
+                    color: #4a148c;
+                    font-size: 1.15rem;
+                    font-weight: 600;
+                    padding: 10px 32px;
+                    box-shadow: 0 2px 8px rgba(76, 0, 130, 0.08);
+                    letter-spacing: 0.5px;
+                    cursor: default;
+                    transition: box-shadow 0.2s;
+                  }
+                  #total-pokemon-btn:focus {
+                    outline: none;
+                    box-shadow: 0 0 0 3px #ce93d8;
+                  }
+                </style>
+
                 <section class="collection-section white">
                   <button class="collapsible-header" type="button">
                     Poke Ball
@@ -889,6 +917,34 @@
                       btn.addEventListener('click', function() {
                         document.body.classList.toggle('serials-visible');
                       });
+                    }
+                  })();
+                  // Add pokemon count to each section title
+                  (function() {
+                    var sections = document.querySelectorAll('.collection-section');
+                    sections.forEach(function(section) {
+                      var header = section.querySelector('.collapsible-header');
+                      var count = section.querySelectorAll('.pokemon-card').length;
+                      if (header && count > 0) {
+                        // Remove any previous count
+                        header.innerHTML = header.innerHTML.replace(/\(x\d+\)/, '').trim();
+                        // Insert count before arrow
+                        var arrow = header.querySelector('.arrow');
+                        if (arrow) {
+                          arrow.insertAdjacentHTML('beforebegin', ' <span class="poke-count">(x' + count + ')</span> ');
+                        } else {
+                          header.innerHTML += ' <span class="poke-count">(x' + count + ')</span>';
+                        }
+                      }
+                    });
+                  })();
+
+                  // Show total pokemon count in button
+                  (function() {
+                    var totalBtn = document.getElementById('total-pokemon-btn');
+                    if (totalBtn) {
+                      var total = document.querySelectorAll('.pokemon-card').length;
+                      totalBtn.textContent = 'Pokemon in this collection: ' + total;
                     }
                   })();
                 </script>
