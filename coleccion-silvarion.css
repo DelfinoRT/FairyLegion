@@ -1,3 +1,100 @@
+/* --- Moved from coleccion-silvarion.html --- */
+.collection-section {
+  background: rgba(255,255,255,0.85);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.transparent-section {
+  background: rgba(255,255,255,0.85); /* white with 85% opacity */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 16px;
+}
+body {
+  background-image: url('ColeccionSilvarion/background.png');
+  background-repeat: repeat-y;
+  background-size: contain;
+  background-attachment: scroll;
+  background-position: center top;
+  background-color: #000;
+  min-height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+.pokemon-serial { display: none; }
+body.serials-visible .pokemon-serial { display: block; }
+#toggle-serial-btn {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  opacity: 0;
+  z-index: 9999;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+.total-pokemon-btn-container {
+  display: flex;
+  justify-content: center;
+  margin: 18px 0 28px 0;
+}
+#total-pokemon-btn {
+  background: linear-gradient(90deg, #f7e6ff 0%, #e0f7fa 100%);
+  border: 2px solid #b39ddb;
+  border-radius: 18px;
+  color: #4a148c;
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 10px 32px;
+  box-shadow: 0 2px 8px rgba(76, 0, 130, 0.08);
+  letter-spacing: 0.5px;
+  cursor: default;
+  transition: box-shadow 0.2s;
+}
+#total-pokemon-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #ce93d8;
+}
+#last-pokemon-section {
+  background: rgba(255,255,255,0.85);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin: 32px auto 24px auto;
+  max-width: 480px;
+  padding: 18px 24px 18px 24px;
+}
+#last-pokemon-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#last-pokemon-list li {
+  display: flex;
+  align-items: center;
+  font-size: 1.08rem;
+  color: #4a148c;
+  font-weight: 600;
+  margin-bottom: 8px;
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 2px #fff8;
+}
+#last-pokemon-list img {
+  width: 28px;
+  height: 28px;
+  margin-right: 10px;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px #0002;
+  background: #fff;
+}
+.last-pokemon-title {
+  margin: 0 0 12px 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #4a148c;
+  letter-spacing: 0.5px;
+}
 .collection-section.looking-for {
   margin-top: 48px;
   background: rgba(100, 150, 100, 0.85);

@@ -4,51 +4,6 @@
                 <meta charset="UTF-8">
                 <title>Colección Silvarion</title>
                 <link rel="stylesheet" href="coleccion-silvarion.css">
-                 <style>
-                      /* Add transparency to Pokémon collection sections */
-                      .collection-section {
-                        background: rgba(255,255,255,0.85);
-                        border-radius: 16px;
-                        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-                      }
-                    /* Add transparency to main content sections */
-                    .transparent-section {
-                      background: rgba(255,255,255,0.85); /* white with 85% opacity */
-                      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-                      border-radius: 16px;
-                    }
-                   body {
-                     background-image: url('ColeccionSilvarion/background.png');
-                     background-repeat: repeat-y;
-                     background-size: contain;
-                     background-attachment: scroll;
-                     background-position: center top;
-                     background-color: #000;
-                     min-height: 100vh;
-                     width: 100vw;
-                     margin: 0;
-                     padding: 0;
-                   }
-                 </style>
-                </style>
-                <style>
-                  /* Hide all serials by default */
-                  .pokemon-serial { display: none; }
-                  body.serials-visible .pokemon-serial { display: block; }
-                  /* Invisible button fixed at top-left */
-                  #toggle-serial-btn {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 40px;
-                    height: 40px;
-                    opacity: 0;
-                    z-index: 9999;
-                    cursor: pointer;
-                    border: none;
-                    background: transparent;
-                  }
-                </style>
               </head>
               <body>
 
@@ -64,32 +19,35 @@
                 </p>
 
                 <div class="total-pokemon-btn-container">
-                  <button id="total-pokemon-btn">Pokemon in this collection: 0</button>
+                  <button id="total-pokemon-btn">Pokémon en esta colección : 0</button>
                 </div>
-                <style>
-                  .total-pokemon-btn-container {
-                    display: flex;
-                    justify-content: center;
-                    margin: 18px 0 28px 0;
-                  }
-                  #total-pokemon-btn {
-                    background: linear-gradient(90deg, #f7e6ff 0%, #e0f7fa 100%);
-                    border: 2px solid #b39ddb;
-                    border-radius: 18px;
-                    color: #4a148c;
-                    font-size: 1.15rem;
-                    font-weight: 600;
-                    padding: 10px 32px;
-                    box-shadow: 0 2px 8px rgba(76, 0, 130, 0.08);
-                    letter-spacing: 0.5px;
-                    cursor: default;
-                    transition: box-shadow 0.2s;
-                  }
-                  #total-pokemon-btn:focus {
-                    outline: none;
-                    box-shadow: 0 0 0 3px #ce93d8;
-                  }
-                </style>
+
+                <!-- Últimos 5 Pokémon añadidos -->
+                <section class="collection-section" id="last-pokemon-section">
+                  <h2 class="last-pokemon-title">Últimos 5 Pokémon añadidos</h2>
+                  <ul id="last-pokemon-list">
+                    <li>
+                      <img src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
+                      <span>Shiny Talonflame (Enero-09-2026)</span>
+                    </li>
+                    <li>
+                      <img src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
+                      <span>Shiny Chimeco (Enero-10-2026)</span>
+                    </li>
+                    <li>
+                      <img src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
+                      <span>Cloned Claydol (Enero-10-2026)</span>
+                    </li>
+                    <li>
+                      <img src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
+                      <span>Shiny Exeggutor (Enero-13-2026)</span>
+                    </li>
+                    <li>
+                      <img src="ColeccionSilvarion/fastBall.gif" alt="Fast Ball">
+                      <span>Cloned Electrode (Enero-15-2026)</span>
+                    </li>
+                  </ul>
+                </section>
 
                 <section class="collection-section white">
                   <button class="collapsible-header" type="button">
@@ -914,24 +872,23 @@
                   </div>
                 </section>
 
+
                 <script src="coleccion-silvarion.js"></script>
                 <script>
                   // Toggle visibility of all .pokemon-serial tags using a class on body
                   (function() {
                     var btn = document.getElementById('toggle-serial-btn');
-                    if (btn) {
-                      btn.addEventListener('click', function() {
-                        document.body.classList.toggle('serials-visible');
-                      });
-                    }
+                    if (btn) {/* ...existing code... */}
                   })();
                   // Add pokemon count to each section title
                   (function() {
                     var sections = document.querySelectorAll('.collection-section');
                     sections.forEach(function(section) {
                       var header = section.querySelector('.collapsible-header');
-                      var count = section.querySelectorAll('.pokemon-card').length;
-                      if (header && count > 0) {
+                      if (!header) return;
+                      var cards = section.querySelectorAll('.pokemon-card');
+                      var count = cards ? cards.length : 0;
+                      if (count > 0) {
                         // Remove any previous count
                         header.innerHTML = header.innerHTML.replace(/\(x\d+\)/, '').trim();
                         // Insert count before arrow
@@ -950,7 +907,7 @@
                     var totalBtn = document.getElementById('total-pokemon-btn');
                     if (totalBtn) {
                       var total = document.querySelectorAll('.pokemon-card').length;
-                      totalBtn.textContent = 'Pokemon in this collection: ' + total;
+                      totalBtn.textContent = 'Pokémon en esta colección: ' + total;
                     }
                   })();
                 </script>
