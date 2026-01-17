@@ -48,16 +48,16 @@
 				clearBtn.style.marginBottom = '8px';
 				encounterLog.parentNode && encounterLog.parentNode.insertBefore(clearBtn, encounterLog);
 			}
-			clearBtn.addEventListener('click', ()=>{
-				showConfirm('Clear the encounter log? This action cannot be undone.', ()=>{
-					if(!player) player = {};
-					player.log = [];
-					renderLog();
-					savePlayer();
-					showMessage('Log cleared.', 'info', 2000);
-				}, ()=>{});
-			});
-		}catch(e){ console.warn('ensureClearLogButton failed', e); }
+			   clearBtn.addEventListener('click', ()=>{
+				   showConfirm('Clear the encounter log? This action cannot be undone.', ()=>{
+					   if(!player) player = {};
+					   player.log = [];
+					   renderLog();
+					   savePlayer();
+					   showMessage('Log cleared.', 'info', 2000);
+				   }, ()=>{});
+			   });
+		   } catch(e){ console.warn('ensureClearLogButton failed', e); }
 	})();
 	// Add a Nurse Joey button to heal the party over time (bottom of left panel)
 	(function ensureNurseJoeyButton(){
@@ -197,6 +197,14 @@
 
 		let currentMapIndex = 0;
 		let unlockedMaps = [0];
+
+		// Get the base spawn level for the current map based on map progression
+		function getMapSpawnLevel(){
+			// Map index determines base difficulty: 0 = level 5, 1 = level 15, 2 = level 25, etc.
+			// This allows players to return to earlier maps for easier Pokémon
+			const mapIndex = currentMapIndex || 0;
+			return 5 + (mapIndex * 10);
+		}
 
 	// Wild encounter state
 	let battleActive = false; // when true, player cannot move
@@ -571,12 +579,12 @@ async function loadMapsFromManifest(mapPaths){
 					if(normalize(MAPS[i].name) === targetName){
 						MAPS[i] = parsed;
 						console.log('Replaced existing map', MAPS[i].name, 'with', p);
-				if(!player.party || player.party.length===0) player.party = [{name: player.starter, level:1, exp:0}];
+				   // Remove legacy: do not overwrite party with only one starter
 						break;
 					}
 				}
 				if(!replaced){
-				player = {name,avatar,starter,inventory:DEFAULT_INV,money:DEFAULT_MONEY,gems:0,party:[{name:starter, level:1, exp:0}],log:[],tasks:[],level:1,exp:0,achievementsClaimed:[],held:[],mapIndex: currentMapIndex, unlockedMaps: unlockedMaps};
+				   // Remove legacy: do not create party with only one starter
 					console.log('Appended map from manifest:', p);
 				}
 			}
@@ -876,22 +884,44 @@ function getTypeColor(t){ return TYPE_COLORS_GLOBAL[String(t||'').toLowerCase()]
 	let modalMode = 'create'; // 'create' or 'edit'
 	function showProfileModal(mode = 'create', hideGame = true){
 		modalMode = mode === 'edit' ? 'edit' : 'create';
-		// If in create mode and a player already exists, prevent opening a create modal
-		if(modalMode === 'create' && player){
-			// prefer edit instead
-			showMessage('A profile already exists. Use Edit Profile to change it.', 'warn', 3500);
-			return;
-		}
+		   // Only block opening the create modal if a truly valid profile exists in storage
+		   if(modalMode === 'create') {
+			   const stored = loadPlayer && typeof loadPlayer === 'function' ? loadPlayer() : null;
+			   if(stored && isValidPlayer(stored)) {
+				   showMessage('A profile already exists. Use Edit Profile to change it.', 'warn', 3500);
+				   return;
+			   }
+		   }
 		profileModal.classList.remove('hidden');
 		if(hideGame) gameRoot.classList.add('hidden');
 		// update create/save label
 		createBtn.textContent = modalMode === 'edit' ? 'Save' : 'Create Trainer';
 		// focus name input for faster creation
 		setTimeout(()=>{ if(playerNameInput) playerNameInput.focus(); },50);
+		// Clear previous selection
+		[...avatarChoices.querySelectorAll('.avatar-choice')].forEach(btn=>btn.classList.remove('selected'));
+		[...starterChoices.querySelectorAll('.starter-choice')].forEach(btn=>btn.classList.remove('selected'));
+		const starterError = document.getElementById('starterError');
+		if(starterError) starterError.style.display = 'none';
+		// If editing, pre-select avatar and starters
+		if(mode==='edit' && player){
+			// Avatar
+			[...avatarChoices.querySelectorAll('.avatar-choice')].forEach(btn=>{
+				if(btn.dataset.avatar===player.avatar) btn.classList.add('selected');
+			});
+			// Starters (if array)
+			if(Array.isArray(player.starters)){
+				[...starterChoices.querySelectorAll('.starter-choice')].forEach(btn=>{
+					if(player.starters.includes(btn.dataset.starter)) btn.classList.add('selected');
+				});
+			}
+		}
 	}
 
 	function hideProfileModal(){
 		profileModal.classList.add('hidden');
+		const starterError = document.getElementById('starterError');
+		if(starterError) starterError.style.display = 'none';
 		// When the modal closes, stop and remove any thumbnail animators and
 		// restore the static thumbnail images so the modal doesn't hold canvases.
 		try{
@@ -909,14 +939,67 @@ function getTypeColor(t){ return TYPE_COLORS_GLOBAL[String(t||'').toLowerCase()]
 	}
 
 	function startGame(){
-		document.getElementById('gameRoot').classList.remove('hidden');
-		mapOverlay.classList.add('hidden');
-		// position player in center tile if no tile position saved
-		if(!player.tilePos) player.tilePos = {r: Math.floor(MAPS[currentMapIndex].rows/2), c: Math.floor(MAPS[currentMapIndex].cols/2)};
-		renderMap();
-		renderPlayer();
-		updatePanels();
+		const starterError = document.getElementById('starterError');
+		// Validate name
+		const name = playerNameInput.value.trim();
+		if(!name){
+			showMessage('Please enter a trainer name.','warning');
+			return;
+		}
+		// Validate avatar
+		const avatarBtn = avatarChoices.querySelector('.avatar-choice.selected');
+		if(!avatarBtn){
+			showMessage('Please select an avatar.','warning');
+			return;
+		}
+		// Validate starters (must select exactly 3)
+		const starterBtns = starterChoices.querySelectorAll('.starter-choice.selected');
+		if(starterBtns.length!==3){
+			if(starterError){
+				starterError.textContent = 'You must select exactly 3 starter Pokémon.';
+				starterError.style.display = '';
+			}
+			return;
+		} else if(starterError){
+			starterError.style.display = 'none';
+		}
+		const starters = Array.from(starterBtns).map(btn=>btn.dataset.starter);
+		// Create player object
+		player = {
+			name,
+			avatar: avatarBtn.dataset.avatar,
+			starters,
+			level: 1,
+			exp: 0,
+			money: DEFAULT_MONEY,
+			gems: 0,
+			inventory: {...DEFAULT_INV},
+			held: [null,null,null],
+			party: starters.map(name=>({
+				name,
+				level: 5, // All starters begin at level 5
+				exp: 0,
+				hp: 20,
+				maxHp: 20,
+				types: [],
+				status: null,
+				ball: 'pokeball',
+				shiny: false
+			})),
+			tasks: [],
+			completedTasks: [],
+			unlockedMaps: [0],
+			pos: {r:5,c:7},
+			seen: {},
+			caught: {},
+			achievements: [],
+			lastDaily: null
+		};
 		savePlayer();
+		hideProfileModal();
+		updatePanels();
+		renderMap();
+		centerPlayer();
 	}
 
 	function centerPlayer(){
@@ -1213,9 +1296,13 @@ function getTypeColor(t){ return TYPE_COLORS_GLOBAL[String(t||'').toLowerCase()]
 		let profHtml = `<div class=\"profile-name\"><strong>${escapeHtml(player.name)}</strong> <span style=\"font-size:14px;font-weight:500;margin-left:8px;color:var(--muted)\">Level ${level}</span></div>`;
 		profHtml += `<div class=\"exp-wrap\" aria-hidden=\"false\"><div class=\"exp-bar\"><div class=\"exp-inner\" style=\"width:${pct}%\"></div></div><div class=\"exp-label\">${exp}/${nextXp}</div></div>`;
 		profHtml += `<div style=\"margin-top:4px;font-size:12px\">Created: <strong>${escapeHtml(createdDisplay || '—')}</strong></div>`;
-		profHtml += `<div style=\"margin-top:2px;font-size:12px\">Starter: <strong>${escapeHtml(player.starter || '(none)')}</strong></div>`;
+		if(Array.isArray(player.starters)){
+			profHtml += `<div style=\"margin-top:2px;font-size:12px\">Starters: <strong>${player.starters.map(escapeHtml).join(', ')}</strong></div>`;
+		}else{
+			profHtml += `<div style=\"margin-top:2px;font-size:12px\">Starter: <strong>${escapeHtml(player.starter || '(none)')}</strong></div>`;
+		}
 		if(nextAch){ profHtml += `<div class=\"next-ach\" style=\"margin-top:6px\">Next reward at level ${nextAch.level}: ${escapeHtml(nextAch.desc)}</div>`; }
-		profHtml += `<div style=\"margin-top:6px;font-size:12px\">Pokemon Caught: <strong>${uniqueSpeciesCount}</strong> Different Species</div>`;
+		profHtml += `<div style=\"margin-top:6px;font-size:12px\">Different Species Caught: <strong>${uniqueSpeciesCount}</strong></div>`;
 		// Rarity breakdown panel
 		profHtml += `<div style=\"margin-top:8px;padding:6px 10px;border:1px solid rgba(0,0,0,0.15);background:#e5f8d2;border-radius:6px;font-size:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px\">`+
 			`<div><strong>Common:</strong> ${commonCnt}</div>`+
@@ -1224,24 +1311,35 @@ function getTypeColor(t){ return TYPE_COLORS_GLOBAL[String(t||'').toLowerCase()]
 			`<div><strong>Super Rare:</strong> ${superRareCnt}</div>`+
 			`<div style=\"grid-column:1 / span 2\"><strong>Shiny:</strong> ${shinyCnt}</div>`+
 		`</div>`;
-		// Delete character button (avoid duplicates)
-		profHtml += `<div style=\"margin-top:10px\"><button id=\"deleteCharacterBtn\" class=\"btn secondary\" style=\"background:#fff;color:#333;border:1px solid #b33;font-size:11px;padding:6px 10px\">DELETE CHARACTER</button></div>`;
+		// Edit and Delete character buttons (avoid duplicates)
+		profHtml += `<div style=\"margin-top:10px;display:flex;gap:8px\">`;
+		profHtml += `<button id=\"editProfile\" class=\"btn secondary\" style=\"background:#fff;color:#333;border:1px solid #333;font-size:11px;padding:6px 10px\">EDIT PROFILE</button>`;
+		profHtml += `<button id=\"deleteCharacterBtn\" class=\"btn secondary\" style=\"background:#fff;color:#333;border:1px solid #b33;font-size:11px;padding:6px 10px\">DELETE CHARACTER</button>`;
+		profHtml += `</div>`;
 		profileSummary.innerHTML = profHtml;
-		// Wire delete button
-		try{
-			const delBtn = document.getElementById('deleteCharacterBtn');
-			if(delBtn && !delBtn._wired){
-				delBtn._wired = true;
-				delBtn.addEventListener('click', ()=>{
-					showConfirm('Delete character and all progress? This cannot be undone.', ()=>{
-						try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
-						player = null;
-						showMessage('Character deleted. Reload to start fresh.', 'warn', 4000);
-						try{ location.reload(); }catch(e){}
-					}, ()=>{});
-				});
-			}
-		}catch(e){}
+		   // Wire edit and delete buttons
+		   try{
+			   const editBtn = document.getElementById('editProfile');
+			   if(editBtn && !editBtn._wired){
+				   editBtn._wired = true;
+				   editBtn.addEventListener('click', ()=>{
+					   showProfileModal('edit', true);
+					   if(playerNameInput) playerNameInput.value = player.name || '';
+				   });
+			   }
+			   const delBtn = document.getElementById('deleteCharacterBtn');
+			   if(delBtn && !delBtn._wired){
+				   delBtn._wired = true;
+				   delBtn.addEventListener('click', ()=>{
+					   showConfirm('Delete character and all progress? This cannot be undone.', ()=>{
+						   try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+						   player = null;
+						   showMessage('Character deleted. Reload to start fresh.', 'warn', 4000);
+						   try{ location.reload(); }catch(e){}
+					   }, ()=>{});
+				   });
+			   }
+		   }catch(e){}
 		// update left panel avatar display if present (show animated front-cycle)
 		const profAv = document.getElementById('profileAvatar');
 		if(profAv){
@@ -2692,7 +2790,8 @@ function attemptWildSpawnOnStep(r,c){
 		for(let i=0;i<count;i++){
 			const pick = pickRandomFromWeighted(pool);
 			// create a runtime wild object with level and id
-			const level = Math.max(1, (player.level || 1) + Math.floor((Math.random()*2) - 1) + (pick.baseLevel || 1));
+			// Always use the baseLevel from the spawn table, do not scale with player/character level
+			const level = pick.baseLevel || 1;
 			const wild = { id: 'w_' + Date.now() + '_' + i, name: pick.name, types: pick.types || [], rarity: pick.rarity, level, power: Math.max(0, Math.floor(level/2)), shiny: false };
 			// roll shiny
 			if(Math.random() < SHINY_PROB){ wild.shiny = true; }
@@ -3653,21 +3752,34 @@ function hideDepot(){
 		updateAvatarPreview();
 	}
 
-	avatarChoices.addEventListener('click', e=>{
-		const btn = e.target.closest('.avatar-choice');
-		if(!btn) return;
-		selectAvatar(btn);
+	// Modal: avatar and starter selection
+	avatarChoices.addEventListener('click',e=>{
+		if(e.target.classList.contains('avatar-choice')){
+			[...avatarChoices.querySelectorAll('.avatar-choice')].forEach(btn=>btn.classList.remove('selected'));
+			e.target.classList.add('selected');
+			avatarPreview.textContent = e.target.dataset.avatar;
+		}
 	});
 
-	// starter selection
-	if(starterChoices){
-		starterChoices.addEventListener('click', e=>{
-			const btn = e.target.closest('.starter-choice');
-			if(!btn) return;
-			[...starterChoices.querySelectorAll('.starter-choice')].forEach(b=>b.classList.remove('selected'));
-			btn.classList.add('selected');
-		});
-	}
+	// Allow selecting up to 3 starters, toggling selection
+	starterChoices.addEventListener('click',e=>{
+		if(e.target.classList.contains('starter-choice')){
+			const btn = e.target;
+			btn.classList.toggle('selected');
+			const selected = starterChoices.querySelectorAll('.starter-choice.selected');
+			const starterError = document.getElementById('starterError');
+			if(selected.length > 3){
+				// Deselect the one that was just selected
+				btn.classList.remove('selected');
+				if(starterError){
+					starterError.textContent = 'You can only select 3 starter Pokémon.';
+					starterError.style.display = '';
+				}
+				return;
+			}
+			if(starterError) starterError.style.display = 'none';
+		}
+	});
 
 // Inventory collapse/expand behavior
 function setInventoryCollapsed(collapsed){
@@ -3799,118 +3911,153 @@ if(openBackpackBtn){
 		});
 	}
 
-	createBtn.addEventListener('click', ()=>{
-		const name = playerNameInput.value.trim() || '';
-		// selected avatar may be null; require when creating a new profile
-		const sel = avatarChoices ? avatarChoices.querySelector('.avatar-choice.selected') : null;
-		let avatar = sel ? sel.getAttribute('data-avatar') : null;
-		const selStarter = starterChoices ? starterChoices.querySelector('.starter-choice.selected') : null;
-		let starter = selStarter ? selStarter.getAttribute('data-starter') : null;
-		// Validate name: 1..18 characters, letters and spaces only (no numbers/symbols)
-		if(!name){ showMessage('Please enter a trainer name.','error',3000); playerNameInput.focus(); return; }
-		if(!/^[\p{L} ]{1,18}$/u.test(name)){
-			showMessage('Name must be 1–18 letters and spaces only (no numbers or special symbols).','error',4000);
-			playerNameInput.focus();
+	   createBtn.addEventListener('click', ()=>{
+		   const name = playerNameInput.value.trim() || '';
+		   const sel = avatarChoices ? avatarChoices.querySelector('.avatar-choice.selected') : null;
+		   let avatar = sel ? sel.getAttribute('data-avatar') : null;
+		   // Get all selected starters
+		   const starterBtns = starterChoices ? starterChoices.querySelectorAll('.starter-choice.selected') : [];
+		   const starters = Array.from(starterBtns).map(btn => btn.getAttribute('data-starter')).filter(Boolean);
+		   // Validate name
+		   if(!name){ showMessage('Please enter a trainer name.','error',3000); playerNameInput.focus(); return; }
+		   if(!/^[\p{L} ]{1,18}$/u.test(name)){
+			   showMessage('Name must be 1–18 letters and spaces only (no numbers or special symbols).','error',4000);
+			   playerNameInput.focus();
+			   return;
+		   }
+		   // Require avatar and exactly 3 starters in create mode
+		   if(modalMode === 'create'){
+			   if(!avatar){ showMessage('Please choose an avatar.','error',3000); return; }
+			   if(starters.length !== 3){ showMessage('You must select exactly 3 starter Pokémon.','error',3000); return; }
+		   } else {
+			   if(!avatar && player) avatar = player.avatar || null;
+		   }
+
+		   if(modalMode === 'edit' && player){
+			   // Update existing profile
+			   player.name = name;
+			   player.avatar = avatar;
+			   if(starters.length === 3) player.starters = starters;
+			   player.party = (Array.isArray(player.starters) ? player.starters : []).map(name => ({
+				   name,
+				   level: 5,
+				   exp: 0,
+				   hp: 20,
+				   maxHp: 20,
+				   types: [],
+				   status: null,
+				   ball: 'pokeball',
+				   shiny: false
+			   }));
+			   ensureInventoryDefaults();
+			   if(!Array.isArray(player.held)) player.held = [];
+		   } else {
+			   // Create new profile
+			   player = {
+				   name,
+				   avatar,
+				   starters,
+				   level: 1,
+				   exp: 0,
+				   money: DEFAULT_MONEY,
+				   gems: 0,
+				   inventory: {...DEFAULT_INV},
+				   held: [null,null,null],
+				   party: starters.map(name => ({
+					   name,
+					   level: 5,
+					   exp: 0,
+					   hp: 20,
+					   maxHp: 20,
+					   types: [],
+					   status: null,
+					   ball: 'pokeball',
+					   shiny: false
+				   })),
+				   log: [],
+				   tasks: [],
+				   achievementsClaimed: [],
+				   mapIndex: currentMapIndex,
+				   unlockedMaps: unlockedMaps
+			   };
+			   // Assign types and balls
+			   try{ player.party.forEach(m=>{ ensurePokemonHasTypes(m); try{ assignBallToPokemon(m); }catch(e){} }); }catch(e){}
+			   if(player.inventory && player.inventory['amulet-coin']) player.held.push('amulet-coin');
+		   }
+		savePlayer();
+		// Fully hide the modal after creation
+		profileModal.classList.add('hidden');
+		profileModal.style.display = 'none';
+		profileModal.setAttribute('aria-hidden', 'true');
+		gameRoot.classList.remove('hidden');
+		updatePanels();
+		renderMap();
+		centerPlayer();
+	   }); // <-- Close createBtn.addEventListener('click', ...) handler
+
+		// Move startGame function to root scope
+		function startGame(){
+		const starterError = document.getElementById('starterError');
+		// Validate name
+		const name = playerNameInput.value.trim();
+		if(!name){
+			showMessage('Please enter a trainer name.','warning');
 			return;
 		}
-		// If creating a new profile, avatar and starter are required. In edit mode, fall back to existing values.
-		if(modalMode === 'create'){
-			if(!avatar){ showMessage('Please choose an avatar.','error',3000); return; }
-			if(!starter){ showMessage('Please choose a starter Pokémon.','error',3000); return; }
-		} else {
-			if(!avatar && player) avatar = player.avatar || null;
-			if(!starter && player) starter = player.starter || null;
+		// Validate avatar
+		const avatarBtn = avatarChoices.querySelector('.avatar-choice.selected');
+		if(!avatarBtn){
+			showMessage('Please select an avatar.','warning');
+			return;
 		}
-
-			// if editing existing player, update; otherwise create new
-			if(player){
-				// updating existing profile: do not overwrite starter unless none exists
-				player.name = name; player.avatar = avatar;
-				player.inventory = player.inventory || DEFAULT_INV;
-				player.money = (typeof player.money === 'number') ? player.money : DEFAULT_MONEY;
-				player.gems = (typeof player.gems === 'number') ? player.gems : 0;
-				player.tasks = player.tasks || [];
-				if(!player.starter) player.starter = starter;
-				if(!player.party || player.party.length===0) player.party = [{ name: player.starter, level: 5, exp: 0, hp: 30 + 5*5, currentHp: 30 + 5*5, power: Math.max(0, Math.floor(5/2)) }];
-				// ensure types and ball assignment for any newly created starter entry
-				try{ player.party.forEach(m=>{ ensurePokemonHasTypes(m); try{ assignBallToPokemon(m); }catch(e){} }); }catch(e){}
-				// ensure inventory contains defaults and held exists
-				ensureInventoryDefaults();
-				if(!Array.isArray(player.held)) player.held = [];
-			} else {
-				player = {name,avatar,starter,inventory:DEFAULT_INV,money:DEFAULT_MONEY,gems:0,party:[{ name: starter, level: 5, exp: 0, hp: 30 + 5*5, currentHp: 30 + 5*5, power: Math.max(0, Math.floor(5/2)) }],log:[],tasks:[],level:1,exp:0,achievementsClaimed:[],held:[],mapIndex: currentMapIndex, unlockedMaps: unlockedMaps};
-				try{ player.party.forEach(m=>{ ensurePokemonHasTypes(m); try{ assignBallToPokemon(m); }catch(e){} }); }catch(e){}
-				// give the new player an amulet-coin in held if present in defaults
-				if(player.inventory && player.inventory['amulet-coin']) player.held.push('amulet-coin');
+		// Validate starters (must select exactly 3)
+		const starterBtns = starterChoices.querySelectorAll('.starter-choice.selected');
+		if(starterBtns.length!==3){
+			if(starterError){
+				starterError.textContent = 'You must select exactly 3 starter Pokémon.';
+				starterError.style.display = '';
 			}
-
-		// ensure player has a centered starting position
-		centerPlayer();
-		renderPlayer();
-		updatePanels();
-		savePlayer();
-
-		// hide modal and show main game area
-		hideProfileModal();
-		// force-hide the modal in case CSS class didn't take effect in some browsers
-		try{ profileModal.style.display = 'none'; }catch(e){}
-		gameRoot.classList.remove('hidden');
-		mapOverlay.classList.add('hidden');
-		// set modal mode to edit to prevent re-opening a create dialog
-		modalMode = 'edit';
-		addLog('Adventure started. Good luck!');
-
-		// add keyboard movement listener once (track attachment so we can remove during battles)
-		if(!movementEnabled){ window.addEventListener('keydown', handleKey); movementEnabled = true; keydownAttached = true; }
-		// focus for accessibility
-		playerEl.focus();
-	});
-
-	cancelBtn.addEventListener('click', ()=>{
-		// close modal without saving
-		hideProfileModal();
-		// if editing, keep game visible; if creating and no player yet, ensure game remains hidden
-		if(modalMode === 'edit'){
-			gameRoot.classList.remove('hidden');
-		} else {
-			// remain hidden until a profile exists
-			if(!player) gameRoot.classList.add('hidden');
+			return;
+		} else if(starterError){
+			starterError.style.display = 'none';
 		}
-	});
-
-	modalClose.addEventListener('click', ()=>{
+		const starters = Array.from(starterBtns).map(btn=>btn.dataset.starter);
+		// Create player object
+		player = {
+			name,
+			avatar: avatarBtn.dataset.avatar,
+			starters,
+			level: 1,
+			exp: 0,
+			money: DEFAULT_MONEY,
+			gems: 0,
+			inventory: {...DEFAULT_INV},
+			held: [null,null,null],
+			party: starters.map(name=>({
+				name,
+				level: 5, // All starters begin at level 5
+				exp: 0,
+				hp: 20,
+				maxHp: 20,
+				types: [],
+				status: null,
+				ball: 'pokeball',
+				shiny: false
+			})),
+			tasks: [],
+			completedTasks: [],
+			unlockedMaps: [0],
+			pos: {r:5,c:7},
+			seen: {},
+			caught: {},
+			achievements: [],
+			lastDaily: null
+		};
+		savePlayer();
 		hideProfileModal();
-		if(modalMode === 'edit') gameRoot.classList.remove('hidden');
-		else if(!player) gameRoot.classList.add('hidden');
-	});
-
-	// Delete profile button
-	const deleteProfileBtn = document.getElementById('deleteProfile');
-	if(deleteProfileBtn){
-		deleteProfileBtn.addEventListener('click', ()=>{
-			if(!player){ showMessage('No profile to delete.', 'error', 3000); return; }
-			showConfirm('Delete your profile and all saved data?', ()=>{
-				try{ localStorage.removeItem(STORAGE_KEY); }catch(e){console.warn(e)}
-				player = null;
-				// clear UI
-				profileSummary.innerHTML = '';
-				inventorySummary.innerHTML = '';
-				if(inventoryGridEl) inventoryGridEl.innerHTML = '';
-				if(moneyAmountEl) moneyAmountEl.textContent = '$0';
-				if(gemsAmountEl) gemsAmountEl.textContent = '0';
-				if(heldItemsEl) heldItemsEl.innerHTML = '';
-				if(tasksListEl) tasksListEl.innerHTML = '<div class="tasks-note">You can have up to <strong>2</strong> active tasks.</div>';
-				// reset level/exp
-				// these will be set when creating a new profile
-				partyList.innerHTML = '(empty)';
-				encounterLog.innerHTML = '';
-				if(ballGrid) ballGrid.innerHTML = '';
-				// ensure modal is shown to create new profile
-				gameRoot.classList.add('hidden');
-				showProfileModal('create', true);
-			}, ()=>{ /* cancelled */ });
-        
-		});
+		updatePanels();
+		renderMap();
+		centerPlayer();
 	}
 
 	// Edit profile button (removed from UI) — only attach handler if button exists
@@ -3986,7 +4133,12 @@ if(openBackpackBtn){
 	}
 
 	function isValidPlayer(p){
-		return p && typeof p.name === 'string' && p.name.trim().length>0 && !!p.avatar && !!p.starter;
+		if (!p || typeof p.name !== 'string' || p.name.trim().length === 0 || !p.avatar) return false;
+		// Accept legacy single starter or new 3-starter array
+		if (Array.isArray(p.starters)) {
+			return p.starters.length === 3 && p.starters.every(s => typeof s === 'string' && s.length > 0);
+		}
+		return !!p.starter;
 	}
 
 	// If a saved player exists and is valid, use it. Otherwise show modal first.
@@ -4086,20 +4238,20 @@ if(openBackpackBtn){
 	// Keep player centered on resize
 	window.addEventListener('resize', ()=>{ if(player && player.pos) setPlayerPosition(player.pos.x, player.pos.y); });
 
-// Expose a small debug API so developer can call helpers from the console
-// e.g. `PokeLegion.addExp(100)` or `PokeLegion.player()`
-try{
-	window.PokeLegion = window.PokeLegion || {};
-	Object.assign(window.PokeLegion, {
-		addExp: function(n){ try{ return addExp(n); }catch(e){ console.error('addExp failed:', e); } },
-		xpForNextLevel: function(l){ try{ return xpForNextLevel(l); }catch(e){ console.error(e); } },
-		player: function(){ return player; },
-		savePlayer: function(){ try{ return savePlayer(); }catch(e){ console.error(e); } },
-		loadPlayer: function(){ try{ return loadPlayer(); }catch(e){ console.error(e); } },
-		setInventoryCollapsed: function(b){ try{ return setInventoryCollapsed(!!b); }catch(e){ console.error(e); } }
-	});
-	// convenience global alias used in quick console tests
-	try{ window.addExp = window.PokeLegion.addExp; }catch(e){}
-}catch(e){ console.warn('Could not expose debug API', e); }
+	// Expose a small debug API so developer can call helpers from the console
+	// e.g. `PokeLegion.addExp(100)` or `PokeLegion.player()`
+	try {
+		window.PokeLegion = window.PokeLegion || {};
+		Object.assign(window.PokeLegion, {
+			addExp: function(n){ try{ return addExp(n); }catch(e){ console.error('addExp failed:', e); } },
+			xpForNextLevel: function(l){ try{ return xpForNextLevel(l); }catch(e){ console.error(e); } },
+			player: function(){ return player; },
+			savePlayer: function(){ try{ return savePlayer(); }catch(e){ console.error(e); } },
+			loadPlayer: function(){ try{ return loadPlayer(); }catch(e){ console.error(e); } },
+			setInventoryCollapsed: function(b){ try{ return setInventoryCollapsed(!!b); }catch(e){ console.error(e); } }
+		});
+		// convenience global alias used in quick console tests
+		try{ window.addExp = window.PokeLegion.addExp; }catch(e){}
+	} catch(e) { console.warn('Could not expose debug API', e); }
 
-})();
+	})();

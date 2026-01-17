@@ -27,18 +27,20 @@
 				</div>
 			</div>
 			<div>
-				<p>Choose a starter Pokémon</p>
-				<div id="starterChoices" class="starter-choices">
-					<button class="starter-choice" data-starter="Bulbasaur">Bulbasaur</button>
-					<button class="starter-choice" data-starter="Charmander">Charmander</button>
-					<button class="starter-choice" data-starter="Squirtle">Squirtle</button>
-					<button class="starter-choice" data-starter="Chikorita">Chikorita</button>
-					<button class="starter-choice" data-starter="Cyndaquil">Cyndaquil</button>
-					<button class="starter-choice" data-starter="Totodile">Totodile</button>
-					<button class="starter-choice" data-starter="Treecko">Treecko</button>
-					<button class="starter-choice" data-starter="Torchic">Torchic</button>
-					<button class="starter-choice" data-starter="Mudkip">Mudkip</button>
-				</div>
+				   <p><strong>Choose <span style="color:var(--accent)">3 starter Pokémon</span> (hold Ctrl or tap 3)</strong><br>
+				   You must select <strong>exactly 3</strong> Pokémon to begin. All will start at <strong>level 5</strong>.</p>
+				   <div id="starterChoices" class="starter-choices" aria-label="Choose 3 starter Pokémon">
+					   <button class="starter-choice" data-starter="Bulbasaur">Bulbasaur</button>
+					   <button class="starter-choice" data-starter="Charmander">Charmander</button>
+					   <button class="starter-choice" data-starter="Squirtle">Squirtle</button>
+					   <button class="starter-choice" data-starter="Chikorita">Chikorita</button>
+					   <button class="starter-choice" data-starter="Cyndaquil">Cyndaquil</button>
+					   <button class="starter-choice" data-starter="Totodile">Totodile</button>
+					   <button class="starter-choice" data-starter="Treecko">Treecko</button>
+					   <button class="starter-choice" data-starter="Torchic">Torchic</button>
+					   <button class="starter-choice" data-starter="Mudkip">Mudkip</button>
+				   </div>
+				   <div id="starterError" style="color:#c22e28;font-size:13px;margin-top:4px;display:none"></div>
 			</div>
 			<div class="modal-actions">
 				<button id="cancelBtn" class="secondary">Cancel</button>
