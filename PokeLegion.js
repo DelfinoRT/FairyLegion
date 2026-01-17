@@ -1302,7 +1302,7 @@ function getTypeColor(t){ return TYPE_COLORS_GLOBAL[String(t||'').toLowerCase()]
 			profHtml += `<div style=\"margin-top:2px;font-size:12px\">Starter: <strong>${escapeHtml(player.starter || '(none)')}</strong></div>`;
 		}
 		if(nextAch){ profHtml += `<div class=\"next-ach\" style=\"margin-top:6px\">Next reward at level ${nextAch.level}: ${escapeHtml(nextAch.desc)}</div>`; }
-		profHtml += `<div style=\"margin-top:6px;font-size:12px\">Different Species Caught: <strong>${uniqueSpeciesCount}</strong></div>`;
+		profHtml += `<div style=\"margin-top:6px;font-size:12px\">Pokemon Caught: <strong>${uniqueSpeciesCount}</strong> Different Species</div>`;
 		// Rarity breakdown panel
 		profHtml += `<div style=\"margin-top:8px;padding:6px 10px;border:1px solid rgba(0,0,0,0.15);background:#e5f8d2;border-radius:6px;font-size:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px\">`+
 			`<div><strong>Common:</strong> ${commonCnt}</div>`+
@@ -2790,8 +2790,7 @@ function attemptWildSpawnOnStep(r,c){
 		for(let i=0;i<count;i++){
 			const pick = pickRandomFromWeighted(pool);
 			// create a runtime wild object with level and id
-			// Always use the baseLevel from the spawn table, do not scale with player/character level
-			const level = pick.baseLevel || 1;
+			const level = Math.max(1, (player.level || 1) + Math.floor((Math.random()*2) - 1) + (pick.baseLevel || 1));
 			const wild = { id: 'w_' + Date.now() + '_' + i, name: pick.name, types: pick.types || [], rarity: pick.rarity, level, power: Math.max(0, Math.floor(level/2)), shiny: false };
 			// roll shiny
 			if(Math.random() < SHINY_PROB){ wild.shiny = true; }
@@ -2812,21 +2811,43 @@ function renderWildSpawns(){
 	box.style.position = 'absolute'; box.style.left = '50%'; box.style.transform = 'translateX(-50%)'; box.style.bottom = '40px'; box.style.minWidth = '480px'; box.style.background = 'linear-gradient(180deg,#fff,#fbfffb)'; box.style.border = '1px solid rgba(0,0,0,0.06)'; box.style.padding = '14px'; box.style.borderRadius = '8px'; box.style.boxShadow = '0 8px 30px rgba(0,0,0,0.12)'; box.style.zIndex = 1200; box.style.textAlign = 'left';
 	const title = document.createElement('div'); title.style.fontSize='20px'; title.style.fontWeight='700'; title.style.marginBottom='8px'; title.textContent = 'Wild Pokemon Found!'; box.appendChild(title);
 	const list = document.createElement('div'); list.style.display='flex'; list.style.flexDirection='column'; list.style.gap='8px';
-	currentWildSpawns.forEach(w=>{
-		const row = document.createElement('div'); row.style.display='flex'; row.style.alignItems='center'; row.style.justifyContent='space-between'; row.style.padding='8px'; row.style.borderRadius='6px'; row.style.background='linear-gradient(180deg,#f7fff7,#f1fff1)';
-		const left = document.createElement('div'); left.style.display='flex'; left.style.alignItems='center'; left.style.gap='10px';
-		const img = document.createElement('img'); img.alt = w.name; img.style.width='40px'; img.style.height='40px'; img.style.objectFit='contain';
-		try{ setImageSrcFromCandidates(img, getPokemonSpriteCandidates(w.name, w.shiny)); }catch(e){ img.src = `PokeLegion/Pokemon/${w.name.toLowerCase()}.png`; img.onerror = ()=>{ img.style.display='none'; }; }
-			const shinyBadge = w.shiny ? ' <span style="color:#d4af37;" title="Shiny">★</span>' : '';
-			const meta = document.createElement('div'); meta.innerHTML = `<div style="font-weight:700">${escapeHtml(w.name)}${shinyBadge}</div><div style="font-size:12px;color:var(--muted)">Lv.${w.level} • ${w.rarity}${w.shiny? ' • Shiny':''}</div>`;
-		left.appendChild(img); left.appendChild(meta);
-		const right = document.createElement('div'); right.style.display='flex'; right.style.alignItems='center'; right.style.gap='8px';
-		const fight = document.createElement('button'); fight.className='btn small'; fight.textContent='⚔️ Fight'; fight.addEventListener('click', ()=>{ selectWildToFight(w); });
-		const ignore = document.createElement('button'); ignore.className='btn secondary small'; ignore.textContent='Ignore'; ignore.addEventListener('click', ()=>{ /* remove this spawn */ currentWildSpawns = currentWildSpawns.filter(x=>x.id !== w.id); try{ if(catchUsage && catchUsage[w.id]) delete catchUsage[w.id]; }catch(e){} if(currentWildSpawns.length===0) clearWildSpawns(); else renderWildSpawns(); });
-		right.appendChild(fight); right.appendChild(ignore);
-		row.appendChild(left); row.appendChild(right);
-		list.appendChild(row);
-	});
+	       currentWildSpawns.forEach(w=>{
+		       const row = document.createElement('div'); row.style.display='flex'; row.style.alignItems='center'; row.style.justifyContent='space-between'; row.style.padding='8px'; row.style.borderRadius='6px'; row.style.background='linear-gradient(180deg,#f7fff7,#f1fff1)';
+		       const left = document.createElement('div'); left.style.display='flex'; left.style.alignItems='center'; left.style.gap='10px';
+		       // Pokéball sprite if caught
+		       let hasCaught = false;
+		       try {
+			       if (player && (Array.isArray(player.party) || Array.isArray(player.depot))) {
+				       const allCaught = [];
+				       if(Array.isArray(player.party)) allCaught.push(...player.party);
+				       if(Array.isArray(player.depot)) allCaught.push(...player.depot);
+				       const key = normalizeName(w.name);
+				       hasCaught = allCaught.some(p => normalizeName(p && p.name) === key);
+			       }
+		       } catch(e){}
+		       if(hasCaught){
+			       const ball = document.createElement('img');
+			       ball.src = 'PokeLegion/Items/poke ball.png';
+			       ball.alt = 'Caught';
+			       ball.title = 'You have caught this Pokémon before!';
+			       ball.className = 'caught-ball-icon';
+			       ball.style.width = '18px';
+			       ball.style.height = '18px';
+			       ball.style.marginRight = '2px';
+			       left.appendChild(ball);
+		       }
+		       const img = document.createElement('img'); img.alt = w.name; img.style.width='40px'; img.style.height='40px'; img.style.objectFit='contain';
+		       try{ setImageSrcFromCandidates(img, getPokemonSpriteCandidates(w.name, w.shiny)); }catch(e){ img.src = `PokeLegion/Pokemon/${w.name.toLowerCase()}.png`; img.onerror = ()=>{ img.style.display='none'; }; }
+		       const shinyBadge = w.shiny ? ' <span style="color:#d4af37;" title="Shiny">★</span>' : '';
+		       const meta = document.createElement('div'); meta.innerHTML = `<div style="font-weight:700">${escapeHtml(w.name)}${shinyBadge}</div><div style="font-size:12px;color:var(--muted)">Lv.${w.level} • ${w.rarity}${w.shiny? ' • Shiny':''}</div>`;
+		       left.appendChild(img); left.appendChild(meta);
+		       const right = document.createElement('div'); right.style.display='flex'; right.style.alignItems='center'; right.style.gap='8px';
+		       const fight = document.createElement('button'); fight.className='btn small'; fight.textContent='⚔️ Fight'; fight.addEventListener('click', ()=>{ selectWildToFight(w); });
+		       const ignore = document.createElement('button'); ignore.className='btn secondary small'; ignore.textContent='Ignore'; ignore.addEventListener('click', ()=>{ /* remove this spawn */ currentWildSpawns = currentWildSpawns.filter(x=>x.id !== w.id); try{ if(catchUsage && catchUsage[w.id]) delete catchUsage[w.id]; }catch(e){} if(currentWildSpawns.length===0) clearWildSpawns(); else renderWildSpawns(); });
+		       right.appendChild(fight); right.appendChild(ignore);
+		       row.appendChild(left); row.appendChild(right);
+		       list.appendChild(row);
+	       });
 	box.appendChild(list);
 	// attach below the map area: use mapArea's parent (centerArea)
 	const centerEl = document.getElementById('centerArea'); if(centerEl) centerEl.appendChild(box);
