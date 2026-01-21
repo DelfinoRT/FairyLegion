@@ -22,6 +22,12 @@
                   <button id="total-pokemon-btn">Pokémon en esta colección : 0</button>
                 </div>
 
+                <!-- Search bar for filtering Pokémon by name -->
+                <div class="search-bar-container" style="display: flex; justify-content: center; margin-bottom: 18px; gap: 8px;">
+                  <input id="pokemon-search-input" type="text" placeholder="Buscar Pokémon..." style="padding: 8px 12px; border-radius: 8px; border: 1px solid #b39ddb; font-size: 1rem; min-width: 220px;">
+                  <button id="clear-search-btn" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #b39ddb; background: #f7e6ff; color: #4a148c; font-weight: 600; cursor: pointer;">Limpiar</button>
+                </div>
+
                 <!-- Últimos 5 Pokémon añadidos -->
                 <section class="collection-section" id="last-pokemon-section">
                   <h2 class="last-pokemon-title">Últimos 5 Pokémon añadidos</h2>
@@ -118,6 +124,12 @@
                         <img class="pokemon-img" src="ColeccionSilvarion/shinyTyphlosion.gif">
                         <div class="pokemon-name">Shiny Typhlosion</div>
                         <div class="pokemon-serial">Serial: OQ-5110</div>
+                      </div>
+                      <div class="pokemon-card">
+                        <img class="pokeball-img" src="ColeccionSilvarion/sunriseBall.gif" alt="Sunrise Ball">
+                        <img class="pokemon-img" src="ColeccionSilvarion/shinyQuagsire.gif">
+                        <div class="pokemon-name">Shiny Quagsire</div>
+                        <div class="pokemon-serial">Serial: xxxxxxx</div>
                       </div>
                     </div>
                   </div>
@@ -920,6 +932,40 @@
                       var total = document.querySelectorAll('.pokemon-card').length;
                       totalBtn.textContent = 'Pokémon en esta colección: ' + total;
                     }
+                  })();
+                  // Pokémon search bar functionality
+                  (function() {
+                    var input = document.getElementById('pokemon-search-input');
+                    var clearBtn = document.getElementById('clear-search-btn');
+                    if (!input || !clearBtn) return;
+                    function filterPokemon() {
+                      var query = input.value.trim().toLowerCase();
+                      var sections = document.querySelectorAll('.collection-section');
+                      sections.forEach(function(section) {
+                        // Always show the 'Últimos 5 Pokémon añadidos' section
+                        if (section.id === 'last-pokemon-section') {
+                          section.style.display = '';
+                          return;
+                        }
+                        var cards = section.querySelectorAll('.pokemon-card');
+                        var anyVisible = false;
+                        cards.forEach(function(card) {
+                          var nameDiv = card.querySelector('.pokemon-name');
+                          var name = nameDiv ? nameDiv.textContent.toLowerCase() : '';
+                          var match = (query === '' || name.includes(query));
+                          card.style.display = match ? '' : 'none';
+                          if (match) anyVisible = true;
+                        });
+                        // Hide section if no cards are visible, else show
+                        section.style.display = anyVisible ? '' : 'none';
+                      });
+                    }
+                    input.addEventListener('input', filterPokemon);
+                    clearBtn.addEventListener('click', function() {
+                      input.value = '';
+                      filterPokemon();
+                      input.focus();
+                    });
                   })();
                 </script>
               </body>
