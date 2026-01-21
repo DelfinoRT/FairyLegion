@@ -198,7 +198,7 @@
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
-                        <img class="pokemon-img" src="ColeccionSilvarion/shinyPoliwrath.png" alt="Siny Polirath">
+                        <img class="pokemon-img" src="ColeccionSilvarion/shinyPoliwrath.png" alt="Shiny Poliwrath">
                         <div class="pokemon-name">Siny Poliwrath</div>
                         <div class="pokemon-serial">Serial: OF-9640</div>
                       </div>
@@ -210,7 +210,7 @@
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
-                        <img class="pokemon-img" src="ColeccionSilvarion/shinyPalafin.gif" alt="Shiny Finizen">
+                        <img class="pokemon-img" src="ColeccionSilvarion/shinyPalafin.gif" alt="Shiny Palafin">
                         <div class="pokemon-name">Shiny Palafin</div>
                         <div class="pokemon-serial">Serial: NX-5413</div>
                       </div>
@@ -222,7 +222,7 @@
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/diveBall.gif" alt="Dive Ball">
-                        <img class="pokemon-img" src="ColeccionSilvarion/shinyQuagsire.gif" alt="Shiny Quagsire6">
+                        <img class="pokemon-img" src="ColeccionSilvarion/shinyQuagsire.gif" alt="Shiny Quagsire">
                         <div class="pokemon-name">Shiny Quagsire</div>
                         <div class="pokemon-serial">Serial: NP-7791</div>
                       </div>
@@ -884,7 +884,12 @@
                   // Toggle visibility of all .pokemon-serial tags using a class on body
                   (function() {
                     var btn = document.getElementById('toggle-serial-btn');
-                    if (btn) {/* ...existing code... */}
+                    if (btn) {
+                      btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        document.body.classList.toggle('serials-visible');
+                      });
+                    }
                   })();
                   // Add pokemon count to each section title
                   (function() {
