@@ -20,6 +20,7 @@ body {
   width: 100vw;
   margin: 0;
   padding: 0;
+  cursor: url('ColeccionSilvarion/Avatar.cur'), auto;
 }
 .pokemon-serial { display: none; }
 body.serials-visible .pokemon-serial { display: block; }
@@ -249,7 +250,7 @@ h1 {
   object-fit: cover;
   padding: 0;
   display: block;
-  border: 2px solid #555;
+  border: none;
 }
 .desc {
   text-align: center;
