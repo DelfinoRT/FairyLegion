@@ -311,6 +311,13 @@ h1 {
   text-align: center;
   width: 100px;
   border: 1px solid #555;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s;
+  z-index: 1;
+}
+.pokemon-card:hover {
+  transform: scale(1.35);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  z-index: 10;
 }
 .pokeball-img {
   width: 28px;
