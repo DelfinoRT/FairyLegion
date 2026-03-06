@@ -1,29 +1,50 @@
-/* --- Moved from coleccion-silvarion.html --- */
-.collection-section {
-  background: rgba(255,255,255,0.85);
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+/* ============================================================
+   COLECCIÓN SILVARION — Redesign
+   Sci-fi / Digital Database aesthetic
+   ============================================================ */
+
+/* --- Fonts --- */
+/* Orbitron + Exo 2 loaded via <link> in HTML head */
+
+/* --- CSS Variables --- */
+:root {
+  --bg-deep:       #080b14;
+  --bg-card:       rgba(12, 20, 40, 0.88);
+  --bg-panel:      rgba(10, 14, 28, 0.92);
+  --accent-purple: #9b59f5;
+  --accent-cyan:   #00e5ff;
+  --accent-purple-dim: rgba(155, 89, 245, 0.18);
+  --accent-cyan-dim:   rgba(0, 229, 255, 0.15);
+  --text-primary:  #e0e8ff;
+  --text-muted:    #7a88bb;
+  --border-subtle: rgba(155, 89, 245, 0.22);
 }
-.transparent-section {
-  background: rgba(255,255,255,0.85); /* white with 85% opacity */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  border-radius: 16px;
-}
+
+/* ============================================================
+   BODY & BACKGROUND
+   ============================================================ */
 body {
-  background-image: url('ColeccionSilvarion/background.png');
-  background-repeat: repeat-y;
-  background-size: contain;
-  background-attachment: scroll;
-  background-position: center top;
-  background-color: #000;
+  font-family: 'Exo 2', 'Courier New', monospace;
+  background-color: var(--bg-deep);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 0 L56 16 L56 50 L28 66 L0 50 L0 16 Z' fill='none' stroke='%239b59f5' stroke-width='0.5' stroke-opacity='0.18'/%3E%3Cpath d='M28 66 L56 82 L56 116 L28 132 L0 116 L0 82 Z' fill='none' stroke='%239b59f5' stroke-width='0.5' stroke-opacity='0.18'/%3E%3C/svg%3E");
+  background-size: 56px 100px;
+  background-attachment: fixed;
   min-height: 100vh;
   width: 100vw;
   margin: 0;
-  padding: 0;
+  padding: 0 0 60px 0;
+  color: var(--text-primary);
   cursor: url('ColeccionSilvarion/Avatar.cur'), auto;
+  position: relative;
 }
-.pokemon-serial { display: none; }
-body.serials-visible .pokemon-serial { display: block; }
+
+/* All main content sits above the overlay */
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Serial toggle button (hidden, top-left corner) */
 #toggle-serial-btn {
   position: fixed;
   top: 0;
@@ -36,307 +57,623 @@ body.serials-visible .pokemon-serial { display: block; }
   border: none;
   background: transparent;
 }
+
+/* Serial visibility */
+.pokemon-serial { display: none; }
+body.serials-visible .pokemon-serial { display: block; }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+h1 {
+  font-family: 'Orbitron', 'Courier New', monospace;
+  text-align: center;
+  margin: 28px 0 16px 0;
+  font-size: 2.2em;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow:
+    0 0 8px var(--accent-purple),
+    0 0 24px rgba(155, 89, 245, 0.5),
+    2px 2px 0 #000;
+}
+
+/* Banner */
+.banner-silvarion-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 12px auto;
+  max-width: 700px;
+}
+
+.banner-silvarion-img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0;
+  object-fit: cover;
+}
+
+/* Description */
+.desc {
+  text-align: center;
+  margin: 0 auto 24px auto;
+  color: var(--text-muted);
+  max-width: 680px;
+  font-size: 0.95em;
+  line-height: 1.65;
+  letter-spacing: 0.2px;
+}
+
+/* ============================================================
+   TOTAL COUNT BADGE
+   ============================================================ */
 .total-pokemon-btn-container {
   display: flex;
   justify-content: center;
-  margin: 18px 0 28px 0;
+  margin: 0 0 20px 0;
 }
+
 #total-pokemon-btn {
-  background: linear-gradient(90deg, #f7e6ff 0%, #e0f7fa 100%);
-  border: 2px solid #b39ddb;
-  border-radius: 18px;
-  color: #4a148c;
-  font-size: 1.15rem;
-  font-weight: 600;
-  padding: 10px 32px;
-  box-shadow: 0 2px 8px rgba(76, 0, 130, 0.08);
-  letter-spacing: 0.5px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  background: rgba(0, 229, 255, 0.06);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  border-radius: 999px;
+  padding: 10px 36px;
   cursor: default;
+  box-shadow:
+    0 0 12px rgba(0, 229, 255, 0.2),
+    inset 0 0 16px rgba(0, 229, 255, 0.05);
   transition: box-shadow 0.2s;
 }
+
 #total-pokemon-btn:focus {
   outline: none;
-  box-shadow: 0 0 0 3px #ce93d8;
+  box-shadow: 0 0 0 2px var(--accent-cyan), 0 0 16px rgba(0,229,255,0.3);
 }
+
+/* ============================================================
+   SEARCH BAR
+   ============================================================ */
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+  gap: 8px;
+}
+
+.search-input {
+  padding: 9px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(155, 89, 245, 0.35);
+  background: rgba(10, 14, 30, 0.9);
+  color: var(--text-primary);
+  font-family: 'Exo 2', monospace;
+  font-size: 0.95rem;
+  min-width: 230px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.search-input:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.25);
+}
+
+.clear-btn {
+  padding: 9px 20px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  background: transparent;
+  color: var(--accent-cyan);
+  font-family: 'Exo 2', monospace;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.clear-btn:hover {
+  background: rgba(0, 229, 255, 0.1);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+}
+
+/* ============================================================
+   ÚLTIMOS AÑADIDOS PANEL
+   ============================================================ */
 #last-pokemon-section {
-  background: rgba(255,255,255,0.85);
+  background: var(--bg-panel);
+  border: 1px solid rgba(155, 89, 245, 0.3);
   border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  margin: 32px auto 24px auto;
-  max-width: 480px;
-  padding: 18px 24px 18px 24px;
+  box-shadow:
+    0 0 24px rgba(155, 89, 245, 0.12),
+    0 4px 20px rgba(0, 0, 0, 0.4);
+  margin: 0 auto 32px auto;
+  max-width: 500px;
+  padding: 20px 28px;
+  clip-path: polygon(0 0, 96% 0, 100% 4%, 100% 100%, 4% 100%, 0 96%);
 }
+
+.last-pokemon-title {
+  font-family: 'Orbitron', monospace;
+  margin: 0 0 14px 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+}
+
 #last-pokemon-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
+
 #last-pokemon-list li {
   display: flex;
   align-items: center;
-  font-size: 1.08rem;
-  color: #4a148c;
-  font-weight: 600;
-  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: #c0c8e8;
+  font-weight: 500;
+  margin-bottom: 9px;
   letter-spacing: 0.2px;
-  text-shadow: 0 1px 2px #fff8;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: rgba(155, 89, 245, 0.06);
+  border-left: 2px solid rgba(155, 89, 245, 0.35);
+  transition: background 0.2s;
 }
+
+#last-pokemon-list li:last-child {
+  margin-bottom: 0;
+}
+
+#last-pokemon-list li:hover {
+  background: rgba(155, 89, 245, 0.12);
+}
+
 #last-pokemon-list img {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   margin-right: 10px;
   border-radius: 50%;
-  box-shadow: 0 1px 4px #0002;
-  background: #fff;
-}
-.last-pokemon-title {
-  margin: 0 0 12px 0;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #4a148c;
-  letter-spacing: 0.5px;
-}
-.collection-section.looking-for {
-  margin-top: 48px;
-  background: rgba(100, 150, 100, 0.85);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  border-radius: 8px;
-  padding: 16px 20px 20px 20px;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-  border: 2px solid #555;
-}
-.looking-title {
-  text-align: center;
-  color: #fff;
-  font-size: 1.5em;
-  margin: 0 0 12px 0;
-  font-weight: bold;
-  letter-spacing: 0.5px;
-  text-shadow: 2px 2px 0 #000;
-}
-.looking-list {
-  list-style: none;
-  padding: 0 0 16px 0;
-  margin: 0 auto;
-  max-width: 400px;
-  color: #fff;
-  font-size: 1em;
-  text-align: center;
-  margin-bottom: 16px;
-  margin-top: 0;
-  line-height: 1.4;
-  font-weight: 400;
-}
-.looking-list li {
-  display: flex;
-  align-items: center;
-  font-size: 1em;
-  margin-bottom: 8px;
-  background: rgba(50, 100, 50, 0.7);
-  border-radius: 4px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-  padding: 6px 12px;
-  border: 1px solid #555;
-}
-.looking-list .pokeball-img {
-  width: 28px;
-  height: 28px;
-  margin-right: 14px;
-}
-.collection-section.blue .collapsible-header {
-  background: #4a6b8a;
-  color: #fff;
-  border: 2px solid #2a3b4a;
+  box-shadow: 0 0 6px rgba(155, 89, 245, 0.4);
+  background: rgba(0,0,0,0.3);
+  flex-shrink: 0;
 }
 
-.collection-section.crystal .collapsible-header {
-  background: #6a8a9a;
-  color: #fff;
-  border: 2px solid #2a3b4a;
-}
-.collection-section.white .collapsible-header {
-  background: #5a5a5a;
-  color: #fff;
-  border: 2px solid #2a2a2a;
-}
-.collection-section.red .collapsible-header {
-  background: #8a4a4a;
-  color: #fff;
-  border: 2px solid #4a2a2a;
-}
-.collection-section.purple .collapsible-header {
-  background: #6a4a8a;
-  color: #fff;
-  border: 2px solid #2a2a4a;
-}
-.collection-section.green .collapsible-header {
-  background: #4a8a4a;
-  color: #fff;
-  border: 2px solid #2a4a2a;
-}
-.collection-section.gray .collapsible-header {
-  background: #6a6a6a;
-  color: #fff;
-  border: 2px solid #2a2a2a;
-}
-.collection-section.darkyellow .collapsible-header {
-  background: #8a8a4a;
-  color: #fff;
-  border: 2px solid #4a4a2a;
-}
-.collection-section.darkblue .collapsible-header {
-  background: #4a6a8a;
-  color: #fff;
-  border: 2px solid #2a3a4a;
-}
-.collection-section.yellow .collapsible-header {
-  background: #8a8a4a;
-  color: #fff;
-  border: 2px solid #4a4a2a;
-}
-.collection-section.darkerblue .collapsible-header {
-  background: #2a2a4a;
-  color: #fff;
-  border: 2px solid #1a1a2a;
-}
-.collection-section.pink .collapsible-header {
-  background: #8a4a6a;
-  color: #fff;
-  border: 2px solid #4a2a3a;
-}
-.collection-section.goldwhite .collapsible-header {
-  background: #8a6a2a;
-  color: #fff;
-  border: 2px solid #4a3a1a;
-}
-.collection-section.prism .collapsible-header {
-  background: #2a2a4a;
-  color: #fff;
-  border: 2px solid #1a1a2a;
-}
-.collection-section.sunrise .collapsible-header {
-  background: #4a2a3a;
-  color: #fff;
-  border: 2px solid #2a1a2a;
-}
-body {
-  font-family: 'Courier New', monospace;
-  background: #000;
-  margin: 0;
-  padding: 0 0 40px 0;
-  color: #fff;
-}
-h1 {
-  text-align: center;
-  margin-top: 16px;
-  color: #fff;
-  text-shadow: 2px 2px 0 #000;
-  font-size: 1.8em;
-}
-
-.banner-silvarion-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 16px 0 8px 0;
-}
-.banner-silvarion-img {
-  width: 90%;
-  max-width: 900px;
-  height: auto;
-  border-radius: 0;
-  object-fit: cover;
-  padding: 0;
-  display: block;
-  border: none;
-}
-.desc {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #fff;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 1em;
-}
-
+/* ============================================================
+   COLLECTION SECTIONS (COLLAPSIBLE)
+   ============================================================ */
 .collection-section {
-  max-width: 900px;
-  margin: 20px auto;
-  border-radius: 8px;
+  max-width: 920px;
+  margin: 18px auto;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  border: 2px solid #555;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255,255,255,0.07);
 }
+
+/* Base collapsible header */
 .collapsible-header {
+  font-family: 'Orbitron', monospace;
   width: 100%;
-  background: #4a6a8a;
   color: #fff;
-  font-size: 1.1em;
-  font-weight: bold;
+  font-size: 0.88em;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
   border: none;
-  padding: 12px 16px;
+  padding: 13px 18px;
   text-align: left;
   cursor: pointer;
   outline: none;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #2a3a4a;
-}
-.collection-section:nth-child(3) .collapsible-header {
-  background: #8a4a4a;
-  color: #fff;
-  border-bottom: 2px solid #4a2a2a;
-}
-.collapsible-content {
-  display: block;
-  background: rgba(30, 30, 30, 0.7);
-  padding: 16px;
+  background: linear-gradient(135deg, #0d1220, #141a2e);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: filter 0.2s;
 }
 
+.collapsible-header:hover {
+  filter: brightness(1.15);
+}
+
+.arrow {
+  font-size: 1.1em;
+  margin-left: 10px;
+  opacity: 0.7;
+}
+
+/* Collapsible content area */
+.collapsible-content {
+  display: block;
+  background: rgba(8, 11, 22, 0.88);
+  padding: 18px;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+/* ============================================================
+   BALL SECTION ACCENT COLORS
+   Each section gets a left-border stripe + header glow
+   ============================================================ */
+
+/* Poke Ball — red */
+.collection-section.white {
+  border-left: 3px solid #e53935;
+}
+.collection-section.white .collapsible-header {
+  background: linear-gradient(135deg, #160808, rgba(229,57,53,0.18));
+  border-bottom: 1px solid rgba(229,57,53,0.3);
+  box-shadow: inset 0 0 30px rgba(229,57,53,0.1);
+  text-shadow: 0 0 8px rgba(229,57,53,0.6);
+}
+
+/* Cherish Ball — deep red */
+.collection-section.red {
+  border-left: 3px solid #c62828;
+}
+.collection-section.red .collapsible-header {
+  background: linear-gradient(135deg, #130404, rgba(198,40,40,0.2));
+  border-bottom: 1px solid rgba(198,40,40,0.3);
+  box-shadow: inset 0 0 30px rgba(198,40,40,0.1);
+  text-shadow: 0 0 8px rgba(198,40,40,0.6);
+}
+
+/* Prism Ball — rainbow shimmer */
+.collection-section.prism {
+  border-left: 3px solid #ab47bc;
+}
+.collection-section.prism .collapsible-header {
+  background: linear-gradient(135deg,
+    rgba(25,10,40,1) 0%,
+    rgba(100,0,180,0.22) 30%,
+    rgba(0,180,230,0.15) 60%,
+    rgba(200,0,100,0.18) 100%);
+  border-bottom: 1px solid rgba(171,71,188,0.4);
+  box-shadow: inset 0 0 40px rgba(171,71,188,0.12);
+  text-shadow: 0 0 10px #ce93d8;
+}
+
+/* Sunrise Ball — amber/orange */
+.collection-section.sunrise {
+  border-left: 3px solid #ff8f00;
+}
+.collection-section.sunrise .collapsible-header {
+  background: linear-gradient(135deg, #160a00, rgba(255,143,0,0.18));
+  border-bottom: 1px solid rgba(255,143,0,0.3);
+  box-shadow: inset 0 0 30px rgba(255,143,0,0.1);
+  text-shadow: 0 0 8px rgba(255,143,0,0.6);
+}
+
+/* Dive Ball — blue */
+.collection-section.blue {
+  border-left: 3px solid #1e88e5;
+}
+.collection-section.blue .collapsible-header {
+  background: linear-gradient(135deg, #060e18, rgba(30,136,229,0.18));
+  border-bottom: 1px solid rgba(30,136,229,0.3);
+  box-shadow: inset 0 0 30px rgba(30,136,229,0.1);
+  text-shadow: 0 0 8px rgba(30,136,229,0.6);
+}
+
+/* Phantom Ball — purple */
+.collection-section.purple {
+  border-left: 3px solid #7b1fa2;
+}
+.collection-section.purple .collapsible-header {
+  background: linear-gradient(135deg, #0e0616, rgba(123,31,162,0.22));
+  border-bottom: 1px solid rgba(123,31,162,0.35);
+  box-shadow: inset 0 0 30px rgba(123,31,162,0.12);
+  text-shadow: 0 0 8px rgba(200,100,255,0.6);
+}
+
+/* Moss Ball — green */
+.collection-section.green {
+  border-left: 3px solid #2e7d32;
+}
+.collection-section.green .collapsible-header {
+  background: linear-gradient(135deg, #05100a, rgba(46,125,50,0.2));
+  border-bottom: 1px solid rgba(46,125,50,0.3);
+  box-shadow: inset 0 0 30px rgba(46,125,50,0.1);
+  text-shadow: 0 0 8px rgba(46,125,50,0.7);
+}
+
+/* Crystal Ball — cyan */
+.collection-section.crystal {
+  border-left: 3px solid #80deea;
+}
+.collection-section.crystal .collapsible-header {
+  background: linear-gradient(135deg, #041018, rgba(128,222,234,0.14));
+  border-bottom: 1px solid rgba(128,222,234,0.3);
+  box-shadow: inset 0 0 30px rgba(128,222,234,0.08);
+  text-shadow: 0 0 8px rgba(128,222,234,0.7);
+}
+
+/* Heavy Ball — gray */
+.collection-section.gray {
+  border-left: 3px solid #757575;
+}
+.collection-section.gray .collapsible-header {
+  background: linear-gradient(135deg, #0e0e0e, rgba(117,117,117,0.2));
+  border-bottom: 1px solid rgba(117,117,117,0.3);
+  box-shadow: inset 0 0 30px rgba(117,117,117,0.1);
+  text-shadow: 0 0 8px rgba(200,200,200,0.5);
+}
+
+/* Ancient Ball — dark yellow/gold */
+.collection-section.darkyellow {
+  border-left: 3px solid #f9a825;
+}
+.collection-section.darkyellow .collapsible-header {
+  background: linear-gradient(135deg, #100a00, rgba(249,168,37,0.18));
+  border-bottom: 1px solid rgba(249,168,37,0.3);
+  box-shadow: inset 0 0 30px rgba(249,168,37,0.1);
+  text-shadow: 0 0 8px rgba(249,168,37,0.7);
+}
+
+/* Aerial Ball — dark blue */
+.collection-section.darkblue {
+  border-left: 3px solid #1565c0;
+}
+.collection-section.darkblue .collapsible-header {
+  background: linear-gradient(135deg, #030a18, rgba(21,101,192,0.2));
+  border-bottom: 1px solid rgba(21,101,192,0.3);
+  box-shadow: inset 0 0 30px rgba(21,101,192,0.1);
+  text-shadow: 0 0 8px rgba(21,101,192,0.8);
+}
+
+/* Fast Ball — yellow */
+.collection-section.yellow {
+  border-left: 3px solid #fdd835;
+}
+.collection-section.yellow .collapsible-header {
+  background: linear-gradient(135deg, #100e00, rgba(253,216,53,0.15));
+  border-bottom: 1px solid rgba(253,216,53,0.25);
+  box-shadow: inset 0 0 30px rgba(253,216,53,0.08);
+  text-shadow: 0 0 8px rgba(253,216,53,0.8);
+}
+
+/* Moon Ball — darker blue */
+.collection-section.darkerblue {
+  border-left: 3px solid #3949ab;
+}
+.collection-section.darkerblue .collapsible-header {
+  background: linear-gradient(135deg, #02040f, rgba(57,73,171,0.22));
+  border-bottom: 1px solid rgba(57,73,171,0.35);
+  box-shadow: inset 0 0 30px rgba(57,73,171,0.12);
+  text-shadow: 0 0 8px rgba(100,130,255,0.7);
+}
+
+/* Dream Ball — pink */
+.collection-section.pink {
+  border-left: 3px solid #e91e63;
+}
+.collection-section.pink .collapsible-header {
+  background: linear-gradient(135deg, #160310, rgba(233,30,99,0.18));
+  border-bottom: 1px solid rgba(233,30,99,0.3);
+  box-shadow: inset 0 0 30px rgba(233,30,99,0.1);
+  text-shadow: 0 0 8px rgba(233,30,99,0.7);
+}
+
+/* Golden Ball — gold */
+.collection-section.goldwhite {
+  border-left: 3px solid #ffd54f;
+}
+.collection-section.goldwhite .collapsible-header {
+  background: linear-gradient(135deg, #100c00, rgba(255,213,79,0.16));
+  border-bottom: 1px solid rgba(255,213,79,0.28);
+  box-shadow: inset 0 0 30px rgba(255,213,79,0.08);
+  text-shadow: 0 0 8px rgba(255,213,79,0.8);
+}
+
+/* Rocket Ball — dark */
+.collection-section.rocketball {
+  border-left: 3px solid #b0bec5;
+}
+.collection-section.rocketball .collapsible-header {
+  background: linear-gradient(135deg, #080a0c, rgba(176,190,197,0.15));
+  border-bottom: 1px solid rgba(176,190,197,0.2);
+  box-shadow: inset 0 0 30px rgba(176,190,197,0.07);
+}
+
+/* Safari Ball */
+.collection-section.safari {
+  border-left: 3px solid #558b2f;
+}
+.collection-section.safari .collapsible-header {
+  background: linear-gradient(135deg, #060e04, rgba(85,139,47,0.2));
+  border-bottom: 1px solid rgba(85,139,47,0.3);
+  box-shadow: inset 0 0 30px rgba(85,139,47,0.1);
+}
+
+/* ============================================================
+   POKÉMON GRID
+   ============================================================ */
 .pokemon-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+  gap: 14px;
   justify-items: center;
 }
+
+/* ============================================================
+   POKÉMON CARDS
+   ============================================================ */
 .pokemon-card {
-  background: rgba(50, 50, 50, 0.7);
-  border-radius: 6px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  padding: 8px 6px;
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 10px 8px 8px 8px;
   text-align: center;
-  width: 100px;
-  border: 1px solid #555;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s;
+  width: 108px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   z-index: 1;
 }
+
 .pokemon-card:hover {
-  transform: scale(1.35);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  z-index: 10;
+  transform: scale(1.38);
+  box-shadow:
+    0 0 20px rgba(155, 89, 245, 0.55),
+    0 6px 20px rgba(0,0,0,0.5);
+  border-color: rgba(155, 89, 245, 0.7);
+  z-index: 20;
 }
+
+/* Pokeball icon — top-right corner */
 .pokeball-img {
-  width: 28px;
-  height: 28px;
-  margin-bottom: 4px;
-}
-.pokemon-img {
-  width: 56px;
-  height: 56px;
+  position: absolute;
+  top: 5px;
+  right: 6px;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
-  margin-bottom: 4px;
 }
+
+/* Sprite */
+.pokemon-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin: 4px auto 4px auto;
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+/* Name line 1 — always visible */
 .pokemon-name {
-  font-size: 0.9em;
-  color: #fff;
-  margin-top: 2px;
-  text-shadow: 1px 1px 0 #000;
+  font-size: 0.78em;
+  color: var(--text-primary);
+  margin-top: 3px;
+  font-weight: 500;
+  line-height: 1.3;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
-.arrow {
-  font-size: 1.2em;
-  margin-left: 8px;
+
+/* Name line 2 (ability / gender) — hidden, revealed on hover */
+.pokemon-card .pokemon-name + .pokemon-name {
+  display: none;
+  font-size: 0.72em;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-top: 1px;
+}
+
+.pokemon-card:hover .pokemon-name + .pokemon-name {
+  display: block;
+}
+
+/* Serial number */
+.pokemon-serial {
+  display: none;
+  font-size: 0.68em;
+  color: var(--accent-cyan);
+  margin-top: 2px;
+  letter-spacing: 0.4px;
+  opacity: 0.75;
+}
+
+body.serials-visible .pokemon-serial {
+  display: block;
+}
+
+/* ============================================================
+   LOOKING FOR SECTION
+   ============================================================ */
+.collection-section.looking-for {
+  margin-top: 48px;
+  background: rgba(20, 35, 20, 0.88);
+  box-shadow: 0 0 20px rgba(46,125,50,0.2), 0 4px 16px rgba(0,0,0,0.4);
+  border-radius: 10px;
+  padding: 18px 22px 22px 22px;
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+  border-left: 3px solid #2e7d32;
+  border-right: none;
+  border-top: 1px solid rgba(46,125,50,0.25);
+  border-bottom: 1px solid rgba(46,125,50,0.25);
+}
+
+.looking-title {
+  font-family: 'Orbitron', monospace;
+  text-align: center;
+  color: #81c784;
+  font-size: 1.1em;
+  margin: 0 0 14px 0;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(129,199,132,0.5);
+}
+
+.looking-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 440px;
+  color: #c8e6c9;
+  font-size: 0.95em;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.looking-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  background: rgba(46,125,50,0.12);
+  border-radius: 6px;
+  padding: 7px 14px;
+  border: 1px solid rgba(46,125,50,0.25);
+  border-left: 2px solid rgba(46,125,50,0.5);
+}
+
+.looking-list .pokeball-img {
+  position: static;
+  width: 26px;
+  height: 26px;
+  margin-right: 12px;
+}
+
+/* ============================================================
+   POKE COUNT BADGE (added by JS next to section header)
+   ============================================================ */
+.poke-count {
+  font-family: 'Exo 2', monospace;
+  font-size: 0.85em;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  opacity: 0.85;
+  margin-left: 4px;
+}
+
+/* ============================================================
+   TRANSPARENT SECTION (misc utility)
+   ============================================================ */
+.transparent-section {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
 }

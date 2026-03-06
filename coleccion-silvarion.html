@@ -3,6 +3,9 @@
               <head>
                 <meta charset="UTF-8">
                 <title>Colección Silvarion</title>
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@400;500;600&display=swap" rel="stylesheet">
                 <link rel="stylesheet" href="coleccion-silvarion.css">
               </head>
               <body>
@@ -23,9 +26,9 @@
                 </div>
 
                 <!-- Search bar for filtering Pokémon by name -->
-                <div class="search-bar-container" style="display: flex; justify-content: center; margin-bottom: 18px; gap: 8px;">
-                  <input id="pokemon-search-input" type="text" placeholder="Buscar Pokémon..." style="padding: 8px 12px; border-radius: 8px; border: 1px solid #b39ddb; font-size: 1rem; min-width: 220px;">
-                  <button id="clear-search-btn" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #b39ddb; background: #f7e6ff; color: #4a148c; font-weight: 600; cursor: pointer;">Limpiar</button>
+                <div class="search-bar-container">
+                  <input id="pokemon-search-input" class="search-input" type="text" placeholder="Buscar Pokémon...">
+                  <button id="clear-search-btn" class="clear-btn">Limpiar</button>
                 </div>
 
                 <!-- Últimos 5 Pokémon añadidos -->
@@ -328,6 +331,13 @@
                         <div class="pokemon-name">Cloned Ninetales</div>
                         <div class="pokemon-name">Male / Flash Fire</div>
                         <div class="pokemon-serial">Serial: OE-5426</div>
+                      </div>
+                      <div class="pokemon-card">
+                        <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
+                        <img class="pokemon-img" src="ColeccionSilvarion/shinyPyroar.gif" alt="Shiny Pyroar">
+                        <div class="pokemon-name">Shiny Pyroar</div>
+                        <div class="pokemon-name">Male / Moxie</div>
+                        <div class="pokemon-serial">Serial: OV-3669</div>
                       </div>
                       <div class="pokemon-card">
                         <img class="pokeball-img" src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
