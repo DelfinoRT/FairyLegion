@@ -8,6 +8,135 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <style>
+        .search-section {
+            background: linear-gradient(135deg, #FFD700 0%, #808080 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            color: white;
+            text-align: center;
+        }
+        .search-section h2 {
+            margin-bottom: 20px;
+            color: white;
+        }
+        .search-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        #pokemonSearch {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 30px;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        #pokemonSearch:focus {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        #suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            margin-top: 5px;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1000;
+        }
+        .suggestion-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .suggestion-item:hover {
+            background: #fffacd;
+        }
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+        .suggestion-item .pokemon-name {
+            font-weight: bold;
+            color: #333;
+        }
+        .suggestion-item .pokemon-types {
+            font-size: 12px;
+            color: #666;
+        }
+        .no-results {
+            color: #999;
+            font-style: italic;
+        }
+        #resultContainer {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        .pokemon-result {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .pokemon-result h2 {
+            color: #FFD700;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+        .pokemon-result .pokemon-types,
+        .pokemon-result .pokemon-location {
+            margin: 10px 0;
+            color: #555;
+        }
+        .items-required {
+            margin-top: 20px;
+        }
+        .items-required h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .item-result {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #FFD700;
+        }
+        .item-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .item-header h3 {
+            margin: 0;
+            color: #333;
+            font-size: 18px;
+        }
+        .item-icon {
+            width: 40px;
+            height: 40px;
+        }
+        .item-effect {
+            color: #555;
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+        .item-compatible {
+            color: #666;
+            font-size: 14px;
+            margin: 5px 0;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -72,6 +201,19 @@
                 <img src="/MagneticDetector/MagneticDetector-objects.png">
                 <p>(Sí, la electricidad también cuenta)</p>
         </section>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <h2>🔍 Buscar Pokemon</h2>
+            <p>Encuentra qué items necesitas para encontrar un Pokemon específico</p>
+            <div class="search-container">
+                <input type="text" id="pokemonSearch" placeholder="Escribe el nombre del Pokemon..." autocomplete="off">
+                <div id="suggestions"></div>
+            </div>
+        </section>
+
+        <!-- Result Display -->
+        <div id="resultContainer"></div>
 
         <table>
             <caption><b>Efectos de Amuletos y Gemas</b></caption>
@@ -364,6 +506,7 @@
                 por Silvarion</a></p>
     </footer>
 
+    <script src="MagneticDetector.js"></script>
     <script src="script.js"></script>
     <script src="pagination.js"></script>
 </body>
