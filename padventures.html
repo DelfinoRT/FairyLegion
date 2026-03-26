@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAdventures - Fairy Legion</title>
+    <link rel="stylesheet" href="padventures.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="padventures\graphic_assets\favicon-32x32.png">
+</head>
+
+<body>
+
+    <!-- Navigation - Glassmorphism -->
+    <nav class="pa-nav">
+        <div class="pa-nav-container">
+            <a href="/" class="pa-logo">
+                <img src="padventures\graphic_assets\logo.png" alt="Fairy Legion Logo">
+            </a>
+
+            <ul class="pa-menu" id="paMenu">
+                <li class="pa-menu-item">
+                    <a href="/" class="pa-menu-link active">Home <span class="indicator">▼</span></a>
+                    <div class="pa-dropdown">
+                        <a href="#" class="pa-dropdown-link">News</a>
+                        <a href="#" class="pa-dropdown-link">Changelog</a>
+                    </div>
+                </li>
+                <li class="pa-menu-item">
+                    <a href="#" class="pa-menu-link">Account <span class="indicator">▼</span></a>
+                    <div class="pa-dropdown">
+                        <a href="#" class="pa-dropdown-link">Log In</a>
+                        <a href="#" class="pa-dropdown-link">Create Account</a>
+                        <a href="#" class="pa-dropdown-link">Recovery</a>
+                    </div>
+                </li>
+                <li class="pa-menu-item">
+                    <a href="#" class="pa-menu-link">Community <span class="indicator">▼</span></a>
+                    <div class="pa-dropdown">
+                        <a href="#" class="pa-dropdown-link">Character Search</a>
+                        <a href="#" class="pa-dropdown-link">Who is Online</a>
+                        <a href="#" class="pa-dropdown-link">Highscores</a>
+                        <a href="#" class="pa-dropdown-link">Guilds</a>
+                        <a href="#" class="pa-dropdown-link">Wars</a>
+                        <a href="#" class="pa-dropdown-link">Dungeons</a>
+                        <a href="#" class="pa-dropdown-link">Lottery</a>
+                        <a href="#" class="pa-dropdown-link">Houses</a>
+                        <a href="#" class="pa-dropdown-link">Latest Deaths</a>
+                        <a href="#" class="pa-dropdown-link">Deletera</a>
+                    </div>
+                </li>
+                <li class="pa-menu-item">
+                    <a href="#" class="pa-menu-link">Game Info <span class="indicator">▼</span></a>
+                    <div class="pa-dropdown">
+                        <a href="#" class="pa-dropdown-link">Interface</a>
+                        <a href="#" class="pa-dropdown-link">Events</a>
+                        <a href="#" class="pa-dropdown-link">Duels</a>
+                        <a href="#" class="pa-dropdown-link">PvP</a>
+                        <a href="#" class="pa-dropdown-link">Catching</a>
+                        <a href="#" class="pa-dropdown-link">Quests</a>
+                        <a href="#" class="pa-dropdown-link">Premium</a>
+                        <a href="#" class="pa-dropdown-link">Rules</a>
+                    </div>
+                </li>
+                <li class="pa-menu-item">
+                    <a href="#" class="pa-menu-link">Resources <span class="indicator">▼</span></a>
+                    <div class="pa-dropdown">
+                        <a href="#" class="pa-dropdown-link">Abilities</a>
+                        <a href="#" class="pa-dropdown-link">Berries</a>
+                        <a href="#" class="pa-dropdown-link">Boxes</a>
+                        <a href="#" class="pa-dropdown-link">Emotes</a>
+                        <a href="#" class="pa-dropdown-link">Held Items</a>
+                        <a href="#" class="pa-dropdown-link">Map</a>
+                        <a href="#" class="pa-dropdown-link">Prices</a>
+                        <a href="#" class="pa-dropdown-link">TM</a>
+                        <a href="#" class="pa-dropdown-link">TM Tasks</a>
+                    </div>
+                </li>
+                <li class="pa-menu-item">
+                    <a href="#" class="pa-menu-link">Support</a>
+                </li>
+                <li class="pa-menu-item">
+                    <a href="#" class="pa-menu-link">Downloads</a>
+                </li>
+            </ul>
+
+            <form class="pa-search-form" action="#" method="post">
+                <input type="text" class="pa-search-input" placeholder="character search" name="search">
+                <button type="submit" class="pa-search-btn">
+                    <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                </button>
+            </form>
+
+            <button class="pa-menu-toggle" id="paMenuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+        <section class="pa-hero">
+            <div class="hero-bg"></div>
+            <div class="pa-hero-content fade-in">
+                <h1 class="pa-hero-title">Welcome to PAdventures</h1>
+                <button class="play-now">Play Now<span class="particles"></span></button>
+            </div>
+        </section>
+
+        <!-- Main Content with Bottom Background -->
+        <section class="pa-main-bottom-bg">
+            <div class="pa-main-columns">
+                <div class="pa-main-col pa-features-col">
+                    <h2 class="pa-section-title">Key <span>features</span>:</h2>
+                    <div class="pa-tools-grid" id="toolsGrid">
+                        <div class="tool-card-glass">
+                            <h3>Pokémon Collection</h3>
+                            <p>Track and manage your Pokémon with advanced filters and search.</p>
+                        </div>
+                        <div class="tool-card-glass">
+                            <h3>Fishing Assistant</h3>
+                            <p>Optimize your fishing with real-time tips and rare catch alerts.</p>
+                        </div>
+                        <div class="tool-card-glass">
+                            <h3>Daily Tasks</h3>
+                            <p>Stay on top of daily quests and maximize your rewards.</p>
+                        </div>
+                        <div class="tool-card-glass">
+                            <h3>Boss Raids</h3>
+                            <p>Coordinate with friends and track upcoming boss events.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="pa-main-col pa-updates-col">
+                    <h2 class="pa-section-title">Latest <span>updates</span>:</h2>
+                    <div class="pa-updates-grid" id="updatesGrid">
+                        <div class="update-card-glass">
+                            <h4>Spring Event Launched!</h4>
+                            <p>Join the new Spring Event for exclusive rewards and challenges!</p>
+                            <span class="update-date">March 2026</span>
+                        </div>
+                        <div class="update-card-glass">
+                            <h4>Balance Patch 1.2 Released</h4>
+                            <p>Major balance changes to PvP and new items added.</p>
+                            <span class="update-date">March 2026</span>
+                        </div>
+                        <div class="update-card-glass">
+                            <h4>Fishing System Overhaul</h4>
+                            <p>New fishing rods, baits, and rare fish species have been added.</p>
+                            <span class="update-date">February 2026</span>
+                        </div>
+                        <div class="update-card-glass">
+                            <h4>Legendary Raid: Zapdos</h4>
+                            <p>The Thunder Pokémon has appeared! Coordinate with your faction to take it down.</p>
+                            <span class="update-date">February 2026</span>
+                        </div>
+                        <div class="update-card-glass">
+                            <h4>Server Optimization</h4>
+                            <p>Under-the-hood improvements to reduce latency during high-traffic gym battles.</p>
+                            <span class="update-date">January 2026</span>
+                        </div>
+
+                        <div class="update-card-glass">
+                            <h4>New Region: Johto Early Access</h4>
+                            <p>Elite trainers can now explore New Bark Town and the surrounding routes.</p>
+                            <span class="update-date">January 2026</span>
+                        </div>
+                        <div class="update-card-glass">
+                            <h4>Evolution Item Drop Rate Buff</h4>
+                            <p>We've heard your feedback! Metal Coats and King's Rocks now have a higher drop rate from PokeStops.</p>
+                            <span class="update-date">March 2026</span>
+                        </div>
+
+                        <div class="update-card-glass">
+                            <h4>Bug Fix: Infinite Berries Glitch</h4>
+                            <p>Resolved an issue where certain Berries were not being consumed upon use in wild encounters.</p>
+                            <span class="update-date">February 2026</span>
+                        </div>
+
+                        <div class="update-card-glass">
+                            <h4>Global Trading Station (GTS) Beta</h4>
+                            <p>The GTS is now open for testing. Trade Pokémon with trainers across different servers instantly!</p>
+                            <span class="update-date">January 2026</span>
+                        </div>
+                        <div class="update-card-glass">
+                            <h4>Developer Diary: The Road to 2.0</h4>
+                            <p>A deep dive into our upcoming features including Secret Bases and the Underground Mining system.</p>
+                            <span class="update-date">December 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <!-- Footer -->
+    <footer class="server-footer-fixed-glass">
+        <div class="server-footer-bg"></div>
+        <div class="server-footer-content-flex">
+            <div class="server-info-glossy diamond">
+                <h3>Diamond Server</h3>
+                <div class="server-status">Status: <span class="status-live">Live</span></div>
+                <div class="server-uptime">Uptime: <span>99:59:59</span></div>
+                <div class="server-players">Players Online: <span>123</span></div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="server-info-glossy platinum">
+                <h3>Platinum Server</h3>
+                <div class="server-status">Status: <span class="status-live">Live</span></div>
+                <div class="server-uptime">Uptime: <span>99:59:59</span></div>
+                <div class="server-players">Players Online: <span>1</span></div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="pa-scroll-top" id="paScrollTop" aria-label="Scroll to top">
+        <svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+    </button>
+
+    <script src="padventures.js"></script>
+</body>
+
+</html>
