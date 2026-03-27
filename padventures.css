@@ -322,9 +322,9 @@ body::before {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 420px;
-    height: 420px;
-    max-height: 520px;
+    min-height: 600px;
+    height: 65vh;
+    max-height: 750px;
     overflow: hidden;
     background: transparent;
     margin-bottom: 0;
