@@ -526,82 +526,176 @@ body::before {
 }
 
 /* ========================================
-   Footer - Full-width Glossy Bar
+   Server Status Section
    ======================================== */
-.server-footer-fixed-glass {
+.pa-server-status {
     position: relative;
     width: 100%;
-    min-height: 140px;
-    display: flex;
-    align-items: stretch;
-    justify-content: stretch;
-    box-shadow: 0 -4px 32px 0 #0004;
-    overflow: hidden;
-    flex-shrink: 0;
-    margin-top: 0;
-    background: rgba(10, 10, 25, 0.85);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 3rem 2rem 2.5rem;
+    background: linear-gradient(180deg, rgba(10, 10, 25, 0.6) 0%, rgba(10, 10, 25, 0.9) 100%);
+    text-align: center;
 }
 
-.server-footer-bg {
-    position: absolute;
-    left: 0; right: 0; top: 0; bottom: 0;
-    background: url('padventures/graphic_assets/hero-bottom.png') center bottom/cover no-repeat;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.25;
+.pa-server-status-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 2rem;
+    letter-spacing: 0.03em;
 }
 
-.server-footer-content-flex {
-    position: relative;
-    z-index: 1;
+.pa-server-status-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #FFD700, #fff700);
+    margin: 0.6rem auto 0;
+    border-radius: 2px;
+}
+
+.pa-server-cards {
     display: flex;
-    width: 100%;
-    height: 100%;
-    align-items: stretch;
     justify-content: center;
-    padding: 0 2vw;
-    gap: 0;
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.server-info-glossy {
+.pa-server-card {
     flex: 1 1 0;
-    background: rgba(255,255,255,0.10);
-    border-radius: 0;
-    box-shadow: none;
-    padding: 1.5rem 1.5rem 1.2rem 1.5rem;
-    margin: 0;
+    max-width: 360px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.8rem 1.5rem 1.5rem;
     text-align: center;
     color: #fff;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.pa-server-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(255, 215, 0, 0.12);
+    border-color: rgba(255, 215, 0, 0.25);
+}
+
+.pa-server-card-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.pa-server-card h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    color: #fff;
+}
+
+.pa-server-card.diamond h3 {
+    color: #7dd3fc;
+}
+
+.pa-server-card.platinum h3 {
+    color: #c4b5fd;
+}
+
+.pa-server-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.pa-server-stat:last-child {
+    border-bottom: none;
+}
+
+.pa-server-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.pa-server-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.pa-server-value.status-live {
+    color: #4ade80;
+    text-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
+}
+
+.pa-server-value.pa-server-players {
+    color: #FFD700;
+}
+
+/* ========================================
+   Footer
+   ======================================== */
+.pa-footer {
+    position: relative;
+    width: 100%;
+    background: rgba(6, 6, 18, 0.95);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 2rem 2rem 1.2rem;
+}
+
+.pa-footer-inner {
+    max-width: 900px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 1rem;
+}
+
+.pa-footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.pa-footer-logo {
+    height: 32px;
+    width: auto;
+    opacity: 0.8;
+}
+
+.pa-footer-tagline {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0;
+}
+
+.pa-footer-links {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    min-width: 0;
-    font-size: 1.08rem;
+    gap: 1.2rem;
 }
 
-.server-info-glossy h3 {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.18rem;
-    margin-bottom: 0.7rem;
+.pa-footer-links a {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    transition: color 0.2s;
 }
 
-.server-info-glossy .status-live {
+.pa-footer-links a:hover {
     color: #FFD700;
-    font-weight: bold;
 }
 
-.footer-divider {
-    width: 2.5px;
-    height: 70%;
-    background: rgba(255,255,255,0.35);
-    border-radius: 2px;
-    margin: auto 0;
-    align-self: center;
+.pa-footer-copy {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.3);
 }
 
 /* ========================================
@@ -865,20 +959,14 @@ body::before {
         flex: 1 1 100%;
         max-width: 100%;
     }
-    .server-footer-content-flex {
+    .pa-server-cards {
         flex-direction: column;
-        max-width: 98vw;
-        gap: 0.5rem;
-        padding: 0 1vw;
+        align-items: center;
+        gap: 1.2rem;
     }
-    .footer-divider {
-        width: 60%;
-        height: 2.5px;
-        margin: 0.5rem auto;
-        background: rgba(255,255,255,0.25);
-    }
-    .server-footer-fixed-glass {
-        min-height: 120px;
+    .pa-server-card {
+        max-width: 100%;
+        width: 100%;
     }
 }
 
