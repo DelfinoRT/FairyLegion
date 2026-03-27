@@ -232,15 +232,15 @@
 
         playNowBtn.addEventListener('mouseenter', () => {
             // Initial burst
-            for (let i = 0; i < 16; i++) {
-                setTimeout(createSpark, i * 25);
+            for (let i = 0; i < 20; i++) {
+                setTimeout(createSpark, i * 18);
             }
             // Continuous sparks while hovering
             sparkInterval = setInterval(() => {
-                for (let i = 0; i < 3; i++) {
-                    setTimeout(createSpark, i * 30);
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(createSpark, i * 20);
                 }
-            }, 150);
+            }, 80);
         });
 
         playNowBtn.addEventListener('mouseleave', () => {

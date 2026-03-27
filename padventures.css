@@ -365,29 +365,30 @@ body::before {
     font-size: clamp(1rem, 2.5vw, 1.3rem);
     font-family: 'Inter', sans-serif;
     font-weight: 700;
+    letter-spacing: 0.04em;
     color: #fff;
-    background: linear-gradient(90deg, #FFD700 60%, #fff700 100%);
-    border: none;
-    border-radius: 16px;
-    padding: clamp(0.6rem, 1.5vw, 0.9rem) clamp(1.5rem, 4vw, 2.5rem);
-    box-shadow: 0 0 24px 6px #FFD70099, 0 0 0 0 #FFD700;
+    background: rgba(255, 215, 0, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(255, 215, 0, 0.55);
+    border-radius: 14px;
+    padding: clamp(0.7rem, 1.5vw, 1rem) clamp(2rem, 5vw, 3rem);
+    box-shadow: 0 0 16px 2px rgba(255, 215, 0, 0.15),
+                inset 0 0 16px 0 rgba(255, 215, 0, 0.1);
     cursor: pointer;
     outline: none;
     position: relative;
-    animation: pulse 1.5s infinite;
-    transition: box-shadow 0.3s, transform 0.2s;
+    transition: box-shadow 0.35s ease, transform 0.25s ease, border-color 0.35s ease, background 0.35s ease;
     overflow: visible;
-}
-
-@keyframes pulse {
-    0% { box-shadow: 0 0 24px 6px #FFD70099, 0 0 0 0 #FFD700; }
-    50% { box-shadow: 0 0 36px 12px #FFD700cc, 0 0 0 8px #FFD70044; }
-    100% { box-shadow: 0 0 24px 6px #FFD70099, 0 0 0 0 #FFD700; }
 }
 
 .play-now:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 48px 16px #FFD700cc, 0 0 0 12px #FFD70044;
+    background: rgba(255, 215, 0, 0.12);
+    border-color: rgba(255, 215, 0, 0.85);
+    box-shadow: 0 0 28px 6px rgba(255, 215, 0, 0.3),
+                0 0 12px 2px rgba(255, 215, 0, 0.2),
+                inset 0 0 18px 0 rgba(255, 215, 0, 0.08);
 }
 
 .play-now .particles {
@@ -472,17 +473,68 @@ body::before {
 .tool-card-glass, .update-card-glass {
     position: relative;
     z-index: 1;
-    background: rgba(255,255,255,0.13);
-    border: 1.5px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.08);
+    border: 1.5px solid transparent;
     border-radius: 18px;
-    box-shadow: 0 2px 16px 0 #0002;
+    box-shadow: 0 0 18px 2px rgba(0,229,255,0.18),
+                0 0 30px 4px rgba(124,77,255,0.12),
+                inset 0 0 18px 0 rgba(0,229,255,0.06);
     padding: 1.2rem 1.5rem;
     color: #fff;
     margin-bottom: 1.2rem;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    transition: box-shadow 0.3s, border 0.3s;
-    overflow: hidden;
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
+    overflow: visible;
+    background-clip: padding-box;
+}
+
+.tool-card-glass::before, .update-card-glass::before {
+    content: '';
+    position: absolute;
+    inset: -1.5px;
+    border-radius: 19px;
+    padding: 1.5px;
+    background: linear-gradient(135deg, #00e5ff 0%, #7c4dff 50%, #ff4081 100%);
+    background-size: 100% 100%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.35s ease;
+}
+
+.tool-card-glass::after, .update-card-glass::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(0,229,255,0.14) 0%, rgba(124,77,255,0.10) 50%, rgba(255,64,129,0.08) 100%);
+    pointer-events: none;
+    opacity: 1;
+}
+
+.tool-card-glass:hover, .update-card-glass:hover {
+    box-shadow: 0 0 28px 8px rgba(0,229,255,0.35),
+                0 0 48px 12px rgba(124,77,255,0.25),
+                0 0 16px 4px rgba(255,64,129,0.18),
+                inset 0 0 28px 0 rgba(0,229,255,0.12);
+    transform: scale(1.02);
+}
+
+.tool-card-glass:hover::before, .update-card-glass:hover::before {
+    inset: -2.5px;
+    padding: 2.5px;
+    background: linear-gradient(135deg, #00e5ff, #00ff88, #7c4dff, #ff4081, #ff9100, #00e5ff);
+    background-size: 300% 300%;
+    animation: rgbBorderShift 3s linear infinite;
+}
+
+@keyframes rgbBorderShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .tool-card-glass h3, .update-card-glass h4 {
