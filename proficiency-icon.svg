@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="#5c2d91" opacity="0.15"/>
+  
+  <!-- Star shape (mastery/proficiency symbol) -->
+  <polygon points="100,20 120,75 180,80 135,120 150,178 100,148 50,178 65,120 20,80 80,75" 
+           fill="url(#starGrad)" stroke="#5c2d91" stroke-width="3"/>
+  
+  <!-- Inner level bars -->
+  <rect x="75" y="85" width="50" height="6" rx="3" fill="#fff" opacity="0.9"/>
+  <rect x="75" y="97" width="40" height="6" rx="3" fill="#fff" opacity="0.7"/>
+  <rect x="75" y="109" width="30" height="6" rx="3" fill="#fff" opacity="0.5"/>
+  
+  <!-- Arrow up (progression) -->
+  <polygon points="100,60 110,72 105,72 105,82 95,82 95,72 90,72" fill="#fff" opacity="0.95"/>
+  
+  <!-- Gradient -->
+  <defs>
+    <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#5c2d91"/>
+      <stop offset="60%" style="stop-color:#b8860b"/>
+      <stop offset="100%" style="stop-color:#ffd700"/>
+    </linearGradient>
+  </defs>
+</svg>
