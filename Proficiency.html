@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fairy Legion - Sistema de Proficiencia</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <style>
+        /* Hero banner */
+        .proficiency-hero {
+            background: linear-gradient(135deg, #5c2d91 0%, #b8860b 60%, #ffd700 100%);
+            padding: 36px 30px 28px;
+            border-radius: 15px;
+            margin: 20px 0;
+            color: white;
+            text-align: center;
+        }
+        .proficiency-hero h1 {
+            margin: 0 0 10px;
+            font-size: 2em;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .proficiency-hero p {
+            margin: 0;
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        /* Info cards grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 22px 0;
+        }
+        .info-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.09);
+            border-top: 4px solid #b8860b;
+        }
+        .info-card h3 {
+            color: #5c2d91;
+            margin: 0 0 10px;
+            font-size: 1.05em;
+        }
+        .info-card p {
+            font-size: 15px;
+            color: #444;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* Section titles */
+        .section-title {
+            color: #5c2d91;
+            font-size: 1.3em;
+            border-left: 5px solid #ffd700;
+            padding-left: 12px;
+            margin: 28px 0 14px;
+        }
+
+        /* Tables */
+        .prof-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .prof-table th {
+            background: #5c2d91;
+            color: white;
+            padding: 12px 14px;
+            text-align: left;
+            border: none;
+        }
+        .prof-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #eee;
+            color: #333;
+        }
+        .prof-table tbody tr:last-child td { border-bottom: none; }
+        .prof-table tbody tr:hover { background: #fdf9e7; }
+        .prof-table .highlight { font-weight: bold; color: #b8860b; }
+
+        /* Catalyst warning box */
+        .warning-box {
+            background: #fff8e1;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin: 14px 0;
+            color: #7a5800;
+            font-size: 15px;
+        }
+        .warning-box strong { color: #d97600; }
+
+        /* Cost badges */
+        .cost-free { color: #2e7d32; font-weight: bold; }
+        .cost-gold { color: #b8860b; font-weight: bold; }
+        .cost-diamond { color: #1565c0; font-weight: bold; }
+
+        /* How-to steps */
+        .steps-list {
+            list-style: none;
+            padding: 0;
+            counter-reset: steps;
+        }
+        .steps-list li {
+            counter-increment: steps;
+            background: white;
+            border-radius: 10px;
+            padding: 14px 18px 14px 60px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            position: relative;
+            color: #333;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        .steps-list li::before {
+            content: counter(steps);
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #5c2d91, #b8860b);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* Tips grid */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin: 14px 0;
+        }
+        .tip-card {
+            background: white;
+            border-radius: 10px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-left: 4px solid #ffd700;
+        }
+        .tip-card .tip-icon { font-size: 1.6em; margin-bottom: 6px; }
+        .tip-card h4 { color: #5c2d91; margin: 0 0 6px; font-size: 0.95em; }
+        .tip-card p { font-size: 14px; color: #555; margin: 0; line-height: 1.4; }
+
+        /* Proficiency browser */
+        .browser-section {
+            background: linear-gradient(135deg, #5c2d91 0%, #9b59b6 100%);
+            padding: 28px;
+            border-radius: 15px;
+            margin: 22px 0;
+            color: white;
+        }
+        .browser-section h2 {
+            margin: 0 0 16px;
+            color: white;
+            text-align: center;
+        }
+        .browser-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 14px;
+            align-items: center;
+        }
+        #profSearch {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px 16px;
+            font-size: 15px;
+            border: none;
+            border-radius: 25px;
+            outline: none;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-bottom: 16px;
+        }
+        .filter-btn {
+            padding: 6px 14px;
+            border: 2px solid rgba(255,255,255,0.5);
+            border-radius: 20px;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: #ffd700;
+            border-color: #ffd700;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Proficiency table inside browser */
+        #profTableWrapper {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        #profTable {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #profTable th {
+            background: #5c2d91;
+            color: white;
+            padding: 11px 14px;
+            text-align: left;
+            border: none;
+            font-size: 14px;
+        }
+        #profTable td {
+            padding: 9px 14px;
+            border-bottom: 1px solid #eee;
+            color: #333;
+            font-size: 14px;
+        }
+        #profTable tbody tr:last-child td { border-bottom: none; }
+        #profTable tbody tr:hover { background: #fdf9e7; }
+        .cat-badge {
+            display: inline-block;
+            padding: 2px 9px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        .cat-combat       { background: #fde8e8; color: #c0392b; }
+        .cat-defense      { background: #e8f4fd; color: #1565c0; }
+        .cat-movement     { background: #e8fdf0; color: #1b5e20; }
+        .cat-profession   { background: #fef9e7; color: #7d6608; }
+        .cat-charm        { background: #f3e5f5; color: #6a1b9a; }
+        .cat-ability      { background: #e3f2fd; color: #0d47a1; }
+        .cat-status       { background: #fce4ec; color: #880e4f; }
+        .cat-move         { background: #e8f5e9; color: #2e7d32; }
+        .cat-type-boost   { background: #fff3e0; color: #e65100; }
+        .cat-mega         { background: #f9fbe7; color: #558b2f; }
+        .cat-utility      { background: #ede7f6; color: #4527a0; }
+        .cat-pvp          { background: #fbe9e7; color: #bf360c; }
+
+        #profCount {
+            color: rgba(255,255,255,0.85);
+            font-size: 13px;
+            margin-bottom: 8px;
+            text-align: right;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="menu-btn">☰</div>
+        <nav class="nav">
+            <ul>
+                <li><a href="/" class="logo-button"><img src="/fl-boton.png" alt="Logo"></a></li>
+                <li><a href="/index.html" class="border">Inicio</a></li>
+                <li><a href="/guias-consejos.html" class="border active">Guías/Consejos</a></li>
+                <li><a href="/reglas.html" class="border">Reglas</a></li>
+                <li><a href="/eventos.html" class="border">Eventos</a></li>
+                <li><a href="/contacto.html" class="border">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Hero -->
+        <div class="proficiency-hero">
+            <h1>⭐ Sistema de Proficiencia</h1>
+            <p>Ruta de maestría personalizada para tus Pokémon — vinculada a tu personaje, no al Pokémon.</p>
+        </div>
+
+        <!-- Mechanics -->
+        <section>
+            <h2 class="section-title">Mecánicas Fundamentales</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Progreso por Cuenta</h3>
+                    <p>La proficiencia está ligada a <strong>tu personaje</strong>. Si alcanzas Nivel 8 con un Charizard, todos tus Charizard tendrán ese nivel. Si vendes uno, el comprador empieza de cero — pero tú mantendrás tu progreso.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Subida Simultánea</h3>
+                    <p>Al ganar EXP, esta se distribuye en <strong>todas las barras de nivel a la vez</strong>. Los primeros niveles se completarán mucho antes que los últimos.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Flexibilidad (Builds)</h3>
+                    <p>En cada nivel puedes elegir un bono entre 3–4 opciones. Puedes <strong>cambiar tu elección en cualquier momento</strong> dentro de zonas de protección (clic derecho para deseleccionar).</p>
+                </div>
+                <div class="info-card">
+                    <h3>Elegibilidad</h3>
+                    <p>El sistema aplica a Pokémon de Kanto, Johto, Hoenn y formas regionales (incluyendo Shinies y Clones). Se centra en <strong>evoluciones finales</strong>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXP Sources -->
+        <section>
+            <h2 class="section-title">Cómo Ganar EXP</h2>
+
+            <h3 style="color:#5c2d91; margin-bottom:10px;">Derrotando Pokémon</h3>
+            <table class="prof-table">
+                <thead>
+                    <tr>
+                        <th>Categoría de Pokémon</th>
+                        <th>EXP Otorgada</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Easy (Fácil)</td><td>50</td></tr>
+                    <tr><td>Normal</td><td>75</td></tr>
+                    <tr><td>Medium (Medio)</td><td>90</td></tr>
+                    <tr><td>Rare (Raro)</td><td>110</td></tr>
+                    <tr><td>Very Rare / Cloned</td><td>140</td></tr>
+                    <tr><td>Shiny</td><td>220</td></tr>
+                    <tr><td class="highlight">BOSS POKÉMON</td><td class="highlight">15,000</td></tr>
+                </tbody>
+            </table>
+
+            <h3 style="color:#5c2d91; margin: 20px 0 10px;">Catalizadores de Proficiencia (Ítems)</h3>
+            <p style="font-size:15px; color:#444; margin-bottom:10px;">Para usarlos: haz clic en el ítem y luego en el Pokémon deseado.</p>
+            <table class="prof-table">
+                <thead>
+                    <tr>
+                        <th>Ítem</th>
+                        <th>EXP Otorgada</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Proficiency Catalyst</td><td>30,000 EXP</td></tr>
+                    <tr><td>Greater Proficiency Catalyst</td><td>120,000 EXP</td></tr>
+                </tbody>
+            </table>
+            <div class="warning-box">
+                <strong>⚠️ IMPORTANTE:</strong> La EXP de los catalizadores <strong>NO se desborda (no hay overflow)</strong>. Si tu límite de nivel actual es menor a la EXP del ítem, el exceso se <strong>perderá</strong>. Desbloquea los niveles con dinero o diamantes <em>antes</em> de usar los catalizadores.
+            </div>
+        </section>
+
+        <!-- Level Unlock Costs -->
+        <section>
+            <h2 class="section-title">Desbloqueo de Niveles y Costos</h2>
+            <p style="font-size:15px; color:#444; margin-bottom:14px;">Aunque acumules EXP, debes desbloquear el acceso a los niveles superiores para activar sus bonos.</p>
+            <table class="prof-table">
+                <thead>
+                    <tr>
+                        <th>Niveles</th>
+                        <th>Requisito de EXP</th>
+                        <th>Costo de Desbloqueo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Lvl 1</td><td>1,500</td><td class="cost-free">Gratis</td></tr>
+                    <tr><td>Lvl 2</td><td>3,000</td><td class="cost-free">Gratis</td></tr>
+                    <tr><td>Lvl 3</td><td>10,500</td><td class="cost-free">Gratis</td></tr>
+                    <tr><td>Lvl 4</td><td>95,000</td><td class="cost-gold">5,000 Oro</td></tr>
+                    <tr><td>Lvl 5</td><td>300,000</td><td class="cost-gold">5,000 Oro</td></tr>
+                    <tr><td>Lvl 6</td><td>1,000,000</td><td class="cost-diamond">3 Diamantes</td></tr>
+                    <tr><td>Lvl 7</td><td>3,000,000</td><td class="cost-diamond">3 Diamantes</td></tr>
+                    <tr><td>Lvl 8</td><td>5,500,000</td><td class="cost-diamond">3 Diamantes</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- How to configure -->
+        <section>
+            <h2 class="section-title">Cómo Configurar tus Bonos</h2>
+            <ol class="steps-list">
+                <li><strong>Abrir Menú:</strong> Usa <kbd>Ctrl + Clic Izquierdo</kbd> sobre la Pokéball equipada, o la opción <em>"Set Proficiency"</em> en el menú contextual del Pokémon.</li>
+                <li><strong>Elegir Bono:</strong> Haz clic en el icono del bono que desees activar. Los niveles bloqueados aparecerán con el texto <em>"LOCKED"</em>.</li>
+                <li><strong>Ver Detalles:</strong> Pasa el ratón sobre el icono para ver qué hace cada bono.</li>
+                <li><strong>Cambiar Bono:</strong> En cualquier zona de protección puedes hacer <strong>clic derecho</strong> para deseleccionar y elegir otra opción.</li>
+            </ol>
+        </section>
+
+        <!-- Strategic Tips -->
+        <section>
+            <h2 class="section-title">Consejos estratégicos</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h4>Prioriza los Bosses</h4>
+                    <p>Matar un solo Boss otorga <strong>15,000 EXP</strong> — más que cientos de Pokémon comunes. Es la forma más eficiente de subir niveles altos.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>No malgastes catalizadores</h4>
+                    <p>Revisa tu barra de EXP antes de usar un catalizador. Si estás cerca del límite de un nivel bloqueado, <strong>págalo primero</strong> — la EXP sobrante se pierde.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>Adaptabilidad</h4>
+                    <p>Cambia tus bonos según la actividad. Si vas a pescar, activa bonos de pesca; en torneo, prioriza daño y resistencias.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>Shinies y clones</h4>
+                    <p>El sistema incluye proficiency para Shinies y Clones. Derrotar Pokémon Shiny da <strong>220 EXP</strong> — más del doble que un Pokémon normal.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Proficiency Browser -->
+        <section>
+            <div class="browser-section">
+                <h2>Explorador de Proficiencias</h2>
+
+                <div class="browser-controls">
+                    <input type="text" id="profSearch" placeholder="Buscar proficiencia...">
+                </div>
+
+                <div class="category-filters" id="categoryFilters">
+                    <!-- Buttons injected by JS -->
+                </div>
+
+                <div id="profCount"></div>
+
+                <div id="profTableWrapper">
+                    <table id="profTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Descripción</th>
+                                <th>Categoría</th>
+                            </tr>
+                        </thead>
+                        <tbody id="profTableBody">
+                            <!-- Rows injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2025 Fairy Legion <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in"> / Desarrollado por Silvarion</a></p>
+    </footer>
+
+    <script src="Proficiency.js"></script>
+    <script src="script.js"></script>
+    <script src="pagination.js"></script>
+</body>
+
+</html>
