@@ -268,6 +268,51 @@
             text-align: right;
         }
 
+        /* Pokemon tags in table */
+        .pokemon-cell {
+            max-width: 320px;
+        }
+        .pokemon-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .pokemon-tags.collapsed {
+            max-height: 28px;
+            overflow: hidden;
+        }
+        .pokemon-tag {
+            display: inline-block;
+            background: #eee8f5;
+            color: #5c2d91;
+            font-size: 11px;
+            padding: 2px 7px;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+        .pokemon-tag.highlight {
+            background: #ffd700;
+            color: #333;
+            font-weight: bold;
+        }
+        .pokemon-toggle {
+            display: inline-block;
+            margin-top: 4px;
+            font-size: 11px;
+            color: #5c2d91;
+            cursor: pointer;
+            font-weight: bold;
+            user-select: none;
+        }
+        .pokemon-toggle:hover {
+            text-decoration: underline;
+        }
+        .pokemon-none {
+            font-size: 12px;
+            color: #999;
+            font-style: italic;
+        }
+
     </style>
 </head>
 
@@ -424,7 +469,7 @@
                 <h2>Explorador de Proficiencias</h2>
 
                 <div class="browser-controls">
-                    <input type="text" id="profSearch" placeholder="Buscar proficiencia...">
+                    <input type="text" id="profSearch" placeholder="Buscar por proficiencia o nombre de Pokémon...">
                 </div>
 
                 <div class="category-filters" id="categoryFilters">
@@ -440,6 +485,7 @@
                                 <th>#</th>
                                 <th>Descripción</th>
                                 <th>Categoría</th>
+                                <th>Pokémon</th>
                             </tr>
                         </thead>
                         <tbody id="profTableBody">
@@ -456,6 +502,7 @@
         <p>© 2025 Fairy Legion <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in"> / Desarrollado por Silvarion</a></p>
     </footer>
 
+    <script src="proficiency-pokemon-data.js"></script>
     <script src="Proficiency.js"></script>
     <script src="script.js"></script>
     <script src="pagination.js"></script>

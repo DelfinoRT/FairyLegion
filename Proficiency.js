@@ -215,7 +215,7 @@ function getCategoryBadge(catKey) {
     return `<span class="cat-badge ${cat.css}">${cat.label}</span>`;
 }
 
-function renderTable(data) {
+function renderTable(data, searchQuery) {
     const tbody = document.getElementById('profTableBody');
     const count = document.getElementById('profCount');
     if (!tbody) return;
@@ -224,12 +224,41 @@ function renderTable(data) {
 
     tbody.innerHTML = data.map(p => {
         const [id, desc, cat] = p;
+        const pokemons = (typeof proficiencyPokemonMap !== 'undefined' && proficiencyPokemonMap[id]) || [];
+        const pokemonHtml = buildPokemonCell(pokemons, id, searchQuery);
         return `<tr>
             <td>${id}</td>
             <td>${desc}</td>
             <td>${getCategoryBadge(cat)}</td>
+            <td class="pokemon-cell">${pokemonHtml}</td>
         </tr>`;
     }).join('');
+}
+
+function buildPokemonCell(pokemons, profId, searchQuery) {
+    if (!pokemons.length) return '<span class="pokemon-none">—</span>';
+
+    const VISIBLE_COUNT = 5;
+    const tags = pokemons.map(name => {
+        const isMatch = searchQuery && name.toLowerCase().includes(searchQuery);
+        return `<span class="pokemon-tag${isMatch ? ' highlight' : ''}">${name}</span>`;
+    }).join('');
+
+    if (pokemons.length <= VISIBLE_COUNT) {
+        return `<div class="pokemon-tags">${tags}</div>`;
+    }
+
+    return `<div class="pokemon-tags collapsed" id="ptags-${profId}">${tags}</div>` +
+           `<span class="pokemon-toggle" onclick="togglePokemonTags(${profId})">${pokemons.length} Pokémon ▾</span>`;
+}
+
+function togglePokemonTags(profId) {
+    const el = document.getElementById('ptags-' + profId);
+    const toggle = el.nextElementSibling;
+    const isCollapsed = el.classList.contains('collapsed');
+    el.classList.toggle('collapsed');
+    const count = el.children.length;
+    toggle.textContent = isCollapsed ? 'Ocultar ▴' : `${count} Pokémon ▾`;
 }
 
 function buildCategoryFilters() {
@@ -256,10 +285,19 @@ function getFiltered(searchQuery, activeCat) {
     return proficiencies.filter(p => {
         const [id, desc, cat] = p;
         const matchesCat = activeCat === 'all' || cat === activeCat;
-        const matchesSearch = !searchQuery ||
-            desc.toLowerCase().includes(searchQuery) ||
+        if (!matchesCat) return false;
+        if (!searchQuery) return true;
+
+        // Match by description or ID
+        const matchesDesc = desc.toLowerCase().includes(searchQuery) ||
             String(id).includes(searchQuery);
-        return matchesCat && matchesSearch;
+        if (matchesDesc) return true;
+
+        // Match by Pokemon name
+        if (typeof proficiencyPokemonMap !== 'undefined' && proficiencyPokemonMap[id]) {
+            return proficiencyPokemonMap[id].some(name => name.toLowerCase().includes(searchQuery));
+        }
+        return false;
     });
 }
 
@@ -272,11 +310,11 @@ function initProficiencyBrowser() {
     const searchInput = document.getElementById('profSearch');
     const filterContainer = document.getElementById('categoryFilters');
 
-    renderTable(getFiltered(searchQuery, activeCat));
+    renderTable(getFiltered(searchQuery, activeCat), searchQuery);
 
     searchInput.addEventListener('input', function () {
         searchQuery = this.value.toLowerCase().trim();
-        renderTable(getFiltered(searchQuery, activeCat));
+        renderTable(getFiltered(searchQuery, activeCat), searchQuery);
     });
 
     filterContainer.addEventListener('click', function (e) {
@@ -285,7 +323,7 @@ function initProficiencyBrowser() {
         filterContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         activeCat = btn.dataset.cat;
-        renderTable(getFiltered(searchQuery, activeCat));
+        renderTable(getFiltered(searchQuery, activeCat), searchQuery);
     });
 }
 
