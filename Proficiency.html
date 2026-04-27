@@ -27,6 +27,30 @@
             font-size: 1.1em;
             opacity: 0.95;
         }
+        .quick-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .quick-nav-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.45);
+            padding: 9px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .quick-nav-btn:hover {
+            background: #ffd700;
+            border-color: #ffd700;
+            color: #333;
+        }
 
         /* Info cards grid */
         .info-grid {
@@ -180,7 +204,8 @@
             margin-bottom: 14px;
             align-items: center;
         }
-        #profSearch {
+        #profSearch,
+        #pokemonSearch {
             flex: 1;
             min-width: 200px;
             padding: 10px 16px;
@@ -189,6 +214,25 @@
             border-radius: 25px;
             outline: none;
             box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        .control-btn,
+        .control-select {
+            border: none;
+            border-radius: 20px;
+            padding: 9px 14px;
+            font-size: 13px;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+        }
+        .control-btn {
+            background: #ffd700;
+            color: #333;
+            font-weight: bold;
+        }
+        .control-select {
+            background: white;
+            color: #333;
+            min-width: 160px;
         }
         .category-filters {
             display: flex;
@@ -268,6 +312,13 @@
             text-align: right;
         }
 
+        #pokemonCount {
+            color: rgba(255,255,255,0.85);
+            font-size: 13px;
+            margin-bottom: 8px;
+            text-align: right;
+        }
+
         /* Pokemon tags in table */
         .pokemon-cell {
             max-width: 320px;
@@ -313,6 +364,162 @@
             font-style: italic;
         }
 
+        /* Pokemon browser table */
+        #pokemonTableWrapper {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        #pokemonTable {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #pokemonTable th {
+            background: #5c2d91;
+            color: white;
+            padding: 11px 14px;
+            text-align: left;
+            border: none;
+            font-size: 14px;
+        }
+        #pokemonTable td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #eee;
+            color: #333;
+            font-size: 14px;
+            vertical-align: top;
+        }
+        #pokemonTable tbody tr:last-child td { border-bottom: none; }
+        #pokemonTable tbody tr:hover { background: #fdf9e7; }
+        .pokemon-name {
+            font-weight: bold;
+            color: #5c2d91;
+        }
+        .prof-chip-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .prof-chip {
+            display: inline-block;
+            background: #f5eefc;
+            color: #4a1f73;
+            border: 1px solid #dfc8f7;
+            border-radius: 12px;
+            font-size: 11px;
+            padding: 3px 8px;
+            white-space: normal;
+            line-height: 1.25;
+        }
+        .prof-chip.match {
+            background: #ffd700;
+            border-color: #ffd700;
+            color: #333;
+            font-weight: bold;
+        }
+        .level-groups {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 8px;
+        }
+        .level-card {
+            border: 1px solid #e6dcf3;
+            background: #fcf9ff;
+            border-radius: 10px;
+            padding: 8px;
+        }
+        .level-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+        .level-badge {
+            background: #5c2d91;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        .level-count {
+            color: #6a6475;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .level-empty {
+            color: #999;
+            font-size: 11px;
+            font-style: italic;
+        }
+        .pokemon-prof-toggle {
+            display: inline-block;
+            margin-top: 6px;
+            font-size: 11px;
+            color: #5c2d91;
+            cursor: pointer;
+            font-weight: bold;
+            user-select: none;
+        }
+        .pokemon-prof-toggle:hover {
+            text-decoration: underline;
+        }
+
+        .muted-note {
+            color: rgba(255,255,255,0.9);
+            font-size: 13px;
+            margin: -4px 0 12px;
+            text-align: center;
+        }
+
+        #scrollToTopBtn {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            z-index: 999;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            background: #ffd700;
+            color: #3a2a00;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+        }
+        #scrollToTopBtn:hover {
+            transform: translateY(-1px);
+            background: #ffea55;
+        }
+
+        @media (max-width: 768px) {
+            .quick-nav {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .quick-nav-btn {
+                text-align: center;
+            }
+            .control-select {
+                min-width: 0;
+                width: 100%;
+            }
+            .control-btn {
+                width: 100%;
+            }
+            #profTableWrapper,
+            #pokemonTableWrapper {
+                overflow-x: auto;
+            }
+            #profTable,
+            #pokemonTable {
+                min-width: 680px;
+            }
+        }
+
     </style>
 </head>
 
@@ -337,6 +544,10 @@
         <div class="proficiency-hero">
             <h1>⭐ Sistema de Proficiencia</h1>
             <p>Ruta de maestría personalizada para tus Pokémon — vinculada a tu personaje, no al Pokémon.</p>
+            <div class="quick-nav">
+                <a class="quick-nav-btn" href="#proficiency-explorer">Ir al Explorador de Proficiencias</a>
+                <a class="quick-nav-btn" href="#pokemon-search">Ir al Buscador por Pokémon</a>
+            </div>
         </div>
 
         <!-- Mechanics -->
@@ -345,7 +556,7 @@
             <div class="info-grid">
                 <div class="info-card">
                     <h3>Progreso por Cuenta</h3>
-                    <p>La proficiencia está ligada a <strong>tu personaje</strong>. Si alcanzas Nivel 8 con un Charizard, todos tus Charizard tendrán ese nivel. Si vendes uno, el comprador empieza de cero, pero tú mantendrás tu progreso.</p>
+                    <p>La proficiencia está ligada a <strong>tu personaje</strong>. Si alcanzas Nivel 9 con un Charizard, todos tus Charizard tendrán ese nivel. Si vendes uno, el comprador empieza de cero, pero tú mantendrás tu progreso.</p>
                 </div>
                 <div class="info-card">
                     <h3>Subida Simultánea</h3>
@@ -425,8 +636,12 @@
                     <tr><td>Lvl 6</td><td>1,000,000</td><td class="cost-diamond">3 Diamantes</td></tr>
                     <tr><td>Lvl 7</td><td>3,000,000</td><td class="cost-diamond">3 Diamantes</td></tr>
                     <tr><td>Lvl 8</td><td>5,500,000</td><td class="cost-diamond">3 Diamantes</td></tr>
+                    <tr><td>Lvl 9</td><td>Especial</td><td class="cost-diamond">Desbloqueo avanzado (solo Pokémon que pueden evolucionar)</td></tr>
                 </tbody>
             </table>
+            <div class="warning-box">
+                <strong>Nota de actualización:</strong> El árbol actual incluye un <strong>Nivel 9</strong> para desbloqueo de slot adicional de held item, pero <strong>solo aplica a Pokémon que pueden evolucionar</strong> según la configuración actual.
+            </div>
         </section>
 
         <!-- How to configure -->
@@ -464,12 +679,19 @@
         </section>
 
         <!-- Proficiency Browser -->
-        <section>
+        <section id="proficiency-explorer">
             <div class="browser-section">
                 <h2>Explorador de Proficiencias</h2>
+                <p class="muted-note">Busca por ID, descripción o Pokémon, filtra por categoría y ordena resultados.</p>
 
                 <div class="browser-controls">
                     <input type="text" id="profSearch" placeholder="Buscar por proficiencia o nombre de Pokémon...">
+                    <select id="profSort" class="control-select">
+                        <option value="id-asc">Orden: ID (menor a mayor)</option>
+                        <option value="id-desc">Orden: ID (mayor a menor)</option>
+                        <option value="pokemon-desc">Orden: más Pokémon primero</option>
+                    </select>
+                    <button id="profClear" class="control-btn" type="button">Limpiar</button>
                 </div>
 
                 <div class="category-filters" id="categoryFilters">
@@ -496,14 +718,53 @@
             </div>
         </section>
 
+        <!-- Pokemon Browser -->
+        <section id="pokemon-search">
+            <div class="browser-section">
+                <h2>Buscador por Pokémon</h2>
+                <p class="muted-note">Encuentra un Pokémon y revisa todas sus proficiencias disponibles en una sola vista.</p>
+
+                <div class="browser-controls">
+                    <input type="text" id="pokemonSearch" placeholder="Buscar Pokémon (ej. Charizard, Gengar, Salamence)...">
+                    <select id="pokemonSort" class="control-select">
+                        <option value="name-asc">Orden: Nombre (A-Z)</option>
+                        <option value="name-desc">Orden: Nombre (Z-A)</option>
+                        <option value="count-desc">Orden: más proficiencias</option>
+                    </select>
+                    <button id="pokemonClear" class="control-btn" type="button">Limpiar</button>
+                </div>
+
+                <div id="pokemonCount"></div>
+
+                <div id="pokemonTableWrapper">
+                    <table id="pokemonTable">
+                        <thead>
+                            <tr>
+                                <th>Pokémon</th>
+                                <th>Total</th>
+                                <th>Proficiencias por nivel (L1-L9)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pokemonTableBody">
+                            <!-- Rows injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer>
         <p>© 2025 Fairy Legion <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in"> / Desarrollado por Silvarion</a></p>
     </footer>
 
+    <button id="scrollToTopBtn" title="Volver arriba" aria-label="Volver arriba">↑</button>
+
     <script src="proficiency-pokemon-data.js"></script>
+    <script src="pokemon-proficiency-level-data.js"></script>
     <script src="Proficiency.js"></script>
+    <script src="scrollToTop.js"></script>
     <script src="script.js"></script>
     <script src="pagination.js"></script>
 </body>
