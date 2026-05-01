@@ -86,6 +86,7 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
   const previewImg = document.getElementById('preview-pokemon-img');
   const previewName = document.getElementById('preview-pokemon-name');
   const previewMeta = document.getElementById('preview-pokemon-meta');
+  const previewBall = document.getElementById('preview-pokeball-img');
   const cards = Array.from(document.querySelectorAll('.collection-section .pokemon-card'));
   const hintStorageKey = 'silvarion-monitor-click-note-seen';
 
@@ -102,6 +103,7 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
   previewImg.removeAttribute('src');
   previewName.textContent = 'Selecciona un Pokemon';
   previewMeta.textContent = 'para mostrar sus detalles';
+  if (previewBall) previewBall.removeAttribute('src');
 
   let selectedCard = null;
 
@@ -114,6 +116,10 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
     const meta = names[1] ? names[1].textContent.trim() : 'Sex / Ability';
     const src = sprite.getAttribute('src') || '';
     const alt = sprite.getAttribute('alt') || name;
+    const section = card.closest('.collection-section');
+    const ballEl = section ? section.querySelector('.ball-icon') : null;
+    const ballSrc = ballEl ? (ballEl.getAttribute('src') || '') : '';
+    const ballAlt = ballEl ? (ballEl.getAttribute('alt') || '') : '';
 
     preview.classList.add('is-updating');
 
@@ -122,6 +128,14 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
       previewImg.setAttribute('alt', alt);
       previewName.textContent = name;
       previewMeta.textContent = meta;
+      if (previewBall) {
+        if (ballSrc) {
+          previewBall.setAttribute('src', ballSrc);
+          previewBall.setAttribute('alt', ballAlt);
+        } else {
+          previewBall.removeAttribute('src');
+        }
+      }
       preview.classList.remove('is-updating');
     }, 80);
 
