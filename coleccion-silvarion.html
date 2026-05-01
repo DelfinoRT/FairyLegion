@@ -46,33 +46,6 @@
                   </div>
                 </aside>
 
-                <!-- Últimos 5 Pokémon añadidos -->
-                <section class="collection-section" id="last-pokemon-section">
-                  <h2 class="last-pokemon-title">Últimos 5 Pokémon añadidos</h2>
-                  <ul id="last-pokemon-list">
-                    <li>
-                      <img src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
-                      <span>Shiny Pyroar (Marzo-06-2026)</span>
-                    </li>
-                    <li>
-                      <img src="ColeccionSilvarion/fastBall.gif" alt="Fast Ball">
-                      <span>Cloned Raichu (Abril-14-2026)</span>
-                    </li>
-                    <li>
-                      <img src="ColeccionSilvarion/dreamBall.gif" alt="Dream Ball">
-                      <span>Shiny Delphox (Abril-19-2026)</span>
-                    </li>
-                    <li>
-                      <img src="ColeccionSilvarion/heavyBall.gif" alt="Heavy Ball">
-                      <span>Cloned Onix (Abril-27-2026)</span>
-                    </li>
-                    <li>
-                      <img src="ColeccionSilvarion/cherishBall.gif" alt="Cherish Ball">
-                      <span>Shiny Magcargo (Abril-29-2026)</span>
-                    </li>
-                  </ul>
-                </section>
-
                 <section class="collection-section white">
                   <button class="collapsible-header" type="button">
                     <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-pokeball.png" alt="Poke Ball icon"> Poke Ball</span>
@@ -1204,10 +1177,36 @@
                   // Show total pokemon count in button
                   (function() {
                     var totalBtn = document.getElementById('total-pokemon-btn');
-                    if (totalBtn) {
-                      var total = document.querySelectorAll('.pokemon-card').length;
-                      totalBtn.textContent = 'Pokémon en esta colección: ' + total;
+                    if (!totalBtn) return;
+
+                    var total = document.querySelectorAll('.pokemon-card').length;
+                    var label = 'Pokémon en esta colección: ';
+                    var durationMs = 3000;
+
+                    totalBtn.textContent = label + '0';
+
+                    if (total <= 0) return;
+
+                    var startTime = null;
+
+                    function animateCounter(timestamp) {
+                      if (startTime === null) startTime = timestamp;
+
+                      var elapsed = timestamp - startTime;
+                      var progress = Math.min(elapsed / durationMs, 1);
+                      var eased = 1 - Math.pow(1 - progress, 3);
+                      var current = Math.round(total * eased);
+
+                      totalBtn.textContent = label + current;
+
+                      if (progress < 1) {
+                        window.requestAnimationFrame(animateCounter);
+                      } else {
+                        totalBtn.textContent = label + total;
+                      }
                     }
+
+                    window.requestAnimationFrame(animateCounter);
                   })();
                   // Pokémon search bar functionality
                   (function() {
