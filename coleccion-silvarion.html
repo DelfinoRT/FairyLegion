@@ -2,10 +2,11 @@
               <html lang="es">
               <head>
                 <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Colección Silvarion</title>
                 <link rel="preconnect" href="https://fonts.googleapis.com">
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-                <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@400;500;600&display=swap" rel="stylesheet">
+                <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
                 <link rel="stylesheet" href="coleccion-silvarion.css">
               </head>
               <body>
@@ -30,6 +31,17 @@
                   <input id="pokemon-search-input" class="search-input" type="text" placeholder="Buscar Pokémon...">
                   <button id="clear-search-btn" class="clear-btn">Limpiar</button>
                 </div>
+
+                <aside id="pokemon-hover-preview" class="pokemon-hover-preview" aria-live="polite">
+                  <div class="preview-shell-label">Monitor Link</div>
+                  <div class="preview-screen-frame">
+                    <div class="preview-screen">
+                      <img id="preview-pokemon-img" src="" alt="Vista previa de Pokemon">
+                    </div>
+                  </div>
+                  <div id="preview-pokemon-name" class="preview-pokemon-name">Hover a Pokemon</div>
+                  <div id="preview-pokemon-meta" class="preview-pokemon-meta">Sex / Ability</div>
+                </aside>
 
                 <!-- Últimos 5 Pokémon añadidos -->
                 <section class="collection-section" id="last-pokemon-section">
