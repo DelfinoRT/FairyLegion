@@ -89,8 +89,107 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
   const previewBall = document.getElementById('preview-pokeball-img');
   const cards = Array.from(document.querySelectorAll('.collection-section .pokemon-card'));
   const hintStorageKey = 'silvarion-monitor-click-note-seen';
+  const createGlitchTextController = (element) => {
+    if (!element) return null;
+
+    let chars = [];
+    let resizeRaf = 0;
+
+    const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+    const fitTextToWidth = () => {
+      const computed = window.getComputedStyle(element);
+      const minFontSize = 10;
+      const baseFontSize = Number.parseFloat(element.dataset.baseFontSize || computed.fontSize) || 24;
+
+      if (!element.dataset.baseFontSize) {
+        element.dataset.baseFontSize = String(baseFontSize);
+      }
+
+      element.style.fontSize = `${baseFontSize}px`;
+      element.style.transform = 'none';
+      element.style.transformOrigin = 'center center';
+
+      if (element.clientWidth <= 0) return;
+
+      let nextSize = baseFontSize;
+      while (element.scrollWidth > element.clientWidth && nextSize > minFontSize) {
+        nextSize -= 0.5;
+        element.style.fontSize = `${nextSize}px`;
+      }
+
+      if (element.scrollWidth > element.clientWidth) {
+        const ratio = element.clientWidth / element.scrollWidth;
+        const safeRatio = Math.max(0.78, Math.min(1, ratio));
+        element.style.transform = `scale(${safeRatio})`;
+      }
+    };
+
+    const setText = (value) => {
+      const rawText = typeof value === 'string' ? value : '';
+      element.setAttribute('aria-label', rawText);
+      element.classList.add('glitch-text');
+      element.textContent = '';
+
+      const fragment = document.createDocumentFragment();
+      rawText.split('').forEach((char) => {
+        const span = document.createElement('span');
+        span.className = 'glitch-char';
+        span.textContent = char === ' ' ? '\u00A0' : char;
+        fragment.appendChild(span);
+      });
+
+      element.appendChild(fragment);
+
+      chars = Array.from(element.querySelectorAll('.glitch-char')).filter((node) => node.textContent.trim() !== '');
+
+      window.requestAnimationFrame(fitTextToWidth);
+    };
+
+    const triggerGlitch = () => {
+      if (chars.length === 0) return;
+
+      element.classList.add('old-school-flash');
+      window.setTimeout(() => {
+        element.classList.remove('old-school-flash');
+      }, randomInt(170, 310));
+
+      const totalChars = randomInt(1, Math.min(3, chars.length));
+      for (let index = 0; index < totalChars; index += 1) {
+        const target = chars[randomInt(0, chars.length - 1)];
+        if (!target) continue;
+
+        target.classList.add('is-glitching');
+        window.setTimeout(() => {
+          target.classList.remove('is-glitching');
+        }, randomInt(130, 280));
+      }
+    };
+
+    const scheduleGlitch = () => {
+      window.setTimeout(() => {
+        triggerGlitch();
+        scheduleGlitch();
+      }, randomInt(1300, 3000));
+    };
+
+    const onResize = () => {
+      if (resizeRaf) {
+        window.cancelAnimationFrame(resizeRaf);
+      }
+      resizeRaf = window.requestAnimationFrame(fitTextToWidth);
+    };
+
+    window.addEventListener('resize', onResize);
+
+    scheduleGlitch();
+
+    return { setText, triggerGlitch };
+  };
 
   if (!previewImg || !previewName || !previewMeta || cards.length === 0) return;
+
+  const previewNameGlitch = createGlitchTextController(previewName);
 
   const hint = document.createElement('p');
   hint.className = 'preview-behavior-note';
@@ -101,7 +200,11 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
   }
 
   previewImg.removeAttribute('src');
-  previewName.textContent = 'Selecciona un Pokemon';
+  if (previewNameGlitch) {
+    previewNameGlitch.setText('Selecciona un Pokemon');
+  } else {
+    previewName.textContent = 'Selecciona un Pokemon';
+  }
   previewMeta.textContent = 'para mostrar sus detalles';
   if (previewBall) previewBall.removeAttribute('src');
 
@@ -126,7 +229,12 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
     window.setTimeout(() => {
       previewImg.setAttribute('src', src);
       previewImg.setAttribute('alt', alt);
-      previewName.textContent = name;
+      if (previewNameGlitch) {
+        previewNameGlitch.setText(name);
+        previewNameGlitch.triggerGlitch();
+      } else {
+        previewName.textContent = name;
+      }
       previewMeta.textContent = meta;
       if (previewBall) {
         if (ballSrc) {

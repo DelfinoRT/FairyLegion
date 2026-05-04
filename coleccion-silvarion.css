@@ -110,6 +110,32 @@ h1 {
   animation: bootDrop 650ms ease both;
 }
 
+h1.glitch-title {
+  position: relative;
+  overflow: hidden;
+}
+
+.glitch-text .glitch-char {
+  position: relative;
+  display: inline-block;
+  transition: color 120ms steps(2, end), text-shadow 120ms steps(2, end), transform 120ms steps(2, end);
+}
+
+.glitch-text .glitch-char.is-glitching {
+  animation: glitchCharShift 180ms steps(2, end) 2;
+  color: #d8ff66;
+  text-shadow: -2px 0 #1bd3ff, 2px 0 #ff3f8f;
+}
+
+.glitch-text.old-school-flash .glitch-char {
+  animation: oldSchoolPaletteFlash 240ms steps(2, end);
+}
+
+.preview-pokemon-name.glitch-text {
+  position: relative;
+  overflow: hidden;
+}
+
 .banner-silvarion-container {
   max-width: 1120px;
   margin: 0 auto 16px;
@@ -299,6 +325,8 @@ h1 {
   color: #222a37;
   font-size: 2.05rem;
   line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .preview-pokemon-meta {
@@ -664,6 +692,42 @@ body.serials-visible .pokemon-serial {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes glitchCharShift {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(-2px, 1px);
+  }
+  50% {
+    transform: translate(2px, -1px);
+  }
+  75% {
+    transform: translate(-1px, 0);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes oldSchoolPaletteFlash {
+  0% {
+    color: #1d2530;
+    text-shadow: none;
+  }
+  35% {
+    color: #d8ff66;
+    text-shadow: -2px 0 #1bd3ff, 2px 0 #ff3f8f;
+  }
+  100% {
+    color: #1d2530;
+    text-shadow: none;
   }
 }
 

@@ -13,7 +13,7 @@
 
                 <button id="toggle-serial-btn" aria-label="Mostrar seriales"></button>
 
-                <h1>Colección Silvarion</h1>
+                <h1 id="glitch-title" class="glitch-title glitch-text">Colección Silvarion</h1>
                 <div class="banner-silvarion-container">
                   <img src="ColeccionSilvarion/BannerSilvarion.png" alt="Banner Silvarion" class="banner-silvarion-img">
                 </div>
@@ -1180,6 +1180,69 @@
                       });
                     }
                   })();
+
+                  // Random glitch effect for main title
+                  (function() {
+                    var title = document.getElementById('glitch-title');
+                    if (!title) return;
+
+                    var raw = (title.textContent || '').trim();
+                    if (!raw) return;
+
+                    title.setAttribute('aria-label', raw);
+                    title.setAttribute('data-text', raw);
+                    title.classList.add('glitch-text');
+                    title.textContent = '';
+
+                    var fragment = document.createDocumentFragment();
+                    raw.split('').forEach(function(char) {
+                      var span = document.createElement('span');
+                      span.className = 'glitch-char';
+                      span.textContent = char === ' ' ? '\u00A0' : char;
+                      fragment.appendChild(span);
+                    });
+                    title.appendChild(fragment);
+
+                    var chars = Array.prototype.slice.call(title.querySelectorAll('.glitch-char')).filter(function(node) {
+                      return node.textContent && node.textContent.trim() !== '';
+                    });
+                    if (!chars.length) return;
+
+                    function randomInt(min, max) {
+                      return Math.floor(Math.random() * (max - min + 1)) + min;
+                    }
+
+                    function triggerGlitch() {
+                      title.classList.add('old-school-flash');
+                      window.setTimeout(function() {
+                        title.classList.remove('old-school-flash');
+                      }, randomInt(180, 320));
+
+                      var total = randomInt(1, 3);
+                      for (var i = 0; i < total; i++) {
+                        var target = chars[randomInt(0, chars.length - 1)];
+                        if (!target) continue;
+
+                        target.classList.add('is-glitching');
+
+                        window.setTimeout(function(node) {
+                          return function() {
+                            node.classList.remove('is-glitching');
+                          };
+                        }(target), randomInt(140, 320));
+                      }
+                    }
+
+                    function scheduleNext() {
+                      window.setTimeout(function() {
+                        triggerGlitch();
+                        scheduleNext();
+                      }, randomInt(1200, 3200));
+                    }
+
+                    scheduleNext();
+                  })();
+
                   // Add pokemon count to each section title
                   (function() {
                     var sections = document.querySelectorAll('.collection-section');
