@@ -113,6 +113,21 @@ h1 {
 h1.glitch-title {
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.title-icon {
+  width: clamp(28px, 4vw, 36px);
+  height: clamp(28px, 4vw, 36px);
+  flex: 0 0 auto;
+  image-rendering: pixelated;
+}
+
+#glitch-title {
+  display: inline-block;
 }
 
 .glitch-text .glitch-char {
