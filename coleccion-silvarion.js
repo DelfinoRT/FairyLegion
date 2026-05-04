@@ -87,6 +87,7 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
   const previewName = document.getElementById('preview-pokemon-name');
   const previewMeta = document.getElementById('preview-pokemon-meta');
   const previewBall = document.getElementById('preview-pokeball-img');
+  const previewBallContainer = previewBall ? previewBall.closest('.preview-pokeball-container') : null;
   const cards = Array.from(document.querySelectorAll('.collection-section .pokemon-card'));
   const hintStorageKey = 'silvarion-monitor-click-note-seen';
   const createGlitchTextController = (element) => {
@@ -189,6 +190,21 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
 
   if (!previewImg || !previewName || !previewMeta || cards.length === 0) return;
 
+  if (previewBall && previewBallContainer) {
+    previewBall.addEventListener('animationend', (event) => {
+      if (event.animationName !== 'monitorBallShake') return;
+
+      previewBall.classList.remove('is-capture-shaking');
+      previewBallContainer.classList.remove('is-caught-spark');
+      void previewBallContainer.offsetWidth;
+      previewBallContainer.classList.add('is-caught-spark');
+
+      window.setTimeout(() => {
+        previewBallContainer.classList.remove('is-caught-spark');
+      }, 430);
+    });
+  }
+
   const previewNameGlitch = createGlitchTextController(previewName);
 
   const hint = document.createElement('p');
@@ -237,9 +253,15 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
       }
       previewMeta.textContent = meta;
       if (previewBall) {
+        previewBall.classList.remove('is-capture-shaking');
+        if (previewBallContainer) {
+          previewBallContainer.classList.remove('is-caught-spark');
+        }
         if (ballSrc) {
           previewBall.setAttribute('src', ballSrc);
           previewBall.setAttribute('alt', ballAlt);
+          void previewBall.offsetWidth;
+          previewBall.classList.add('is-capture-shaking');
         } else {
           previewBall.removeAttribute('src');
         }
