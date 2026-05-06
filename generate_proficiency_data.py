@@ -120,7 +120,19 @@ for pid, levels in pokemon_options.items():
     if entry:
         pokemon_level_map[name] = entry
 
+# ---------- Step 5b: Build pokemonProficiencyMap (flat: name -> all prof IDs) ----------
+pokemon_flat_map = {}  # {name: sorted list of unique prof IDs}
+
+for pid, levels in pokemon_options.items():
+    name = pokemon_names.get(pid, f"Unknown#{pid}")
+    all_ids = set()
+    for level, ids in levels.items():
+        all_ids.update(ids)
+    if all_ids:
+        pokemon_flat_map[name] = sorted(all_ids)
+
 print(f"Built pokemonProficiencyLevelMap with {len(pokemon_level_map)} Pokemon.")
+print(f"Built pokemonProficiencyMap (flat) with {len(pokemon_flat_map)} Pokemon.")
 
 # ---------- Step 6: Write JS files ----------
 with open("proficiency-pokemon-data.js", "w", encoding="utf-8") as f:
@@ -142,6 +154,11 @@ with open("pokemon-proficiency-level-data.js", "w", encoding="utf-8") as f:
     f.write("const pokemonProficiencyLevelMap = ")
     sorted_map = dict(sorted(pokemon_level_map.items()))
     f.write(json.dumps(sorted_map, ensure_ascii=False, indent=2))
+    f.write(";\n\n")
+    f.write("// Maps Pokemon name -> flat array of all proficiency IDs\n")
+    f.write("const pokemonProficiencyMap = ")
+    sorted_flat = dict(sorted(pokemon_flat_map.items()))
+    f.write(json.dumps(sorted_flat, ensure_ascii=False, indent=2))
     f.write(";\n")
 
 print("Wrote pokemon-proficiency-level-data.js")
