@@ -1,3 +1,55 @@
+/* Mini Monitor Device (footer link) */
+.mini-monitor-device {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 18px;
+  margin-bottom: -8px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.mini-monitor-bezel {
+  background: #e6e3d6;
+  border: 2.5px solid #222;
+  border-radius: 13px;
+  box-shadow: 0 2px 6px #0002, 0 0.5px 0 #7c7e82;
+  padding: 7px 8px 10px 8px;
+  width: 92px;
+  position: relative;
+}
+.mini-monitor-label {
+  font-family: 'VT323', 'Courier New', monospace;
+  font-size: 10px;
+  color: #444;
+  text-align: center;
+  letter-spacing: 1.2px;
+  margin-bottom: 2px;
+}
+.mini-monitor-screen {
+  background: linear-gradient(180deg, #b5cb66 80%, #9fb65a 100%);
+  border: 2px solid #7c7e82;
+  border-radius: 7px;
+  width: 76px;
+  height: 28px;
+  margin: 0 auto 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1.5px 0 #bfcf8a, 0 0.5px 0 #7c7e82;
+  font-family: 'VT323', 'Courier New', monospace;
+  font-size: 15px;
+  color: #1f3a20;
+  letter-spacing: 2.2px;
+  overflow: hidden;
+  position: relative;
+}
+#mini-monitor-letters {
+  display: inline-block;
+  white-space: pre;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
 /* ============================================================
    COLECCION SILVARION - Nintendo Game Boy UI Revamp
    ============================================================ */
