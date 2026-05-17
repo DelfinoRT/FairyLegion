@@ -212,21 +212,25 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
       previewBall.classList.remove('is-capture-shaking');
       shakeCount++;
       if (shakeCount < 3) {
-        // Next shake after a short delay
+        // Next shake after a short delay (reduce by 30%)
         ballLoopTimeout = setTimeout(() => {
           doShake();
-        }, 80);
+        }, 56); // 80ms * 0.7
       } else {
         // Show spark
-        previewBallContainer.classList.add('is-caught-spark');
+        // Reduce delay before spark by 30% (was 80ms, now 56ms)
         ballLoopTimeout = setTimeout(() => {
-          previewBallContainer.classList.remove('is-caught-spark');
-          // Pause for 1s, then restart
+          previewBallContainer.classList.add('is-caught-spark');
+          // Spark duration remains the same (animation duration)
           ballLoopTimeout = setTimeout(() => {
-            shakeCount = 0;
-            doShake();
-          }, 1000);
-        }, 430);
+            previewBallContainer.classList.remove('is-caught-spark');
+            // Pause for 1s, then restart (30% less)
+            ballLoopTimeout = setTimeout(() => {
+              shakeCount = 0;
+              doShake();
+            }, 700); // 1000ms * 0.7
+          }, 301); // 430ms * 0.7
+        }, 56);
       }
     });
     // Start the loop if a ball is shown
