@@ -686,20 +686,20 @@ body.serials-visible .pokemon-serial {
   border-left-width: 8px;
 }
 
-.collection-section.white { border-left-color: #9f1b2f; }
-.collection-section.red { border-left-color: #7d1626; }
-.collection-section.prism { border-left-color: #5459ad; }
-.collection-section.sunrise { border-left-color: #a85e16; }
-.collection-section.blue { border-left-color: #315f8c; }
-.collection-section.pink { border-left-color: #b62f74; }
-.collection-section.crystal { border-left-color: #356678; }
+.collection-section.white { border-left-color: #cc2b44; }
+.collection-section.red { border-left-color: #9c162a; }
+.collection-section.prism { border-left-color: #262c97; }
+.collection-section.sunrise { border-left-color: #ac1178; }
+.collection-section.blue { border-left-color: #1b7ad3; }
+.collection-section.pink { border-left-color: #d849a8; }
+.collection-section.crystal { border-left-color: #4cc7e6; }
 .collection-section.gray { border-left-color: #4f545c; }
-.collection-section.darkerblue { border-left-color: #4245a5; }
+.collection-section.darkerblue { border-left-color: #22275a; }
 .collection-section.darkyellow { border-left-color: #7b6a27; }
 .collection-section.purple { border-left-color: #623f93; }
-.collection-section.green { border-left-color: #3a6e31; }
+.collection-section.green { border-left-color: #84cf2e; }
 .collection-section.darkblue { border-left-color: #2b4f7f; }
-.collection-section.yellow { border-left-color: #8f7e26; }
+.collection-section.yellow { border-left-color: #ecd930; }
 .collection-section.goldwhite { border-left-color: #8f7a3e; }
 .collection-section.rocketball { border-left-color: #56606b; }
 .collection-section.safari { border-left-color: #4d7335; }
@@ -908,4 +908,14 @@ body.serials-visible .pokemon-serial {
   .pokemon-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+#back-to-top-img {
+  width: 36px;
+  height: 36px;
+  transition: transform 0.18s ease;
+}
+
+#back-to-top-btn:hover #back-to-top-img {
+  transform: scale(1.22);
 }
