@@ -231,18 +231,20 @@
     </section>
     <button id="back-to-top" onclick="scrollToTop()">Subir ⤴</button>
     <footer>
-                <p>© 2025 Fairy Legion <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in"> / Desarrollado por Silvarion</a>
-                    <a href="coleccion-silvarion.html" id="mini-monitor-link" aria-label="Ir a la colección">
-                        <div class="mini-monitor-device">
-                            <div class="mini-monitor-bezel">
-                                <div class="mini-monitor-label">COLECCION</div>
-                                <div class="mini-monitor-screen">
-                                    <div id="mini-monitor-sprites" style="display:flex;gap:2px;align-items:center;justify-content:center;width:100%;height:100%;overflow:hidden;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </p>
+    <p>
+        © <span id="current-year"></span> Fairy Legion
+        <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in"> / Desarrollado por Silvarion</a>
+        <a href="coleccion-silvarion.html" id="mini-monitor-link" aria-label="Ir a la colección">
+        <div class="mini-monitor-device">
+            <div class="mini-monitor-bezel">
+            <div class="mini-monitor-label">MI COLECCION</div>
+            <div class="mini-monitor-screen">
+                <div id="mini-monitor-sprites" style="display:flex;gap:2px;align-items:center;justify-content:center;width:100%;height:100%;overflow:hidden;"></div>
+            </div>
+            </div>
+        </div>
+        </a>
+    </p>
     </footer>
         <script src="script.js"></script>
         <script src="gallery.js"></script>
@@ -285,6 +287,9 @@
                     setInterval(updateSprites, 650);
                     updateSprites();
                 })();
+                </script>
+                <script>
+                document.getElementById('current-year').textContent = new Date().getFullYear();
                 </script>
 
 </body>
