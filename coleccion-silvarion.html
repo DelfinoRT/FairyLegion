@@ -9,8 +9,108 @@
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
                 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
                 <link rel="stylesheet" href="coleccion-silvarion.css">
+                <style>
+                  .section-index-pixel {
+                    margin: 18px auto 0 auto;
+                    max-width: 820px;
+                    background: #e6e3d6;
+                    border: 2px solid #7a7a6c;
+                    border-radius: 10px;
+                    box-shadow: 0 2px 8px #0002;
+                    padding: 10px 0 6px 0;
+                    font-family: 'Press Start 2P', 'VT323', monospace;
+                  }
+                  .section-index-pixel .section-index-title {
+                    text-align: center;
+                    font-size: 13px;
+                    color: #4a4a3c;
+                    margin-bottom: 6px;
+                    font-family: 'Press Start 2P', 'VT323', monospace;
+                  }
+                  .section-index-pixel ul {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    gap: 16px 18px;
+                    padding: 0;
+                    margin: 0;
+                    list-style: none;
+                  }
+                  .section-index-pixel li {
+                    margin: 0;
+                    padding: 0;
+                    flex: 0 0 20%;
+                    max-width: 20%;
+                    box-sizing: border-box;
+                    display: flex;
+                    justify-content: center;
+                  }
+                  .section-index-pixel a {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    gap: 6px;
+                    padding: 8px 10px;
+                    border-radius: 6px;
+                    background: #bfcf8a;
+                    color: #2d2d1a;
+                    text-decoration: none;
+                    font-size: 13px;
+                    border: 1.5px solid #7a7a6c;
+                    transition: background 0.15s, color 0.15s;
+                    min-height: 48px;
+                    min-width: 160px;
+                    max-width: 160px;
+                    width: 160px;
+                    box-sizing: border-box;
+                    position: relative;
+                    overflow: hidden;
+                  }
+                  .section-index-pixel a .ball-icon {
+                    transition: width 0.18s, height 0.18s, margin 0.18s;
+                  }
+                  .section-index-pixel a .index-label {
+                    transition: opacity 0.18s;
+                  }
+                  .section-index-pixel a:hover,
+                  .section-index-pixel a:focus {
+                    background: #e6e3d6;
+                    color: #7a7a6c;
+                  }
+                  .section-index-pixel a:hover .index-label,
+                  .section-index-pixel a:focus .index-label {
+                    opacity: 0;
+                    pointer-events: none;
+                  }
+                  .section-index-pixel a:hover .ball-icon,
+                  .section-index-pixel a:focus .ball-icon {
+                    width: 38px !important;
+                    height: 38px !important;
+                    margin: 0 auto !important;
+                    display: block;
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    z-index: 2;
+                  }
+                  .section-index-pixel a,
+                  .section-index-pixel a:hover,
+                  .section-index-pixel a:focus {
+                    width: 160px;
+                    height: 48px;
+                  }
+                  .section-index-pixel a .ball-icon {
+                    display: inline-block;
+                  }
+                </style>
               </head>
               <body>
+
+
+
+                <!-- Section Index for Ball Types (Styled, with icons) -->
+
 
                 <button id="toggle-serial-btn" aria-label="Mostrar seriales"></button>
 
@@ -22,10 +122,35 @@
                 <div class="banner-silvarion-container">
                   <img src="ColeccionSilvarion/BannerSilvarion.png" alt="Banner Silvarion" class="banner-silvarion-img">
                 </div>
+
                 <p class="desc">
                   El objetivo de mi colección es conseguir Pokémon en ball especial dependiendo de su tipo.
                   Capturando, comprando o intercambiando, especialmente cloned, shiny, legendarios, raros, de evento y miticos.
                 </p>
+
+                <nav class="section-index-pixel">
+                  <div class="section-index-title">Ir a colección:</div>
+                  <ul>
+                    <li><a href="#pokeball"><img src="ColeccionSilvarion/icon-pokeball.gif" alt="Poke Ball" class="ball-icon" style="vertical-align:middle;width:24px;height:24px;margin-right:6px;"><span class="index-label">Poke Ball</span></a></li>
+                    <li><a href="#prismball"><img src="ColeccionSilvarion/icon-prism.gif" alt="Prism Ball" class="ball-icon" style="vertical-align:middle;width:24px;height:24px;margin-right:6px;"><span class="index-label">Prism Ball</span></a></li>
+                    <li><a href="#sunriseball"><img src="ColeccionSilvarion/icon-sunrise.gif" alt="Sunrise Ball" class="ball-icon" style="vertical-align:middle;width:24px;height:24px;margin-right:6px;"><span class="index-label">Sunrise Ball</span></a></li>
+                    <li><a href="#diveball"><img src="ColeccionSilvarion/icon-dive.gif" alt="Dive Ball" class="ball-icon" style="vertical-align:middle;width:24px;height:24px;margin-right:6px;"><span class="index-label">Dive Ball</span></a></li>
+                    <li><a href="#cherishball"><img src="ColeccionSilvarion/icon-cherish.gif" alt="Cherish Ball" class="ball-icon" style="vertical-align:middle;width:24px;height:24px;margin-right:6px;"><span class="index-label">Cherish Ball</span></a></li>
+                    <li><a href="#dreamball"><img src="ColeccionSilvarion/icon-dream.gif" alt="Dream Ball" class="ball-icon" style="vertical-align:middle;width:24px;height:24px;margin-right:6px;"><span class="index-label">Dream Ball</span></a></li>
+                    <li><a href="#crystalball"><img src="ColeccionSilvarion/icon-crystal.gif" alt="Crystal Ball" class="ball-icon" style="vertical-align:middle;width:24px;height:24px;margin-right:6px;"><span class="index-label">Crystal Ball</span></a></li>
+                    <li><a href="#heavyball"><img src="ColeccionSilvarion/icon-heavy.gif" alt="Heavy Ball" class="ball-icon" style="vertical-align:middle;width:24px;height:24px;margin-right:6px;"><span class="index-label">Heavy Ball</span></a></li>
+                    <li><a href="#moonball"><img src="ColeccionSilvarion/icon-moon.gif" alt="Moon Ball" class="ball-icon" style="vertical-align:middle;width:24px;height:24px;margin-right:6px;"><span class="index-label">Moon Ball</span></a></li>
+                    <li><a href="#ancientball"><img src="ColeccionSilvarion/icon-ancient.gif" alt="Ancient Ball" class="ball-icon" style="vertical-align:middle;width:24px;height:24px;margin-right:6px;"><span class="index-label">Ancient Ball</span></a></li>
+                    <li><a href="#phantomball"><img src="ColeccionSilvarion/icon-phantom.gif" alt="Phantom Ball" class="ball-icon" style="vertical-align:middle;width:24px;height:24px;margin-right:6px;"><span class="index-label">Phantom Ball</span></a></li>
+                    <li><a href="#mossball"><img src="ColeccionSilvarion/icon-moss.gif" alt="Moss Ball" class="ball-icon" style="vertical-align:middle;width:24px;height:24px;margin-right:6px;"><span class="index-label">Moss Ball</span></a></li>
+                    <li><a href="#aerialball"><img src="ColeccionSilvarion/icon-aerial.gif" alt="Aerial Ball" class="ball-icon" style="vertical-align:middle;width:24px;height:24px;margin-right:6px;"><span class="index-label">Aerial Ball</span></a></li>
+                    <li><a href="#fastball"><img src="ColeccionSilvarion/icon-fast.gif" alt="Fast Ball" class="ball-icon" style="vertical-align:middle;width:24px;height:24px;margin-right:6px;"><span class="index-label">Fast Ball</span></a></li>
+                    <li><a href="#clonedball"><img src="ColeccionSilvarion/icon-cloned.gif" alt="Cloned Ball" class="ball-icon" style="vertical-align:middle;width:24px;height:24px;margin-right:6px;"><span class="index-label">Cloned Ball</span></a></li>
+                    <li><a href="#goldenball"><img src="ColeccionSilvarion/icon-golden.gif" alt="Golden Ball" class="ball-icon" style="vertical-align:middle;width:24px;height:24px;margin-right:6px;"><span class="index-label">Golden Ball</span></a></li>
+                  </ul>
+                </nav>
+
+                <br>
 
                 <div class="total-pokemon-btn-container">
                   <button id="total-pokemon-btn">Pokémon en esta colección : 0</button>
@@ -51,7 +176,7 @@
                   </div>
                 </aside>
 
-                <section class="collection-section white">
+                <section class="collection-section white" id="pokeball">
                   <button class="collapsible-header" type="button">
                     <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-pokeball.gif" alt="Poke Ball icon"> Poke Ball</span>
                     <span class="arrow">▼</span>
@@ -76,7 +201,7 @@
                   </div>
                 </section>
                 
-                <section class="collection-section prism">
+                <section class="collection-section prism" id="prismball">
                   <button class="collapsible-header" type="button">
                     <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-prism.gif" alt="Prism Ball icon"> Prism Ball</span>
                     <span class="arrow">▼</span>
@@ -100,7 +225,7 @@
                   </div>
                 </section>
 
-                <section class="collection-section sunrise">
+                <section class="collection-section sunrise" id="sunriseball">
                   <button class="collapsible-header" type="button">
                     <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-sunrise.gif" alt="Sunrise Ball icon"> Sunrise Ball</span>
                     <span class="arrow">▼</span>
@@ -139,7 +264,7 @@
                   </div>
                 </section>
 
-                <section class="collection-section blue">
+                <section class="collection-section blue" id="diveball">
                   <button class="collapsible-header" type="button">
                     <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-dive.gif" alt="Dive Ball icon"> Dive Ball</span>
                     <span class="arrow">▼</span>
@@ -304,7 +429,7 @@
                   </div>
                 </section>
 
-                <section class="collection-section red">
+                <section class="collection-section red" id="cherishball">
                   <button class="collapsible-header" type="button">
                     <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-cherish.gif" alt="Cherish Ball icon"> Cherish Ball</span>
                     <span class="arrow">▼</span>
@@ -476,7 +601,7 @@
                   </div>
                 </section>
 
-                <section class="collection-section pink">
+                <section class="collection-section pink" id="dreamball">
                   <button class="collapsible-header" type="button">
                     <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-dream.gif" alt="Dream Ball icon"> Dream Ball</span>
                     <span class="arrow">▼</span>
@@ -648,7 +773,7 @@
                   </div>
                 </section>
 
-                <section class="collection-section crystal">
+                <section class="collection-section crystal" id="crystalball">
                   <button class="collapsible-header" type="button">
                     <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-crystal.gif" alt="Crystal Ball icon"> Crystal Ball</span>
                     <span class="arrow">▼</span>
@@ -757,7 +882,7 @@
                   </div>
                 </section>
 
-                <section class="collection-section gray">
+                <section class="collection-section gray" id="heavyball">
                   <button class="collapsible-header" type="button">
                     <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-heavy.gif" alt="Heavy Ball icon"> Heavy Ball</span>
                     <span class="arrow">▼</span>
@@ -838,7 +963,7 @@
                   </div>
                 </section>
 
-                <section class="collection-section darkerblue">
+                <section class="collection-section darkerblue" id="moonball">
                   <button class="collapsible-header" type="button">
                     <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-moon.gif" alt="Moon Ball icon"> Moon Ball</span>
                     <span class="arrow">▼</span>
@@ -904,7 +1029,7 @@
                   </div>
                 </section>
 
-                <section class="collection-section darkyellow">
+                <section class="collection-section darkyellow" id="ancientball">
                   <button class="collapsible-header" type="button">
                     <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-ancient.gif" alt="Ancient Ball icon"> Ancient Ball</span>
                     <span class="arrow">▼</span>
@@ -964,7 +1089,7 @@
                   </div>
                 </section>
 
-                <section class="collection-section purple">
+                <section class="collection-section purple" id="phantomball">
                   <button class="collapsible-header" type="button">
                     <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-phantom.gif" alt="Phantom Ball icon"> Phantom Ball</span>
                     <span class="arrow">▼</span>
@@ -1010,7 +1135,7 @@
                   </div>
                 </section>
 
-                <section class="collection-section green">
+                <section class="collection-section green" id="mossball">
                   <button class="collapsible-header" type="button">
                     <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-moss.gif" alt="Moss Ball icon"> Moss Ball</span>
                     <span class="arrow">▼</span>
@@ -1056,7 +1181,7 @@
                   </div>
                 </section>
 
-                <section class="collection-section darkblue">
+                <section class="collection-section darkblue" id="aerialball">
                   <button class="collapsible-header" type="button">
                     <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-aerial.gif" alt="Aerial Ball icon"> Aerial Ball</span>
                     <span class="arrow">▼</span>
@@ -1116,7 +1241,7 @@
                   </div>
                 </section>
 
-                <section class="collection-section yellow">
+                <section class="collection-section yellow" id="fastball">
                   <button class="collapsible-header" type="button">
                     <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-fast.gif" alt="Fast Ball icon"> Fast Ball</span>
                     <span class="arrow">▼</span>
@@ -1162,7 +1287,31 @@
                   </div>
                 </section>
 
-                <section class="collection-section goldwhite">
+                <section class="collection-section cloned" id="clonedball">
+                  <button class="collapsible-header" type="button">
+                    <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-cloned.gif" alt="Cloned Ball icon"> Cloned Ball</span>
+                    <span class="arrow">▼</span>
+                  </button>
+                  <div class="collapsible-content">
+                    <div class="pokemon-grid">
+                      <div class="pokemon-card">
+                        <img class="pokeball-img" src="ColeccionSilvarion/icon-cloned.gif" alt="Cloned Ball">
+                        <img class="pokemon-img" src="ColeccionSilvarion/clonedFarfetchd.gif" alt="Cloned Farfetch'd">
+                        <div class="pokemon-name">Cloned Farfetch'd</div>
+                        <div class="pokemon-name">Female / Inner Focus</div>
+                        <div class="pokemon-serial">Serial: OX-604</div>
+                      </div>
+                      <div class="pokemon-card">
+                        <img class="pokeball-img" src="ColeccionSilvarion/icon-cloned.gif" alt="Cloned Ball">
+                        <img class="pokemon-img" src="ColeccionSilvarion/clonedPinsir.gif" alt="Cloned Pinsir">
+                        <div class="pokemon-name">Cloned Pinsir</div>
+                        <div class="pokemon-name">Female / Moxie</div>
+                        <div class="pokemon-serial">Serial: OZ-1937</div>
+                      </div>
+                    </div>
+                </section>
+
+                <section class="collection-section goldwhite" id="goldenball">
                   <button class="collapsible-header" type="button">
                     <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-golden.gif" alt="Golden Ball icon"> Golden Ball</span>
                     <span class="arrow">▼</span>
@@ -1180,8 +1329,38 @@
                 </section>
 
 
+                <!-- Back to Top Button -->
+                <button id="back-to-top-btn" aria-label="Volver arriba" style="opacity:0;pointer-events:none;position:fixed;bottom:32px;right:32px;z-index:1000;padding:0;background:none;border:none;box-shadow:none;cursor:pointer;transition:opacity 0.2s;">
+                  <img id="back-to-top-img" src="ColeccionSilvarion/up.png" alt="Arriba" style="width:36px;height:36px;display:block;margin:auto;filter:drop-shadow(0 1px 0 #fff8);transition:transform 0.18s;">
+                </button>
+                  // Grow effect on hover for the icon
+                  var upBtn = document.getElementById('back-to-top-btn');
+                  var upImg = document.getElementById('back-to-top-img');
+                  upBtn.addEventListener('mouseenter', function(){
+                    upImg.style.transform = 'scale(1.22)';
+                  });
+                  upBtn.addEventListener('mouseleave', function(){
+                    upImg.style.transform = 'scale(1)';
+                  });
+
                 <script src="coleccion-silvarion.js"></script>
                 <script>
+                  // Back to Top Button logic
+                  (function() {
+                    var btn = document.getElementById('back-to-top-btn');
+                    window.addEventListener('scroll', function() {
+                      if (window.scrollY > 200) {
+                        btn.style.opacity = '1';
+                        btn.style.pointerEvents = 'auto';
+                      } else {
+                        btn.style.opacity = '0';
+                        btn.style.pointerEvents = 'none';
+                      }
+                    });
+                    btn.addEventListener('click', function() {
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                  })();
                   // Toggle visibility of all .pokemon-serial tags using a class on body
                   (function() {
                     var btn = document.getElementById('toggle-serial-btn');

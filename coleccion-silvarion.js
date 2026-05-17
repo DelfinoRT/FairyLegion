@@ -190,19 +190,63 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
 
   if (!previewImg || !previewName || !previewMeta || cards.length === 0) return;
 
+  // Ball shake + spark + pause loop
   if (previewBall && previewBallContainer) {
-    previewBall.addEventListener('animationend', (event) => {
-      if (event.animationName !== 'monitorBallShake') return;
-
+    let ballLoopTimeout = null;
+    let shakeCount = 0;
+    let running = false;
+    function doShake() {
       previewBall.classList.remove('is-capture-shaking');
+      void previewBall.offsetWidth;
+      previewBall.classList.add('is-capture-shaking');
+    }
+    function startBallLoop() {
+      if (running) return;
+      running = true;
+      shakeCount = 0;
       previewBallContainer.classList.remove('is-caught-spark');
-      void previewBallContainer.offsetWidth;
-      previewBallContainer.classList.add('is-caught-spark');
-
-      window.setTimeout(() => {
-        previewBallContainer.classList.remove('is-caught-spark');
-      }, 430);
+      doShake();
+    }
+    previewBall.addEventListener('animationend', (event) => {
+      if (event.animationName !== 'monitorBallShakeLoop') return;
+      previewBall.classList.remove('is-capture-shaking');
+      shakeCount++;
+      if (shakeCount < 3) {
+        // Next shake after a short delay
+        ballLoopTimeout = setTimeout(() => {
+          doShake();
+        }, 80);
+      } else {
+        // Show spark
+        previewBallContainer.classList.add('is-caught-spark');
+        ballLoopTimeout = setTimeout(() => {
+          previewBallContainer.classList.remove('is-caught-spark');
+          // Pause for 1s, then restart
+          ballLoopTimeout = setTimeout(() => {
+            shakeCount = 0;
+            doShake();
+          }, 1000);
+        }, 430);
+      }
     });
+    // Start the loop if a ball is shown
+    const observer = new MutationObserver(() => {
+      if (previewBall.getAttribute('src')) {
+        running = false;
+        shakeCount = 0;
+        previewBall.classList.remove('is-capture-shaking');
+        previewBallContainer.classList.remove('is-caught-spark');
+        if (ballLoopTimeout) clearTimeout(ballLoopTimeout);
+        startBallLoop();
+      } else {
+        running = false;
+        shakeCount = 0;
+        previewBall.classList.remove('is-capture-shaking');
+        previewBallContainer.classList.remove('is-caught-spark');
+        if (ballLoopTimeout) clearTimeout(ballLoopTimeout);
+      }
+    });
+    observer.observe(previewBall, { attributes: true, attributeFilter: ['src'] });
   }
 
   const previewNameGlitch = createGlitchTextController(previewName);
@@ -254,14 +298,11 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
       previewMeta.textContent = meta;
       if (previewBall) {
         previewBall.classList.remove('is-capture-shaking');
-        if (previewBallContainer) {
-          previewBallContainer.classList.remove('is-caught-spark');
-        }
+        if (previewBallContainer) previewBallContainer.classList.remove('is-caught-spark');
         if (ballSrc) {
           previewBall.setAttribute('src', ballSrc);
           previewBall.setAttribute('alt', ballAlt);
-          void previewBall.offsetWidth;
-          previewBall.classList.add('is-capture-shaking');
+          // Ball loop will auto-start via MutationObserver
         } else {
           previewBall.removeAttribute('src');
         }
