@@ -734,6 +734,7 @@ body.serials-visible .pokemon-serial {
 .collection-section.goldwhite,
 .collection-section.rocketball,
 .collection-section.safari,
+.collection-section.charm,
 .collection-section.cloned {
   border-left-width: 8px;
 }
@@ -755,8 +756,9 @@ body.serials-visible .pokemon-serial {
 .collection-section.goldwhite { border-left-color: #8f7a3e; }
 .collection-section.rocketball { border-left-color: #56606b; }
 .collection-section.safari { border-left-color: #4d7335; }
-.collection-section.cloned { border-left-color: #7a2f8f;
-}
+.collection-section.charm { border-left-color: #830021; }
+.collection-section.cloned { border-left-color: #7a2f8f; }
+
 .transparent-section {
   background: transparent;
   border: 0;
