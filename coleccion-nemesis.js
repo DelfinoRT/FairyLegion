@@ -155,7 +155,9 @@
     if (!totalBtn) return;
 
     var total = qsa(".pokemon-card").length;
-    var label = "Specimens registered: ";
+    var initialText = textOf(totalBtn);
+    var labelMatch = initialText.match(/^(.*?)(\d+)\s*$/);
+    var label = labelMatch ? labelMatch[1] : "Pokemon en la coleccion: ";
     var durationMs = 2200;
 
     totalBtn.textContent = label + "0";
@@ -240,9 +242,6 @@
     var previewName = document.getElementById("preview-pokemon-name");
     var previewMeta = document.getElementById("preview-pokemon-meta");
     var previewBall = document.getElementById("preview-pokeball-img");
-    var previewSerial = document.getElementById("preview-serial-value");
-    var previewContainment = document.getElementById("preview-containment-value");
-    var previewHint = document.getElementById("preview-empty-hint");
 
     var cards = qsa(".pokemon-card");
 
@@ -251,9 +250,6 @@
       !previewName ||
       !previewMeta ||
       !previewBall ||
-      !previewSerial ||
-      !previewContainment ||
-      !previewHint ||
       !cards.length
     ) {
       return;
@@ -267,14 +263,6 @@
       }
     });
 
-    function extractContainmentLabel(card) {
-      var ballImg = qs(".pokeball-img", card);
-      if (!ballImg) return "---";
-
-      var alt = (ballImg.getAttribute("alt") || "").trim();
-      return alt || "Linked";
-    }
-
     function extractPrimaryName(card) {
       var names = qsa(".pokemon-name", card);
       return names[0] ? textOf(names[0]) : "Unknown specimen";
@@ -283,12 +271,6 @@
     function extractMeta(card) {
       var names = qsa(".pokemon-name", card);
       return names[1] ? textOf(names[1]) : "Unknown signature";
-    }
-
-    function extractSerial(card) {
-      var serialNode = qs(".pokemon-serial", card);
-      if (!serialNode) return "---";
-      return textOf(serialNode).replace(/^Serial:\s*/i, "").trim() || "---";
     }
 
     function setSelectedCard(card) {
@@ -308,9 +290,6 @@
       var pokeballImg = qs(".pokeball-img", card);
       var primaryName = extractPrimaryName(card);
       var meta = extractMeta(card);
-      var serial = extractSerial(card);
-      var containment = extractContainmentLabel(card);
-
       if (pokemonImg) {
         previewImg.src = pokemonImg.src;
         previewImg.alt = pokemonImg.alt || primaryName;
@@ -329,9 +308,6 @@
 
       previewName.textContent = primaryName;
       previewMeta.textContent = meta;
-      previewSerial.textContent = serial;
-      previewContainment.textContent = containment;
-      previewHint.textContent = "Toxic scan complete. Specimen isolated.";
 
       setSelectedCard(card);
     }
@@ -362,37 +338,94 @@
   function makePreviewCapsuleDraggable() {
     var capsule = document.getElementById('pokemon-hover-preview');
     if (!capsule) return;
-    let isDragging = false, offsetX = 0, offsetY = 0;
 
-    capsule.addEventListener('mousedown', function(e) {
-      // Only drag with left mouse button
-      if (e.button !== 0) return;
-      isDragging = true;
-      capsule.style.cursor = 'grabbing';
-      offsetX = e.clientX - capsule.getBoundingClientRect().left;
-      offsetY = e.clientY - capsule.getBoundingClientRect().top;
-      capsule.style.transition = 'none';
-      document.body.style.userSelect = 'none';
-    });
+    var handle = capsule.querySelector('.preview-shell-label') || capsule;
+    var storageKey = 'nemesis-capsule-position';
+    var edgePadding = 8;
+    var dragging = false;
+    var pointerId = null;
+    var dragOffsetX = 0;
+    var dragOffsetY = 0;
 
-    document.addEventListener('mousemove', function(e) {
-      if (!isDragging) return;
-      let x = e.clientX - offsetX;
-      let y = e.clientY - offsetY;
-      // Keep within viewport
-      x = Math.max(0, Math.min(window.innerWidth - capsule.offsetWidth, x));
-      y = Math.max(0, Math.min(window.innerHeight - capsule.offsetHeight, y));
-      capsule.style.left = x + 'px';
-      capsule.style.top = y + 'px';
-    });
+    function getClampedPosition(left, top) {
+      var maxLeft = window.innerWidth - capsule.offsetWidth - edgePadding;
+      var maxTop = window.innerHeight - capsule.offsetHeight - edgePadding;
+      return {
+        left: Math.min(Math.max(left, edgePadding), Math.max(edgePadding, maxLeft)),
+        top: Math.min(Math.max(top, edgePadding), Math.max(edgePadding, maxTop))
+      };
+    }
 
-    document.addEventListener('mouseup', function() {
-      if (isDragging) {
-        isDragging = false;
-        capsule.style.cursor = 'grab';
-        capsule.style.transition = '';
-        document.body.style.userSelect = '';
+    function applyPosition(left, top, persist) {
+      var clamped = getClampedPosition(left, top);
+      capsule.style.left = clamped.left + 'px';
+      capsule.style.top = clamped.top + 'px';
+      capsule.style.right = 'auto';
+      capsule.style.bottom = 'auto';
+
+      if (persist) {
+        window.localStorage.setItem(storageKey, JSON.stringify(clamped));
       }
+    }
+
+    var savedPosition = window.localStorage.getItem(storageKey);
+    if (savedPosition) {
+      try {
+        var parsed = JSON.parse(savedPosition);
+        if (typeof parsed.left === 'number' && typeof parsed.top === 'number') {
+          applyPosition(parsed.left, parsed.top, false);
+        }
+      } catch (e) {
+        window.localStorage.removeItem(storageKey);
+      }
+    }
+
+    handle.addEventListener('pointerdown', function (event) {
+      if (event.button !== 0) return;
+
+      var rect = capsule.getBoundingClientRect();
+      dragging = true;
+      pointerId = event.pointerId;
+      dragOffsetX = event.clientX - rect.left;
+      dragOffsetY = event.clientY - rect.top;
+
+      capsule.classList.add('dragging');
+      if (handle.setPointerCapture) {
+        handle.setPointerCapture(pointerId);
+      }
+      event.preventDefault();
+    });
+
+    handle.addEventListener('pointermove', function (event) {
+      if (!dragging || event.pointerId !== pointerId) return;
+
+      var nextLeft = event.clientX - dragOffsetX;
+      var nextTop = event.clientY - dragOffsetY;
+      applyPosition(nextLeft, nextTop, false);
+    });
+
+    function finishDrag(event) {
+      if (!dragging || event.pointerId !== pointerId) return;
+
+      dragging = false;
+      capsule.classList.remove('dragging');
+
+      var rect = capsule.getBoundingClientRect();
+      applyPosition(rect.left, rect.top, true);
+
+      if (handle.hasPointerCapture && handle.hasPointerCapture(pointerId)) {
+        handle.releasePointerCapture(pointerId);
+      }
+
+      pointerId = null;
+    }
+
+    handle.addEventListener('pointerup', finishDrag);
+    handle.addEventListener('pointercancel', finishDrag);
+
+    window.addEventListener('resize', function () {
+      var rect = capsule.getBoundingClientRect();
+      applyPosition(rect.left, rect.top, true);
     });
   }
 

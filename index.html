@@ -237,9 +237,19 @@
         <a href="coleccion-silvarion.html" id="mini-monitor-link" aria-label="Ir a la colección">
         <div class="mini-monitor-device">
             <div class="mini-monitor-bezel">
-            <div class="mini-monitor-label">MI COLECCION</div>
+            <div class="mini-monitor-label">Coleccion Silvarion</div>
             <div class="mini-monitor-screen">
                 <div id="mini-monitor-sprites" style="display:flex;gap:2px;align-items:center;justify-content:center;width:100%;height:100%;overflow:hidden;"></div>
+            </div>
+            </div>
+        </div>
+        </a>
+        <a href="coleccion-nemesis.html" id="mini-monitor-link-nemesis" aria-label="Ir a la colección">
+        <div class="mini-monitor-device">
+            <div class="mini-monitor-bezel">
+            <div class="mini-monitor-label">Coleccion Nemesis</div>
+            <div class="mini-monitor-screen">
+                <div id="mini-monitor-sprites-nemesis" style="display:flex;gap:2px;align-items:center;justify-content:center;width:100%;height:100%;overflow:hidden;"></div>
             </div>
             </div>
         </div>
@@ -265,14 +275,15 @@
                         'PokeLegion/Pokemon/eevee.png',
                         'PokeLegion/Pokemon/mew.png'
                     ];
+
                     var visibleCount = 5;
-                    var container = document.getElementById('mini-monitor-sprites');
-                    var idx = 0;
-                    function updateSprites() {
+
+                    function updateSprites(containerId) {
+                        var container = document.getElementById(containerId);
                         if (!container) return;
                         container.innerHTML = '';
                         for (var i = 0; i < visibleCount; i++) {
-                            var spriteIdx = (idx + i) % spritePaths.length;
+                            var spriteIdx = (Math.random() * spritePaths.length) | 0;
                             var img = document.createElement('img');
                             img.src = spritePaths[spriteIdx];
                             img.alt = '';
@@ -282,10 +293,16 @@
                             img.style.display = 'inline-block';
                             container.appendChild(img);
                         }
-                        idx = (idx + 1) % spritePaths.length;
                     }
-                    setInterval(updateSprites, 650);
-                    updateSprites();
+
+                    setInterval(function() {
+                        updateSprites('mini-monitor-sprites');
+                        updateSprites('mini-monitor-sprites-nemesis');
+                    }, 650);
+
+                    // Initial update
+                    updateSprites('mini-monitor-sprites');
+                    updateSprites('mini-monitor-sprites-nemesis');
                 })();
                 </script>
                 <script>
