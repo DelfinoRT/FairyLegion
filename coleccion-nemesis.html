@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nemesis - Toxic Collection</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="coleccion-nemesis.css">
+
+  <style>
+    .section-index-pixel {
+      margin: 18px auto 0 auto;
+      max-width: 1120px;
+      background: linear-gradient(180deg, rgba(56, 26, 77, 0.92), rgba(29, 12, 39, 0.96));
+      border: 3px solid rgba(183, 109, 255, 0.55);
+      border-radius: 14px;
+      box-shadow:
+        inset 0 0 0 2px rgba(197, 255, 90, 0.08),
+        0 0 28px rgba(157, 73, 236, 0.14),
+        0 10px 24px rgba(0, 0, 0, 0.32);
+      padding: 14px 14px 12px;
+      font-family: "Press Start 2P", "VT323", monospace;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .section-index-pixel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(187, 255, 61, 0.18), transparent 18%),
+        radial-gradient(circle at 85% 100%, rgba(209, 76, 255, 0.12), transparent 20%);
+      opacity: 0.9;
+    }
+
+    .section-index-pixel .section-index-title {
+      text-align: center;
+      font-size: 12px;
+      color: #d9ff72;
+      margin-bottom: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-index-pixel ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-index-pixel li {
+      margin: 0;
+      padding: 0;
+      flex: 0 1 auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    .section-index-pixel a {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(109, 52, 148, 0.88), rgba(54, 24, 74, 0.96));
+      color: #f2ebff;
+      text-decoration: none;
+      font-size: 11px;
+      border: 2px solid rgba(183, 109, 255, 0.34);
+      min-height: 50px;
+      min-width: 180px;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .section-index-pixel a::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(90deg, transparent, rgba(215, 255, 101, 0.12), transparent);
+      transform: translateX(-120%);
+      transition: transform 0.35s ease;
+    }
+
+    .section-index-pixel a:hover,
+    .section-index-pixel a:focus-visible {
+      background: linear-gradient(180deg, rgba(126, 58, 171, 0.96), rgba(62, 28, 86, 1));
+      color: #ffffff;
+      border-color: rgba(197, 255, 90, 0.72);
+      box-shadow: 0 0 18px rgba(182, 255, 73, 0.14);
+      transform: translateY(-2px);
+    }
+
+    .section-index-pixel a:hover::after,
+    .section-index-pixel a:focus-visible::after {
+      transform: translateX(120%);
+    }
+
+    .section-index-pixel a .ball-icon {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      flex: 0 0 auto;
+      filter: drop-shadow(0 0 10px rgba(182, 255, 73, 0.18));
+    }
+
+    .section-index-pixel a .index-label {
+      display: inline-block;
+      line-height: 1.25;
+    }
+
+    .toxic-drip {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 90px;
+      z-index: 2;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .toxic-drip::before,
+    .toxic-drip::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 8% 18%, rgba(187, 255, 61, 0.95) 0 16px, transparent 17px),
+        radial-gradient(circle at 16% 0%, rgba(187, 255, 61, 0.95) 0 26px, transparent 27px),
+        radial-gradient(circle at 28% 10%, rgba(160, 241, 47, 0.95) 0 20px, transparent 21px),
+        radial-gradient(circle at 42% 2%, rgba(187, 255, 61, 0.92) 0 24px, transparent 25px),
+        radial-gradient(circle at 58% 6%, rgba(187, 255, 61, 0.95) 0 18px, transparent 19px),
+        radial-gradient(circle at 74% 8%, rgba(151, 230, 43, 0.95) 0 22px, transparent 23px),
+        radial-gradient(circle at 88% 14%, rgba(187, 255, 61, 0.95) 0 17px, transparent 18px),
+        linear-gradient(180deg, rgba(205, 255, 78, 0.92), rgba(112, 191, 22, 0.8));
+      clip-path: polygon(
+        0 0, 100% 0, 100% 22%, 94% 22%, 93% 56%, 90% 86%, 86% 54%, 85% 22%,
+        77% 22%, 76% 70%, 73% 100%, 69% 68%, 68% 22%, 58% 22%, 57% 55%, 54% 82%,
+        51% 56%, 50% 22%, 38% 22%, 37% 64%, 34% 92%, 30% 58%, 29% 22%, 18% 22%,
+        17% 74%, 13% 100%, 10% 60%, 9% 22%, 0 22%
+      );
+      filter: blur(0.4px) drop-shadow(0 8px 14px rgba(187, 255, 61, 0.28));
+      opacity: 0.9;
+    }
+
+    .toxic-drip::after {
+      transform: translateY(6px);
+      opacity: 0.35;
+      filter: blur(10px);
+    }
+
+    .lab-shell {
+      position: relative;
+      z-index: 1;
+    }
+
+    .preview-status-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+      margin-bottom: 8px;
+    }
+
+    .status-chip {
+      font-family: "Press Start 2P", monospace;
+      font-size: 9px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(182, 255, 73, 0.12);
+      border: 2px solid rgba(182, 255, 73, 0.35);
+      color: #d7ff65;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .preview-data-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+      width: 100%;
+    }
+
+    .preview-data-box {
+      background: rgba(28, 14, 37, 0.75);
+      border: 2px solid rgba(183, 109, 255, 0.28);
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .preview-data-box .label {
+      display: block;
+      font-family: "Press Start 2P", monospace;
+      font-size: 8px;
+      color: #c8b6df;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .preview-data-box .value {
+      display: block;
+      color: #d7ff65;
+      font-size: 25px;
+      line-height: 1;
+    }
+
+    .preview-empty-hint {
+      margin-top: 8px;
+      color: #d0c1e5;
+      text-align: center;
+      font-size: 26px;
+      line-height: 1.05;
+    }
+
+    .back-to-top-toxic {
+      opacity: 0;
+      pointer-events: none;
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      z-index: 1000;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 3px solid rgba(182, 255, 73, 0.5);
+      background:
+        radial-gradient(circle at 50% 35%, rgba(195, 255, 76, 0.28), rgba(116, 191, 32, 0.2) 35%, rgba(31, 58, 32, 0.28) 100%),
+        linear-gradient(180deg, #293c13 0%, #18220e 100%);
+      box-shadow: 0 0 16px rgba(182, 255, 73, 0.18), 0 8px 22px rgba(0, 0, 0, 0.42);
+      cursor: pointer;
+      transition: opacity 0.2s ease, transform 0.18s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #d7ff65;
+      font-family: "Press Start 2P", monospace;
+      font-size: 18px;
+    }
+
+    .back-to-top-toxic:hover,
+    .back-to-top-toxic:focus-visible {
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    @media (max-width: 700px) {
+      .preview-data-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-index-pixel a {
+        min-width: 148px;
+        font-size: 10px;
+      }
+
+      .status-chip {
+        font-size: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="sr-only">Saltar al contenido</a>
+
+  <div class="toxic-drip" aria-hidden="true">
+    <svg class="toxic-drip-svg" width="100%" height="100" viewBox="0 0 1920 100" preserveAspectRatio="none">
+      <path class="toxic-drip-path"
+        d="M0,0 
+           Q120,60 240,20 
+           Q320,0 400,40 
+           Q480,80 600,30 
+           Q700,0 800,60 
+           Q900,100 1000,40 
+           Q1100,0 1200,50 
+           Q1300,100 1400,30 
+           Q1500,0 1600,60 
+           Q1700,100 1800,20 
+           Q1860,0 1920,40 
+           L1920,100 L0,100 Z"
+        fill="#bbff3d"
+        opacity="0.92"
+      />
+    </svg>
+  </div>
+
+  <main id="main-content" class="lab-shell">
+    <h1 class="glitch-title">
+      <img src="NemesisAssets/nemesis-icon.png" alt="Nemesis icon" class="title-icon">
+      <span id="glitch-title" class="glitch-text">NEMESIS - TOXIC COLLECTION</span>
+      <img src="NemesisAssets/nemesis-icon.png" alt="Nemesis icon" class="title-icon">
+    </h1>
+
+    <p class="desc">
+      Catálogo de especímenes con vibra venenosa, mutante, oscura y letal, presentado como un terminal de laboratorio tóxico con escáneres de radiación y cápsulas de contención.
+    </p>
+
+    <p class="desc preview-behavior-note">
+      Cada sección agrupa Pokémon por ball y, al seleccionar una unidad, la cápsula de análisis mostrará su sprite, firma tóxica y datos de contención.
+    </p>
+
+    <nav class="section-index-pixel" aria-label="Índice de secciones de colección">
+      <div class="section-index-title">Bays de contención</div>
+      <ul>
+        <li><a href="#pokeball"><img src="ColeccionSilvarion/icon-pokeball.gif" alt="Poke Ball" class="ball-icon"><span class="index-label">Poke Ball Bay</span></a></li>
+        <li><a href="#prismball"><img src="ColeccionSilvarion/icon-prism.gif" alt="Prism Ball" class="ball-icon"><span class="index-label">Prism Chamber</span></a></li>
+        <li><a href="#sunriseball"><img src="ColeccionSilvarion/icon-sunrise.gif" alt="Sunrise Ball" class="ball-icon"><span class="index-label">Sunrise Tank</span></a></li>
+        <li><a href="#diveball"><img src="ColeccionSilvarion/icon-dive.gif" alt="Dive Ball" class="ball-icon"><span class="index-label">Abyss Reservoir</span></a></li>
+        <li><a href="#cherishball"><img src="ColeccionSilvarion/icon-cherish.gif" alt="Cherish Ball" class="ball-icon"><span class="index-label">Cherish Vault</span></a></li>
+        <li><a href="#dreamball"><img src="ColeccionSilvarion/icon-dream.gif" alt="Dream Ball" class="ball-icon"><span class="index-label">Dream Reactor</span></a></li>
+        <li><a href="#crystalball"><img src="ColeccionSilvarion/icon-crystal.gif" alt="Crystal Ball" class="ball-icon"><span class="index-label">Crystal Core</span></a></li>
+        <li><a href="#heavyball"><img src="ColeccionSilvarion/icon-heavy.gif" alt="Heavy Ball" class="ball-icon"><span class="index-label">Heavy Lock</span></a></li>
+        <li><a href="#moonball"><img src="ColeccionSilvarion/icon-moon.gif" alt="Moon Ball" class="ball-icon"><span class="index-label">Moon Sector</span></a></li>
+        <li><a href="#ancientball"><img src="ColeccionSilvarion/icon-ancient.gif" alt="Ancient Ball" class="ball-icon"><span class="index-label">Ancient Vault</span></a></li>
+        <li><a href="#phantomball"><img src="ColeccionSilvarion/icon-phantom.gif" alt="Phantom Ball" class="ball-icon"><span class="index-label">Phantom Wing</span></a></li>
+        <li><a href="#mossball"><img src="ColeccionSilvarion/icon-moss.gif" alt="Moss Ball" class="ball-icon"><span class="index-label">Moss Chamber</span></a></li>
+        <li><a href="#aerialball"><img src="ColeccionSilvarion/icon-aerial.gif" alt="Aerial Ball" class="ball-icon"><span class="index-label">Aerial Lab</span></a></li>
+        <li><a href="#fastball"><img src="ColeccionSilvarion/icon-fast.gif" alt="Fast Ball" class="ball-icon"><span class="index-label">Fast Reactor</span></a></li>
+        <li><a href="#clonedball"><img src="ColeccionSilvarion/icon-cloned.gif" alt="Cloned Ball" class="ball-icon"><span class="index-label">Clone Unit</span></a></li>
+        <li><a href="#goldenball"><img src="ColeccionSilvarion/icon-golden.gif" alt="Golden Ball" class="ball-icon"><span class="index-label">Golden Seal</span></a></li>
+        <li><a href="#charmball"><img src="ColeccionSilvarion/icon-charm.gif" alt="Charm Ball" class="ball-icon"><span class="index-label">Charm Capsule</span></a></li>
+      </ul>
+    </nav>
+
+    <div class="total-pokemon-btn-container">
+      <button id="total-pokemon-btn" type="button">Specimens registered: 0</button>
+    </div>
+
+    <div class="search-bar-container">
+      <label for="pokemon-search-input" class="sr-only">Buscar espécimen</label>
+      <input
+        id="pokemon-search-input"
+        class="search-input"
+        type="text"
+        placeholder="Search specimen, toxin class or containment ID..."
+        autocomplete="off"
+      >
+      <button id="clear-search-btn" class="clear-btn" type="button">Purge Filter</button>
+    </div>
+
+    <aside id="pokemon-hover-preview" class="pokemon-hover-preview" aria-live="polite" aria-label="Cápsula de análisis de espécimen">
+      <div class="preview-shell-label">Venom Capsule / Radiation Scanner</div>
+
+      <div class="preview-status-row" aria-hidden="true">
+        <span class="status-chip">Scanner Online</span>
+        <span class="status-chip">Toxin Stable</span>
+        <span class="status-chip">Capsule Sealed</span>
+      </div>
+
+      <div class="preview-screen-frame">
+        <div class="preview-screen">
+          <img id="preview-pokemon-img" src="" alt="Specimen preview">
+        </div>
+      </div>
+
+      <div id="preview-pokemon-name" class="preview-pokemon-name">No specimen selected</div>
+      <div id="preview-pokemon-meta" class="preview-pokemon-meta">Insert a subject to begin venom scan.</div>
+
+      <div class="preview-pokeball-container">
+        <img id="preview-pokeball-img" src="" alt="" class="preview-pokeball-img">
+      </div>
+
+      <div class="preview-data-grid">
+        <div class="preview-data-box">
+          <span class="label">Containment</span>
+          <span id="preview-containment-value" class="value">---</span>
+        </div>
+        <div class="preview-data-box">
+          <span class="label">Mutation ID</span>
+          <span id="preview-serial-value" class="value">---</span>
+        </div>
+      </div>
+
+      <div class="preview-empty-hint" id="preview-empty-hint">
+        Awaiting contaminated specimen...
+      </div>
+    </aside>
+
+    <section class="collection-section poison-main" id="pokeball">
+      <button class="collapsible-header" type="button" aria-expanded="true">
+        <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-pokeball.gif" alt="Poke Ball icon"> Poke Ball Bay</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="pokemon-grid">
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-pokeball.gif" alt="Poke Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyMarshadow.gif" alt="Shiny Marshadow">
+            <div class="pokemon-name">Shiny Marshadow</div>
+            <div class="pokemon-name">No sex / Technician</div>
+            <div class="pokemon-serial">Serial: OJ-8790</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-pokeball.gif" alt="Poke Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/eliteBisharp.gif" alt="Elite Bisharp">
+            <div class="pokemon-name">Elite Bisharp</div>
+            <div class="pokemon-name">Male / Inner Focus</div>
+            <div class="pokemon-serial">Serial: NT-1012</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection-section toxic-lime" id="prismball">
+      <button class="collapsible-header" type="button" aria-expanded="true">
+        <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-prism.gif" alt="Prism Ball icon"> Prism Chamber</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="pokemon-grid">
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-prism.gif" alt="Prism Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyArcanine.gif" alt="Shiny Arcanine">
+            <div class="pokemon-name">Shiny Arcanine</div>
+            <div class="pokemon-name">Male / Flash Fire</div>
+            <div class="pokemon-serial">Serial: OQ-2474</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-prism.gif" alt="Prism Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyKingdra.gif" alt="Shiny Kingdra">
+            <div class="pokemon-name">Shiny Kingdra</div>
+            <div class="pokemon-name">Male / Sniper</div>
+            <div class="pokemon-serial">Serial: OR-1571</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection-section sludge-pink" id="sunriseball">
+      <button class="collapsible-header" type="button" aria-expanded="true">
+        <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-sunrise.gif" alt="Sunrise Ball icon"> Sunrise Tank</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="pokemon-grid">
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-sunrise.gif" alt="Sunrise Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinySpectrier.gif" alt="Shiny Spectrier">
+            <div class="pokemon-name">Shiny Spectrier</div>
+            <div class="pokemon-name">No sex / Moxie</div>
+            <div class="pokemon-serial">Serial: OP-4553</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-sunrise.gif" alt="Sunrise Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyQuagsire2.gif" alt="Shiny Quagsire">
+            <div class="pokemon-name">Shiny Quagsire</div>
+            <div class="pokemon-name">Male / Water Absorb</div>
+            <div class="pokemon-serial">Serial: ON-8882</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection-section crobat" id="diveball">
+      <button class="collapsible-header" type="button" aria-expanded="true">
+        <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-dive.gif" alt="Dive Ball icon"> Abyss Reservoir</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="pokemon-grid">
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-dive.gif" alt="Dive Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/clonedBlastoise.gif" alt="Cloned Blastoise">
+            <div class="pokemon-name">Cloned Blastoise</div>
+            <div class="pokemon-name">Female / Torrent</div>
+            <div class="pokemon-serial">Serial: OE-1695</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-dive.gif" alt="Dive Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyAraquanid.gif" alt="Shiny Araquanid">
+            <div class="pokemon-name">Shiny Araquanid</div>
+            <div class="pokemon-name">Female / Water Bubble</div>
+            <div class="pokemon-serial">Serial: OJ-7998</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection-section nidoking" id="cherishball">
+      <button class="collapsible-header" type="button" aria-expanded="true">
+        <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-cherish.gif" alt="Cherish Ball icon"> Cherish Vault</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="pokemon-grid">
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-cherish.gif" alt="Cherish Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyCeruledge.gif" alt="Shiny Ceruledge">
+            <div class="pokemon-name">Shiny Ceruledge</div>
+            <div class="pokemon-name">Male / Flash Fire</div>
+            <div class="pokemon-serial">Serial: OX-5022</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-cherish.gif" alt="Cherish Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyBlaziken.gif" alt="Shiny Blaziken">
+            <div class="pokemon-name">Shiny Blaziken</div>
+            <div class="pokemon-name">Female / Blaze</div>
+            <div class="pokemon-serial">Serial: OY-5955</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection-section sludge-pink" id="dreamball">
+      <button class="collapsible-header" type="button" aria-expanded="true">
+        <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-dream.gif" alt="Dream Ball icon"> Dream Reactor</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="pokemon-grid">
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-dream.gif" alt="Dream Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyMrMime.gif" alt="Shiny Mr Mime">
+            <div class="pokemon-name">Shiny Mr Mime</div>
+            <div class="pokemon-name">Male / Technician</div>
+            <div class="pokemon-serial">Serial: OC-3821</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-dream.gif" alt="Dream Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/clonedChansey.gif" alt="Cloned Chansey">
+            <div class="pokemon-name">Cloned Chansey</div>
+            <div class="pokemon-name">Female / Healer</div>
+            <div class="pokemon-serial">Serial: OZ-5320</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection-section gengar-dark" id="crystalball">
+      <button class="collapsible-header" type="button" aria-expanded="true">
+        <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-crystal.gif" alt="Crystal Ball icon"> Crystal Core</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="pokemon-grid">
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-crystal.gif" alt="Crystal Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyCetitan.gif" alt="Shiny Cetitan">
+            <div class="pokemon-name">Shiny Cetitan</div>
+            <div class="pokemon-name">Male / Own Tempo</div>
+            <div class="pokemon-serial">Serial: OC-4729</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-crystal.gif" alt="Crystal Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/clonedHypno.gif" alt="Cloned Hypno">
+            <div class="pokemon-name">Cloned Hypno</div>
+            <div class="pokemon-name">Male / Comatose</div>
+            <div class="pokemon-serial">Serial: OX-3490</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection-section poison-main" id="heavyball">
+      <button class="collapsible-header" type="button" aria-expanded="true">
+        <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-heavy.gif" alt="Heavy Ball icon"> Heavy Lock</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="pokemon-grid">
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-heavy.gif" alt="Heavy Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyMetagross.gif" alt="Shiny Metagross">
+            <div class="pokemon-name">Shiny Metagross</div>
+            <div class="pokemon-name">No sex / Inner Focus</div>
+            <div class="pokemon-serial">Serial: NY-4877</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-heavy.gif" alt="Heavy Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyHisuianGoodra.gif" alt="Shiny Hisuian Goodra">
+            <div class="pokemon-name">Shiny Hisuian Goodra</div>
+            <div class="pokemon-name">Female / Overcoat</div>
+            <div class="pokemon-serial">Serial: OR-5526</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection-section crobat" id="moonball">
+      <button class="collapsible-header" type="button" aria-expanded="true">
+        <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-moon.gif" alt="Moon Ball icon"> Moon Sector</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="pokemon-grid">
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-moon.gif" alt="Moon Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyAegislash.gif" alt="Shiny Aegislash">
+            <div class="pokemon-name">Shiny Aegislash</div>
+            <div class="pokemon-name">Unknown / Unknown</div>
+            <div class="pokemon-serial">Serial: OB-7940</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-moon.gif" alt="Moon Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/zarude.gif" alt="Zarude">
+            <div class="pokemon-name">Zarude</div>
+            <div class="pokemon-name">No sex / Leaf Guard</div>
+            <div class="pokemon-serial">Serial: OX-5014</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection-section toxic-lime" id="ancientball">
+      <button class="collapsible-header" type="button" aria-expanded="true">
+        <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-ancient.gif" alt="Ancient Ball icon"> Ancient Vault</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="pokemon-grid">
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-ancient.gif" alt="Ancient Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/clonedOnix.gif" alt="Cloned Onix">
+            <div class="pokemon-name">Cloned Onix</div>
+            <div class="pokemon-name">Male / Weak Armor</div>
+            <div class="pokemon-serial">Serial: OC-3811</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-ancient.gif" alt="Ancient Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyKrookodile.gif" alt="Shiny Krookodile">
+            <div class="pokemon-name">Shiny Krookodile</div>
+            <div class="pokemon-name">Female / Moxie</div>
+            <div class="pokemon-serial">Serial: OY-6751</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection-section gengar-dark" id="phantomball">
+      <button class="collapsible-header" type="button" aria-expanded="true">
+        <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-phantom.gif" alt="Phantom Ball icon"> Phantom Wing</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="pokemon-grid">
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-phantom.gif" alt="Phantom Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyShedinja.gif" alt="Shiny Shedinja">
+            <div class="pokemon-name">Shiny Shedinja</div>
+            <div class="pokemon-name">Male / Infiltrator</div>
+            <div class="pokemon-serial">Serial: NZ-7391</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-phantom.gif" alt="Phantom Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinySlurpuff.gif" alt="Shiny Slurpuff">
+            <div class="pokemon-name">Shiny Slurpuff</div>
+            <div class="pokemon-name">Male / Sweet Veil</div>
+            <div class="pokemon-serial">Serial: OX-3454</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection-section toxic-lime" id="mossball">
+      <button class="collapsible-header" type="button" aria-expanded="true">
+        <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-moss.gif" alt="Moss Ball icon"> Moss Chamber</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="pokemon-grid">
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-moss.gif" alt="Moss Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyShedinja.gif" alt="Shiny Shedinja">
+            <div class="pokemon-name">Shiny Shedinja</div>
+            <div class="pokemon-name">Male / Infiltrator</div>
+            <div class="pokemon-serial">Serial: NZ-7554</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-moss.gif" alt="Moss Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/clonedScyther.gif" alt="Cloned Scyther">
+            <div class="pokemon-name">Cloned Scyther</div>
+            <div class="pokemon-name">Male / Technician</div>
+            <div class="pokemon-serial">Serial: OM-4285</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-moss.gif" alt="Moss Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/clonedPinsir.gif" alt="Cloned Pinsir">
+            <div class="pokemon-name">Cloned Pinsir</div>
+            <div class="pokemon-name">Male / Moxie</div>
+            <div class="pokemon-serial">Serial: OQ-72</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-moss.gif" alt="Moss Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinySunflora.gif" alt="Shiny Sunflora">
+            <div class="pokemon-name">Shiny Sunflora</div>
+            <div class="pokemon-name">Male / Early Bird</div>
+            <div class="pokemon-serial">Serial: NP-7980</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-moss.gif" alt="Moss Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyFrosmoth.gif" alt="Shiny Frosmoth">
+            <div class="pokemon-name">Shiny Frosmoth</div>
+            <div class="pokemon-name">Male / Shield Dust</div>
+            <div class="pokemon-serial">Serial: OS-9720</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection-section crobat" id="aerialball">
+      <button class="collapsible-header" type="button" aria-expanded="true">
+        <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-aerial.gif" alt="Aerial Ball icon"> Aerial Lab</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="pokemon-grid">
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-aerial.gif" alt="Aerial Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyCorviknight.gif" alt="Shiny Corviknight">
+            <div class="pokemon-name">Shiny Corviknight</div>
+            <div class="pokemon-name">Male / Reckless</div>
+            <div class="pokemon-serial">Serial: NH-1691</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-aerial.gif" alt="Aerial Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyToucannon.gif" alt="Shiny Toucannon">
+            <div class="pokemon-name">Shiny Toucannon</div>
+            <div class="pokemon-name">Male / Pickup</div>
+            <div class="pokemon-serial">Serial: MU-2920</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-aerial.gif" alt="Aerial Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyStaraptor.gif" alt="Shiny Staraptor">
+            <div class="pokemon-name">Shiny Staraptor</div>
+            <div class="pokemon-name">Female / Reckless</div>
+            <div class="pokemon-serial">Serial: NU-6112</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-aerial.gif" alt="Aerial Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyFlygon.gif" alt="Shiny Flygon">
+            <div class="pokemon-name">Shiny Flygon</div>
+            <div class="pokemon-name">Female / Levitate</div>
+            <div class="pokemon-serial">Serial: NX-8927</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-aerial.gif" alt="Aerial Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyKingdra.gif" alt="Shiny Kingdra">
+            <div class="pokemon-name">Shiny Kingdra</div>
+            <div class="pokemon-name">Female / Sniper</div>
+            <div class="pokemon-serial">Serial: NT-7502</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-aerial.gif" alt="Aerial Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/clonedDragonite.gif" alt="Cloned Dragonite">
+            <div class="pokemon-name">Cloned Dragonite</div>
+            <div class="pokemon-name">Male / Pickup</div>
+            <div class="pokemon-serial">Serial: OQ-71</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-aerial.gif" alt="Aerial Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyDelibird.gif" alt="Shiny Delibird">
+            <div class="pokemon-name">Shiny Delibird</div>
+            <div class="pokemon-name">Female / Vital Spirit</div>
+            <div class="pokemon-serial">Serial: OX-3374</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection-section toxic-lime" id="fastball">
+      <button class="collapsible-header" type="button" aria-expanded="true">
+        <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-fast.gif" alt="Fast Ball icon"> Fast Reactor</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="pokemon-grid">
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-fast.gif" alt="Fast Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/shinyZeraora.gif" alt="Shiny Zeraora">
+            <div class="pokemon-name">Shiny Zeraora</div>
+            <div class="pokemon-name">No sex / Volt Absorb</div>
+            <div class="pokemon-serial">Serial: OT-5451</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-fast.gif" alt="Fast Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/zeraora.gif" alt="Zeraora">
+            <div class="pokemon-name">Zeraora</div>
+            <div class="pokemon-name">No sex / Volt Absorb</div>
+            <div class="pokemon-serial">Serial: MO-1000</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-fast.gif" alt="Fast Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/clonedJolteon.gif" alt="Cloned Jolteon">
+            <div class="pokemon-name">Cloned Jolteon</div>
+            <div class="pokemon-name">Male / Volt Absorb</div>
+            <div class="pokemon-serial">Serial: OX-4538</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-fast.gif" alt="Fast Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/clonedElectrode.gif" alt="Cloned Electrode">
+            <div class="pokemon-name">Cloned Electrode</div>
+            <div class="pokemon-name">No sex / Aftermath</div>
+            <div class="pokemon-serial">Serial: OR-9685</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-fast.gif" alt="Fast Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/clonedRaichu.gif" alt="Cloned Raichu">
+            <div class="pokemon-name">Cloned Raichu</div>
+            <div class="pokemon-name">Female / Static</div>
+            <div class="pokemon-serial">Serial: OX-4225</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection-section poison-main" id="clonedball">
+      <button class="collapsible-header" type="button" aria-expanded="true">
+        <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-cloned.gif" alt="Cloned Ball icon"> Clone Unit</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="pokemon-grid">
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-cloned.gif" alt="Cloned Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/clonedFarfetchd.gif" alt="Cloned Farfetch'd">
+            <div class="pokemon-name">Cloned Farfetch'd</div>
+            <div class="pokemon-name">Female / Inner Focus</div>
+            <div class="pokemon-serial">Serial: OX-604</div>
+          </div>
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-cloned.gif" alt="Cloned Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/clonedPinsir.gif" alt="Cloned Pinsir">
+            <div class="pokemon-name">Cloned Pinsir</div>
+            <div class="pokemon-name">Female / Moxie</div>
+            <div class="pokemon-serial">Serial: OZ-1937</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection-section toxic-lime" id="goldenball">
+      <button class="collapsible-header" type="button" aria-expanded="true">
+        <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-golden.gif" alt="Golden Ball icon"> Golden Seal</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="pokemon-grid">
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-golden.gif" alt="Golden Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/hisuianDecidueye.gif" alt="Hisuian Decidueye">
+            <div class="pokemon-name">Hisuian Decidueye</div>
+            <div class="pokemon-name">Male / Sheer Force</div>
+            <div class="pokemon-serial">Serial: HISULOT9</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection-section sludge-pink" id="charmball">
+      <button class="collapsible-header" type="button" aria-expanded="true">
+        <span class="header-left"><img class="ball-icon" src="ColeccionSilvarion/icon-charm.gif" alt="Charm Ball icon"> Charm Capsule</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="collapsible-content">
+        <div class="pokemon-grid">
+          <div class="pokemon-card" tabindex="0">
+            <img class="pokeball-img" src="ColeccionSilvarion/icon-charm.gif" alt="Charm Ball">
+            <img class="pokemon-img" src="ColeccionSilvarion/clonedTogekiss.gif" alt="Cloned Togekiss">
+            <div class="pokemon-name">Cloned Togekiss</div>
+            <div class="pokemon-name">Male / Hustle</div>
+            <div class="pokemon-serial">Serial: OX-6103</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <button id="back-to-top-btn" class="back-to-top-toxic" aria-label="Volver arriba" type="button">
+    ▲
+  </button>
+
+  <script>
+    (function () {
+      var title = document.getElementById('glitch-title');
+      if (!title) return;
+
+      var raw = (title.textContent || '').trim();
+      if (!raw) return;
+
+      title.setAttribute('aria-label', raw);
+      title.setAttribute('data-text', raw);
+      title.classList.add('glitch-text');
+      title.textContent = '';
+
+      var fragment = document.createDocumentFragment();
+      raw.split('').forEach(function (char) {
+        var span = document.createElement('span');
+        span.className = 'glitch-char';
+        span.textContent = char === ' ' ? '\u00A0' : char;
+        fragment.appendChild(span);
+      });
+      title.appendChild(fragment);
+
+      var chars = Array.prototype.slice.call(title.querySelectorAll('.glitch-char')).filter(function (node) {
+        return node.textContent && node.textContent.trim() !== '';
+      });
+      if (!chars.length) return;
+
+      function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      function triggerGlitch() {
+        title.classList.add('old-school-flash');
+        window.setTimeout(function () {
+          title.classList.remove('old-school-flash');
+        }, randomInt(180, 320));
+
+        var total = randomInt(1, 3);
+        for (var i = 0; i < total; i++) {
+          var target = chars[randomInt(0, chars.length - 1)];
+          if (!target) continue;
+
+          target.classList.add('is-glitching');
+
+          window.setTimeout(function (node) {
+            return function () {
+              node.classList.remove('is-glitching');
+            };
+          }(target), randomInt(140, 320));
+        }
+      }
+
+      function scheduleNext() {
+        window.setTimeout(function () {
+          triggerGlitch();
+          scheduleNext();
+        }, randomInt(1200, 3200));
+      }
+
+      scheduleNext();
+    })();
+
+    (function () {
+      var sections = document.querySelectorAll('.collection-section');
+
+      sections.forEach(function (section) {
+        var header = section.querySelector('.collapsible-header');
+        var content = section.querySelector('.collapsible-content');
+        var cards = section.querySelectorAll('.pokemon-card');
+        var count = cards.length;
+        var arrow = header ? header.querySelector('.arrow') : null;
+
+        if (header && count > 0 && !header.querySelector('.poke-count')) {
+          var countTag = document.createElement('span');
+          countTag.className = 'poke-count';
+          countTag.textContent = '(x' + count + ')';
+          if (arrow) {
+            header.insertBefore(countTag, arrow);
+          } else {
+            header.appendChild(countTag);
+          }
+        }
+
+        if (header && content) {
+          header.addEventListener('click', function () {
+            var expanded = header.getAttribute('aria-expanded') === 'true';
+            header.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+            content.hidden = expanded;
+            header.classList.toggle('is-collapsed', expanded);
+          });
+        }
+      });
+    })();
+
+    (function () {
+      var totalBtn = document.getElementById('total-pokemon-btn');
+      if (!totalBtn) return;
+
+      var total = document.querySelectorAll('.pokemon-card').length;
+      var label = 'Specimens registered: ';
+      var durationMs = 2200;
+
+      totalBtn.textContent = label + '0';
+      if (total <= 0) return;
+
+      var startTime = null;
+
+      function animateCounter(timestamp) {
+        if (startTime === null) startTime = timestamp;
+
+        var elapsed = timestamp - startTime;
+        var progress = Math.min(elapsed / durationMs, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = Math.round(total * eased);
+
+        totalBtn.textContent = label + current;
+
+        if (progress < 1) {
+          window.requestAnimationFrame(animateCounter);
+        } else {
+          totalBtn.textContent = label + total;
+        }
+      }
+
+      window.requestAnimationFrame(animateCounter);
+    })();
+
+    (function () {
+      var input = document.getElementById('pokemon-search-input');
+      var clearBtn = document.getElementById('clear-search-btn');
+      if (!input || !clearBtn) return;
+
+      function filterPokemon() {
+        var query = input.value.trim().toLowerCase();
+        var sections = document.querySelectorAll('.collection-section');
+
+        sections.forEach(function (section) {
+          var cards = section.querySelectorAll('.pokemon-card');
+          var anyVisible = false;
+
+          cards.forEach(function (card) {
+            var text = card.textContent.toLowerCase();
+            var match = query === '' || text.indexOf(query) !== -1;
+            card.style.display = match ? '' : 'none';
+            if (match) anyVisible = true;
+          });
+
+          section.style.display = anyVisible ? '' : 'none';
+        });
+      }
+
+      input.addEventListener('input', filterPokemon);
+      clearBtn.addEventListener('click', function () {
+        input.value = '';
+        filterPokemon();
+        input.focus();
+      });
+    })();
+
+    (function () {
+      var previewImg = document.getElementById('preview-pokemon-img');
+      var previewName = document.getElementById('preview-pokemon-name');
+      var previewMeta = document.getElementById('preview-pokemon-meta');
+      var previewBall = document.getElementById('preview-pokeball-img');
+      var previewSerial = document.getElementById('preview-serial-value');
+      var previewContainment = document.getElementById('preview-containment-value');
+      var previewHint = document.getElementById('preview-empty-hint');
+
+      var cards = document.querySelectorAll('.pokemon-card');
+      if (!previewImg || !previewName || !previewMeta || !previewBall || !previewSerial || !previewContainment || !cards.length) return;
+
+      function applyPreview(card) {
+        var pokemonImg = card.querySelector('.pokemon-img');
+        var pokeballImg = card.querySelector('.pokeball-img');
+        var names = card.querySelectorAll('.pokemon-name');
+        var serialNode = card.querySelector('.pokemon-serial');
+
+        var primaryName = names[0] ? names[0].textContent.trim() : 'Unknown specimen';
+        var meta = names[1] ? names[1].textContent.trim() : 'Unknown signature';
+        var serial = serialNode ? serialNode.textContent.replace(/^Serial:\s*/i, '').trim() : '---';
+
+        if (pokemonImg) {
+          previewImg.src = pokemonImg.src;
+          previewImg.alt = pokemonImg.alt || primaryName;
+        }
+
+        if (pokeballImg) {
+          previewBall.src = pokeballImg.src;
+          previewBall.alt = pokeballImg.alt || 'Containment ball';
+        }
+
+        previewName.textContent = primaryName;
+        previewMeta.textContent = meta;
+        previewSerial.textContent = serial;
+        previewContainment.textContent = (pokeballImg && pokeballImg.alt) ? pokeballImg.alt : 'Linked';
+        previewHint.textContent = 'Toxic scan complete. Specimen isolated.';
+
+        cards.forEach(function (item) {
+          item.classList.remove('is-preview-selected');
+          item.setAttribute('aria-pressed', 'false');
+        });
+
+        card.classList.add('is-preview-selected');
+        card.setAttribute('aria-pressed', 'true');
+      }
+
+      cards.forEach(function (card) {
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-pressed', 'false');
+
+        card.addEventListener('click', function () {
+          applyPreview(card);
+        });
+
+        card.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            applyPreview(card);
+          }
+        });
+      });
+    })();
+
+    (function () {
+      var btn = document.getElementById('back-to-top-btn');
+      if (!btn) return;
+
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 240) {
+          btn.style.opacity = '1';
+          btn.style.pointerEvents = 'auto';
+        } else {
+          btn.style.opacity = '0';
+          btn.style.pointerEvents = 'none';
+        }
+      });
+
+      btn.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
+</body>
+</html>
