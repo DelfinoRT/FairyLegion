@@ -450,7 +450,7 @@ h1,
   position: fixed;
   right: max(16px, calc(50% - 760px));
   top: 250px;
-  width: min(88vw, 260px);
+  width: min(88vw, 220px);
   padding: 10px 10px 12px;
   z-index: 6;
 }
@@ -648,6 +648,21 @@ h1,
   line-height: 1.05;
   color: #c8b6df;
   margin-bottom: 6px;
+}
+
+.preview-types-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.preview-type-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  flex: 0 0 auto;
 }
 
 .preview-pokeball-container {
@@ -1142,7 +1157,7 @@ h1,
   .pokemon-hover-preview {
     top: 210px;
     right: 12px;
-    width: min(88vw, 240px);
+    width: min(78vw, 220px);
   }
 }
 

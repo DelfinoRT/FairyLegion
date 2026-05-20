@@ -8,6 +8,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     initGlitchTitle();
+    initCardBallIcons();
     initSectionCountsAndCollapse();
     initTotalSpecimenCounter();
     initSearchFilter();
@@ -31,6 +32,50 @@
 
   function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  /* ============================================================
+     Ball icon conversion (card text -> icon)
+     ============================================================ */
+  function initCardBallIcons() {
+    var ballIconMap = {
+      "poke ball": "icon-pokeball.gif",
+      pokeball: "icon-pokeball.gif",
+      "premier ball": "icon-premier.gif",
+      "dream ball": "icon-dream.gif",
+      "mythic ball": "icon-mythic.gif",
+      "heavy ball": "icon-heavy.gif",
+      "moon ball": "icon-moon.gif",
+      "crystal ball": "icon-crystal.gif",
+      "friend ball": "icon-friend.gif",
+      "moss ball": "icon-moss.gif",
+      "ultra ball": "icon-ultra.gif",
+      "rocket ball": "icon-rocket.gif",
+      "cherish ball": "icon-cherish.gif",
+      "dive ball": "icon-dive.gif",
+      "ancient ball": "icon-ancient.gif",
+      "timer ball": "icon-pokeball.gif",
+      "pink ball": "icon-pokeball.gif"
+    };
+
+    qsa(".pokemon-card").forEach(function (card) {
+      var existingIcon = qs(".pokeball-img", card);
+      if (existingIcon) return;
+
+      var ballTextEl = qs(".pokemon-ball", card);
+      if (!ballTextEl) return;
+
+      var ballName = textOf(ballTextEl);
+      var key = ballName.toLowerCase();
+      var iconFile = ballIconMap[key] || "icon-pokeball.gif";
+
+      var icon = document.createElement("img");
+      icon.className = "pokeball-img";
+      icon.setAttribute("src", "ColeccionSilvarion/" + iconFile);
+      icon.setAttribute("alt", ballName || "Pokeball");
+
+      ballTextEl.parentNode.replaceChild(icon, ballTextEl);
+    });
   }
 
   /* ============================================================
@@ -192,7 +237,19 @@
   function initSearchFilter() {
     var input = document.getElementById("pokemon-search-input");
     var clearBtn = document.getElementById("clear-search-btn");
+    var typeLinks = qsa('.section-index-pixel a[href^="#type-"]');
+    var selectedTypes = [];
     if (!input || !clearBtn) return;
+
+    function setTypeLinkState() {
+      typeLinks.forEach(function (link) {
+        var href = (link.getAttribute("href") || "").toLowerCase();
+        var typeName = href.replace("#type-", "");
+        var active = selectedTypes.indexOf(typeName) !== -1;
+        link.classList.toggle("is-active-type", active);
+        link.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+    }
 
     function updateVisibleSectionCount(section) {
       var visibleCards = qsa(".pokemon-card", section).filter(function (card) {
@@ -214,8 +271,18 @@
         var anyVisible = false;
 
         cards.forEach(function (card) {
-          var text = card.textContent.toLowerCase();
-          var match = query === "" || text.indexOf(query) !== -1;
+          var nameEl = qs(".pokemon-name", card);
+          var cardName = ((card.getAttribute("data-name") || textOf(nameEl)) + "").toLowerCase();
+          var cardTypes = qsa(".pokemon-types .type-icon", card).map(function (icon) {
+            return (icon.getAttribute("alt") || "").trim().toLowerCase();
+          });
+          var textMatch = query === "" || cardName.indexOf(query) !== -1;
+          var typeMatch =
+            selectedTypes.length === 0 ||
+            selectedTypes.every(function (typeName) {
+              return cardTypes.indexOf(typeName) !== -1;
+            });
+          var match = textMatch && typeMatch;
           card.style.display = match ? "" : "none";
           if (match) anyVisible = true;
         });
@@ -225,13 +292,43 @@
       });
     }
 
+    typeLinks.forEach(function (link) {
+      link.setAttribute("role", "button");
+      link.setAttribute("aria-pressed", "false");
+
+      link.addEventListener("click", function (event) {
+        event.preventDefault();
+        var href = (link.getAttribute("href") || "").toLowerCase();
+        var typeName = href.replace("#type-", "");
+        if (!typeName) return;
+
+        var index = selectedTypes.indexOf(typeName);
+        if (index !== -1) {
+          selectedTypes.splice(index, 1);
+        } else {
+          if (selectedTypes.length >= 2) {
+            selectedTypes.shift();
+          }
+          selectedTypes.push(typeName);
+        }
+
+        setTypeLinkState();
+        filterPokemon();
+      });
+    });
+
     input.addEventListener("input", filterPokemon);
 
     clearBtn.addEventListener("click", function () {
       input.value = "";
+      selectedTypes = [];
+      setTypeLinkState();
       filterPokemon();
       input.focus();
     });
+
+    setTypeLinkState();
+    filterPokemon();
   }
 
   /* ============================================================
@@ -268,9 +365,27 @@
       return names[0] ? textOf(names[0]) : "Unknown specimen";
     }
 
-    function extractMeta(card) {
-      var names = qsa(".pokemon-name", card);
-      return names[1] ? textOf(names[1]) : "Unknown signature";
+    function renderPreviewTypes(card) {
+      var typeIcons = qsa(".pokemon-types .type-icon", card);
+      previewMeta.innerHTML = "";
+
+      if (!typeIcons.length) {
+        previewMeta.textContent = "Unknown type";
+        return;
+      }
+
+      var row = document.createElement("div");
+      row.className = "preview-types-row";
+
+      typeIcons.forEach(function (icon) {
+        var typeImg = document.createElement("img");
+        typeImg.className = "preview-type-icon";
+        typeImg.src = icon.getAttribute("src") || "";
+        typeImg.alt = icon.getAttribute("alt") || "Type";
+        row.appendChild(typeImg);
+      });
+
+      previewMeta.appendChild(row);
     }
 
     function setSelectedCard(card) {
@@ -289,7 +404,6 @@
       var pokemonImg = qs(".pokemon-img", card);
       var pokeballImg = qs(".pokeball-img", card);
       var primaryName = extractPrimaryName(card);
-      var meta = extractMeta(card);
       if (pokemonImg) {
         previewImg.src = pokemonImg.src;
         previewImg.alt = pokemonImg.alt || primaryName;
@@ -307,7 +421,7 @@
       }
 
       previewName.textContent = primaryName;
-      previewMeta.textContent = meta;
+  renderPreviewTypes(card);
 
       setSelectedCard(card);
     }
