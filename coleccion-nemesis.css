@@ -1,3 +1,8 @@
+/* Hide serials by default */
+.pokemon-serial { display: none; }
+
+/* Show serials when toggled */
+.show-serials .pokemon-serial { display: block; }
 /* Toxic Drip SVG Bar */
 .toxic-drip {
   position: absolute;

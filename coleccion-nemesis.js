@@ -16,6 +16,14 @@
     initBackToTop();
     initSectionIndexSmoothScroll();
     makePreviewCapsuleDraggable();
+
+    // Serial toggle logic
+    var toggleBtn = document.getElementById("toggle-serial-btn");
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", function (e) {
+        document.body.classList.toggle("show-serials");
+      });
+    }
   });
 
   function qs(selector, scope) {
