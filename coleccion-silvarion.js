@@ -1,6 +1,26 @@
 const COLLAPSE_ANIMATION_MS = 460;
 const COLLAPSE_EASING = 'cubic-bezier(0.2, 0.75, 0.2, 1)';
 
+(function sortPokemonCardsAlphabetically() {
+  const grids = Array.from(document.querySelectorAll('.collection-section .pokemon-grid'));
+
+  const getCardName = (card) => {
+    const nameElement = card.querySelector('.pokemon-name');
+    return nameElement ? nameElement.textContent.trim() : '';
+  };
+
+  grids.forEach((grid) => {
+    const cards = Array.from(grid.querySelectorAll(':scope > .pokemon-card'));
+    if (cards.length < 2) return;
+
+    cards
+      .sort((leftCard, rightCard) => getCardName(leftCard).localeCompare(getCardName(rightCard), 'es', { sensitivity: 'base' }))
+      .forEach((card) => {
+        grid.appendChild(card);
+      });
+  });
+})();
+
 function animateOpen(panel) {
   panel.style.display = 'block';
   panel.style.overflow = 'hidden';
