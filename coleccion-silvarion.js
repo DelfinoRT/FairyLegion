@@ -79,6 +79,219 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
   });
 });
 
+(function setupPokemonTypeBadges() {
+  const cards = Array.from(document.querySelectorAll('.collection-section .pokemon-card'));
+  if (cards.length === 0) return;
+
+  const typeDataSources = [
+    'PokeDuel-Script.js',
+    'BugNet.js',
+    'FieryFisherRod.js',
+    'GhostDetector.js',
+    'IceHammer.js',
+    'LeadPickaxe.js',
+    'MagneticDetector.js',
+  ];
+  const typeIconBasePath = 'ColeccionSilvarion';
+  const typeEntryPattern = /\{\s*name:\s*"([^"]+)"[\s\S]{0,320}?types:\s*\[([^\]]+)\]/g;
+  const quotedValuePattern = /"([^"]+)"/g;
+  const prefixPattern = /^(shiny|elite|cloned|red|shadow|crystal|golden|alpha|mega|armored|dark|light|ancient)\s+/i;
+  const fallbackTypeEntries = {
+    'shiny marshadow': ['Fighting', 'Ghost'],
+    'cloned alomomola': ['Water'],
+    'shiny feraligatr': ['Water'],
+    'walking wake': ['Water', 'Dragon'],
+    'ashs greninja': ['Water', 'Dark'],
+    'cloned vaporeon': ['Water'],
+    'cloned kingler': ['Water'],
+    'shiny corsola': ['Water', 'Rock'],
+    'champion poliwrath': ['Water', 'Fighting'],
+    'shiny finizen': ['Water'],
+    'shiny palafin': ['Water'],
+    'shiny politoed': ['Water'],
+    'shiny big magikarp': ['Water'],
+    'shiny araquanid': ['Water', 'Bug'],
+    'shiny ceruledge': ['Fire', 'Ghost'],
+    'cloned ninetales': ['Fire'],
+    'iron hands': ['Fighting', 'Electric'],
+    'elder charizard': ['Fire', 'Flying'],
+    'gouging fire': ['Fire', 'Dragon'],
+    'cloned hitmonchan': ['Fighting'],
+    'cloned hitmonlee': ['Fighting'],
+    'cloned hitmontop': ['Fighting'],
+    'cloned primeape': ['Fighting'],
+    'cloned flareon': ['Fire'],
+    'shiny grapploct': ['Fighting'],
+    'shiny mr mime': ['Psychic', 'Fairy'],
+    'shiny exeggutor': ['Grass', 'Psychic'],
+    'shiny klefki': ['Steel', 'Fairy'],
+    'shiny chimeco': ['Psychic'],
+    'diancie': ['Rock', 'Fairy'],
+    'shiny enamorus': ['Fairy', 'Flying'],
+    'scream tail': ['Fairy', 'Psychic'],
+    'cloned claydol': ['Ground', 'Psychic'],
+    'shiny slurpuff': ['Fairy'],
+    'carbink': ['Rock', 'Fairy'],
+    'shiny clefable': ['Fairy'],
+    'cloned chansey': ['Normal'],
+    'shiny cetitan': ['Ice'],
+    'shiny chien-pao': ['Dark', 'Ice'],
+    'cloned dewong': ['Water', 'Ice'],
+    'cloned hypno': ['Psychic'],
+    'melmetal': ['Steel'],
+    'shiny umbreon': ['Dark'],
+    'roaring moon': ['Dragon', 'Dark'],
+    'shiny mightyena': ['Dark'],
+    'zarude': ['Dark', 'Grass'],
+    'shiny shedinja': ['Bug', 'Ghost'],
+    'shiny sunflora': ['Grass'],
+    'shiny corviknight': ['Flying', 'Steel'],
+    'shiny zeraora': ['Electric'],
+    'zeraora': ['Electric'],
+    'cloned togepi': ['Fairy'],
+    'hisuian decidueye': ['Grass', 'Fighting'],
+  };
+
+  const normalizeName = (value) => value
+    .toLowerCase()
+    .replace(/\./g, '')
+    .replace(/[’']/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const buildCandidateNames = (value) => {
+    const candidates = new Set();
+    let current = (value || '').trim();
+
+    while (current) {
+      candidates.add(normalizeName(current));
+
+      const next = current.replace(prefixPattern, '').trim();
+      if (!next || next === current) break;
+
+      current = next;
+    }
+
+    return Array.from(candidates);
+  };
+
+  const parseTypesFromSource = (sourceText) => {
+    const nextEntries = new Map();
+    let match = typeEntryPattern.exec(sourceText);
+
+    while (match) {
+      const [, rawName, rawTypes] = match;
+      const types = Array.from(rawTypes.matchAll(quotedValuePattern)).map((entry) => entry[1].trim());
+
+      if (rawName && types.length > 0) {
+        nextEntries.set(normalizeName(rawName), types);
+      }
+
+      match = typeEntryPattern.exec(sourceText);
+    }
+
+    typeEntryPattern.lastIndex = 0;
+    return nextEntries;
+  };
+
+  const createTypeIcon = (type) => {
+    const typeIcon = document.createElement('img');
+    const normalizedType = type.toLowerCase();
+
+    typeIcon.className = 'type-icon';
+    typeIcon.setAttribute('src', `${typeIconBasePath}/type-${normalizedType}.png`);
+    typeIcon.setAttribute('alt', type);
+
+    return typeIcon;
+  };
+
+  const getExplicitCardTypes = (card) => {
+    const rawTypes = card.dataset.types;
+    if (!rawTypes) return [];
+
+    return rawTypes
+      .split(',')
+      .map((type) => type.trim())
+      .filter(Boolean);
+  };
+
+  const ensureCardTopRow = (card) => {
+    let topRow = card.querySelector(':scope > .pokemon-card-top');
+    if (topRow) return topRow;
+
+    topRow = document.createElement('div');
+    topRow.className = 'pokemon-card-top';
+
+    const ball = card.querySelector(':scope > .pokeball-img');
+    const image = card.querySelector(':scope > .pokemon-img');
+
+    if (ball) {
+      topRow.appendChild(ball);
+    }
+
+    card.insertBefore(topRow, image || card.firstChild);
+    return topRow;
+  };
+
+  const applyTypesToCards = (typeMap) => {
+    cards.forEach((card) => {
+      const nameElement = card.querySelector('.pokemon-name');
+      if (!nameElement) return;
+
+      const topRow = ensureCardTopRow(card);
+      let typeRow = topRow.querySelector('.pokemon-types');
+      if (!typeRow) {
+        typeRow = document.createElement('div');
+        typeRow.className = 'pokemon-types';
+        topRow.insertBefore(typeRow, topRow.firstChild);
+      }
+
+      if (typeRow.childElementCount > 0) return;
+
+      const explicitTypes = getExplicitCardTypes(card);
+      if (explicitTypes.length > 0) {
+        explicitTypes.forEach((type) => {
+          typeRow.appendChild(createTypeIcon(type));
+        });
+        return;
+      }
+
+      const resolvedTypes = buildCandidateNames(nameElement.textContent).find((candidate) => typeMap.has(candidate));
+      if (!resolvedTypes) return;
+
+      typeMap.get(resolvedTypes).forEach((type) => {
+        typeRow.appendChild(createTypeIcon(type));
+      });
+    });
+  };
+
+  Promise.all(
+    typeDataSources.map((path) => fetch(path).then((response) => (response.ok ? response.text() : '')).catch(() => ''))
+  )
+    .then((sources) => {
+      const typeMap = new Map();
+
+      sources.forEach((sourceText) => {
+        parseTypesFromSource(sourceText).forEach((types, name) => {
+          if (!typeMap.has(name)) {
+            typeMap.set(name, types);
+          }
+        });
+      });
+
+      Object.entries(fallbackTypeEntries).forEach(([name, types]) => {
+        if (!typeMap.has(name)) {
+          typeMap.set(name, types);
+        }
+      });
+
+      applyTypesToCards(typeMap);
+    })
+    .catch(() => {
+      // Leave cards unchanged if local type sources are unavailable.
+    });
+})();
+
 (function setupPokemonHoverPreview() {
   const preview = document.getElementById('pokemon-hover-preview');
   if (!preview) return;
@@ -87,6 +300,7 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
   const previewName = document.getElementById('preview-pokemon-name');
   const previewMeta = document.getElementById('preview-pokemon-meta');
   const previewBall = document.getElementById('preview-pokeball-img');
+  const previewTypes = document.getElementById('preview-pokemon-types');
   const previewBallContainer = previewBall ? previewBall.closest('.preview-pokeball-container') : null;
   const cards = Array.from(document.querySelectorAll('.collection-section .pokemon-card'));
   const hintStorageKey = 'silvarion-monitor-click-note-seen';
@@ -265,12 +479,13 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
 
   previewImg.removeAttribute('src');
   if (previewNameGlitch) {
-    previewNameGlitch.setText('Selecciona un Pokemon');
+    previewNameGlitch.setText('Selecciona un Pokémon');
   } else {
-    previewName.textContent = 'Selecciona un Pokemon';
+    previewName.textContent = 'Selecciona un Pokémon';
   }
   previewMeta.textContent = 'para mostrar sus detalles';
   if (previewBall) previewBall.removeAttribute('src');
+  if (previewTypes) previewTypes.replaceChildren();
 
   let selectedCard = null;
 
@@ -287,6 +502,10 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
     const ballEl = section ? section.querySelector('.ball-icon') : null;
     const ballSrc = ballEl ? (ballEl.getAttribute('src') || '') : '';
     const ballAlt = ballEl ? (ballEl.getAttribute('alt') || '') : '';
+    const cardTypes = Array.from(card.querySelectorAll('.pokemon-types .type-icon')).map((icon) => ({
+      src: icon.getAttribute('src') || '',
+      alt: icon.getAttribute('alt') || '',
+    }));
 
     preview.classList.add('is-updating');
 
@@ -310,6 +529,18 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
         } else {
           previewBall.removeAttribute('src');
         }
+      }
+      if (previewTypes) {
+        previewTypes.replaceChildren();
+        cardTypes.forEach((type) => {
+          if (!type.src) return;
+
+          const typeIcon = document.createElement('img');
+          typeIcon.className = 'preview-type-icon';
+          typeIcon.setAttribute('src', type.src);
+          typeIcon.setAttribute('alt', type.alt);
+          previewTypes.appendChild(typeIcon);
+        });
       }
       preview.classList.remove('is-updating');
     }, 80);

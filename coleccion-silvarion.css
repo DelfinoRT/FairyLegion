@@ -404,12 +404,22 @@ h1.glitch-title {
   line-height: 1;
 }
 
+.preview-pokeball-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 8px;
+  min-height: 44px;
+}
+
 .preview-pokeball-container {
   position: relative;
   display: flex;
   justify-content: center;
-  margin-top: 8px;
-  min-height: 40px;
+  align-items: center;
+  min-height: 44px;
+  flex: 0 0 auto;
 }
 
 .preview-pokeball-container.is-caught-spark::after {
@@ -461,6 +471,27 @@ h1.glitch-title {
 
 .preview-pokeball-img:not([src]) {
   display: none;
+}
+
+.preview-pokemon-types {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  flex-wrap: wrap;
+}
+
+.preview-pokemon-types:empty {
+  display: none;
+}
+
+.preview-type-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 1px 2px rgba(21, 23, 28, 0.28));
 }
 
 .preview-behavior-note {
@@ -616,7 +647,7 @@ h1.glitch-title {
   position: relative;
   border: 3px solid var(--card-border);
   border-radius: 10px;
-  padding: 9px 8px 8px;
+  padding: 8px;
   min-height: 122px;
   background: linear-gradient(180deg, rgba(191, 210, 107, 0.88), rgba(159, 184, 82, 0.82));
   box-shadow: inset 0 0 0 2px rgba(36, 48, 30, 0.28), 0 3px 6px rgba(18, 25, 16, 0.25);
@@ -634,14 +665,34 @@ h1.glitch-title {
   box-shadow: inset 0 0 0 2px rgba(36, 48, 30, 0.28), 0 0 0 2px rgba(67, 88, 124, 0.45), 0 8px 14px rgba(18, 25, 16, 0.28);
 }
 
-.pokeball-img {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 20px;
-  height: 20px;
+.pokemon-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 20px;
+  margin-bottom: 4px;
+}
+
+.pokemon-types {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 20px;
+  flex-wrap: wrap;
+}
+
+.type-icon,
+.pokemon-card .pokeball-img {
+  width: 30px;
+  height: 30px;
   object-fit: contain;
   image-rendering: pixelated;
+}
+
+.pokemon-card .pokeball-img {
+  flex: 0 0 auto;
+  margin-left: auto;
 }
 
 .pokemon-img {
