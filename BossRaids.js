@@ -74,7 +74,10 @@ const bossRaidData = [
     { name: "Donald Trump", region: "Alola", location: "Montaña Hau'oli (centro, cerca de Acero 175 o lado de Tapu Koko)", imagePath: "BossRaids/donald_trump.png", groupA: ["(No hay datos para grupo A)"], groupB: ["(No hay datos para grupo B)"], groupC: ["(No hay datos para grupo C)"] }, // No data provided in tables
     { name: "Solgaleo", region: "Alola", location: "Rancho Paniola (izquierda del pueblo, corrales dentro o fuera)", imagePath: "BossRaids/solgaleo.png", groupA: ["Solgaleo's Mask", "TM Magnetic Shock", "TM Metallic Rush", "TM Psychic Terrain"], groupB: ["TM Metal Sound", "TM Meteor Mash"], groupC: ["TM Gear Grind", "TM Smart Strike"] },
     { name: "Grand Galvantula", region: "Alola", location: "Norte Rancho Paniola", imagePath: "BossRaids/grand_galvantula.png", groupA: ["(No hay datos para grupo A)"], groupB: ["(No hay datos para grupo B)"], groupC: ["(No hay datos para grupo C)"] }, // No data provided in tables
-    { name: "Necrozma", region: "Alola", location: "Malie (camino al teleférico Lanakila)", imagePath: "BossRaids/necrozma.png", groupA: ["TM Psyblast", "TM Light Screen", "TM Case 11"], groupB: ["Trapped Soul", "TM Synchronoise"], groupC: ["TM Psychic"] }
+    { name: "Necrozma", region: "Alola", location: "Malie (camino al teleférico Lanakila)", imagePath: "BossRaids/necrozma.png", groupA: ["TM Psyblast", "TM Light Screen", "TM Case 11"], groupB: ["Trapped Soul", "TM Synchronoise"], groupC: ["TM Psychic"] },
+    { name: "Genesect", region: "Unknown", location: "Happines Island", imagePath: "BossRaids/genesect.png", groupA: ["(No hay datos para grupo A)"], groupB: ["(No hay datos para grupo B)"], groupC: ["(No hay datos para grupo C)"] },
+    { name: "Giratina", region: "Kanto", location: "West of Pallet Town", imagePath: "BossRaids/giratina.png", groupA: ["(No hay datos para grupo A)"], groupB: ["(No hay datos para grupo B)"], groupC: ["(No hay datos para grupo C)"] },
+    { name: "Ultra Necrozma", region: "Unknown", location: "Seafolk Village's beach", imagePath: "BossRaids/ultra_necrozma.png", groupA: ["(No hay datos para grupo A)"], groupB: ["(No hay datos para grupo B)"], groupC: ["(No hay datos para grupo C)"] }
 ];
     // --- End Boss Data Structure ---
 
