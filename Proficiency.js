@@ -89,7 +89,6 @@ const STATIC_COPY = {
         unlockWarningTitle: 'Nota: Proficiencia Nivel 9 - Mega & G-Max Slot:',
         unlockWarningItems: [
             '<strong>Disponibilidad:</strong> solo para Pokémon que puedan Mega Evolucionar o Gigantamax',
-            '<strong>Requisito:</strong> requiere <strong>1,000,000 EXP</strong> para activarse y su desbloqueo es <strong>gratis</strong>',
             '<strong>Beneficio:</strong> desbloquea un <strong>tercer slot de held item</strong>',
             '<strong>Restricción:</strong> ese slot solo acepta <strong>Mega Stones</strong> o <strong>ítems G-Max</strong>'
         ],
@@ -113,10 +112,6 @@ const STATIC_COPY = {
             {
                 title: 'Adaptabilidad',
                 html: 'Cambia tus bonos según la actividad. Si vas a pescar, activa bonos de pesca; en torneo, prioriza daño y resistencias.'
-            },
-            {
-                title: 'Shinies y clones',
-                html: 'El sistema incluye proficiency para Shinies y Clones. Derrotar Pokémon Shiny da <strong>220 EXP</strong>, más del doble que un Pokémon normal.'
             }
         ],
         explorerTitle: 'Explorador de Proficiencias',
@@ -152,7 +147,7 @@ const STATIC_COPY = {
     en: {
         title: 'Fairy Legion - Proficiency System',
         heroTitle: '⭐ Proficiency System',
-        heroSubtitle: 'A custom mastery path for your Pokémon — tied to your character, not the Pokémon itself.',
+        heroSubtitle: 'A custom mastery path for your Pokémon.',
         navExplorer: 'Go to Proficiency Explorer',
         navPokemon: 'Go to Pokémon Browser',
         languageToggle: 'Español',
@@ -219,7 +214,6 @@ const STATIC_COPY = {
         unlockWarningTitle: 'Note: Level 9 Proficiency - Mega & G-Max Slot:',
         unlockWarningItems: [
             '<strong>Availability:</strong> only for Pokémon that can Mega Evolve or Gigantamax',
-            '<strong>Requirement:</strong> needs <strong>1,000,000 EXP</strong> to activate and the unlock is <strong>free</strong>',
             '<strong>Benefit:</strong> unlocks a <strong>third held item slot</strong>',
             '<strong>Restriction:</strong> that slot only accepts <strong>Mega Stones</strong> or <strong>G-Max items</strong>'
         ],
@@ -243,10 +237,6 @@ const STATIC_COPY = {
             {
                 title: 'Adaptability',
                 html: 'Swap your bonuses depending on the activity. If you are fishing, equip fishing bonuses; in tournaments, prioritize damage and resistances.'
-            },
-            {
-                title: 'Shinies and clones',
-                html: 'The system includes proficiency for Shinies and Clones. Defeating a Shiny Pokémon grants <strong>220 EXP</strong>, more than double a normal Pokémon.'
             }
         ],
         explorerTitle: 'Proficiency Explorer',
