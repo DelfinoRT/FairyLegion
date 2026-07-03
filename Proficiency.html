@@ -312,29 +312,6 @@
             color: #333;
             min-width: 160px;
         }
-        .category-filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 7px;
-            margin-bottom: 16px;
-        }
-        .filter-btn {
-            padding: 7px 14px;
-            border: 1px solid rgba(255,255,255,0.55);
-            border-radius: 999px;
-            background: rgba(255,255,255,0.08);
-            color: white;
-            cursor: pointer;
-            font-size: 13px;
-            transition: all 0.2s;
-        }
-        .filter-btn:hover, .filter-btn.active {
-            background: var(--prof-gold);
-            border-color: var(--prof-gold);
-            color: #333;
-            font-weight: bold;
-        }
-
         /* Proficiency table inside browser */
         #profTableWrapper {
             background: #fff;
@@ -859,20 +836,11 @@
         <section id="proficiency-explorer">
             <div class="browser-section">
                 <h2>Explorador de Proficiencias</h2>
-                <p class="muted-note">Busca por ID, descripción o Pokémon, filtra por categoría y ordena resultados.</p>
+                <p class="muted-note">Busca por ID, descripción o Pokémon.</p>
 
                 <div class="browser-controls">
                     <input type="text" id="profSearch" placeholder="Buscar por proficiencia o nombre de Pokémon...">
-                    <select id="profSort" class="control-select">
-                        <option value="id-asc">Orden: ID (menor a mayor)</option>
-                        <option value="id-desc">Orden: ID (mayor a menor)</option>
-                        <option value="pokemon-desc">Orden: más Pokémon primero</option>
-                    </select>
                     <button id="profClear" class="control-btn" type="button">Limpiar</button>
-                </div>
-
-                <div class="category-filters" id="categoryFilters">
-                    <!-- Buttons injected by JS -->
                 </div>
 
                 <div id="profCount"></div>

@@ -115,13 +115,12 @@ const STATIC_COPY = {
             }
         ],
         explorerTitle: 'Explorador de Proficiencias',
-        explorerNote: 'Busca por ID, descripción o Pokémon, filtra por categoría y ordena resultados.',
+        explorerNote: 'Busca por ID, descripción o Pokémon y ordena resultados.',
         profSearchPlaceholder: 'Buscar por proficiencia o nombre de Pokémon...',
         profSortAsc: 'Orden: ID (menor a mayor)',
         profSortDesc: 'Orden: ID (mayor a menor)',
         profSortPokemon: 'Orden: más Pokémon primero',
         clear: 'Limpiar',
-        allCategories: 'Todas',
         profCount: (count) => `Mostrando ${count} proficiencia(s)`,
         profHeaderId: '#',
         profHeaderDescription: 'Descripción',
@@ -240,13 +239,12 @@ const STATIC_COPY = {
             }
         ],
         explorerTitle: 'Proficiency Explorer',
-        explorerNote: 'Search by ID, description, or Pokémon, filter by category, and sort the results.',
+        explorerNote: 'Search by ID, description, or Pokémon and sort the results.',
         profSearchPlaceholder: 'Search by proficiency or Pokémon name...',
         profSortAsc: 'Sort: ID (low to high)',
         profSortDesc: 'Sort: ID (high to low)',
         profSortPokemon: 'Sort: most Pokémon first',
         clear: 'Clear',
-        allCategories: 'All',
         profCount: (count) => `Showing ${count} proficiency(s)`,
         profHeaderId: '#',
         profHeaderDescription: 'Description',
@@ -274,8 +272,7 @@ const STATIC_COPY = {
 const browserState = {
     proficiency: {
         searchQuery: '',
-        sortMode: 'id-asc',
-        activeCat: 'all'
+        sortMode: 'id-asc'
     },
     pokemon: {
         searchQuery: '',
@@ -526,8 +523,7 @@ function applyStaticTranslations() {
 }
 
 function refreshBrowserViews() {
-    buildCategoryFilters();
-    const profFiltered = getFilteredProficiencies(browserState.proficiency.searchQuery, browserState.proficiency.activeCat);
+    const profFiltered = getFilteredProficiencies(browserState.proficiency.searchQuery);
     renderProficiencyTable(sortProficiencies(profFiltered, browserState.proficiency.sortMode), browserState.proficiency.searchQuery);
     const pokemonFiltered = getFilteredPokemonRows(browserState.pokemon.searchQuery);
     renderPokemonTable(sortPokemonRows(pokemonFiltered, browserState.pokemon.sortMode), browserState.pokemon.searchQuery);
@@ -851,32 +847,8 @@ function togglePokemonTags(profId) {
     toggle.textContent = isCollapsed ? `${copyText('hide')} ▴` : `${count} Pokémon ▾`;
 }
 
-function buildCategoryFilters() {
-    const container = document.getElementById('categoryFilters');
-    if (!container) return;
-
-    container.innerHTML = '';
-
-    const allBtn = document.createElement('button');
-    allBtn.className = `filter-btn${browserState.proficiency.activeCat === 'all' ? ' active' : ''}`;
-    allBtn.textContent = copyText('allCategories');
-    allBtn.dataset.cat = 'all';
-    container.appendChild(allBtn);
-
-    Object.entries(CATEGORIES).forEach(([key, val]) => {
-        const btn = document.createElement('button');
-        btn.className = `filter-btn${browserState.proficiency.activeCat === key ? ' active' : ''}`;
-        btn.textContent = getCategoryLabel(key);
-        btn.dataset.cat = key;
-        container.appendChild(btn);
-    });
-}
-
-function getFilteredProficiencies(searchQuery, activeCat) {
+function getFilteredProficiencies(searchQuery) {
     return proficiencies.filter(([id, desc, cat]) => {
-        const matchesCat = activeCat === 'all' || cat === activeCat;
-        if (!matchesCat) return false;
-
         if (!searchQuery) return true;
 
         const { en, es } = splitDescription(desc);
@@ -1036,15 +1008,11 @@ function renderPokemonTable(rows, searchQuery) {
 }
 
 function initProficiencyBrowser() {
-    buildCategoryFilters();
-
     const searchInput = document.getElementById('profSearch');
-    const sortInput = document.getElementById('profSort');
     const clearBtn = document.getElementById('profClear');
-    const filterContainer = document.getElementById('categoryFilters');
 
     function updateProficiencyUI() {
-        const filtered = getFilteredProficiencies(browserState.proficiency.searchQuery, browserState.proficiency.activeCat);
+        const filtered = getFilteredProficiencies(browserState.proficiency.searchQuery);
         renderProficiencyTable(sortProficiencies(filtered, browserState.proficiency.sortMode), browserState.proficiency.searchQuery);
     }
 
@@ -1057,34 +1025,11 @@ function initProficiencyBrowser() {
         });
     }
 
-    if (sortInput) {
-        sortInput.addEventListener('change', function () {
-            browserState.proficiency.sortMode = this.value;
-            updateProficiencyUI();
-        });
-    }
-
-    if (clearBtn && searchInput && sortInput) {
+    if (clearBtn && searchInput) {
         clearBtn.addEventListener('click', function () {
             browserState.proficiency.searchQuery = '';
             browserState.proficiency.sortMode = 'id-asc';
-            browserState.proficiency.activeCat = 'all';
             searchInput.value = '';
-            sortInput.value = 'id-asc';
-            filterContainer.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.cat === 'all');
-            });
-            updateProficiencyUI();
-        });
-    }
-
-    if (filterContainer) {
-        filterContainer.addEventListener('click', function (e) {
-            const btn = e.target.closest('.filter-btn');
-            if (!btn) return;
-            filterContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            browserState.proficiency.activeCat = btn.dataset.cat;
             updateProficiencyUI();
         });
     }
