@@ -6,8 +6,15 @@ Parses proficiency-test.lua and generates:
 
 import re
 import json
+import os
+import sys
 
-LUA_FILE = "proficiency-test.lua"
+DEFAULT_LUA_FILES = ["proficiencyFinal.lua", "proficiency-test.lua"]
+
+if len(sys.argv) > 1:
+    LUA_FILE = sys.argv[1]
+else:
+    LUA_FILE = next((path for path in DEFAULT_LUA_FILES if os.path.exists(path)), "proficiencyFinal.lua")
 
 # ---------- Step 1: Build constant name -> id map ----------
 const_map = {}  # e.g. {"PROFICIENCY_DAMAGE_REDUCTION_10_PERCENT": 9, ...}
@@ -136,7 +143,7 @@ print(f"Built pokemonProficiencyMap (flat) with {len(pokemon_flat_map)} Pokemon.
 
 # ---------- Step 6: Write JS files ----------
 with open("proficiency-pokemon-data.js", "w", encoding="utf-8") as f:
-    f.write("// Auto-generated from proficiency-test.lua\n")
+    f.write(f"// Auto-generated from {LUA_FILE}\n")
     f.write("// Maps proficiency ID -> array of Pokemon names that can learn it\n")
     f.write("const proficiencyPokemonMap = ")
     # Convert keys to numbers in output
@@ -149,7 +156,7 @@ with open("proficiency-pokemon-data.js", "w", encoding="utf-8") as f:
 print("Wrote proficiency-pokemon-data.js")
 
 with open("pokemon-proficiency-level-data.js", "w", encoding="utf-8") as f:
-    f.write("// Auto-generated from proficiency-test.lua\n")
+    f.write(f"// Auto-generated from {LUA_FILE}\n")
     f.write("// Maps Pokemon name -> proficiency IDs by level (L1..L9)\n")
     f.write("const pokemonProficiencyLevelMap = ")
     sorted_map = dict(sorted(pokemon_level_map.items()))
