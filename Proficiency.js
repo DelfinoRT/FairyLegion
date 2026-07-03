@@ -116,6 +116,8 @@ const STATIC_COPY = {
         ],
         explorerTitle: 'Explorador de Proficiencias',
         explorerNote: 'Busca por ID, descripción o Pokémon y ordena resultados.',
+        explorerCollapse: 'Ocultar',
+        explorerExpand: 'Mostrar',
         profSearchPlaceholder: 'Buscar por proficiencia o nombre de Pokémon...',
         profSortAsc: 'Orden: ID (menor a mayor)',
         profSortDesc: 'Orden: ID (mayor a menor)',
@@ -240,6 +242,8 @@ const STATIC_COPY = {
         ],
         explorerTitle: 'Proficiency Explorer',
         explorerNote: 'Search by ID, description, or Pokémon and sort the results.',
+        explorerCollapse: 'Collapse',
+        explorerExpand: 'Expand',
         profSearchPlaceholder: 'Search by proficiency or Pokémon name...',
         profSortAsc: 'Sort: ID (low to high)',
         profSortDesc: 'Sort: ID (high to low)',
@@ -272,7 +276,8 @@ const STATIC_COPY = {
 const browserState = {
     proficiency: {
         searchQuery: '',
-        sortMode: 'id-asc'
+        sortMode: 'id-asc',
+        collapsed: false
     },
     pokemon: {
         searchQuery: '',
@@ -310,6 +315,39 @@ function updateLanguageToggleButton() {
     if (!button) return;
     button.textContent = copyText('languageToggle');
     button.setAttribute('aria-label', copyText('languageToggle'));
+}
+
+function updateExplorerToggleButton() {
+    const button = document.getElementById('profExplorerToggle');
+    const content = document.getElementById('proficiencyExplorerContent');
+    if (!button || !content) return;
+
+    const isCollapsed = content.hidden;
+    button.textContent = isCollapsed ? copyText('explorerExpand') : copyText('explorerCollapse');
+    button.setAttribute('aria-expanded', String(!isCollapsed));
+}
+
+function setExplorerCollapsed(collapsed) {
+    const section = document.querySelector('#proficiency-explorer .browser-section');
+    const content = document.getElementById('proficiencyExplorerContent');
+    if (!section || !content) return;
+
+    browserState.proficiency.collapsed = collapsed;
+    content.hidden = collapsed;
+    section.classList.toggle('is-collapsed', collapsed);
+    updateExplorerToggleButton();
+}
+
+function initProficiencyExplorerCollapse() {
+    const button = document.getElementById('profExplorerToggle');
+    const content = document.getElementById('proficiencyExplorerContent');
+    if (!button || !content) return;
+
+    button.addEventListener('click', function () {
+        setExplorerCollapsed(!browserState.proficiency.collapsed);
+    });
+
+    setExplorerCollapsed(browserState.proficiency.collapsed);
 }
 
 function ensureLanguageToggleButton() {
@@ -496,6 +534,7 @@ function applyStaticTranslations() {
         if (headers[1]) headers[1].textContent = copy.profHeaderDescription;
         if (headers[2]) headers[2].textContent = copy.profHeaderCategory;
         if (headers[3]) headers[3].textContent = copy.profHeaderPokemon;
+        updateExplorerToggleButton();
     }
 
     const pokemonBrowser = document.getElementById('pokemon-search');
@@ -1102,6 +1141,7 @@ function refreshPokemonTable() {
 
 document.addEventListener('DOMContentLoaded', function () {
     ensureLanguageToggleButton();
+    initProficiencyExplorerCollapse();
     applyStaticTranslations();
     initProficiencyBrowser();
     initPokemonBrowser();

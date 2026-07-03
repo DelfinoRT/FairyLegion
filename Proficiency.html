@@ -258,6 +258,29 @@
             margin: 0;
             color: white;
             box-shadow: 0 14px 28px rgba(54, 20, 94, 0.2);
+            position: relative;
+        }
+        .explorer-toggle-btn {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            border: 1px solid rgba(255,255,255,0.45);
+            border-radius: 999px;
+            background: rgba(255,255,255,0.14);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 6px 12px;
+            transition: all 0.2s;
+        }
+        .explorer-toggle-btn:hover {
+            background: #ffd700;
+            border-color: #ffd700;
+            color: #333;
+        }
+        #proficiency-explorer .browser-section.is-collapsed .muted-note {
+            margin-bottom: 0;
         }
         .browser-section h2 {
             margin: 0 0 10px;
@@ -621,6 +644,12 @@
         }
 
         @media (max-width: 768px) {
+            .explorer-toggle-btn {
+                top: 10px;
+                left: 10px;
+                padding: 5px 10px;
+                font-size: 11px;
+            }
             .content-section {
                 padding: 18px;
             }
@@ -835,30 +864,33 @@
         <!-- Proficiency Browser -->
         <section id="proficiency-explorer">
             <div class="browser-section">
+                <button id="profExplorerToggle" class="explorer-toggle-btn" type="button" aria-controls="proficiencyExplorerContent" aria-expanded="true">Ocultar</button>
                 <h2>Explorador de Proficiencias</h2>
                 <p class="muted-note">Busca por ID, descripción o Pokémon.</p>
 
-                <div class="browser-controls">
-                    <input type="text" id="profSearch" placeholder="Buscar por proficiencia o nombre de Pokémon...">
-                    <button id="profClear" class="control-btn" type="button">Limpiar</button>
-                </div>
+                <div id="proficiencyExplorerContent" class="explorer-collapsible-content">
+                    <div class="browser-controls">
+                        <input type="text" id="profSearch" placeholder="Buscar por proficiencia o nombre de Pokémon...">
+                        <button id="profClear" class="control-btn" type="button">Limpiar</button>
+                    </div>
 
-                <div id="profCount"></div>
+                    <div id="profCount"></div>
 
-                <div id="profTableWrapper">
-                    <table id="profTable">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Descripción</th>
-                                <th>Categoría</th>
-                                <th>Pokémon</th>
-                            </tr>
-                        </thead>
-                        <tbody id="profTableBody">
-                            <!-- Rows injected by JS -->
-                        </tbody>
-                    </table>
+                    <div id="profTableWrapper">
+                        <table id="profTable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Descripción</th>
+                                    <th>Categoría</th>
+                                    <th>Pokémon</th>
+                                </tr>
+                            </thead>
+                            <tbody id="profTableBody">
+                                <!-- Rows injected by JS -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>
