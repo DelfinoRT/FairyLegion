@@ -466,6 +466,74 @@
             text-decoration: underline;
         }
 
+        .pokemon-summary-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            justify-content: space-between;
+        }
+        .pokemon-summary-meta {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+        .pokemon-summary-label {
+            font-size: 11px;
+            font-weight: bold;
+            color: #5c2d91;
+            margin-right: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+        .pokemon-summary-count,
+        .pokemon-summary-empty {
+            font-size: 11px;
+            color: #6a6475;
+            font-weight: bold;
+        }
+        .pokemon-summary-counts {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .pokemon-level-mini {
+            display: inline-block;
+            background: #f0ebfa;
+            color: #5c2d91;
+            border: 1px solid #dfc8f7;
+            border-radius: 999px;
+            padding: 1px 6px;
+            font-size: 10px;
+            white-space: nowrap;
+        }
+        .pokemon-toggle-row {
+            border: 1px solid #cdb3ef;
+            background: #fff;
+            color: #5c2d91;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        .pokemon-toggle-row:hover {
+            background: #f7f1ff;
+        }
+        .pokemon-result-row.expanded {
+            background: #fdf9e7;
+        }
+        .pokemon-detail-row td {
+            padding-top: 0;
+            background: #fcf9ff;
+        }
+        .pokemon-detail-row .level-groups {
+            margin-top: 2px;
+        }
+        .pokemon-detail-row .level-card {
+            background: #fff;
+        }
+
         .muted-note {
             color: rgba(255,255,255,0.9);
             font-size: 13px;

@@ -1,19 +1,547 @@
 // Proficiency.js - Proficiency System Browser
 
+const LANGUAGE_STORAGE_KEY = 'proficiency-language';
+let currentLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY) || 'es';
+
 const CATEGORIES = {
-    combat:     { label: 'Combate Ofensivo', css: 'cat-combat' },
-    defense:    { label: 'Combate Defensivo', css: 'cat-defense' },
-    movement:   { label: 'Movimiento', css: 'cat-movement' },
-    profession: { label: 'Profesión', css: 'cat-profession' },
-    charm:      { label: 'Charms', css: 'cat-charm' },
-    ability:    { label: 'Habilidades', css: 'cat-ability' },
-    status:     { label: 'Estados', css: 'cat-status' },
-    move:       { label: 'Movimientos', css: 'cat-move' },
-    type_boost: { label: 'Boost de Tipo', css: 'cat-type-boost' },
-    mega:       { label: 'Mega Evolución', css: 'cat-mega' },
-    utility:    { label: 'Utilidad', css: 'cat-utility' },
-    pvp:        { label: 'PvP', css: 'cat-pvp' },
+    combat:     { label: { es: 'Combate Ofensivo', en: 'Offensive Combat' }, css: 'cat-combat' },
+    defense:    { label: { es: 'Combate Defensivo', en: 'Defensive Combat' }, css: 'cat-defense' },
+    movement:   { label: { es: 'Movimiento', en: 'Movement' }, css: 'cat-movement' },
+    profession: { label: { es: 'Profesión', en: 'Profession' }, css: 'cat-profession' },
+    charm:      { label: { es: 'Charms', en: 'Charms' }, css: 'cat-charm' },
+    ability:    { label: { es: 'Habilidades', en: 'Abilities' }, css: 'cat-ability' },
+    status:     { label: { es: 'Estados', en: 'Status' }, css: 'cat-status' },
+    move:       { label: { es: 'Movimientos', en: 'Moves' }, css: 'cat-move' },
+    type_boost: { label: { es: 'Boost de Tipo', en: 'Type Boost' }, css: 'cat-type-boost' },
+    mega:       { label: { es: 'Mega Evolución', en: 'Mega Evolution' }, css: 'cat-mega' },
+    utility:    { label: { es: 'Utilidad', en: 'Utility' }, css: 'cat-utility' },
+    pvp:        { label: { es: 'PvP', en: 'PvP' }, css: 'cat-pvp' },
 };
+
+const STATIC_COPY = {
+    es: {
+        title: 'Fairy Legion - Sistema de Proficiencia',
+        heroTitle: '⭐ Sistema de Proficiencia',
+        heroSubtitle: 'Ruta de maestría personalizada para tus Pokémon — vinculada a tu personaje, no al Pokémon.',
+        navExplorer: 'Ir al Explorador de Proficiencias',
+        navPokemon: 'Ir al Buscador por Pokémon',
+        languageToggle: 'English',
+        mechanicsTitle: 'Mecánicas Fundamentales',
+        mechanicsCards: [
+            {
+                title: 'Progreso por Cuenta',
+                html: 'La proficiencia está ligada a <strong>tu personaje</strong>. Si alcanzas Nivel 9 con un Charizard, todos tus Charizard tendrán ese nivel. Si vendes uno, el comprador empieza de cero, pero tú mantendrás tu progreso.'
+            },
+            {
+                title: 'Subida Simultánea',
+                html: 'Al ganar EXP, esta se distribuye en <strong>todas las barras de nivel a la vez</strong>. Los primeros niveles se completarán mucho antes que los últimos.'
+            },
+            {
+                title: 'Flexibilidad (Builds)',
+                html: 'En cada nivel puedes elegir un bono entre 3–4 opciones. Puedes <strong>cambiar tu elección en cualquier momento</strong> dentro de zonas de protección (clic derecho para deseleccionar).'
+            },
+            {
+                title: 'Elegibilidad',
+                html: 'Por ahora, el sistema aplica a Pokémon de Kanto, Johto, Hoenn, Sinnoh, Unova, Kalos, Alola, Galar y Paldea, además de formas regionales, Pokémon especiales y Pokémon clonados. Aplica para <strong>evoluciones finales</strong>; el nivel 9 está disponible para especies que puedan <strong>Mega Evolucionar o Gigantamax</strong>.'
+            }
+        ],
+        referenceNote: 'Esta página es una referencia general. Las proficiencias se actualizan y reequilibran activamente, por lo que algunos datos pueden cambiar en futuras revisiones.',
+        expTitle: 'Cómo Ganar EXP',
+        defeatingTitle: 'Derrotando Pokémon',
+        expCategory: 'Categoría de Pokémon',
+        expValue: 'EXP Otorgada',
+        expRows: [
+            ['Easy', '50'],
+            ['Normal', '75'],
+            ['Medium', '90'],
+            ['Rare', '110'],
+            ['Very Rare / Cloned', '140'],
+            ['Shiny', '220'],
+            ['BOSS POKÉMON', '15,000']
+        ],
+        catalystsTitle: 'Catalizadores de Proficiencia (Ítems)',
+        catalystsNote: 'Para usarlos: Ten activo el Pokémon al que quieres darle la experiencia, luego da clic en el ítem y confirma. También existe el Proficiency Experience Ticket, que activa un boost de ganancia de proficiencia (+100%) durante 3 horas y se puede comprar en la Premium Shop.',
+        catalystsItem: 'Ítem',
+        catalystsExp: 'EXP Otorgada',
+        catalystRows: [
+            ['Proficiency Catalyst', '30,000 EXP'],
+            ['Greater Proficiency Catalyst', '120,000 EXP'],
+            ['Supreme Proficiency Catalyst', '600,000 EXP']
+        ],
+        warningTitle: '⚠️ IMPORTANTE:',
+        warningText: 'La EXP de los catalizadores <strong>NO se desborda (no hay overflow)</strong>. Si tu límite de nivel actual es menor a la EXP del ítem, el exceso se <strong>perderá</strong>. Desbloquea los niveles con dinero o diamantes <em>antes</em> de usar los catalizadores.',
+        unlockTitle: 'Desbloqueo de Niveles y Costos',
+        unlockNote: 'Aunque acumules EXP, debes desbloquear el acceso a los niveles superiores para activar sus bonos.',
+        unlockLevel: 'Niveles',
+        unlockExp: 'Requisito de EXP',
+        unlockCost: 'Costo de Desbloqueo',
+        unlockRows: [
+            ['Lvl 1', '1,500', 'Gratis'],
+            ['Lvl 2', '4,500', 'Gratis'],
+            ['Lvl 3', '15,000', 'Gratis'],
+            ['Lvl 4', '110,000', '5,000 Oro'],
+            ['Lvl 5', '410,000', '5,000 Oro'],
+            ['Lvl 6', '1,410,000', '1 Diamante'],
+            ['Lvl 7', '4,410,000', '1 Diamante'],
+            ['Lvl 8', '9,910,000', '1 Diamante'],
+            ['Lvl 9 (Mega/G-Max Slot)', '10,910,000', 'Gratis']
+        ],
+        unlockWarningTitle: 'Nota: Proficiencia Nivel 9 - Mega & G-Max Slot:',
+        unlockWarningItems: [
+            '<strong>Disponibilidad:</strong> solo para Pokémon que puedan Mega Evolucionar o Gigantamax',
+            '<strong>Requisito:</strong> requiere <strong>1,000,000 EXP</strong> para activarse y su desbloqueo es <strong>gratis</strong>',
+            '<strong>Beneficio:</strong> desbloquea un <strong>tercer slot de held item</strong>',
+            '<strong>Restricción:</strong> ese slot solo acepta <strong>Mega Stones</strong> o <strong>ítems G-Max</strong>'
+        ],
+        setupTitle: 'Cómo Configurar tus Bonos',
+        setupSteps: [
+            '<strong>Abrir Menú:</strong> Usa <kbd>Ctrl + Clic Izquierdo</kbd> sobre la Pokéball equipada, o la opción <em>"Set Proficiency"</em> en el menú contextual del Pokémon.',
+            '<strong>Elegir Bono:</strong> Haz clic en el icono del bono que desees activar. Los niveles bloqueados aparecerán con el texto <em>"LOCKED"</em>.',
+            '<strong>Ver Detalles:</strong> Pasa el ratón sobre el icono para ver qué hace cada bono.',
+            '<strong>Cambiar Bono:</strong> En cualquier zona de protección puedes hacer <strong>clic derecho</strong> para deseleccionar y elegir otra opción.'
+        ],
+        tipsTitle: 'Consejos estratégicos',
+        tips: [
+            {
+                title: 'Prioriza los Bosses',
+                html: 'Matar un solo Boss otorga <strong>15,000 EXP</strong>, más que cientos de Pokémon comunes. Es la forma más eficiente de subir niveles altos.'
+            },
+            {
+                title: 'No malgastes catalizadores',
+                html: 'Revisa tu barra de EXP antes de usar un catalizador. Si estás cerca del límite de un nivel bloqueado, <strong>págalo primero</strong>, la EXP sobrante se pierde.'
+            },
+            {
+                title: 'Adaptabilidad',
+                html: 'Cambia tus bonos según la actividad. Si vas a pescar, activa bonos de pesca; en torneo, prioriza daño y resistencias.'
+            },
+            {
+                title: 'Shinies y clones',
+                html: 'El sistema incluye proficiency para Shinies y Clones. Derrotar Pokémon Shiny da <strong>220 EXP</strong>, más del doble que un Pokémon normal.'
+            }
+        ],
+        explorerTitle: 'Explorador de Proficiencias',
+        explorerNote: 'Busca por ID, descripción o Pokémon, filtra por categoría y ordena resultados.',
+        profSearchPlaceholder: 'Buscar por proficiencia o nombre de Pokémon...',
+        profSortAsc: 'Orden: ID (menor a mayor)',
+        profSortDesc: 'Orden: ID (mayor a menor)',
+        profSortPokemon: 'Orden: más Pokémon primero',
+        clear: 'Limpiar',
+        allCategories: 'Todas',
+        profCount: (count) => `Mostrando ${count} proficiencia(s)`,
+        profHeaderId: '#',
+        profHeaderDescription: 'Descripción',
+        profHeaderCategory: 'Categoría',
+        profHeaderPokemon: 'Pokémon',
+        pokemonExplorerTitle: 'Buscador por Pokémon',
+        pokemonExplorerNote: 'Encuentra un Pokémon y revisa todas sus proficiencias disponibles en una sola vista.',
+        pokemonSearchPlaceholder: 'Buscar Pokémon (ej. Charizard, Gengar, Salamence)...',
+        pokemonSortAsc: 'Orden: Nombre (A-Z)',
+        pokemonSortDesc: 'Orden: Nombre (Z-A)',
+        pokemonSortCount: 'Orden: más proficiencias',
+        pokemonHeaderName: 'Pokémon',
+        pokemonHeaderTotal: 'Total',
+        pokemonHeaderLevels: 'Proficiencias por nivel (L1-L9)',
+        pokemonCount: (count) => `Mostrando ${count} Pokémon`,
+        pokemonNoResults: 'No se encontraron Pokémon con ese criterio.',
+        pokemonShowDetails: 'Ver niveles',
+        pokemonHideDetails: 'Ocultar niveles',
+        pokemonCompactLevels: 'Niveles',
+        noOptions: 'Sin opciones',
+        hide: 'Ocultar'
+    },
+    en: {
+        title: 'Fairy Legion - Proficiency System',
+        heroTitle: '⭐ Proficiency System',
+        heroSubtitle: 'A custom mastery path for your Pokémon — tied to your character, not the Pokémon itself.',
+        navExplorer: 'Go to Proficiency Explorer',
+        navPokemon: 'Go to Pokémon Browser',
+        languageToggle: 'Español',
+        mechanicsTitle: 'Core Mechanics',
+        mechanicsCards: [
+            {
+                title: 'Account-Based Progress',
+                html: 'Proficiency is tied to <strong>your character</strong>. If you reach Level 9 with a Charizard, all your Charizard will have that level. If you sell one, the buyer starts from zero, but you keep your progress.'
+            },
+            {
+                title: 'Simultaneous Progress',
+                html: 'When you earn EXP, it is distributed across <strong>all level bars at once</strong>. The early levels will complete much sooner than the later ones.'
+            },
+            {
+                title: 'Flexibility (Builds)',
+                html: 'At each level you can choose one bonus from 3–4 options. You can <strong>change your choice at any time</strong> inside protection zones (right-click to deselect).'
+            },
+            {
+                title: 'Eligibility',
+                html: 'For now, the system applies to Pokémon from Kanto, Johto, Hoenn, Sinnoh, Unova, Kalos, Alola, Galar, and Paldea, as well as regional forms, special Pokémon, and cloned Pokémon. It applies to <strong>final evolutions</strong>; Level 9 is available to species that can <strong>Mega Evolve or Gigantamax</strong>.'
+            }
+        ],
+        referenceNote: 'This page is a general reference. Proficiencies are actively updated and reworked, so some data may change in future revisions.',
+        expTitle: 'How to Gain EXP',
+        defeatingTitle: 'Defeating Pokémon',
+        expCategory: 'Pokémon Category',
+        expValue: 'EXP Awarded',
+        expRows: [
+            ['Easy', '50'],
+            ['Normal', '75'],
+            ['Medium', '90'],
+            ['Rare', '110'],
+            ['Very Rare / Cloned', '140'],
+            ['Shiny', '220'],
+            ['BOSS POKÉMON', '15,000']
+        ],
+        catalystsTitle: 'Proficiency Catalysts (Items)',
+        catalystsNote: 'To use them: Keep the Pokémon you want to level active, then click the item and confirm. There is also the Proficiency Experience Ticket, which activates a proficiency gain boost (+100%) for 3 hours and can be purchased from the Premium Shop.',
+        catalystsItem: 'Item',
+        catalystsExp: 'EXP Awarded',
+        catalystRows: [
+            ['Proficiency Catalyst', '30,000 EXP'],
+            ['Greater Proficiency Catalyst', '120,000 EXP'],
+            ['Supreme Proficiency Catalyst', '600,000 EXP']
+        ],
+        warningTitle: '⚠️ IMPORTANT:',
+        warningText: 'Catalyst EXP <strong>does not overflow</strong>. If your current level cap is lower than the item EXP, the excess will be <strong>lost</strong>. Unlock the levels with money or diamonds <em>before</em> using catalysts.',
+        unlockTitle: 'Level Unlocks and Costs',
+        unlockNote: 'Even if you accumulate EXP, you must unlock higher levels to activate their bonuses.',
+        unlockLevel: 'Levels',
+        unlockExp: 'EXP Requirement',
+        unlockCost: 'Unlock Cost',
+        unlockRows: [
+            ['Lvl 1', '1,500', 'Free'],
+            ['Lvl 2', '4,500', 'Free'],
+            ['Lvl 3', '15,000', 'Free'],
+            ['Lvl 4', '110,000', '5,000 Gold'],
+            ['Lvl 5', '410,000', '5,000 Gold'],
+            ['Lvl 6', '1,410,000', '1 Diamond'],
+            ['Lvl 7', '4,410,000', '1 Diamond'],
+            ['Lvl 8', '9,910,000', '1 Diamond'],
+            ['Lvl 9 (Mega/G-Max Slot)', '10,910,000', 'Free']
+        ],
+        unlockWarningTitle: 'Note: Level 9 Proficiency - Mega & G-Max Slot:',
+        unlockWarningItems: [
+            '<strong>Availability:</strong> only for Pokémon that can Mega Evolve or Gigantamax',
+            '<strong>Requirement:</strong> needs <strong>1,000,000 EXP</strong> to activate and the unlock is <strong>free</strong>',
+            '<strong>Benefit:</strong> unlocks a <strong>third held item slot</strong>',
+            '<strong>Restriction:</strong> that slot only accepts <strong>Mega Stones</strong> or <strong>G-Max items</strong>'
+        ],
+        setupTitle: 'How to Configure Your Bonuses',
+        setupSteps: [
+            '<strong>Open Menu:</strong> Use <kbd>Ctrl + Left Click</kbd> on the equipped Poké Ball, or the <em>"Set Proficiency"</em> option in the Pokémon context menu.',
+            '<strong>Choose Bonus:</strong> Click the bonus icon you want to activate. Locked levels will display the text <em>"LOCKED"</em>.',
+            '<strong>View Details:</strong> Hover over an icon to see what each bonus does.',
+            '<strong>Change Bonus:</strong> In any protection zone you can <strong>right-click</strong> to deselect and choose another option.'
+        ],
+        tipsTitle: 'Strategic Tips',
+        tips: [
+            {
+                title: 'Prioritize Bosses',
+                html: 'Defeating a single Boss grants <strong>15,000 EXP</strong>, more than hundreds of common Pokémon. It is the most efficient way to level up.'
+            },
+            {
+                title: 'Don’t waste catalysts',
+                html: 'Check your EXP bar before using a catalyst. If you are close to a locked level cap, <strong>unlock it first</strong>; leftover EXP is lost.'
+            },
+            {
+                title: 'Adaptability',
+                html: 'Swap your bonuses depending on the activity. If you are fishing, equip fishing bonuses; in tournaments, prioritize damage and resistances.'
+            },
+            {
+                title: 'Shinies and clones',
+                html: 'The system includes proficiency for Shinies and Clones. Defeating a Shiny Pokémon grants <strong>220 EXP</strong>, more than double a normal Pokémon.'
+            }
+        ],
+        explorerTitle: 'Proficiency Explorer',
+        explorerNote: 'Search by ID, description, or Pokémon, filter by category, and sort the results.',
+        profSearchPlaceholder: 'Search by proficiency or Pokémon name...',
+        profSortAsc: 'Sort: ID (low to high)',
+        profSortDesc: 'Sort: ID (high to low)',
+        profSortPokemon: 'Sort: most Pokémon first',
+        clear: 'Clear',
+        allCategories: 'All',
+        profCount: (count) => `Showing ${count} proficiency(s)`,
+        profHeaderId: '#',
+        profHeaderDescription: 'Description',
+        profHeaderCategory: 'Category',
+        profHeaderPokemon: 'Pokémon',
+        pokemonExplorerTitle: 'Pokémon Browser',
+        pokemonExplorerNote: 'Find a Pokémon and review all of its available proficiencies in one view.',
+        pokemonSearchPlaceholder: 'Search Pokémon (e.g. Charizard, Gengar, Salamence)...',
+        pokemonSortAsc: 'Sort: Name (A-Z)',
+        pokemonSortDesc: 'Sort: Name (Z-A)',
+        pokemonSortCount: 'Sort: most proficiencies',
+        pokemonHeaderName: 'Pokémon',
+        pokemonHeaderTotal: 'Total',
+        pokemonHeaderLevels: 'Proficiencies by level (L1-L9)',
+        pokemonCount: (count) => `Showing ${count} Pokémon`,
+        pokemonNoResults: 'No Pokémon matched that criteria.',
+        pokemonShowDetails: 'View levels',
+        pokemonHideDetails: 'Hide levels',
+        pokemonCompactLevels: 'Levels',
+        noOptions: 'No options',
+        hide: 'Hide'
+    }
+};
+
+const browserState = {
+    proficiency: {
+        searchQuery: '',
+        sortMode: 'id-asc',
+        activeCat: 'all'
+    },
+    pokemon: {
+        searchQuery: '',
+        sortMode: 'name-asc',
+        expandedNames: new Set()
+    }
+};
+
+function copyText(key) {
+    return STATIC_COPY[currentLanguage][key];
+}
+
+function setText(selector, value) {
+    const element = document.querySelector(selector);
+    if (element) {
+        element.textContent = value;
+    }
+}
+
+function setHTML(selector, value) {
+    const element = document.querySelector(selector);
+    if (element) {
+        element.innerHTML = value;
+    }
+}
+
+function getCategoryLabel(catKey) {
+    const category = CATEGORIES[catKey];
+    if (!category) return catKey;
+    return category.label[currentLanguage] || category.label.es || category.label.en || catKey;
+}
+
+function updateLanguageToggleButton() {
+    const button = document.getElementById('languageToggle');
+    if (!button) return;
+    button.textContent = copyText('languageToggle');
+    button.setAttribute('aria-label', copyText('languageToggle'));
+}
+
+function ensureLanguageToggleButton() {
+    const quickNav = document.querySelector('.quick-nav');
+    if (!quickNav || document.getElementById('languageToggle')) return;
+
+    const button = document.createElement('button');
+    button.id = 'languageToggle';
+    button.type = 'button';
+    button.className = 'quick-nav-btn';
+    button.addEventListener('click', toggleLanguage);
+    quickNav.appendChild(button);
+}
+
+function toggleLanguage() {
+    currentLanguage = currentLanguage === 'es' ? 'en' : 'es';
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLanguage);
+    applyStaticTranslations();
+    refreshBrowserViews();
+}
+
+function applyStaticTranslations() {
+    const copy = STATIC_COPY[currentLanguage];
+
+    document.documentElement.lang = currentLanguage;
+    document.title = copy.title;
+
+    const heroTitle = document.querySelector('.proficiency-hero h1');
+    const heroSubtitle = document.querySelector('.proficiency-hero p');
+    const quickNavButtons = document.querySelectorAll('.quick-nav-btn');
+
+    if (heroTitle) heroTitle.textContent = copy.heroTitle;
+    if (heroSubtitle) heroSubtitle.innerHTML = copy.heroSubtitle;
+    if (quickNavButtons[0]) quickNavButtons[0].textContent = copy.navExplorer;
+    if (quickNavButtons[1]) quickNavButtons[1].textContent = copy.navPokemon;
+
+    updateLanguageToggleButton();
+
+    const sectionTitles = document.querySelectorAll('main .section-title');
+    if (sectionTitles[0]) sectionTitles[0].textContent = copy.mechanicsTitle;
+    if (sectionTitles[1]) sectionTitles[1].textContent = copy.expTitle;
+    if (sectionTitles[2]) sectionTitles[2].textContent = copy.unlockTitle;
+    if (sectionTitles[3]) sectionTitles[3].textContent = copy.setupTitle;
+    if (sectionTitles[4]) sectionTitles[4].textContent = copy.tipsTitle;
+
+    const mechanicsCards = document.querySelectorAll('main > section .info-grid .info-card');
+    copy.mechanicsCards.forEach((item, index) => {
+        const card = mechanicsCards[index];
+        if (!card) return;
+        const heading = card.querySelector('h3');
+        const paragraph = card.querySelector('p');
+        if (heading) heading.textContent = item.title;
+        if (paragraph) paragraph.innerHTML = item.html;
+    });
+
+    const mechanicsSection = document.querySelector('main > section');
+    if (mechanicsSection) {
+        let referenceNote = mechanicsSection.querySelector('.proficiency-reference-note');
+        if (!referenceNote) {
+            referenceNote = document.createElement('div');
+            referenceNote.className = 'warning-box proficiency-reference-note';
+            mechanicsSection.appendChild(referenceNote);
+        }
+        referenceNote.innerHTML = `<strong>${currentLanguage === 'es' ? 'Nota de referencia:' : 'Reference note:'}</strong> ${copy.referenceNote}`;
+    }
+
+    const expSection = document.querySelector('#proficiency-explorer')?.previousElementSibling?.previousElementSibling;
+    const expSections = document.querySelectorAll('main > section');
+    const expSourceSection = expSections[1];
+    if (expSourceSection) {
+        const sectionHeading = expSourceSection.querySelector('h2');
+        const subHeadings = expSourceSection.querySelectorAll('h3');
+        const expTable = expSourceSection.querySelectorAll('.prof-table');
+        const warningBox = expSourceSection.querySelector('.warning-box');
+        const note = expSourceSection.querySelector('p');
+
+        if (sectionHeading) sectionHeading.textContent = copy.expTitle;
+        if (subHeadings[0]) subHeadings[0].textContent = copy.defeatingTitle;
+        if (subHeadings[1]) subHeadings[1].textContent = copy.catalystsTitle;
+        if (note) note.textContent = copy.catalystsNote;
+
+        if (expTable[0]) {
+            const headers = expTable[0].querySelectorAll('thead th');
+            if (headers[0]) headers[0].textContent = copy.expCategory;
+            if (headers[1]) headers[1].textContent = copy.expValue;
+            expTable[0].querySelectorAll('tbody tr').forEach((row, index) => {
+                const cells = row.querySelectorAll('td');
+                const data = copy.expRows[index];
+                if (!data) return;
+                if (cells[0]) cells[0].textContent = data[0];
+                if (cells[1]) cells[1].textContent = data[1];
+                const isBoss = index === copy.expRows.length - 1;
+                cells.forEach(cell => cell.className = isBoss ? 'highlight' : '');
+            });
+        }
+
+        if (expTable[1]) {
+            const headers = expTable[1].querySelectorAll('thead th');
+            if (headers[0]) headers[0].textContent = copy.catalystsItem;
+            if (headers[1]) headers[1].textContent = copy.catalystsExp;
+            const body = expTable[1].querySelector('tbody');
+            if (body) {
+                body.innerHTML = copy.catalystRows.map(([item, reward]) => `<tr><td>${item}</td><td>${reward}</td></tr>`).join('');
+            }
+        }
+
+        if (warningBox) {
+            warningBox.innerHTML = `<strong>${copy.warningTitle}</strong> ${copy.warningText}`;
+        }
+    }
+
+    const unlockSection = expSections[2];
+    if (unlockSection) {
+        const sectionHeading = unlockSection.querySelector('h2');
+        const note = unlockSection.querySelector('p');
+        const table = unlockSection.querySelector('.prof-table');
+        const warningBox = unlockSection.querySelector('.warning-box');
+        if (sectionHeading) sectionHeading.textContent = copy.unlockTitle;
+        if (note) note.textContent = copy.unlockNote;
+        if (table) {
+            const headers = table.querySelectorAll('thead th');
+            if (headers[0]) headers[0].textContent = copy.unlockLevel;
+            if (headers[1]) headers[1].textContent = copy.unlockExp;
+            if (headers[2]) headers[2].textContent = copy.unlockCost;
+            table.querySelectorAll('tbody tr').forEach((row, index) => {
+                const cells = row.querySelectorAll('td');
+                const data = copy.unlockRows[index];
+                if (!data) return;
+                if (cells[0]) cells[0].textContent = data[0];
+                if (cells[1]) cells[1].textContent = data[1];
+                if (cells[2]) {
+                    cells[2].textContent = data[2];
+                    cells[2].className = index < 3 ? 'cost-free' : index < 5 ? 'cost-gold' : index < 8 ? 'cost-diamond' : 'cost-free';
+                }
+            });
+        }
+        if (warningBox) {
+            warningBox.innerHTML = `<strong>${copy.unlockWarningTitle}</strong><ul style="margin:8px 0 0 18px; padding:0;">${copy.unlockWarningItems.map(item => `<li>${item}</li>`).join('')}</ul>`;
+        }
+    }
+
+    const setupSection = expSections[3];
+    if (setupSection) {
+        const sectionHeading = setupSection.querySelector('h2');
+        if (sectionHeading) sectionHeading.textContent = copy.setupTitle;
+        setupSection.querySelectorAll('.steps-list li').forEach((item, index) => {
+            if (copy.setupSteps[index]) item.innerHTML = copy.setupSteps[index];
+        });
+    }
+
+    const tipsSection = expSections[4];
+    if (tipsSection) {
+        const sectionHeading = tipsSection.querySelector('h2');
+        if (sectionHeading) sectionHeading.textContent = copy.tipsTitle;
+        tipsSection.querySelectorAll('.tip-card').forEach((card, index) => {
+            const data = copy.tips[index];
+            if (!data) return;
+            const heading = card.querySelector('h4');
+            const paragraph = card.querySelector('p');
+            if (heading) heading.textContent = data.title;
+            if (paragraph) paragraph.innerHTML = data.html;
+        });
+    }
+
+    const profExplorer = document.getElementById('proficiency-explorer');
+    if (profExplorer) {
+        const heading = profExplorer.querySelector('h2');
+        const note = profExplorer.querySelector('.muted-note');
+        const search = document.getElementById('profSearch');
+        const sort = document.getElementById('profSort');
+        const clear = document.getElementById('profClear');
+        const headers = document.querySelectorAll('#profTable thead th');
+        if (heading) heading.textContent = copy.explorerTitle;
+        if (note) note.textContent = copy.explorerNote;
+        if (search) search.placeholder = copy.profSearchPlaceholder;
+        if (sort) {
+            const options = sort.querySelectorAll('option');
+            if (options[0]) options[0].textContent = copy.profSortAsc;
+            if (options[1]) options[1].textContent = copy.profSortDesc;
+            if (options[2]) options[2].textContent = copy.profSortPokemon;
+        }
+        if (clear) clear.textContent = copy.clear;
+        if (headers[0]) headers[0].textContent = copy.profHeaderId;
+        if (headers[1]) headers[1].textContent = copy.profHeaderDescription;
+        if (headers[2]) headers[2].textContent = copy.profHeaderCategory;
+        if (headers[3]) headers[3].textContent = copy.profHeaderPokemon;
+    }
+
+    const pokemonBrowser = document.getElementById('pokemon-search');
+    if (pokemonBrowser) {
+        const heading = pokemonBrowser.querySelector('h2');
+        const note = pokemonBrowser.querySelector('.muted-note');
+        const search = document.getElementById('pokemonSearch');
+        const sort = document.getElementById('pokemonSort');
+        const clear = document.getElementById('pokemonClear');
+        const headers = document.querySelectorAll('#pokemonTable thead th');
+        if (heading) heading.textContent = copy.pokemonExplorerTitle;
+        if (note) note.textContent = copy.pokemonExplorerNote;
+        if (search) search.placeholder = copy.pokemonSearchPlaceholder;
+        if (sort) {
+            const options = sort.querySelectorAll('option');
+            if (options[0]) options[0].textContent = copy.pokemonSortAsc;
+            if (options[1]) options[1].textContent = copy.pokemonSortDesc;
+            if (options[2]) options[2].textContent = copy.pokemonSortCount;
+        }
+        if (clear) clear.textContent = copy.clear;
+        if (headers[0]) headers[0].textContent = copy.pokemonHeaderName;
+        if (headers[1]) headers[1].textContent = copy.pokemonHeaderTotal;
+        if (headers[2]) headers[2].textContent = copy.pokemonHeaderLevels;
+    }
+}
+
+function refreshBrowserViews() {
+    buildCategoryFilters();
+    const profFiltered = getFilteredProficiencies(browserState.proficiency.searchQuery, browserState.proficiency.activeCat);
+    renderProficiencyTable(sortProficiencies(profFiltered, browserState.proficiency.sortMode), browserState.proficiency.searchQuery);
+    const pokemonFiltered = getFilteredPokemonRows(browserState.pokemon.searchQuery);
+    renderPokemonTable(sortPokemonRows(pokemonFiltered, browserState.pokemon.sortMode), browserState.pokemon.searchQuery);
+}
 
 // [ id, description, category ]
 const proficiencies = [
@@ -213,6 +741,84 @@ const proficiencyById = new Map(proficiencies.map(([id, desc, cat]) => [id, { de
 const levelMapByLowerName = (typeof pokemonProficiencyLevelMap !== 'undefined')
     ? new Map(Object.keys(pokemonProficiencyLevelMap).map(name => [name.toLowerCase(), pokemonProficiencyLevelMap[name]]))
     : new Map();
+const pokemonSearchIndex = new Map();
+buildPokemonSearchIndex();
+
+function isMegaPokemonName(name) {
+    return /^Mega\s+/i.test(name);
+}
+
+function escapeHtml(value) {
+    return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+}
+
+function getPokemonRowKey(name) {
+    return encodeURIComponent(name.toLowerCase());
+}
+
+function getPokemonRowSummary(name, profIds) {
+    const fromMap = levelMapByLowerName.get(name.toLowerCase());
+    const counts = [];
+
+    for (let level = 1; level <= 9; level++) {
+        const levelIds = Array.isArray(fromMap?.[`L${level}`]) ? fromMap[`L${level}`] : [];
+        if (levelIds.length) {
+            counts.push(`L${level} ${levelIds.length}`);
+        }
+    }
+
+    const summaryLabel = copyText('pokemonCompactLevels');
+    if (!counts.length && profIds.length) {
+        return `<span class="pokemon-summary-label">${summaryLabel}:</span> <span class="pokemon-summary-count">${profIds.length}</span>`;
+    }
+
+    if (!counts.length) {
+        return `<span class="pokemon-summary-label">${summaryLabel}:</span> <span class="pokemon-summary-empty">${copyText('noOptions')}</span>`;
+    }
+
+    return `<span class="pokemon-summary-label">${summaryLabel}:</span> <span class="pokemon-summary-counts">${counts.map(item => `<span class="pokemon-level-mini">${item}</span>`).join('')}</span>`;
+}
+
+function isPokemonRowExpanded(name) {
+    return browserState.pokemon.expandedNames.has(name.toLowerCase());
+}
+
+function togglePokemonRow(name) {
+    const normalized = name.toLowerCase();
+    if (browserState.pokemon.expandedNames.has(normalized)) {
+        browserState.pokemon.expandedNames.delete(normalized);
+    } else {
+        browserState.pokemon.expandedNames.add(normalized);
+    }
+    refreshPokemonTable();
+}
+
+function buildPokemonSearchIndex() {
+    pokemonSearchIndex.clear();
+    if (typeof pokemonProficiencyMap === 'undefined') return;
+
+    Object.keys(pokemonProficiencyMap).forEach(name => {
+        if (isMegaPokemonName(name)) return;
+
+        const profIds = pokemonProficiencyMap[name] || [];
+        const parts = [name.toLowerCase(), String(profIds.length)];
+
+        profIds.forEach(id => {
+            parts.push(String(id));
+            const prof = proficiencyById.get(id);
+            if (!prof) return;
+            const split = splitDescription(prof.desc);
+            parts.push(split.en.toLowerCase(), split.es.toLowerCase());
+        });
+
+        pokemonSearchIndex.set(name.toLowerCase(), parts.join(' '));
+    });
+}
 
 function splitDescription(desc) {
     const parts = desc.split(' // ');
@@ -225,7 +831,7 @@ function splitDescription(desc) {
 function getCategoryBadge(catKey) {
     const cat = CATEGORIES[catKey];
     if (!cat) return '';
-    return `<span class="cat-badge ${cat.css}">${cat.label}</span>`;
+    return `<span class="cat-badge ${cat.css}">${getCategoryLabel(catKey)}</span>`;
 }
 
 function buildPokemonCell(pokemons, profId, searchQuery) {
@@ -252,7 +858,7 @@ function togglePokemonTags(profId) {
     const isCollapsed = el.classList.contains('collapsed');
     el.classList.toggle('collapsed');
     const count = el.children.length;
-    toggle.textContent = isCollapsed ? 'Ocultar ▴' : `${count} Pokémon ▾`;
+    toggle.textContent = isCollapsed ? `${copyText('hide')} ▴` : `${count} Pokémon ▾`;
 }
 
 function buildCategoryFilters() {
@@ -262,15 +868,15 @@ function buildCategoryFilters() {
     container.innerHTML = '';
 
     const allBtn = document.createElement('button');
-    allBtn.className = 'filter-btn active';
-    allBtn.textContent = 'Todas';
+    allBtn.className = `filter-btn${browserState.proficiency.activeCat === 'all' ? ' active' : ''}`;
+    allBtn.textContent = copyText('allCategories');
     allBtn.dataset.cat = 'all';
     container.appendChild(allBtn);
 
     Object.entries(CATEGORIES).forEach(([key, val]) => {
         const btn = document.createElement('button');
-        btn.className = 'filter-btn';
-        btn.textContent = val.label;
+        btn.className = `filter-btn${browserState.proficiency.activeCat === key ? ' active' : ''}`;
+        btn.textContent = getCategoryLabel(key);
         btn.dataset.cat = key;
         container.appendChild(btn);
     });
@@ -316,16 +922,17 @@ function renderProficiencyTable(data, searchQuery) {
     const count = document.getElementById('profCount');
     if (!tbody || !count) return;
 
-    count.textContent = `Mostrando ${data.length} proficiencia(s)`;
+    count.textContent = copyText('profCount')(data.length);
 
     tbody.innerHTML = data.map(([id, desc, cat]) => {
         const pokemons = (typeof proficiencyPokemonMap !== 'undefined' && proficiencyPokemonMap[id]) || [];
         const pokemonHtml = buildPokemonCell(pokemons, id, searchQuery);
-        const { es } = splitDescription(desc);
+        const { en, es } = splitDescription(desc);
+        const description = currentLanguage === 'en' ? en : es;
 
         return `<tr>
             <td>${id}</td>
-            <td>${es}</td>
+            <td>${description}</td>
             <td>${getCategoryBadge(cat)}</td>
             <td class="pokemon-cell">${pokemonHtml}</td>
         </tr>`;
@@ -352,7 +959,8 @@ function buildPokemonProficiencyCell(pokemonName, profIds, searchQuery) {
 
         const chips = ids.map(id => {
             const prof = proficiencyById.get(id);
-            const description = prof ? splitDescription(prof.desc).es : 'Descripción no encontrada';
+            const split = prof ? splitDescription(prof.desc) : { en: '', es: '' };
+            const description = prof ? (currentLanguage === 'en' ? split.en : split.es) : (currentLanguage === 'en' ? 'Description not found' : 'Descripción no encontrada');
             const isMatch = searchQuery && (
                 pokemonName.toLowerCase().includes(searchQuery) ||
                 String(id).includes(searchQuery) ||
@@ -366,7 +974,7 @@ function buildPokemonProficiencyCell(pokemonName, profIds, searchQuery) {
                 <span class="level-badge">L${levelNum}</span>
                 <span class="level-count">${ids.length}</span>
             </div>
-            ${ids.length ? `<div class="prof-chip-wrap">${chips}</div>` : '<div class="level-empty">Sin opciones</div>'}
+            ${ids.length ? `<div class="prof-chip-wrap">${chips}</div>` : `<div class="level-empty">${copyText('noOptions')}</div>`}
         </div>`;
     }).join('');
 
@@ -376,23 +984,13 @@ function buildPokemonProficiencyCell(pokemonName, profIds, searchQuery) {
 function getFilteredPokemonRows(searchQuery) {
     if (typeof pokemonProficiencyMap === 'undefined') return [];
 
-    const names = Object.keys(pokemonProficiencyMap);
+    const names = Object.keys(pokemonProficiencyMap).filter(name => !isMegaPokemonName(name));
     return names.filter(name => {
         const profIds = pokemonProficiencyMap[name] || [];
         if (!searchQuery) return profIds.length > 0;
 
-        if (name.toLowerCase().includes(searchQuery)) return true;
-
-        return profIds.some(id => {
-            const prof = proficiencyById.get(id);
-            if (!prof) return String(id).includes(searchQuery);
-            const { en, es } = splitDescription(prof.desc);
-            return (
-                String(id).includes(searchQuery) ||
-                en.toLowerCase().includes(searchQuery) ||
-                es.toLowerCase().includes(searchQuery)
-            );
-        });
+        const cached = pokemonSearchIndex.get(name.toLowerCase()) || name.toLowerCase();
+        return cached.includes(searchQuery);
     }).map(name => {
         const profIds = [...(pokemonProficiencyMap[name] || [])].sort((a, b) => a - b);
         return { name, profIds, count: profIds.length };
@@ -418,28 +1016,37 @@ function renderPokemonTable(rows, searchQuery) {
     const count = document.getElementById('pokemonCount');
     if (!tbody || !count) return;
 
-    count.textContent = `Mostrando ${rows.length} Pokémon`;
+    count.textContent = copyText('pokemonCount')(rows.length);
 
     if (!rows.length) {
-        tbody.innerHTML = '<tr><td colspan="3">No se encontraron Pokémon con ese criterio.</td></tr>';
+        tbody.innerHTML = `<tr><td colspan="3">${copyText('pokemonNoResults')}</td></tr>`;
         return;
     }
 
     tbody.innerHTML = rows.map(row => {
-        return `<tr>
-            <td class="pokemon-name">${row.name}</td>
+        const expanded = isPokemonRowExpanded(row.name);
+        const rowKey = getPokemonRowKey(row.name);
+        const summaryHtml = getPokemonRowSummary(row.name, row.profIds);
+        const buttonLabel = expanded ? copyText('pokemonHideDetails') : copyText('pokemonShowDetails');
+        const detailRow = expanded
+            ? `<tr class="pokemon-detail-row" data-detail-for="${rowKey}"><td colspan="3">${buildPokemonProficiencyCell(row.name, row.profIds, searchQuery)}</td></tr>`
+            : '';
+
+        return `<tr class="pokemon-result-row${expanded ? ' expanded' : ''}" data-pokemon-name="${escapeHtml(row.name)}" data-pokemon-key="${rowKey}">
+            <td class="pokemon-name">${escapeHtml(row.name)}</td>
             <td>${row.count}</td>
-            <td>${buildPokemonProficiencyCell(row.name, row.profIds, searchQuery)}</td>
-        </tr>`;
+            <td>
+                <div class="pokemon-summary-row">
+                    <div class="pokemon-summary-meta">${summaryHtml}</div>
+                    <button class="pokemon-toggle-row" type="button" data-pokemon-toggle="${rowKey}">${buttonLabel}</button>
+                </div>
+            </td>
+        </tr>${detailRow}`;
     }).join('');
 }
 
 function initProficiencyBrowser() {
     buildCategoryFilters();
-
-    let activeCat = 'all';
-    let profSearchQuery = '';
-    let profSortMode = 'id-asc';
 
     const searchInput = document.getElementById('profSearch');
     const sortInput = document.getElementById('profSort');
@@ -447,31 +1054,31 @@ function initProficiencyBrowser() {
     const filterContainer = document.getElementById('categoryFilters');
 
     function updateProficiencyUI() {
-        const filtered = getFilteredProficiencies(profSearchQuery, activeCat);
-        renderProficiencyTable(sortProficiencies(filtered, profSortMode), profSearchQuery);
+        const filtered = getFilteredProficiencies(browserState.proficiency.searchQuery, browserState.proficiency.activeCat);
+        renderProficiencyTable(sortProficiencies(filtered, browserState.proficiency.sortMode), browserState.proficiency.searchQuery);
     }
 
     updateProficiencyUI();
 
     if (searchInput) {
         searchInput.addEventListener('input', function () {
-            profSearchQuery = this.value.toLowerCase().trim();
+            browserState.proficiency.searchQuery = this.value.toLowerCase().trim();
             updateProficiencyUI();
         });
     }
 
     if (sortInput) {
         sortInput.addEventListener('change', function () {
-            profSortMode = this.value;
+            browserState.proficiency.sortMode = this.value;
             updateProficiencyUI();
         });
     }
 
     if (clearBtn && searchInput && sortInput) {
         clearBtn.addEventListener('click', function () {
-            profSearchQuery = '';
-            profSortMode = 'id-asc';
-            activeCat = 'all';
+            browserState.proficiency.searchQuery = '';
+            browserState.proficiency.sortMode = 'id-asc';
+            browserState.proficiency.activeCat = 'all';
             searchInput.value = '';
             sortInput.value = 'id-asc';
             filterContainer.querySelectorAll('.filter-btn').forEach(btn => {
@@ -487,53 +1094,80 @@ function initProficiencyBrowser() {
             if (!btn) return;
             filterContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            activeCat = btn.dataset.cat;
+            browserState.proficiency.activeCat = btn.dataset.cat;
             updateProficiencyUI();
         });
     }
 }
 
 function initPokemonBrowser() {
-    let pokemonSearchQuery = '';
-    let pokemonSortMode = 'name-asc';
-
     const searchInput = document.getElementById('pokemonSearch');
     const sortInput = document.getElementById('pokemonSort');
     const clearBtn = document.getElementById('pokemonClear');
+    const tbody = document.getElementById('pokemonTableBody');
+    let searchTimer = null;
 
     function updatePokemonUI() {
-        const filtered = getFilteredPokemonRows(pokemonSearchQuery);
-        renderPokemonTable(sortPokemonRows(filtered, pokemonSortMode), pokemonSearchQuery);
+        const filtered = getFilteredPokemonRows(browserState.pokemon.searchQuery);
+        renderPokemonTable(sortPokemonRows(filtered, browserState.pokemon.sortMode), browserState.pokemon.searchQuery);
+    }
+
+    function schedulePokemonUpdate() {
+        window.clearTimeout(searchTimer);
+        searchTimer = window.setTimeout(updatePokemonUI, 150);
     }
 
     updatePokemonUI();
 
     if (searchInput) {
         searchInput.addEventListener('input', function () {
-            pokemonSearchQuery = this.value.toLowerCase().trim();
-            updatePokemonUI();
+            browserState.pokemon.searchQuery = this.value.toLowerCase().trim();
+            schedulePokemonUpdate();
         });
     }
 
     if (sortInput) {
         sortInput.addEventListener('change', function () {
-            pokemonSortMode = this.value;
+            browserState.pokemon.sortMode = this.value;
             updatePokemonUI();
         });
     }
 
     if (clearBtn && searchInput && sortInput) {
         clearBtn.addEventListener('click', function () {
-            pokemonSearchQuery = '';
-            pokemonSortMode = 'name-asc';
+            browserState.pokemon.searchQuery = '';
+            browserState.pokemon.sortMode = 'name-asc';
             searchInput.value = '';
             sortInput.value = 'name-asc';
             updatePokemonUI();
         });
     }
+
+    if (tbody) {
+        tbody.addEventListener('click', function (event) {
+            const toggleButton = event.target.closest('[data-pokemon-toggle]');
+            if (toggleButton) {
+                const name = decodeURIComponent(toggleButton.dataset.pokemonToggle);
+                togglePokemonRow(name);
+                return;
+            }
+
+            const row = event.target.closest('tr[data-pokemon-name]');
+            if (!row) return;
+            if (event.target.closest('button, a, input, select, textarea')) return;
+            togglePokemonRow(row.dataset.pokemonName);
+        });
+    }
+}
+
+function refreshPokemonTable() {
+    const filtered = getFilteredPokemonRows(browserState.pokemon.searchQuery);
+    renderPokemonTable(sortPokemonRows(filtered, browserState.pokemon.sortMode), browserState.pokemon.searchQuery);
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    ensureLanguageToggleButton();
+    applyStaticTranslations();
     initProficiencyBrowser();
     initPokemonBrowser();
 });
