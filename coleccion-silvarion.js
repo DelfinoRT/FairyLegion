@@ -1,6 +1,236 @@
 const COLLAPSE_ANIMATION_MS = 460;
 const COLLAPSE_EASING = 'cubic-bezier(0.2, 0.75, 0.2, 1)';
 
+(function setupPadventuresCharacterCard() {
+  const card = document.getElementById('silvarion-character-card');
+  const sprite = document.getElementById('silvarion-character-sprite');
+  const text = document.getElementById('silvarion-character-text');
+  const world = document.getElementById('silvarion-character-world');
+  const embed = document.getElementById('silvarion-character-embed');
+  const leftParty = card ? card.querySelector('.silvarion-side-party-left') : null;
+  const rightParty = card ? card.querySelector('.silvarion-side-party-right') : null;
+  const leftSlots = leftParty ? Array.from(leftParty.querySelectorAll('.silvarion-side-sprite')) : [];
+  const rightSlots = rightParty ? Array.from(rightParty.querySelectorAll('.silvarion-side-sprite')) : [];
+  if (!card || !sprite || !text || !world) return;
+
+  const endpoint = 'https://api.padventures.org/w/RZF8C9QcAiZZQJSRQckaXF';
+  const jsonEndpoint = `${endpoint}.json`;
+  const defaultColor = '#8000ff';
+  let pollTimerId = 0;
+  let lastEtag = '';
+
+  const isValidHexColor = (value) => /^#[0-9a-fA-F]{6}$/.test(value || '');
+
+  const readConfiguredSources = (partyElement) => {
+    if (!partyElement) return [];
+
+    const raw = partyElement.dataset.sprites || '';
+    if (!raw.trim()) return [];
+
+    return raw
+      .split('|')
+      .map((value) => value.trim())
+      .filter(Boolean);
+  };
+
+  const applySourcesToSlots = (slots, sources) => {
+    slots.forEach((slot, index) => {
+      const source = sources[index];
+      if (!source) {
+        slot.hidden = true;
+        slot.removeAttribute('src');
+        return;
+      }
+
+      slot.setAttribute('src', source);
+      slot.hidden = false;
+    });
+  };
+
+  const populateSideSprites = () => {
+    if (leftSlots.length === 0 && rightSlots.length === 0) return;
+
+    const configuredLeft = readConfiguredSources(leftParty);
+    const configuredRight = readConfiguredSources(rightParty);
+
+    if (configuredLeft.length > 0 || configuredRight.length > 0) {
+      applySourcesToSlots(leftSlots, configuredLeft);
+      applySourcesToSlots(rightSlots, configuredRight);
+      return;
+    }
+
+    const cardSprites = Array.from(document.querySelectorAll('.pokemon-card .pokemon-img'));
+    const uniqueSources = [];
+    const seen = new Set();
+
+    cardSprites.forEach((img) => {
+      const src = img.getAttribute('src');
+      if (!src || seen.has(src)) return;
+
+      seen.add(src);
+      uniqueSources.push(src);
+    });
+
+    applySourcesToSlots(leftSlots, uniqueSources.slice(0, leftSlots.length));
+    applySourcesToSlots(rightSlots, uniqueSources.slice(leftSlots.length, leftSlots.length + rightSlots.length));
+  };
+
+  const showEmbedFallback = () => {
+    if (!embed) return;
+
+    card.classList.remove('is-error');
+    card.classList.add('is-embed-mode');
+    embed.hidden = false;
+
+    const main = card.querySelector('.silvarion-character-main');
+    if (main) {
+      main.hidden = true;
+      main.style.display = 'none';
+    }
+
+    text.textContent = '';
+  };
+
+  const buildLine = (state) => {
+    const name = typeof state.name === 'string' ? state.name.trim() : '';
+    const level = Number.isFinite(state.level) ? state.level : Number.parseInt(state.level, 10);
+    if (name && Number.isFinite(level)) return `${name} [${level}]`;
+    if (name) return name;
+    if (Number.isFinite(level)) return `Nivel [${level}]`;
+    return '';
+  };
+
+  const applyState = (state) => {
+    if (!state || state.active === false) {
+      card.hidden = true;
+      return;
+    }
+
+    card.hidden = false;
+    card.classList.remove('is-error');
+    card.classList.remove('is-embed-mode');
+
+    if (embed) {
+      embed.hidden = true;
+    }
+
+    const main = card.querySelector('.silvarion-character-main');
+    if (main) {
+      main.hidden = false;
+      main.style.display = '';
+    }
+
+    if (state.image) {
+      if (sprite.getAttribute('src') !== state.image) {
+        sprite.setAttribute('src', state.image);
+      }
+      sprite.hidden = false;
+    }
+
+    const line = buildLine(state);
+    text.textContent = line || 'Personaje sin datos';
+
+    const color = isValidHexColor(state.font_color) ? state.font_color : defaultColor;
+    text.style.color = color;
+
+    if (state.world_icon) {
+      if (world.getAttribute('src') !== state.world_icon) {
+        world.setAttribute('src', state.world_icon);
+      }
+      world.hidden = false;
+    } else {
+      world.hidden = true;
+      world.removeAttribute('src');
+    }
+
+    if (typeof state.poll === 'string' && state.poll.trim()) {
+      const pollUrl = new URL(state.poll, endpoint).toString();
+      if (!pollTimerId) {
+        pollTimerId = window.setInterval(() => {
+          fetchStateFromJson(pollUrl)
+            .then((nextState) => {
+              if (nextState) applyState(nextState);
+            })
+            .catch(() => {
+              // Ignore transient polling failures.
+            });
+        }, 15000);
+      }
+    }
+  };
+
+  const fetchStateFromJson = async (url) => {
+    const headers = {};
+    if (lastEtag) {
+      headers['If-None-Match'] = lastEtag;
+    }
+
+    const response = await fetch(url, { headers, cache: 'no-store' });
+    if (response.status === 304) return null;
+    if (!response.ok) throw new Error(`Request failed with status ${response.status}`);
+
+    const etag = response.headers.get('ETag');
+    if (etag) {
+      lastEtag = etag;
+    }
+
+    return response.json();
+  };
+
+  const parseStateFromHtml = (html) => {
+    const match = html.match(/var\s+cfg\s*=\s*(\{[\s\S]*?\});/);
+    if (!match) return null;
+
+    try {
+      return JSON.parse(match[1]);
+    } catch {
+      return null;
+    }
+  };
+
+  const loadInitialState = async () => {
+    try {
+      const jsonState = await fetchStateFromJson(jsonEndpoint);
+      if (jsonState) {
+        applyState(jsonState);
+        return;
+      }
+    } catch {
+      // Fall through to HTML parser fallback.
+    }
+
+    try {
+      const response = await fetch(endpoint, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`Request failed with status ${response.status}`);
+
+      const html = await response.text();
+      const htmlState = parseStateFromHtml(html);
+
+      if (htmlState) {
+        applyState(htmlState);
+        return;
+      }
+    } catch {
+      // Show graceful fallback message.
+    }
+
+    showEmbedFallback();
+    if (embed && !embed.hidden) {
+      return;
+    }
+
+    card.classList.add('is-error');
+    text.textContent = 'No se pudo cargar el personaje';
+    sprite.hidden = true;
+    sprite.removeAttribute('src');
+    world.hidden = true;
+    world.removeAttribute('src');
+  };
+
+  populateSideSprites();
+  loadInitialState();
+})();
+
 (function sortPokemonCardsAlphabetically() {
   const grids = Array.from(document.querySelectorAll('.collection-section .pokemon-grid'));
 

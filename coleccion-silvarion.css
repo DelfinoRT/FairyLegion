@@ -223,6 +223,130 @@ h1.glitch-title {
   filter: saturate(0.75) contrast(1.04) sepia(0.28) hue-rotate(8deg);
 }
 
+.silvarion-character-card {
+  max-width: 1120px;
+  margin: 0 auto 14px;
+  padding: 12px 14px;
+  border: 3px solid var(--stroke);
+  border-radius: 12px;
+  background: linear-gradient(160deg, #a8bb58, #8fa447 72%);
+  box-shadow: 4px 4px 0 #7b7568, 7px 7px 0 rgba(18, 19, 22, 0.18);
+}
+
+.silvarion-character-label {
+  font-family: "Press Start 2P", "Courier New", monospace;
+  font-size: clamp(0.54rem, 1.25vw, 0.66rem);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #1f2b1f;
+  margin-bottom: 9px;
+}
+
+.silvarion-character-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 84px;
+  padding: 8px 10px;
+  border: 2px solid var(--bezel);
+  border-radius: 10px;
+  background: linear-gradient(180deg, var(--lcd-4), #9fb65a);
+  box-shadow: inset 0 0 0 2px rgba(36, 53, 26, 0.4);
+}
+
+.silvarion-character-sprite {
+  width: 92px;
+  height: 92px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.24));
+}
+
+.silvarion-character-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.silvarion-character-text {
+  margin: 0;
+  font-family: "Press Start 2P", "Courier New", monospace;
+  font-size: clamp(0.95rem, 2.6vw, 1.9rem);
+  text-align: center;
+  color: #5d37ce;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6), 0 0 10px rgba(36, 53, 26, 0.2);
+  line-height: 1.24;
+}
+
+.silvarion-character-world {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.silvarion-character-card.is-error .silvarion-character-main {
+  background: linear-gradient(180deg, #d9d2be, #c2baa2);
+}
+
+.silvarion-character-card.is-embed-mode .silvarion-character-main {
+  display: none;
+}
+
+.silvarion-character-embed {
+  margin-top: 10px;
+  border: 2px solid var(--bezel);
+  border-radius: 10px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #c2d277, #adc25f);
+}
+
+.silvarion-character-embed-layout {
+  display: grid;
+  grid-template-columns: max-content clamp(300px, 46vw, 430px) max-content;
+  justify-content: center;
+  align-items: center;
+  gap: 1px;
+  padding: 8px;
+}
+
+.silvarion-side-party {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.silvarion-side-sprite {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.25));
+}
+
+.silvarion-character-iframe-viewport {
+  width: clamp(220px, 72%, 310px);
+  min-height: 168px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 0 auto;
+}
+
+.silvarion-character-iframe {
+  width: 100%;
+  min-height: 168px;
+  border: 0;
+  display: block;
+  background: #bed073;
+}
+
 .desc {
   max-width: 1120px;
   margin: 0 auto 14px;
@@ -968,9 +1092,31 @@ body.serials-visible .pokemon-serial {
   }
 
   .banner-silvarion-container,
+  .silvarion-character-card,
   .collection-section,
   #last-pokemon-section {
     border-width: 3px;
+  }
+
+  .silvarion-character-main {
+    min-height: 76px;
+  }
+
+  .silvarion-character-embed-layout {
+    grid-template-columns: max-content clamp(250px, 48vw, 360px) max-content;
+    justify-content: center;
+    gap: 1px;
+    padding: 6px;
+  }
+
+  .silvarion-side-sprite {
+    width: 58px;
+    height: 58px;
+  }
+
+  .silvarion-character-sprite {
+    width: 76px;
+    height: 76px;
   }
 
   .pokemon-grid {
@@ -999,6 +1145,41 @@ body.serials-visible .pokemon-serial {
 }
 
 @media (max-width: 520px) {
+  .silvarion-character-embed-layout {
+    grid-template-columns: 1fr;
+    gap: 5px;
+    padding: 5px;
+  }
+
+  .silvarion-side-party {
+    justify-content: center;
+  }
+
+  .silvarion-side-sprite {
+    width: 44px;
+    height: 44px;
+  }
+
+  .silvarion-character-iframe-viewport {
+    width: min(82vw, 260px);
+    min-height: 150px;
+  }
+
+  .silvarion-character-iframe {
+    min-height: 150px;
+  }
+
+  .silvarion-character-main {
+    flex-direction: column;
+    gap: 7px;
+    padding: 10px 8px;
+  }
+
+  .silvarion-character-sprite {
+    width: 68px;
+    height: 68px;
+  }
+
   .collapsible-header {
     padding: 10px;
   }
