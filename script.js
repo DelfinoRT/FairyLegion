@@ -380,31 +380,132 @@ const pokemonImages = {
 };
 
 
-// Populate the dropdown with Pokemon options
-const pokemonSelect = document.getElementById('pokemon-select');
-Object.keys(pokemonImages).forEach(pokemon => {
-    const option = document.createElement('option');
-    option.value = pokemon;
-    option.innerText = pokemon;
-    pokemonSelect.appendChild(option);
-});
+const pokemonGrid = document.getElementById('pokemon-grid');
+const pokemonSearchInput = document.getElementById('pokemon-search-grid');
+const pokemonInfoPanel = document.getElementById('pokemon-info');
 
-// Event listener for the dropdown
-pokemonSelect.addEventListener('change', function () {
-    const selectedPokemon = this.value;
-    const pokemonInfo = document.getElementById('pokemon-info');
+function getAllFishingPokemon() {
+    const fishablePokemon = [];
 
-    let rodInfo = '';
-    for (let rod in fishingData) {
-        for (let bait in fishingData[rod]) {
-            if (fishingData[rod][bait].includes(selectedPokemon)) {
-                rodInfo += `<p>${rod} ${bait !== 'noBait' ? 'con ' + bait : 'without bait'}</p>`;
+    for (const rod in fishingData) {
+        for (const bait in fishingData[rod]) {
+            fishablePokemon.push(...fishingData[rod][bait]);
+        }
+    }
+
+    return fishablePokemon;
+}
+
+function getPokemonCombinations(pokemonName) {
+    const combinations = [];
+
+    for (const rod in fishingData) {
+        for (const bait in fishingData[rod]) {
+            if (fishingData[rod][bait].includes(pokemonName)) {
+                combinations.push(`${rod} con ${bait}`);
             }
         }
     }
 
-    pokemonInfo.innerHTML = `<img src="${pokemonImages[selectedPokemon]}" alt="${selectedPokemon}"><p>${rodInfo}</p>`;
-});
+    return combinations;
+}
+
+function escapeRegExp(text) {
+    return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function highlightName(name, query) {
+    if (!query) {
+        return name;
+    }
+
+    const safeQuery = escapeRegExp(query);
+    const matcher = new RegExp(`(${safeQuery})`, 'ig');
+    return name.replace(matcher, '<mark>$1</mark>');
+}
+
+if (pokemonGrid && pokemonInfoPanel) {
+    const placeholderSprite = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png';
+    const pokemonNames = Array.from(new Set([
+        ...Object.keys(pokemonImages),
+        ...getAllFishingPokemon()
+    ]))
+        .filter(name => name && name !== '-')
+        .sort((a, b) => a.localeCompare(b));
+
+    const gridCards = [];
+
+    function selectPokemon(pokemonName, shouldScroll) {
+        const combinations = getPokemonCombinations(pokemonName);
+        const sprite = pokemonImages[pokemonName] || placeholderSprite;
+
+        gridCards.forEach(card => {
+            card.classList.toggle('is-selected', card.dataset.name === pokemonName);
+        });
+
+        if (combinations.length > 0) {
+            const combosMarkup = combinations.map(combo => `<li>${combo}</li>`).join('');
+            pokemonInfoPanel.innerHTML = `
+                <img src="${sprite}" alt="${pokemonName}">
+                <h3>${pokemonName}</h3>
+                <ul>${combosMarkup}</ul>
+            `;
+            if (shouldScroll) {
+                pokemonInfoPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            return;
+        }
+
+        pokemonInfoPanel.innerHTML = `
+            <img src="${sprite}" alt="${pokemonName}">
+            <h3>${pokemonName}</h3>
+            <p>No hay combinaciones registradas para este Pokémon.</p>
+        `;
+        if (shouldScroll) {
+            pokemonInfoPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
+    pokemonNames.forEach(name => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'pokemon-grid-card';
+        card.dataset.name = name;
+        card.innerHTML = `
+            <img src="${pokemonImages[name] || placeholderSprite}" alt="${name}">
+            <span class="pokemon-grid-name">${name}</span>
+        `;
+
+        card.addEventListener('click', function () {
+            selectPokemon(name, true);
+        });
+
+        gridCards.push(card);
+        pokemonGrid.appendChild(card);
+    });
+
+    if (pokemonSearchInput) {
+        pokemonSearchInput.addEventListener('input', function () {
+            const query = this.value.trim();
+            const queryLower = query.toLowerCase();
+
+            gridCards.forEach(card => {
+                const cardName = card.dataset.name || '';
+                const isMatch = !queryLower || cardName.toLowerCase().includes(queryLower);
+                const label = card.querySelector('.pokemon-grid-name');
+
+                card.classList.toggle('is-match', Boolean(query) && isMatch);
+                card.classList.toggle('is-dimmed', Boolean(query) && !isMatch);
+
+                if (label) {
+                    label.innerHTML = highlightName(cardName, query);
+                }
+            });
+        });
+    }
+
+    selectPokemon(pokemonNames[0], false);
+}
 
 // Funcionalidad colapsable para guías
 document.addEventListener('DOMContentLoaded', function () {

@@ -33,9 +33,13 @@
         </div>
         <p>Que quieres pescar en este momento?</p>
         <div class="fishing-assistant">
-            <select id="pokemon-select">
-                <!-- Options will be dynamically inserted here -->
-            </select>
+          <div class="pokemon-picker-controls">
+            <label for="pokemon-search-grid" class="sr-only">Buscar pokemon</label>
+            <input type="text" id="pokemon-search-grid" placeholder="Buscar Pokémon o variante..." autocomplete="off">
+          </div>
+          <div id="pokemon-grid" class="pokemon-grid" aria-live="polite">
+            <!-- Pokemon cards will be dynamically inserted here -->
+          </div>
             <div id="pokemon-info">
                 <!-- Fishing rod and bait info will be displayed here -->
             </div>
