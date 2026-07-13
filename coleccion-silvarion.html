@@ -1591,6 +1591,18 @@
                 </section>
 
 
+                <p style="max-width:980px;margin:28px auto 10px auto;padding:12px 16px;border:1px solid #8ea783;border-radius:8px;background:rgba(142,167,131,0.16);color:#243224;font-size:18px;line-height:1.45;text-align:center;">
+                  Si quieres una página similar a esta, contacta a Silvarion mediante
+                  <a href="https://www.fairylegion.com/contacto.html" target="_blank" rel="noopener noreferrer" style="color:#1f3f1f;font-weight:700;text-decoration:underline;">https://www.fairylegion.com/contacto.html</a>
+                 con tu idea para acordar la mejor forma de realizarla. Llevar un registro de tus Pokémon puede ser útil, tanto para mostrar tu colección como para tener una referencia rápida de sus detalles cuando ocurren rollbacks o problemas en el servidor.
+                </p>
+
+
+                <!-- Home Button -->
+                <button id="home-btn" aria-label="Ir a FairyLegion.com" style="position:fixed;top:24px;right:32px;z-index:1000;padding:8px 12px;background:linear-gradient(180deg,#8ea783 0%,#60755a 100%);border:1px solid #465845;border-radius:7px;color:#f5faec;font-size:13px;line-height:1;cursor:pointer;box-shadow:inset 0 1px 0 #dce8c8,0 2px 0 #3d4f3d;text-shadow:0 1px 0 #314031;transition:transform 0.18s, box-shadow 0.18s, filter 0.18s;">
+                  FairyLegion.com
+                </button>
+
                 <!-- Back to Top Button -->
                 <button id="back-to-top-btn" aria-label="Volver arriba" style="opacity:0;pointer-events:none;position:fixed;bottom:32px;right:32px;z-index:1000;padding:0;background:none;border:none;box-shadow:none;cursor:pointer;transition:opacity 0.2s;">
                   <img id="back-to-top-img" src="ColeccionSilvarion/up.png" alt="Arriba" style="width:36px;height:36px;display:block;margin:auto;filter:drop-shadow(0 1px 0 #fff8);transition:transform 0.18s;">
@@ -1600,16 +1612,41 @@
                   // Grow effect on hover for the icon
                   var upBtn = document.getElementById('back-to-top-btn');
                   var upImg = document.getElementById('back-to-top-img');
+                  var homeBtn = document.getElementById('home-btn');
+
                   upBtn.addEventListener('mouseenter', function(){
                     upImg.style.transform = 'scale(1.22)';
                   });
                   upBtn.addEventListener('mouseleave', function(){
                     upImg.style.transform = 'scale(1)';
                   });
+
+                  if (homeBtn) {
+                    homeBtn.addEventListener('mouseenter', function(){
+                      homeBtn.style.transform = 'translateY(-1px) scale(1.03)';
+                      homeBtn.style.boxShadow = 'inset 0 1px 0 #e5f0d3,0 3px 0 #3d4f3d';
+                      homeBtn.style.filter = 'brightness(1.04)';
+                    });
+                    homeBtn.addEventListener('mouseleave', function(){
+                      homeBtn.style.transform = 'none';
+                      homeBtn.style.boxShadow = 'inset 0 1px 0 #dce8c8,0 2px 0 #3d4f3d';
+                      homeBtn.style.filter = 'none';
+                    });
+                  }
                 </script>
 
                 <script src="coleccion-silvarion.js"></script>
                 <script>
+                  // Home button logic
+                  (function() {
+                    var homeBtn = document.getElementById('home-btn');
+                    if (!homeBtn) return;
+
+                    homeBtn.addEventListener('click', function() {
+                      window.location.href = 'https://www.fairylegion.com';
+                    });
+                  })();
+
                   // Back to Top Button logic
                   (function() {
                     var btn = document.getElementById('back-to-top-btn');
