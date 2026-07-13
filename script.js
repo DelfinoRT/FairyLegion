@@ -488,6 +488,8 @@ if (pokemonGrid && pokemonInfoPanel) {
         pokemonSearchInput.addEventListener('input', function () {
             const query = this.value.trim();
             const queryLower = query.toLowerCase();
+            const matchingCards = [];
+            const nonMatchingCards = [];
 
             gridCards.forEach(card => {
                 const cardName = card.dataset.name || '';
@@ -500,6 +502,17 @@ if (pokemonGrid && pokemonInfoPanel) {
                 if (label) {
                     label.innerHTML = highlightName(cardName, query);
                 }
+
+                if (isMatch) {
+                    matchingCards.push(card);
+                } else {
+                    nonMatchingCards.push(card);
+                }
+            });
+
+            const orderedCards = query ? matchingCards.concat(nonMatchingCards) : gridCards;
+            orderedCards.forEach(card => {
+                pokemonGrid.appendChild(card);
             });
         });
     }
