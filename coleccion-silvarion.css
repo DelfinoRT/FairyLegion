@@ -231,6 +231,17 @@ h1.glitch-title {
   border-radius: 12px;
   background: linear-gradient(160deg, #a8bb58, #8fa447 72%);
   box-shadow: 4px 4px 0 #7b7568, 7px 7px 0 rgba(18, 19, 22, 0.18);
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(360px, 1.18fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.silvarion-character-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
 }
 
 .silvarion-character-label {
@@ -246,9 +257,9 @@ h1.glitch-title {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 12px;
   min-height: 84px;
-  padding: 8px 10px;
+  padding: 8px 8px;
   border: 2px solid var(--bezel);
   border-radius: 10px;
   background: linear-gradient(180deg, var(--lcd-4), #9fb65a);
@@ -256,8 +267,8 @@ h1.glitch-title {
 }
 
 .silvarion-character-sprite {
-  width: 92px;
-  height: 92px;
+  width: 84px;
+  height: 84px;
   object-fit: contain;
   image-rendering: pixelated;
   filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.24));
@@ -305,12 +316,132 @@ h1.glitch-title {
 }
 
 .silvarion-character-embed-layout {
-  display: grid;
-  grid-template-columns: max-content clamp(300px, 46vw, 430px) max-content;
+  display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1px;
-  padding: 8px;
+  padding: 6px;
+}
+
+.silvarion-team-card {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  box-shadow: none;
+  color: #eef2f7;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.silvarion-team-card::before {
+  content: none;
+}
+
+.silvarion-team-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.silvarion-team-label {
+  font-family: "Press Start 2P", "Courier New", monospace;
+  font-size: clamp(0.48rem, 1.05vw, 0.58rem);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #1f2b1f;
+  margin-bottom: 7px;
+}
+
+.silvarion-team-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(31, 58, 32, 0.28);
+  border-radius: 10px;
+  padding: 7px;
+  background: rgba(239, 235, 223, 0.28);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+}
+
+.silvarion-team-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 80px);
+  gap: 7px;
+  justify-content: center;
+  justify-items: center;
+}
+
+.silvarion-team-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 120px;
+  padding: 7px 5px 6px;
+  border: 1px solid rgba(31, 58, 32, 0.2);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.silvarion-team-member-sprite {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.35));
+}
+
+.silvarion-team-member-caption {
+  width: 100%;
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.silvarion-team-member-name {
+  width: 100%;
+  min-height: 26px;
+  text-align: center;
+  font-family: "Press Start 2P", "Courier New", monospace;
+  font-size: 0.4rem;
+  line-height: 1.25;
+  color: #202734;
+  text-shadow: none;
+}
+
+.silvarion-team-member-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 18px;
+  color: #273340;
+  font-family: "VT323", "Courier New", monospace;
+  font-size: 1rem;
+  letter-spacing: 0.2px;
+}
+
+.silvarion-team-member-ball {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.silvarion-team-status {
+  margin-top: 8px;
+  min-height: 1.2em;
+  text-align: center;
+  color: rgba(36, 50, 36, 0.92);
+  font-family: "VT323", "Courier New", monospace;
+  font-size: 1.05rem;
 }
 
 .silvarion-side-party {
@@ -1098,25 +1229,43 @@ body.serials-visible .pokemon-serial {
     border-width: 3px;
   }
 
+  .silvarion-character-card {
+    grid-template-columns: 1fr;
+  }
+
   .silvarion-character-main {
     min-height: 76px;
   }
 
   .silvarion-character-embed-layout {
-    grid-template-columns: max-content clamp(250px, 48vw, 360px) max-content;
-    justify-content: center;
-    gap: 1px;
     padding: 6px;
   }
 
-  .silvarion-side-sprite {
-    width: 58px;
-    height: 58px;
+  .silvarion-team-body {
+    padding: 7px;
+  }
+
+  .silvarion-team-grid {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 7px;
+  }
+
+  .silvarion-team-member {
+    min-height: 120px;
+  }
+
+  .silvarion-team-member-sprite {
+    width: 52px;
+    height: 52px;
+  }
+
+  .silvarion-team-member-name {
+    font-size: 0.4rem;
   }
 
   .silvarion-character-sprite {
-    width: 76px;
-    height: 76px;
+    width: 70px;
+    height: 70px;
   }
 
   .pokemon-grid {
@@ -1146,22 +1295,11 @@ body.serials-visible .pokemon-serial {
 
 @media (max-width: 520px) {
   .silvarion-character-embed-layout {
-    grid-template-columns: 1fr;
-    gap: 5px;
     padding: 5px;
   }
 
-  .silvarion-side-party {
-    justify-content: center;
-  }
-
-  .silvarion-side-sprite {
-    width: 44px;
-    height: 44px;
-  }
-
   .silvarion-character-iframe-viewport {
-    width: min(82vw, 260px);
+    width: min(86vw, 320px);
     min-height: 150px;
   }
 
@@ -1173,6 +1311,28 @@ body.serials-visible .pokemon-serial {
     flex-direction: column;
     gap: 7px;
     padding: 10px 8px;
+  }
+
+  .silvarion-team-body {
+    padding: 6px;
+  }
+
+  .silvarion-team-grid {
+    grid-template-columns: repeat(auto-fit, minmax(76px, 1fr));
+    gap: 6px;
+  }
+
+  .silvarion-team-member {
+    min-height: 114px;
+  }
+
+  .silvarion-team-member-sprite {
+    width: 48px;
+    height: 48px;
+  }
+
+  .silvarion-team-member-name {
+    font-size: 0.38rem;
   }
 
   .silvarion-character-sprite {

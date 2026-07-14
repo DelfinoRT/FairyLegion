@@ -7,73 +7,21 @@ const COLLAPSE_EASING = 'cubic-bezier(0.2, 0.75, 0.2, 1)';
   const text = document.getElementById('silvarion-character-text');
   const world = document.getElementById('silvarion-character-world');
   const embed = document.getElementById('silvarion-character-embed');
-  const leftParty = card ? card.querySelector('.silvarion-side-party-left') : null;
-  const rightParty = card ? card.querySelector('.silvarion-side-party-right') : null;
-  const leftSlots = leftParty ? Array.from(leftParty.querySelectorAll('.silvarion-side-sprite')) : [];
-  const rightSlots = rightParty ? Array.from(rightParty.querySelectorAll('.silvarion-side-sprite')) : [];
+  const teamCard = document.getElementById('silvarion-team-card');
+  const teamGrid = document.getElementById('silvarion-team-grid');
   if (!card || !sprite || !text || !world) return;
 
   const endpoint = 'https://api.padventures.org/w/RZF8C9QcAiZZQJSRQckaXF';
   const jsonEndpoint = `${endpoint}.json`;
+  const teamEndpoint = 'https://api.padventures.org/w/K2K4WASjE4LcO9Yjawl07Z.json';
+  const teamProxyEndpoint = 'https://r.jina.ai/http://api.padventures.org/w/K2K4WASjE4LcO9Yjawl07Z.json';
   const defaultColor = '#8000ff';
   let pollTimerId = 0;
   let lastEtag = '';
+  let teamLoadAttempt = 0;
+  let teamRetryTimerId = 0;
 
   const isValidHexColor = (value) => /^#[0-9a-fA-F]{6}$/.test(value || '');
-
-  const readConfiguredSources = (partyElement) => {
-    if (!partyElement) return [];
-
-    const raw = partyElement.dataset.sprites || '';
-    if (!raw.trim()) return [];
-
-    return raw
-      .split('|')
-      .map((value) => value.trim())
-      .filter(Boolean);
-  };
-
-  const applySourcesToSlots = (slots, sources) => {
-    slots.forEach((slot, index) => {
-      const source = sources[index];
-      if (!source) {
-        slot.hidden = true;
-        slot.removeAttribute('src');
-        return;
-      }
-
-      slot.setAttribute('src', source);
-      slot.hidden = false;
-    });
-  };
-
-  const populateSideSprites = () => {
-    if (leftSlots.length === 0 && rightSlots.length === 0) return;
-
-    const configuredLeft = readConfiguredSources(leftParty);
-    const configuredRight = readConfiguredSources(rightParty);
-
-    if (configuredLeft.length > 0 || configuredRight.length > 0) {
-      applySourcesToSlots(leftSlots, configuredLeft);
-      applySourcesToSlots(rightSlots, configuredRight);
-      return;
-    }
-
-    const cardSprites = Array.from(document.querySelectorAll('.pokemon-card .pokemon-img'));
-    const uniqueSources = [];
-    const seen = new Set();
-
-    cardSprites.forEach((img) => {
-      const src = img.getAttribute('src');
-      if (!src || seen.has(src)) return;
-
-      seen.add(src);
-      uniqueSources.push(src);
-    });
-
-    applySourcesToSlots(leftSlots, uniqueSources.slice(0, leftSlots.length));
-    applySourcesToSlots(rightSlots, uniqueSources.slice(leftSlots.length, leftSlots.length + rightSlots.length));
-  };
 
   const showEmbedFallback = () => {
     if (!embed) return;
@@ -227,8 +175,140 @@ const COLLAPSE_EASING = 'cubic-bezier(0.2, 0.75, 0.2, 1)';
     world.removeAttribute('src');
   };
 
-  populateSideSprites();
+  const normalizeTeamName = (value) => (typeof value === 'string' ? value.replace(/\s+/g, ' ').trim() : '');
+
+  const parseTeamPayload = (text) => {
+    if (!text) return null;
+
+    try {
+      return JSON.parse(text);
+    } catch {
+      const match = text.match(/var\s+cfg\s*=\s*(\{[\s\S]*?\});/);
+      if (!match) return null;
+
+      try {
+        return JSON.parse(match[1]);
+      } catch {
+        return null;
+      }
+    }
+  };
+
+  const fetchText = async (url) => {
+    const response = await fetch(url, { cache: 'no-store' });
+    if (!response.ok) throw new Error(`Request failed with status ${response.status}`);
+
+    return response.text();
+  };
+
+  const createTeamMemberCard = (member, index) => {
+    const slot = document.createElement('article');
+    slot.className = 'silvarion-team-member';
+
+    const spriteImage = document.createElement('img');
+    spriteImage.className = 'silvarion-team-member-sprite';
+    spriteImage.src = member.image || '';
+    spriteImage.alt = normalizeTeamName(member.name) || `Pokemon del equipo ${index + 1}`;
+    spriteImage.loading = 'lazy';
+    spriteImage.decoding = 'async';
+
+    const caption = document.createElement('div');
+    caption.className = 'silvarion-team-member-caption';
+
+    const name = document.createElement('div');
+    name.className = 'silvarion-team-member-name';
+    name.textContent = normalizeTeamName(member.name) || `Pokemon ${index + 1}`;
+
+    const meta = document.createElement('div');
+    meta.className = 'silvarion-team-member-meta';
+
+    if (member.ball) {
+      const ball = document.createElement('img');
+      ball.className = 'silvarion-team-member-ball';
+      ball.src = member.ball;
+      ball.alt = '';
+      ball.loading = 'lazy';
+      ball.decoding = 'async';
+      meta.appendChild(ball);
+    }
+
+    const level = document.createElement('span');
+    level.className = 'silvarion-team-member-level';
+    const numericLevel = Number.parseInt(member.level, 10);
+    level.textContent = Number.isFinite(numericLevel) ? `Lv. ${numericLevel}` : 'Lv. -';
+
+    meta.appendChild(level);
+    caption.appendChild(name);
+    caption.appendChild(meta);
+    slot.appendChild(spriteImage);
+    slot.appendChild(caption);
+
+    return slot;
+  };
+
+  const renderTeamState = (state) => {
+    if (!teamCard || !teamGrid) return;
+
+    if (!state || state.active === false) {
+      teamCard.hidden = true;
+      return;
+    }
+
+    teamCard.hidden = false;
+    teamGrid.textContent = '';
+
+    const team = Array.isArray(state.team) ? state.team : [];
+    team.forEach((member, index) => {
+      teamGrid.appendChild(createTeamMemberCard(member || {}, index));
+    });
+  };
+
+  const loadTeamState = async () => {
+    if (!teamCard || !teamGrid) return;
+
+    teamCard.hidden = false;
+    teamGrid.textContent = '';
+
+    if (teamRetryTimerId) {
+      window.clearTimeout(teamRetryTimerId);
+      teamRetryTimerId = 0;
+    }
+
+    try {
+      let teamState = null;
+
+      try {
+        teamState = parseTeamPayload(await fetchText(teamEndpoint));
+      } catch {
+        teamState = null;
+      }
+
+      if (!teamState) {
+        const proxyText = await fetchText(teamProxyEndpoint);
+        const jsonStart = proxyText.indexOf('{');
+        const jsonEnd = proxyText.lastIndexOf('}');
+        const rawPayload = jsonStart >= 0 && jsonEnd > jsonStart ? proxyText.slice(jsonStart, jsonEnd + 1) : proxyText;
+        teamState = parseTeamPayload(rawPayload);
+      }
+
+      if (!teamState) throw new Error('Invalid team payload');
+
+      renderTeamState(teamState);
+      teamLoadAttempt = 0;
+    } catch {
+      teamLoadAttempt += 1;
+
+      if (teamLoadAttempt < 3) {
+        teamRetryTimerId = window.setTimeout(() => {
+          loadTeamState().catch(() => {});
+        }, 2500);
+        return;
+      }
+    }
+  };
+
   loadInitialState();
+  loadTeamState();
 })();
 
 (function sortPokemonCardsAlphabetically() {
