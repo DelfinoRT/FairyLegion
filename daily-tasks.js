@@ -38,188 +38,77 @@ document.addEventListener("DOMContentLoaded", function () {
     { name: "Vileplume", task: "Task en elemental grass o en Palace", map: "xx.png" }
   ];
 
-    const taskListContainer = document.getElementById("pokemon-task-list");
-    const pokemonSearchInput = document.getElementById("pokemon-search");
-    const clearSearchBtn = document.getElementById("clear-search-btn");
+  const list = document.getElementById('pokemon-task-list');
+  const search = document.getElementById('pokemon-search');
+  const clear = document.getElementById('clear-search-btn');
+  if (!list || !search || !clear) return;
 
-    // Function to render filtered results based on search input
-    function renderFilteredResults(query) {
-      // Clear previous results
-      taskListContainer.innerHTML = '';
+  const cards = pokemonTasks.map((pokemon, index) => {
+    const card = document.createElement('div');
+    card.className = 'pokemon-task';
+    const img = document.createElement('img');
+    img.src = `daily-task-sprites/${pokemon.name.toLowerCase()}.png`;
+    img.alt = pokemon.name;
+    img.className = 'pokemon-img';
+    img.width = img.height = 96;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    const name = document.createElement('h3');
+    name.textContent = pokemon.name;
+    if (pokemon.task.includes('pesca')) name.style.color = 'cornflowerblue';
+    const task = document.createElement('p');
+    task.textContent = pokemon.task;
+    card.append(img, name, task);
 
-      const filteredPokemon = pokemonTasks.filter(pokemon => pokemon.name.toLowerCase().includes(query.toLowerCase()));
-
-      if (filteredPokemon.length === 0) {
-        const errorDiv = document.createElement("div");
-        errorDiv.classList.add("error-message");
-
-        // Create a span element to wrap the query term with bold styling
-        const boldQuery = document.createElement("strong");
-        boldQuery.textContent = query;
-
-        // Set the error message with the bolded query term
-        errorDiv.innerHTML = `No se encontró ningún Pokémon cuyo nombre incluya `;
-        errorDiv.appendChild(boldQuery);
-        errorDiv.innerHTML += `. Intenta con otro nombre.`;
-
-        taskListContainer.appendChild(errorDiv);
-      } else {
-        filteredPokemon.forEach((pokemon, index) => {
-          fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name.toLowerCase()}`)
-            .then((response) => response.json())
-            .then((data) => {
-              const pokemonDiv = document.createElement("div");
-              pokemonDiv.classList.add("pokemon-task");
-
-              const img = document.createElement("img");
-              img.src = data.sprites.front_default;
-              img.alt = pokemon.name;
-              img.classList.add("pokemon-img");
-
-              const name = document.createElement("h3");
-              if (pokemon.task.includes("pesca")) {
-                name.style.color = "cornflowerblue";
-              }
-              name.textContent = pokemon.name;
-
-              const task = document.createElement("p");
-              task.textContent = pokemon.task;
-
-              pokemonDiv.appendChild(img);
-              pokemonDiv.appendChild(name);
-              pokemonDiv.appendChild(task);
-
-              // Only add the map container if the task does not involve fishing
-              if (!pokemon.task.includes("pesca")) {
-                const mapContainer = document.createElement("div");
-                mapContainer.classList.add("map-container");
-
-                const mapButton = document.createElement("button");
-                mapButton.textContent = "Mostrar Mapa";
-                mapButton.classList.add("show-map-btn");
-                mapButton.dataset.index = index;
-
-                const mapImage = document.createElement("img");
-                mapImage.src = `/spawn-maps/${pokemon.map}`;
-                mapImage.classList.add("map-image");
-                mapImage.id = `map-${index}`;
-                mapImage.style.display = "none"; // Ensure the image is hidden initially
-
-                mapButton.addEventListener("click", function () {
-                  const mapImg = document.getElementById(`map-${this.dataset.index}`);
-                  const pokemonLine = this.closest('.pokemon-task');
-                  if (mapImg.style.display === "none" || !mapImg.style.display) {
-                    mapImg.style.display = "block";
-                    this.textContent = "Ocultar Mapa";
-                    pokemonLine.classList.add("lightpurple");
-                  } else {
-                    mapImg.style.display = "none";
-                    this.textContent = "Mostrar Mapa";
-                    pokemonLine.classList.remove("lightpurple");
-                  }
-                });
-
-                mapContainer.appendChild(mapButton);
-                mapContainer.appendChild(mapImage);
-
-                pokemonDiv.appendChild(mapContainer);
-              }
-
-              taskListContainer.appendChild(pokemonDiv);
-            })
-            .catch((error) => console.error("Error fetching data from PokeAPI:", error));
-        });
-      }
+    if (pokemon.map && !/^x+\.png$/.test(pokemon.map) && !pokemon.task.includes('pesca')) {
+      const container = document.createElement('div');
+      container.className = 'map-container';
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'show-map-btn';
+      button.textContent = 'Mostrar Mapa';
+      button.setAttribute('aria-expanded', 'false');
+      const map = document.createElement('img');
+      map.className = 'map-image';
+      map.id = `map-${index}`;
+      map.alt = `Mapa de ${pokemon.name}`;
+      map.style.display = 'none';
+      map.decoding = 'async';
+      button.setAttribute('aria-controls', map.id);
+      button.addEventListener('click', () => {
+        const open = button.getAttribute('aria-expanded') !== 'true';
+        if (open && !map.getAttribute('src')) map.src = `/spawn-maps/${pokemon.map}`;
+        map.style.display = open ? 'block' : 'none';
+        button.textContent = open ? 'Ocultar Mapa' : 'Mostrar Mapa';
+        button.setAttribute('aria-expanded', String(open));
+        card.classList.toggle('lightpurple', open);
+      });
+      container.append(button, map);
+      card.appendChild(container);
     }
-
-    // Event listener for input changes in the search box
-    pokemonSearchInput.addEventListener("input", function () {
-      const query = this.value.trim(); // Trimmed value of the input
-      if (query.length > 0) {
-        renderFilteredResults(query);
-        clearSearchBtn.style.display = "inline-block"; // Show clear button
-      } else {
-        taskListContainer.innerHTML = ''; // Clear previous results
-        pokemonTasks.forEach((pokemon, index) => renderPokemonTask(pokemon, index)); // Render all Pokémon tasks again
-        clearSearchBtn.style.display = "none"; // Hide clear button
-      }
-    });
-
-    // Event listener for the clear search button
-    clearSearchBtn.addEventListener("click", function () {
-      pokemonSearchInput.value = ''; // Clear the search input field
-      taskListContainer.innerHTML = ''; // Clear previous results
-      pokemonTasks.forEach((pokemon, index) => renderPokemonTask(pokemon, index)); // Render all Pokémon tasks again
-      clearSearchBtn.style.display = "none"; // Hide clear button again
-    });
-
-    // Initial rendering of all Pokémon tasks
-    pokemonTasks.forEach((pokemon, index) => renderPokemonTask(pokemon, index));
-
-    // Function to render each Pokemon task
-    function renderPokemonTask(pokemon, index) {
-      fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name.toLowerCase()}`)
-        .then((response) => response.json())
-        .then((data) => {
-          const pokemonDiv = document.createElement("div");
-          pokemonDiv.classList.add("pokemon-task");
-
-          const img = document.createElement("img");
-          img.src = data.sprites.front_default;
-          img.alt = pokemon.name;
-          img.classList.add("pokemon-img");
-
-          const name = document.createElement("h3");
-          if (pokemon.task.includes("pesca")) {
-            name.style.color = "cornflowerblue";
-          }
-          name.textContent = pokemon.name;
-
-          const task = document.createElement("p");
-          task.textContent = pokemon.task;
-
-          pokemonDiv.appendChild(img);
-          pokemonDiv.appendChild(name);
-          pokemonDiv.appendChild(task);
-
-          // Only add the map container if the task does not involve fishing
-          if (!pokemon.task.includes("pesca")) {
-            const mapContainer = document.createElement("div");
-            mapContainer.classList.add("map-container");
-
-            const mapButton = document.createElement("button");
-            mapButton.textContent = "Mostrar Mapa";
-            mapButton.classList.add("show-map-btn");
-            mapButton.dataset.index = index;
-
-            const mapImage = document.createElement("img");
-            mapImage.src = `/spawn-maps/${pokemon.map}`;
-            mapImage.classList.add("map-image");
-            mapImage.id = `map-${index}`;
-            mapImage.style.display = "none"; // Ensure the image is hidden initially
-
-            mapButton.addEventListener("click", function () {
-              const mapImg = document.getElementById(`map-${this.dataset.index}`);
-              const pokemonLine = this.closest('.pokemon-task');
-              if (mapImg.style.display === "none" || !mapImg.style.display) {
-                mapImg.style.display = "block";
-                this.textContent = "Ocultar Mapa";
-                pokemonLine.classList.add("lightpurple");
-              } else {
-                mapImg.style.display = "none";
-                this.textContent = "Mostrar Mapa";
-                pokemonLine.classList.remove("lightpurple");
-              }
-            });
-
-            mapContainer.appendChild(mapButton);
-            mapContainer.appendChild(mapImage);
-
-            pokemonDiv.appendChild(mapContainer);
-          }
-
-          taskListContainer.appendChild(pokemonDiv);
-        })
-        .catch((error) => console.error("Error fetching data from PokeAPI:", error));
-    }
+    list.appendChild(card);
+    return { card, name: pokemon.name.toLowerCase() };
   });
+  const empty = document.createElement('div');
+  empty.className = 'error-message';
+  empty.hidden = true;
+  empty.setAttribute('role', 'status');
+  list.appendChild(empty);
+  function filter() {
+    const query = search.value.trim().toLowerCase();
+    let matches = 0;
+    cards.forEach(({ card, name }) => {
+      const visible = name.includes(query);
+      card.hidden = !visible;
+      // Existing card CSS sets display:flex; explicitly hide filtered cards.
+      card.style.display = visible ? '' : 'none';
+      if (visible) matches++;
+    });
+    empty.hidden = matches > 0;
+    empty.textContent = matches ? '' : `No se encontró ningún Pokémon cuyo nombre incluya ${search.value.trim()}. Intenta con otro nombre.`;
+    clear.style.display = query ? 'inline-block' : 'none';
+  }
+  search.addEventListener('input', filter);
+  clear.addEventListener('click', () => { search.value = ''; filter(); search.focus(); });
+  filter();
+});

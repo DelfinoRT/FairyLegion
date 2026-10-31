@@ -51,6 +51,16 @@ html,body{height:100%;margin:0;font-family: 'Courier New', Courier, monospace;ba
 .avatar-choice img{width:40px;height:40px;object-fit:contain;border-radius:6px;display:block}
 .avatar-choice.selected{outline:3px solid var(--accent);}
 
+/* Reserve profile space before avatars and starter thumbnails arrive. */
+#profileModal .modal-content{position:relative;width:min(640px,calc(100% - 24px));height:min(840px,calc(100dvh - 24px));min-width:0;overflow-y:auto}
+#profileModal .avatar-choices{height:192px;overflow-y:auto;align-content:flex-start}
+#profileModal .starter-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+#profileModal .starter-choice{height:64px;display:flex;align-items:center;justify-content:center;font-size:12px;min-width:0}
+@media(max-width:520px){#profileModal .starter-choices{grid-template-columns:repeat(2,minmax(0,1fr))}#profileModal .starter-choice img{flex-shrink:0}}
+#centerArea.depot-open{align-items:flex-start;overflow:auto}
+#depotRoot{min-width:0;width:100%}
+#depotRoot .depot-layout{flex-wrap:wrap}
+
 .starter-choices{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .starter-choice{padding:8px 10px;border-radius:6px;border:1px solid #ddd;background:#fff;cursor:pointer}
 .starter-choice.selected{outline:3px solid var(--accent)}

@@ -1,0 +1,24 @@
+{
+  "environment": "Local uncompressed HTTP, cold context per page, Chrome headless, 390x844, no CPU/network throttling, 4 second observation; external APIs live",
+  "results": [
+    {
+      "page": "index.html",
+      "longTasks": [],
+      "lcp": 188,
+      "cls": 0,
+      "shiftSources": [],
+      "domNodes": 235,
+      "images": 55,
+      "lazyImages": 53,
+      "resources": 19,
+      "localResourceBytes": 1375209,
+      "dcl": 67.59999999403954,
+      "proficiencyRows": 0,
+      "requests": 20,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    }
+  ]
+}

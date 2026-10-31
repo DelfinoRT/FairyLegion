@@ -398,6 +398,9 @@
             text-align: right;
         }
 
+        .explorer-pagination { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 12px 0; }
+        .explorer-pagination button { padding: 8px 14px; cursor: pointer; }
+        .explorer-pagination button:disabled { opacity: 0.5; cursor: default; }
         /* Pokemon tags in table */
         .pokemon-cell {
             max-width: 320px;
@@ -426,6 +429,9 @@
             font-weight: bold;
         }
         .pokemon-toggle {
+            background: transparent;
+            border: 0;
+            padding: 0;
             display: inline-block;
             margin-top: 4px;
             font-size: 11px;
@@ -943,7 +949,6 @@
     <script src="Proficiency.js"></script>
     <script src="scrollToTop.js"></script>
     <script src="script.js"></script>
-    <script src="pagination.js"></script>
 </body>
 
 </html>

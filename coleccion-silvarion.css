@@ -216,6 +216,7 @@ h1.glitch-title {
 
 .banner-silvarion-img {
   width: 100%;
+  height: auto;
   display: block;
   border: 2px solid rgba(33, 47, 30, 0.7);
   border-radius: 10px;
@@ -373,6 +374,7 @@ h1.glitch-title {
   gap: 7px;
   justify-content: center;
   justify-items: center;
+  min-height: 130px;
 }
 
 .silvarion-team-member {
@@ -1234,7 +1236,12 @@ body.serials-visible .pokemon-serial {
   }
 
   .silvarion-character-main {
-    min-height: 76px;
+    min-height: 208px;
+  }
+
+  .silvarion-team-grid {
+    min-height: 267px;
+    align-content: start;
   }
 
   .silvarion-character-embed-layout {

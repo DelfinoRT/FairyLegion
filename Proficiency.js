@@ -277,11 +277,13 @@ const browserState = {
     proficiency: {
         searchQuery: '',
         sortMode: 'id-asc',
+        page: 1,
         collapsed: false
     },
     pokemon: {
         searchQuery: '',
         sortMode: 'name-asc',
+        page: 1,
         expandedNames: new Set()
     }
 };
@@ -815,12 +817,24 @@ function isPokemonRowExpanded(name) {
 
 function togglePokemonRow(name) {
     const normalized = name.toLowerCase();
-    if (browserState.pokemon.expandedNames.has(normalized)) {
-        browserState.pokemon.expandedNames.delete(normalized);
-    } else {
-        browserState.pokemon.expandedNames.add(normalized);
+    const rowKey = getPokemonRowKey(name);
+    const row = Array.from(document.querySelectorAll('#pokemonTableBody .pokemon-result-row'))
+        .find(item => item.dataset.pokemonKey === rowKey);
+    if (!row) return;
+    const expanded = !isPokemonRowExpanded(name);
+    if (expanded) browserState.pokemon.expandedNames.add(normalized);
+    else browserState.pokemon.expandedNames.delete(normalized);
+    row.classList.toggle('expanded', expanded);
+    const button = row.querySelector('[data-pokemon-toggle]');
+    button.textContent = copyText(expanded ? 'pokemonHideDetails' : 'pokemonShowDetails');
+    button.setAttribute('aria-expanded', String(expanded));
+    if (!expanded) {
+        if (row.nextElementSibling?.classList.contains('pokemon-detail-row')) row.nextElementSibling.remove();
+        return;
     }
-    refreshPokemonTable();
+    const actualName = row.dataset.pokemonName;
+    const ids = pokemonProficiencyMap[actualName] || [];
+    row.insertAdjacentHTML('afterend', `<tr class="pokemon-detail-row" data-detail-for="${rowKey}"><td colspan="3">${buildPokemonProficiencyCell(actualName, ids, browserState.pokemon.searchQuery)}</td></tr>`);
 }
 
 function buildPokemonSearchIndex() {
@@ -859,31 +873,64 @@ function getCategoryBadge(catKey) {
     return `<span class="cat-badge ${cat.css}">${getCategoryLabel(catKey)}</span>`;
 }
 
+function pokemonTagsHtml(names, searchQuery) {
+    return names.map(name => `<span class="pokemon-tag${searchQuery && name.toLowerCase().includes(searchQuery) ? ' highlight' : ''}">${escapeHtml(name)}</span>`).join('');
+}
+
 function buildPokemonCell(pokemons, profId, searchQuery) {
     if (!pokemons.length) return '<span class="pokemon-none">—</span>';
-
-    const visibleCount = 5;
-    const tags = pokemons.map(name => {
-        const isMatch = searchQuery && name.toLowerCase().includes(searchQuery);
-        return `<span class="pokemon-tag${isMatch ? ' highlight' : ''}">${name}</span>`;
-    }).join('');
-
-    if (pokemons.length <= visibleCount) {
-        return `<div class="pokemon-tags">${tags}</div>`;
-    }
-
+    const tags = pokemonTagsHtml(pokemons.slice(0, 5), searchQuery);
+    if (pokemons.length <= 5) return `<div class="pokemon-tags">${tags}</div>`;
     return `<div class="pokemon-tags collapsed" id="ptags-${profId}">${tags}</div>` +
-           `<span class="pokemon-toggle" onclick="togglePokemonTags(${profId})">${pokemons.length} Pokémon ▾</span>`;
+        `<button type="button" class="pokemon-toggle" aria-expanded="false" aria-controls="ptags-${profId}" onclick="togglePokemonTags(${profId})">${pokemons.length} Pokémon ▾</button>`;
 }
 
 function togglePokemonTags(profId) {
     const el = document.getElementById('ptags-' + profId);
     if (!el) return;
-    const toggle = el.nextElementSibling;
-    const isCollapsed = el.classList.contains('collapsed');
-    el.classList.toggle('collapsed');
-    const count = el.children.length;
-    toggle.textContent = isCollapsed ? `${copyText('hide')} ▴` : `${count} Pokémon ▾`;
+    const expanded = el.classList.contains('collapsed');
+    const names = (typeof proficiencyPokemonMap !== 'undefined' && proficiencyPokemonMap[profId]) || [];
+    el.innerHTML = pokemonTagsHtml(expanded ? names : names.slice(0, 5), browserState.proficiency.searchQuery);
+    el.classList.toggle('collapsed', !expanded);
+    const button = el.nextElementSibling;
+    button.setAttribute('aria-expanded', String(expanded));
+    button.textContent = expanded ? `${copyText('hide')} ▴` : `${names.length} Pokémon ▾`;
+}
+
+const EXPLORER_PAGE_SIZE = 25;
+function paginateExplorer(data, kind, tbody, render) {
+    const state = browserState[kind];
+    const pages = Math.max(1, Math.ceil(data.length / EXPLORER_PAGE_SIZE));
+    state.page = Math.max(1, Math.min(state.page, pages));
+    let controls = document.getElementById(`${kind}-pagination`);
+    if (!controls) {
+        controls = document.createElement('nav');
+        controls.id = `${kind}-pagination`;
+        controls.className = 'explorer-pagination';
+        tbody.closest('table').parentElement.insertAdjacentElement('afterend', controls);
+    }
+    controls.setAttribute('aria-label', currentLanguage === 'en' ? 'Results pages' : 'Páginas de resultados');
+    controls.replaceChildren();
+    const previous = document.createElement('button');
+    previous.type = 'button';
+    previous.textContent = currentLanguage === 'en' ? 'Previous' : 'Anterior';
+    previous.disabled = state.page === 1;
+    const next = document.createElement('button');
+    next.type = 'button';
+    next.textContent = currentLanguage === 'en' ? 'Next' : 'Siguiente';
+    next.disabled = state.page === pages;
+    const status = document.createElement('span');
+    status.setAttribute('aria-live', 'polite');
+    status.textContent = `${currentLanguage === 'en' ? 'Page' : 'Página'} ${state.page} / ${pages}`;
+    function go(delta) {
+        state.page += delta;
+        render();
+        document.getElementById(`${kind}-pagination`).querySelector(delta < 0 ? 'button:first-child' : 'button:last-child').focus();
+    }
+    previous.addEventListener('click', () => go(-1));
+    next.addEventListener('click', () => go(1));
+    controls.append(previous, status, next);
+    return data.slice((state.page - 1) * EXPLORER_PAGE_SIZE, state.page * EXPLORER_PAGE_SIZE);
 }
 
 function getFilteredProficiencies(searchQuery) {
@@ -925,7 +972,11 @@ function renderProficiencyTable(data, searchQuery) {
 
     count.textContent = copyText('profCount')(data.length);
 
-    tbody.innerHTML = data.map(([id, desc, cat]) => {
+    const page = paginateExplorer(data, 'proficiency', tbody, () => {
+        const filtered = getFilteredProficiencies(browserState.proficiency.searchQuery);
+        renderProficiencyTable(sortProficiencies(filtered, browserState.proficiency.sortMode), browserState.proficiency.searchQuery);
+    });
+    tbody.innerHTML = page.map(([id, desc, cat]) => {
         const pokemons = (typeof proficiencyPokemonMap !== 'undefined' && proficiencyPokemonMap[id]) || [];
         const pokemonHtml = buildPokemonCell(pokemons, id, searchQuery);
         const { en, es } = splitDescription(desc);
@@ -1019,12 +1070,13 @@ function renderPokemonTable(rows, searchQuery) {
 
     count.textContent = copyText('pokemonCount')(rows.length);
 
+    const page = paginateExplorer(rows, 'pokemon', tbody, refreshPokemonTable);
     if (!rows.length) {
         tbody.innerHTML = `<tr><td colspan="3">${copyText('pokemonNoResults')}</td></tr>`;
         return;
     }
 
-    tbody.innerHTML = rows.map(row => {
+    tbody.innerHTML = page.map(row => {
         const expanded = isPokemonRowExpanded(row.name);
         const rowKey = getPokemonRowKey(row.name);
         const summaryHtml = getPokemonRowSummary(row.name, row.profIds);
@@ -1039,7 +1091,7 @@ function renderPokemonTable(rows, searchQuery) {
             <td>
                 <div class="pokemon-summary-row">
                     <div class="pokemon-summary-meta">${summaryHtml}</div>
-                    <button class="pokemon-toggle-row" type="button" data-pokemon-toggle="${rowKey}">${buttonLabel}</button>
+                    <button class="pokemon-toggle-row" type="button" aria-expanded="${expanded}" data-pokemon-toggle="${rowKey}">${buttonLabel}</button>
                 </div>
             </td>
         </tr>${detailRow}`;
@@ -1059,6 +1111,7 @@ function initProficiencyBrowser() {
 
     if (searchInput) {
         searchInput.addEventListener('input', function () {
+            browserState.proficiency.page = 1;
             browserState.proficiency.searchQuery = this.value.toLowerCase().trim();
             updateProficiencyUI();
         });
@@ -1066,6 +1119,7 @@ function initProficiencyBrowser() {
 
     if (clearBtn && searchInput) {
         clearBtn.addEventListener('click', function () {
+            browserState.proficiency.page = 1;
             browserState.proficiency.searchQuery = '';
             browserState.proficiency.sortMode = 'id-asc';
             searchInput.value = '';
@@ -1095,6 +1149,7 @@ function initPokemonBrowser() {
 
     if (searchInput) {
         searchInput.addEventListener('input', function () {
+            browserState.pokemon.page = 1;
             browserState.pokemon.searchQuery = this.value.toLowerCase().trim();
             schedulePokemonUpdate();
         });
@@ -1102,6 +1157,7 @@ function initPokemonBrowser() {
 
     if (sortInput) {
         sortInput.addEventListener('change', function () {
+            browserState.pokemon.page = 1;
             browserState.pokemon.sortMode = this.value;
             updatePokemonUI();
         });
@@ -1109,6 +1165,7 @@ function initPokemonBrowser() {
 
     if (clearBtn && searchInput && sortInput) {
         clearBtn.addEventListener('click', function () {
+            browserState.pokemon.page = 1;
             browserState.pokemon.searchQuery = '';
             browserState.pokemon.sortMode = 'name-asc';
             searchInput.value = '';

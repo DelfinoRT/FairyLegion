@@ -1,0 +1,427 @@
+{
+  "/BossRaids/BossRaids-Banner.png": {
+    "path": "optimized-images/BossRaids-Banner-42f461f0e6.webp",
+    "width": 1155,
+    "height": 178
+  },
+  "/BossRaids/PokeCatch.png": {
+    "path": "optimized-images/PokeCatch-dffcda3647.webp",
+    "width": 1447,
+    "height": 279
+  },
+  "/BossRaids/PokeDuel.png": {
+    "path": "optimized-images/PokeDuel-09f8bcb184.webp",
+    "width": 1583,
+    "height": 326
+  },
+  "/BossRaids/PokeLegion-Banner.png": {
+    "path": "optimized-images/PokeLegion-Banner-b3c6e91cb9.webp",
+    "width": 1622,
+    "height": 298
+  },
+  "/BugNet/BugNet-Banner.png": {
+    "path": "optimized-images/BugNet-Banner-0a2d0e4eb3.webp",
+    "width": 1155,
+    "height": 177
+  },
+  "/BugNet/arbolesyhierba.png": {
+    "path": "optimized-images/arbolesyhierba-b44ba634c2.webp",
+    "width": 1528,
+    "height": 179
+  },
+  "/BugNet/arbustos.png": {
+    "path": "optimized-images/arbustos-9ba2465e13.webp",
+    "width": 962,
+    "height": 177
+  },
+  "/DailyTasks.png": {
+    "path": "optimized-images/DailyTasks-18535fa55a.webp",
+    "width": 1936,
+    "height": 1145
+  },
+  "/EventosPAD/pikachucon2025.png": {
+    "path": "optimized-images/pikachucon2025-62d71a2285.webp",
+    "width": 1549,
+    "height": 1139
+  },
+  "/FL-logotype.png": {
+    "path": "optimized-images/FL-logotype-928cd3d865.webp",
+    "width": 968,
+    "height": 755
+  },
+  "/FLBazar-Banner.png": {
+    "path": "optimized-images/FLBazar-Banner-01d28d2423.webp",
+    "width": 1984,
+    "height": 376
+  },
+  "/FieryFisherRod/FieryFisherRod-Banner.png": {
+    "path": "optimized-images/FieryFisherRod-Banner-fa544de76b.webp",
+    "width": 1155,
+    "height": 177
+  },
+  "/GhostDetector/Ghost-Detector-Banner.png": {
+    "path": "optimized-images/Ghost-Detector-Banner-66939c4a7d.webp",
+    "width": 1959,
+    "height": 301
+  },
+  "/GhostDetector/GhostDetector-Locations.png": {
+    "path": "optimized-images/GhostDetector-Locations-fddf9e21aa.webp",
+    "width": 676,
+    "height": 394
+  },
+  "/IceHammer/IceBlocks.png": {
+    "path": "optimized-images/IceBlocks-af298250bb.webp",
+    "width": 629,
+    "height": 200
+  },
+  "/IceHammer/IceHammer.png": {
+    "path": "optimized-images/IceHammer-1ec57e1ec8.webp",
+    "width": 1155,
+    "height": 177
+  },
+  "/MagneticDetector/MagneticDetector-Banner.png": {
+    "path": "optimized-images/MagneticDetector-Banner-c83c8159f6.webp",
+    "width": 1156,
+    "height": 178
+  },
+  "/MagneticDetector/MagneticDetector-details.png": {
+    "path": "optimized-images/MagneticDetector-details-1ea408b897.webp",
+    "width": 952,
+    "height": 133
+  },
+  "/MagneticDetector/MagneticDetector-objects.png": {
+    "path": "optimized-images/MagneticDetector-objects-5c5e64919b.webp",
+    "width": 493,
+    "height": 190
+  },
+  "/PAD-Baits.png": {
+    "path": "optimized-images/PAD-Baits-f9a82cb749.webp",
+    "width": 902,
+    "height": 604
+  },
+  "/Pickaxe/LeadPickaxe.png": {
+    "path": "optimized-images/LeadPickaxe-689b050730.webp",
+    "width": 1155,
+    "height": 177
+  },
+  "/Pickaxe/rocksPickaxe.png": {
+    "path": "optimized-images/rocksPickaxe-165c87cb5e.webp",
+    "width": 1062,
+    "height": 256
+  },
+  "/Shedinja.png": {
+    "path": "optimized-images/Shedinja-f11a79c54e.webp",
+    "width": 2733,
+    "height": 3417
+  },
+  "/SrEko.png": {
+    "path": "optimized-images/SrEko-9af7c5bb3e.webp",
+    "width": 1832,
+    "height": 866
+  },
+  "/casa-donacion-1.png": {
+    "path": "optimized-images/casa-donacion-1-75ebb8d5de.webp",
+    "width": 2082,
+    "height": 1459
+  },
+  "/casa-donacion-2.png": {
+    "path": "optimized-images/casa-donacion-2-c81005c2e0.webp",
+    "width": 1351,
+    "height": 1459
+  },
+  "/elemental-grounds.png": {
+    "path": "optimized-images/elemental-grounds-e961ae9fe8.webp",
+    "width": 3174,
+    "height": 2839
+  },
+  "/fishin1.png": {
+    "path": "optimized-images/fishin1-92cdffaa36.webp",
+    "width": 1156,
+    "height": 177
+  },
+  "/guild-quests/AgasHell-Apr13-2025.png": {
+    "path": "optimized-images/AgasHell-Apr13-2025-33e6fa8501.webp",
+    "width": 1405,
+    "height": 1200
+  },
+  "/guild-quests/AmaDiancie.png": {
+    "path": "optimized-images/AmaDiancie-adbb41717f.webp",
+    "width": 1444,
+    "height": 1200
+  },
+  "/guild-quests/MasterRodNov1.png": {
+    "path": "optimized-images/MasterRodNov1-ee1ffbf611.webp",
+    "width": 1575,
+    "height": 1200
+  },
+  "/guild-quests/MasterRodNov2.png": {
+    "path": "optimized-images/MasterRodNov2-40ffab4b66.webp",
+    "width": 1524,
+    "height": 1200
+  },
+  "/guild-quests/MasterRodNov3.png": {
+    "path": "optimized-images/MasterRodNov3-8e6008f0c1.webp",
+    "width": 1353,
+    "height": 1200
+  },
+  "/guild-quests/MasterRodNov4.png": {
+    "path": "optimized-images/MasterRodNov4-e97d0a3a1e.webp",
+    "width": 1304,
+    "height": 1200
+  },
+  "/guild-quests/Oct14.png": {
+    "path": "optimized-images/Oct14-c7ff2e5ded.webp",
+    "width": 685,
+    "height": 542
+  },
+  "/guild-quests/Pan672025.png": {
+    "path": "optimized-images/Pan672025-e29e9cb7f1.webp",
+    "width": 1423,
+    "height": 1200
+  },
+  "/guild-quests/Pannihi287.png": {
+    "path": "optimized-images/Pannihi287-102bc569b9.webp",
+    "width": 915,
+    "height": 686
+  },
+  "/guild-quests/Pannihi2872.png": {
+    "path": "optimized-images/Pannihi2872-81dafb3ed1.webp",
+    "width": 916,
+    "height": 686
+  },
+  "/guild-quests/elemental17.png": {
+    "path": "optimized-images/elemental17-eec369c347.webp",
+    "width": 915,
+    "height": 687
+  },
+  "/guild-quests/elementalJul14.png": {
+    "path": "optimized-images/elementalJul14-53e561a748.webp",
+    "width": 1238,
+    "height": 1200
+  },
+  "/guild-quests/elements-edgar.png": {
+    "path": "optimized-images/elements-edgar-ea8e4a414d.webp",
+    "width": 1315,
+    "height": 1200
+  },
+  "/guild-quests/levy-magic fishing rod.png": {
+    "path": "optimized-images/levy-magic fishing rod-2bab228eef.webp",
+    "width": 1373,
+    "height": 1200
+  },
+  "/guild-quests/master-dragus.png": {
+    "path": "optimized-images/master-dragus-fb8d9ec069.webp",
+    "width": 1347,
+    "height": 1200
+  },
+  "/guild-quests/master-mickell.png": {
+    "path": "optimized-images/master-mickell-9d07d0c0d4.webp",
+    "width": 1195,
+    "height": 1200
+  },
+  "/guild-quests/master-vildh.png": {
+    "path": "optimized-images/master-vildh-daa465682d.webp",
+    "width": 1346,
+    "height": 1200
+  },
+  "/guild-quests/master-vzla.png": {
+    "path": "optimized-images/master-vzla-717418e4db.webp",
+    "width": 1252,
+    "height": 1200
+  },
+  "/guild-quests/nov1.png": {
+    "path": "optimized-images/nov1-2635141189.webp",
+    "width": 1600,
+    "height": 1177
+  },
+  "/guild-quests/nov2.png": {
+    "path": "optimized-images/nov2-c93e3953f7.webp",
+    "width": 1600,
+    "height": 1063
+  },
+  "/guild-quests/nov3.png": {
+    "path": "optimized-images/nov3-31f60cd891.webp",
+    "width": 1600,
+    "height": 1132
+  },
+  "/guild-quests/nov4.png": {
+    "path": "optimized-images/nov4-9cf4addb4a.webp",
+    "width": 1600,
+    "height": 1075
+  },
+  "/guild-quests/nov5.png": {
+    "path": "optimized-images/nov5-502ae18fd5.webp",
+    "width": 1600,
+    "height": 1003
+  },
+  "/guild-quests/nov6.png": {
+    "path": "optimized-images/nov6-82bea99341.webp",
+    "width": 1600,
+    "height": 1078
+  },
+  "/guild-quests/nov7.png": {
+    "path": "optimized-images/nov7-2544c16c7e.webp",
+    "width": 1600,
+    "height": 1117
+  },
+  "/guild-quests/oct12-2.png": {
+    "path": "optimized-images/oct12-2-f0dd2eacca.webp",
+    "width": 818,
+    "height": 634
+  },
+  "/guild-quests/oct12.png": {
+    "path": "optimized-images/oct12-7002cdeb2c.webp",
+    "width": 558,
+    "height": 474
+  },
+  "/guild-quests/panihi-vild-mickell.png": {
+    "path": "optimized-images/panihi-vild-mickell-db25b26b70.webp",
+    "width": 1279,
+    "height": 1200
+  },
+  "/guild-quests/pannihilator18junio2024.png": {
+    "path": "optimized-images/pannihilator18junio2024-638ef93265.webp",
+    "width": 1332,
+    "height": 1200
+  },
+  "/guild-quests/papoibotanera.png": {
+    "path": "optimized-images/papoibotanera-bdf3fb0502.webp",
+    "width": 1217,
+    "height": 1200
+  },
+  "/guild-quests/veno28Abr.png": {
+    "path": "optimized-images/veno28Abr-17bc1fbe4c.webp",
+    "width": 1354,
+    "height": 1200
+  },
+  "/malie-ghost-tower.png": {
+    "path": "optimized-images/malie-ghost-tower-271aca7d1b.webp",
+    "width": 4429,
+    "height": 1453
+  },
+  "/moneyPAD.png": {
+    "path": "optimized-images/moneyPAD-0bdd5e250d.webp",
+    "width": 1034,
+    "height": 308
+  },
+  "/respawns.png": {
+    "path": "optimized-images/respawns-c3bc2ccb7f.webp",
+    "width": 1156,
+    "height": 178
+  },
+  "/spawn-maps/Azumarill.png": {
+    "path": "optimized-images/Azumarill-f16b7fea5a.webp",
+    "width": 640,
+    "height": 465
+  },
+  "/spawn-maps/CardsIcon.png": {
+    "path": "optimized-images/CardsIcon-c858a99049.webp",
+    "width": 1769,
+    "height": 256
+  },
+  "/spawn-maps/FishyFishy.png": {
+    "path": "optimized-images/FishyFishy-933d75b088.webp",
+    "width": 1834,
+    "height": 428
+  },
+  "/spawn-maps/Golduck.png": {
+    "path": "optimized-images/Golduck-88738d68b0.webp",
+    "width": 640,
+    "height": 467
+  },
+  "/spawn-maps/Milotic.png": {
+    "path": "optimized-images/Milotic-5ae2da5fdf.webp",
+    "width": 640,
+    "height": 471
+  },
+  "/spawn-maps/NPCJames.png": {
+    "path": "optimized-images/NPCJames-fa2a413746.webp",
+    "width": 1640,
+    "height": 1050
+  },
+  "/spawn-maps/Slowking.png": {
+    "path": "optimized-images/Slowking-ef2d635cd1.webp",
+    "width": 640,
+    "height": 470
+  },
+  "/spawn-maps/Starmie.png": {
+    "path": "optimized-images/Starmie-65342c7ac7.webp",
+    "width": 640,
+    "height": 469
+  },
+  "/spawn-maps/Surskit.png": {
+    "path": "optimized-images/Surskit-e6823aa59c.webp",
+    "width": 631,
+    "height": 460
+  },
+  "/spawn-maps/TMs.png": {
+    "path": "optimized-images/TMs-c9eed1ab41.webp",
+    "width": 1155,
+    "height": 178
+  },
+  "/spawn-maps/dailybanner.png": {
+    "path": "optimized-images/dailybanner-fe6c80dec1.webp",
+    "width": 1156,
+    "height": 178
+  },
+  "/spawn-maps/tipsandtricks.png": {
+    "path": "optimized-images/tipsandtricks-0dd0d678c9.webp",
+    "width": 1155,
+    "height": 177
+  },
+  "/viridian-mankeys.png": {
+    "path": "optimized-images/viridian-mankeys-873be46f13.webp",
+    "width": 1931,
+    "height": 950
+  },
+  "ColeccionSilvarion/BannerSilvarion.png": {
+    "path": "optimized-images/BannerSilvarion-96b9501d4d.webp",
+    "width": 1600,
+    "height": 446
+  },
+  "ColeccionSilvarion/neme-icon2.png": {
+    "path": "optimized-images/neme-icon2-83ca0bc800.webp",
+    "width": 1091,
+    "height": 1531
+  },
+  "EventosPAD/halloween2024/danierin1.png": {
+    "path": "optimized-images/danierin1-fb24faa6be.webp",
+    "width": 776,
+    "height": 668
+  },
+  "EventosPAD/halloween2024/danierin2.png": {
+    "path": "optimized-images/danierin2-363d2463ff.webp",
+    "width": 776,
+    "height": 726
+  },
+  "PokeLegion/Items/coin.png": {
+    "path": "optimized-images/coin-07aff55972.webp",
+    "width": 1280,
+    "height": 1280
+  },
+  "PokeLegion/Items/gem.png": {
+    "path": "optimized-images/gem-ef5c9e1e10.webp",
+    "width": 750,
+    "height": 650
+  },
+  "flbazar-logo.png": {
+    "path": "optimized-images/flbazar-logo-9d9412e8dd.webp",
+    "width": 338,
+    "height": 338
+  },
+  "padventures/graphic_assets/hero-bottom.png": {
+    "path": "optimized-images/hero-bottom-649f514e13.webp",
+    "width": 1429,
+    "height": 750
+  },
+  "padventures/graphic_assets/hero-main.png": {
+    "path": "optimized-images/hero-main-ecba719c40.webp",
+    "width": 1600,
+    "height": 873
+  },
+  "spawn-maps/tmbg.png": {
+    "path": "optimized-images/tmbg-9713f06485.webp",
+    "width": 1305,
+    "height": 702
+  }
+}

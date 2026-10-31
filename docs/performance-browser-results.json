@@ -1,0 +1,288 @@
+{
+  "environment": "Local uncompressed HTTP, cold context per page, Chrome headless, 390x844, no CPU/network throttling, 4 second observation; external APIs live",
+  "results": [
+    {
+      "page": "index.html",
+      "longTasks": [],
+      "lcp": 244,
+      "cls": 0,
+      "domNodes": 244,
+      "images": 65,
+      "lazyImages": 0,
+      "resources": 78,
+      "localResourceBytes": 85421772,
+      "dcl": 136.7999999821186,
+      "proficiencyRows": 0,
+      "requests": 80,
+      "apiRequests": 0,
+      "errors": [
+        "Cannot set properties of null (setting 'textContent')"
+      ],
+      "failures": [
+        {
+          "url": "http://127.0.0.1:19519/PokeLegion/Pokemon/snorlax.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:19519/PokeLegion/Pokemon/mew.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:19519/PokeLegion/Pokemon/snorlax.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:19519/PokeLegion/Pokemon/mew.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:19519/PokeLegion/Pokemon/snorlax.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:19519/PokeLegion/Pokemon/mew.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:19519/PokeLegion/Pokemon/mew.png",
+          "status": 404
+        }
+      ],
+      "interactions": []
+    },
+    {
+      "page": "coleccion-silvarion.html",
+      "longTasks": [],
+      "lcp": 380,
+      "cls": 0.22149931922926822,
+      "domNodes": 2128,
+      "images": 726,
+      "lazyImages": 12,
+      "resources": 219,
+      "localResourceBytes": 6294947,
+      "dcl": 241.40000000596046,
+      "proficiencyRows": 0,
+      "requests": 222,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [
+        {
+          "url": "https://api.padventures.org/w/RZF8C9QcAiZZQJSRQckaXF",
+          "status": 403
+        }
+      ],
+      "interactions": []
+    },
+    {
+      "page": "coleccion-nemesis.html",
+      "longTasks": [],
+      "lcp": 312,
+      "cls": 0.131527638804419,
+      "domNodes": 551,
+      "images": 212,
+      "lazyImages": 0,
+      "resources": 87,
+      "localResourceBytes": 545433,
+      "dcl": 152.80000001192093,
+      "proficiencyRows": 0,
+      "requests": 90,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    },
+    {
+      "page": "Proficiency.html",
+      "longTasks": [
+        362
+      ],
+      "lcp": 184,
+      "cls": 0.047692953454981486,
+      "domNodes": 45297,
+      "images": 1,
+      "lazyImages": 0,
+      "resources": 11,
+      "localResourceBytes": 1574856,
+      "dcl": 202.5,
+      "proficiencyRows": 966,
+      "requests": 12,
+      "apiRequests": 0,
+      "errors": [
+        "Cannot read properties of null (reading 'addEventListener')"
+      ],
+      "failures": [],
+      "interactions": []
+    },
+    {
+      "page": "daily-tasks.html",
+      "longTasks": [],
+      "lcp": 56,
+      "cls": 0,
+      "domNodes": 322,
+      "images": 63,
+      "lazyImages": 0,
+      "resources": 97,
+      "localResourceBytes": 3530937,
+      "dcl": 44.099999994039536,
+      "proficiencyRows": 0,
+      "requests": 126,
+      "apiRequests": 60,
+      "errors": [],
+      "failures": [
+        {
+          "url": "http://127.0.0.1:19519/spawn-maps/xxx.png",
+          "status": 404
+        },
+        {
+          "url": "https://pokeapi.co/api/v2/pokemon/jellicent",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:19519/spawn-maps/",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:19519/spawn-maps/xxx.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:19519/spawn-maps/xxx.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:19519/spawn-maps/xxx.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:19519/spawn-maps/xx.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:19519/spawn-maps/xxx.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:19519/spawn-maps/xx.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:19519/spawn-maps/xxx.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:19519/spawn-maps/xx.png",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:19519/spawn-maps/",
+          "status": 404
+        },
+        {
+          "url": "http://127.0.0.1:19519/spawn-maps/xxx.png",
+          "status": 404
+        }
+      ],
+      "interactions": [
+        {
+          "action": "type ala",
+          "newRequests": 28,
+          "apiRequests": 24
+        }
+      ]
+    },
+    {
+      "page": "pesca.html",
+      "longTasks": [],
+      "lcp": 152,
+      "cls": 0.6681127719042411,
+      "domNodes": 749,
+      "images": 150,
+      "lazyImages": 0,
+      "resources": 152,
+      "localResourceBytes": 5427856,
+      "dcl": 102.89999997615814,
+      "proficiencyRows": 0,
+      "requests": 153,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    },
+    {
+      "page": "tms.html",
+      "longTasks": [],
+      "lcp": 48,
+      "cls": 0,
+      "domNodes": 309,
+      "images": 19,
+      "lazyImages": 0,
+      "resources": 27,
+      "localResourceBytes": 1682304,
+      "dcl": 45.69999998807907,
+      "proficiencyRows": 0,
+      "requests": 28,
+      "apiRequests": 0,
+      "errors": [
+        "Cannot read properties of null (reading 'addEventListener')"
+      ],
+      "failures": [],
+      "interactions": []
+    },
+    {
+      "page": "BossRaids.html",
+      "longTasks": [],
+      "lcp": 100,
+      "cls": 0,
+      "domNodes": 132,
+      "images": 1,
+      "lazyImages": 0,
+      "resources": 8,
+      "localResourceBytes": 176797,
+      "dcl": 78.2000000178814,
+      "proficiencyRows": 0,
+      "requests": 9,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    },
+    {
+      "page": "PokeLegion.html",
+      "longTasks": [
+        65
+      ],
+      "lcp": 188,
+      "cls": 0.5004094802172009,
+      "domNodes": 298,
+      "images": 31,
+      "lazyImages": 0,
+      "resources": 53,
+      "localResourceBytes": 3859236,
+      "dcl": 108.60000002384186,
+      "proficiencyRows": 0,
+      "requests": 53,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    },
+    {
+      "page": "PokeDuel.html",
+      "longTasks": [],
+      "lcp": 48,
+      "cls": 0,
+      "domNodes": 189,
+      "images": 2,
+      "lazyImages": 0,
+      "resources": 2,
+      "localResourceBytes": 125550,
+      "dcl": 46.69999998807907,
+      "proficiencyRows": 0,
+      "requests": 3,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    }
+  ]
+}

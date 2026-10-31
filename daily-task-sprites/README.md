@@ -1,0 +1,1 @@
+Sprites vendored from https://github.com/PokeAPI/sprites (sprites/pokemon/<national-id>.png), 31 October 2026. Pokémon and character designs belong to their respective owners. These are the same default front sprites previously retrieved through PokeAPI; hosting them locally removes runtime API dependence.

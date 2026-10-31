@@ -1655,6 +1655,7 @@ function showTasksModal(){
 		});
 	}
 	let timerInt = null;
+	let lockTimerInt = null;
 	// start interval only after list is populated
 	const activeTasks = Array.isArray(player.tasks) ? player.tasks : [];
 	const maxSelected = activeTasks.length >= 2;
@@ -1666,7 +1667,7 @@ function showTasksModal(){
 				const remain = DAY_MS - elapsed; const sec = Math.floor(remain/1000); const h = Math.floor(sec/3600); const m = Math.floor((sec%3600)/60); const s = sec%60;
 				const lockNotice = document.createElement('div'); lockNotice.style.fontSize='11px'; lockNotice.style.fontWeight='600'; lockNotice.style.color='#a33'; lockNotice.style.margin='4px 0 8px 0'; lockNotice.textContent = `Selection locked: ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')} until new picks`; box.appendChild(lockNotice);
 				// update every second
-				setInterval(()=>{ const now2 = Date.now(); const el2 = lockNotice; if(!el2) return; const elapsed2 = now2 - player.tasksCycleStartedAt; if(elapsed2 >= DAY_MS){ el2.textContent = 'Selection window ended.'; el2.style.color = '#2a572a'; return; } const remain2 = DAY_MS - elapsed2; const sec2 = Math.floor(remain2/1000); const h2 = Math.floor(sec2/3600); const m2 = Math.floor((sec2%3600)/60); const s2 = sec2%60; el2.textContent = `Selection locked: ${h2.toString().padStart(2,'0')}:${m2.toString().padStart(2,'0')}:${s2.toString().padStart(2,'0')} until new picks`; }, 1000);
+				lockTimerInt = setInterval(()=>{ const now2 = Date.now(); const el2 = lockNotice; if(!el2) return; const elapsed2 = now2 - player.tasksCycleStartedAt; if(elapsed2 >= DAY_MS){ el2.textContent = 'Selection window ended.'; el2.style.color = '#2a572a'; return; } const remain2 = DAY_MS - elapsed2; const sec2 = Math.floor(remain2/1000); const h2 = Math.floor(sec2/3600); const m2 = Math.floor((sec2%3600)/60); const s2 = sec2%60; el2.textContent = `Selection locked: ${h2.toString().padStart(2,'0')}:${m2.toString().padStart(2,'0')}:${s2.toString().padStart(2,'0')} until new picks`; }, 1000);
 			}
 		}
 	})();
@@ -1700,11 +1701,13 @@ function showTasksModal(){
 	// Kick off timers now that list (and potential rows) exist
 	updatePerTaskTimers();
 	timerInt = setInterval(()=>{ updateTimer(); updatePerTaskTimers(); }, 1000);
-	// clear timer on close
-	box.addEventListener('remove', ()=>{ try{ clearInterval(timerInt); }catch(e){} });
-	const close = document.createElement('button'); close.className='btn secondary'; close.textContent='Close'; close.style.marginTop='12px'; close.addEventListener('click', ()=>{ overlay.remove(); renderTasks(); }); box.appendChild(close);
-	// ensure interval cleared when overlay removed
-	overlay.addEventListener('remove', ()=>{ try{ clearInterval(timerInt); }catch(e){} });
+	function closeTasks() {
+		clearInterval(timerInt);
+		clearInterval(lockTimerInt);
+		overlay.remove();
+		renderTasks();
+	}
+	const close = document.createElement('button'); close.className='btn secondary'; close.textContent='Close'; close.style.marginTop='12px'; close.addEventListener('click', closeTasks); box.appendChild(close);
 	overlay.appendChild(box); document.body.appendChild(overlay);
 }
 
@@ -2337,9 +2340,6 @@ function updatePartySlot(idx){
 			box.appendChild(progWrap); box.appendChild(lbl);
 
 			overlay.appendChild(box); document.body.appendChild(overlay);
-			// Trigger initial grid column adjustment now that modal is in the DOM
-			try{ if(depotCol && depotCol._adjustDepotGridColumns) depotCol._adjustDepotGridColumns(); }catch(e){}
-
 			const start = Date.now(); const end = start + durationMs;
 			const tick = 150; // ms
 			const timer = setInterval(()=>{
@@ -3690,26 +3690,7 @@ function showDepot(){
 		});
 		if(!any){ const em = document.createElement('div'); em.style.color='var(--muted)'; em.style.padding = '8px'; em.textContent='No Pokémon match your search/filters.'; gridWrap.appendChild(em); } else gridWrap.appendChild(grid);
 		depotCol.appendChild(gridWrap);
-		// expose a hook to recalc columns once the modal is in the DOM
-		try{
-			// small helper: compute number of columns based on available width and min column size
-			const adjustDepotGridColumns = function(){
-				try{
-					const wrap = depotCol.querySelector('.pl-depot-grid-wrap');
-					const g = depotCol.querySelector('.pl-depot-grid');
-					if(!wrap || !g) return;
-					const w = wrap.clientWidth || wrap.getBoundingClientRect().width || 0;
-					// choose a sensible minimum column width (matches grid minmax min)
-					const minCol = 140;
-					const cols = Math.max(1, Math.floor(Math.max(1, w) / minCol));
-					g.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-				}catch(e){}
-			};
-			// call once after render; a resize listener will keep it responsive
-			window.addEventListener('resize', adjustDepotGridColumns);
-			// store on depotCol so we can clean up when closing the modal
-			depotCol._adjustDepotGridColumns = adjustDepotGridColumns;
-		}catch(e){}
+
 	}
 
 	renderPartyList(); renderControls(); renderDepotList();
@@ -3721,8 +3702,6 @@ function hideDepot(){
 	const root = document.getElementById('depotRoot'); if(root && root.parentNode) root.parentNode.removeChild(root);
 	const mapAreaEl = document.getElementById('mapArea'); if(mapAreaEl) mapAreaEl.style.display='';
 	const center = document.getElementById('centerArea'); if(center && center.classList.contains('depot-open')) center.classList.remove('depot-open');
-	// remove resize listener if stored
-	try{ const depotCol = document.querySelector('#depotRoot .depot-main-col'); if(depotCol && depotCol._adjustDepotGridColumns) window.removeEventListener('resize', depotCol._adjustDepotGridColumns); }catch(e){}
 	// re-render panels/map
 	try{ renderMap(); renderPlayer(); updatePanels(); }catch(e){}
 	updateFeatureToggleButtons();

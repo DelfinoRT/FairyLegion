@@ -18,6 +18,9 @@ const COLLAPSE_EASING = 'cubic-bezier(0.2, 0.75, 0.2, 1)';
   const defaultColor = '#8000ff';
   let pollTimerId = 0;
   let lastEtag = '';
+  let pollUrl = '';
+  let polling = false;
+  let pollDelay = 15000;
   let teamLoadAttempt = 0;
   let teamRetryTimerId = 0;
 
@@ -92,20 +95,29 @@ const COLLAPSE_EASING = 'cubic-bezier(0.2, 0.75, 0.2, 1)';
     }
 
     if (typeof state.poll === 'string' && state.poll.trim()) {
-      const pollUrl = new URL(state.poll, endpoint).toString();
-      if (!pollTimerId) {
-        pollTimerId = window.setInterval(() => {
-          fetchStateFromJson(pollUrl)
-            .then((nextState) => {
-              if (nextState) applyState(nextState);
-            })
-            .catch(() => {
-              // Ignore transient polling failures.
-            });
-        }, 15000);
-      }
+      pollUrl = new URL(state.poll, endpoint).toString();
+      schedulePoll();
     }
   };
+
+  function schedulePoll() {
+    clearTimeout(pollTimerId);
+    if (!pollUrl || document.hidden || polling) return;
+    pollTimerId = window.setTimeout(async () => {
+      polling = true;
+      try {
+        const nextState = await fetchStateFromJson(pollUrl);
+        if (nextState) applyState(nextState);
+        pollDelay = 15000;
+      } catch {
+        pollDelay = Math.min(pollDelay * 2, 120000);
+      } finally {
+        polling = false;
+        schedulePoll();
+      }
+    }, pollDelay);
+  }
+  document.addEventListener('visibilitychange', schedulePoll);
 
   const fetchStateFromJson = async (url) => {
     const headers = {};
@@ -113,7 +125,7 @@ const COLLAPSE_EASING = 'cubic-bezier(0.2, 0.75, 0.2, 1)';
       headers['If-None-Match'] = lastEtag;
     }
 
-    const response = await fetch(url, { headers, cache: 'no-store' });
+    const response = await fetch(url, { headers, cache: 'no-store', signal: AbortSignal.timeout(10000) });
     if (response.status === 304) return null;
     if (!response.ok) throw new Error(`Request failed with status ${response.status}`);
 
@@ -148,7 +160,7 @@ const COLLAPSE_EASING = 'cubic-bezier(0.2, 0.75, 0.2, 1)';
     }
 
     try {
-      const response = await fetch(endpoint, { cache: 'no-store' });
+      const response = await fetch(endpoint, { cache: 'no-store', signal: AbortSignal.timeout(10000) });
       if (!response.ok) throw new Error(`Request failed with status ${response.status}`);
 
       const html = await response.text();
@@ -195,7 +207,7 @@ const COLLAPSE_EASING = 'cubic-bezier(0.2, 0.75, 0.2, 1)';
   };
 
   const fetchText = async (url) => {
-    const response = await fetch(url, { cache: 'no-store' });
+    const response = await fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(10000) });
     if (!response.ok) throw new Error(`Request failed with status ${response.status}`);
 
     return response.text();
@@ -413,75 +425,8 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
   const cards = Array.from(document.querySelectorAll('.collection-section .pokemon-card'));
   if (cards.length === 0) return;
 
-  const typeDataSources = [
-    'PokeDuel-Script.js',
-    'BugNet.js',
-    'FieryFisherRod.js',
-    'GhostDetector.js',
-    'IceHammer.js',
-    'LeadPickaxe.js',
-    'MagneticDetector.js',
-  ];
   const typeIconBasePath = 'ColeccionSilvarion';
-  const typeEntryPattern = /\{\s*name:\s*"([^"]+)"[\s\S]{0,320}?types:\s*\[([^\]]+)\]/g;
-  const quotedValuePattern = /"([^"]+)"/g;
   const prefixPattern = /^(shiny|elite|cloned|red|shadow|crystal|golden|alpha|mega|armored|dark|light|ancient)\s+/i;
-  const fallbackTypeEntries = {
-    'shiny marshadow': ['Fighting', 'Ghost'],
-    'cloned alomomola': ['Water'],
-    'shiny feraligatr': ['Water'],
-    'walking wake': ['Water', 'Dragon'],
-    'ashs greninja': ['Water', 'Dark'],
-    'cloned vaporeon': ['Water'],
-    'cloned kingler': ['Water'],
-    'shiny corsola': ['Water', 'Rock'],
-    'champion poliwrath': ['Water', 'Fighting'],
-    'shiny finizen': ['Water'],
-    'shiny palafin': ['Water'],
-    'shiny politoed': ['Water'],
-    'shiny big magikarp': ['Water'],
-    'shiny araquanid': ['Water', 'Bug'],
-    'shiny ceruledge': ['Fire', 'Ghost'],
-    'cloned ninetales': ['Fire'],
-    'iron hands': ['Fighting', 'Electric'],
-    'elder charizard': ['Fire', 'Flying'],
-    'gouging fire': ['Fire', 'Dragon'],
-    'cloned hitmonchan': ['Fighting'],
-    'cloned hitmonlee': ['Fighting'],
-    'cloned hitmontop': ['Fighting'],
-    'cloned primeape': ['Fighting'],
-    'cloned flareon': ['Fire'],
-    'shiny grapploct': ['Fighting'],
-    'shiny mr mime': ['Psychic', 'Fairy'],
-    'shiny exeggutor': ['Grass', 'Psychic'],
-    'shiny klefki': ['Steel', 'Fairy'],
-    'shiny chimeco': ['Psychic'],
-    'diancie': ['Rock', 'Fairy'],
-    'shiny enamorus': ['Fairy', 'Flying'],
-    'scream tail': ['Fairy', 'Psychic'],
-    'cloned claydol': ['Ground', 'Psychic'],
-    'shiny slurpuff': ['Fairy'],
-    'carbink': ['Rock', 'Fairy'],
-    'shiny clefable': ['Fairy'],
-    'cloned chansey': ['Normal'],
-    'shiny cetitan': ['Ice'],
-    'shiny chien-pao': ['Dark', 'Ice'],
-    'cloned dewong': ['Water', 'Ice'],
-    'cloned hypno': ['Psychic'],
-    'melmetal': ['Steel'],
-    'shiny umbreon': ['Dark'],
-    'roaring moon': ['Dragon', 'Dark'],
-    'shiny mightyena': ['Dark'],
-    'zarude': ['Dark', 'Grass'],
-    'shiny shedinja': ['Bug', 'Ghost'],
-    'shiny sunflora': ['Grass'],
-    'shiny corviknight': ['Flying', 'Steel'],
-    'shiny zeraora': ['Electric'],
-    'zeraora': ['Electric'],
-    'cloned togepi': ['Fairy'],
-    'hisuian decidueye': ['Grass', 'Fighting'],
-  };
-
   const normalizeName = (value) => value
     .toLowerCase()
     .replace(/\./g, '')
@@ -505,25 +450,6 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
     return Array.from(candidates);
   };
 
-  const parseTypesFromSource = (sourceText) => {
-    const nextEntries = new Map();
-    let match = typeEntryPattern.exec(sourceText);
-
-    while (match) {
-      const [, rawName, rawTypes] = match;
-      const types = Array.from(rawTypes.matchAll(quotedValuePattern)).map((entry) => entry[1].trim());
-
-      if (rawName && types.length > 0) {
-        nextEntries.set(normalizeName(rawName), types);
-      }
-
-      match = typeEntryPattern.exec(sourceText);
-    }
-
-    typeEntryPattern.lastIndex = 0;
-    return nextEntries;
-  };
-
   const createTypeIcon = (type) => {
     const typeIcon = document.createElement('img');
     const normalizedType = type.toLowerCase();
@@ -531,6 +457,8 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
     typeIcon.className = 'type-icon';
     typeIcon.setAttribute('src', `${typeIconBasePath}/type-${normalizedType}.png`);
     typeIcon.setAttribute('alt', type);
+    typeIcon.loading = 'lazy';
+    typeIcon.decoding = 'async';
 
     return typeIcon;
   };
@@ -595,31 +523,14 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
     });
   };
 
-  Promise.all(
-    typeDataSources.map((path) => fetch(path).then((response) => (response.ok ? response.text() : '')).catch(() => ''))
-  )
-    .then((sources) => {
-      const typeMap = new Map();
-
-      sources.forEach((sourceText) => {
-        parseTypesFromSource(sourceText).forEach((types, name) => {
-          if (!typeMap.has(name)) {
-            typeMap.set(name, types);
-          }
-        });
-      });
-
-      Object.entries(fallbackTypeEntries).forEach(([name, types]) => {
-        if (!typeMap.has(name)) {
-          typeMap.set(name, types);
-        }
-      });
-
-      applyTypesToCards(typeMap);
+  fetch('pokemon-types.json')
+    .then(response => {
+      if (!response.ok) throw new Error('Could not load Pokémon types');
+      return response.json();
     })
-    .catch(() => {
-      // Leave cards unchanged if local type sources are unavailable.
-    });
+    .then(entries => applyTypesToCards(new Map(Object.entries(entries))))
+    .catch(() => applyTypesToCards(new Map()));
+
 })();
 
 (function setupPokemonHoverPreview() {

@@ -1,6 +1,7 @@
 // flag.js
 document.addEventListener('DOMContentLoaded', function() {
   const flagElement = document.getElementById('floating-lgbt-flag');
+  if (!flagElement) return;
   const message = "Danierin representante de la comunidad LGBT, la guild te apoya chica!";
   flagElement.textContent = message; // Set the text content
 

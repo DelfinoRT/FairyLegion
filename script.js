@@ -18,6 +18,7 @@ window.addEventListener('resize', function() {
 
 window.addEventListener('scroll', function() {
     const backToTopBtn = document.getElementById('back-to-top');
+    if (!backToTopBtn) return;
     if (window.pageYOffset > 100) {
         backToTopBtn.style.display = 'block';
     } else {
@@ -53,7 +54,7 @@ function sprinkleFairyDust() {
     }
 }
 
-setInterval(sprinkleFairyDust, 500);
+
 
 function createStary() {
     const star = document.createElement('div');
@@ -76,7 +77,20 @@ function sprinkleFairyDusty() {
     }
 }
 
-setInterval(sprinkleFairyDusty, 500);
+// Decorative work is suspended in background tabs and for reduced motion.
+(function setupFairyDust() {
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let timer;
+    function sync() {
+        clearInterval(timer);
+        if (!document.hidden && !motion.matches) {
+            timer = setInterval(() => { sprinkleFairyDust(); sprinkleFairyDusty(); }, 500);
+        }
+    }
+    document.addEventListener('visibilitychange', sync);
+    motion.addEventListener('change', sync);
+    sync();
+})();
 
 (function enableFloatingEventsDrag() {
     const floatingEvents = document.querySelector('.floating-events');
@@ -472,7 +486,7 @@ if (pokemonGrid && pokemonInfoPanel) {
         card.className = 'pokemon-grid-card';
         card.dataset.name = name;
         card.innerHTML = `
-            <img src="${pokemonImages[name] || placeholderSprite}" alt="${name}">
+            <img loading="lazy" decoding="async" width="72" height="72" src="${pokemonImages[name] || placeholderSprite}" alt="${name}">
             <span class="pokemon-grid-name">${name}</span>
         `;
 

@@ -1,0 +1,837 @@
+{
+  "pages": [
+    {
+      "page": "index.html",
+      "images": 55,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 87656643,
+      "largest": [
+        {
+          "file": "guild-quests\\DiancieCatch.gif",
+          "bytes": 10110058
+        },
+        {
+          "file": "guild-quests\\AmaDiancie.png",
+          "bytes": 4069910
+        },
+        {
+          "file": "guild-quests\\nov3.png",
+          "bytes": 3425234
+        },
+        {
+          "file": "guild-quests\\nov6.png",
+          "bytes": 3377760
+        },
+        {
+          "file": "guild-quests\\nov7.png",
+          "bytes": 3308385
+        }
+      ]
+    },
+    {
+      "page": "guia-inicial.html",
+      "images": 28,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 8080173,
+      "largest": [
+        {
+          "file": "DailyTasks.png",
+          "bytes": 2461699
+        },
+        {
+          "file": "mininggif.gif",
+          "bytes": 1933396
+        },
+        {
+          "file": "capturing.gif",
+          "bytes": 1732287
+        },
+        {
+          "file": "SrEko.png",
+          "bytes": 642662
+        },
+        {
+          "file": "viridian-mankeys.png",
+          "bytes": 513087
+        }
+      ]
+    },
+    {
+      "page": "coleccion-silvarion.html",
+      "images": 410,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 6050517,
+      "largest": [
+        {
+          "file": "ColeccionSilvarion\\BannerSilvarion.png",
+          "bytes": 5091303
+        },
+        {
+          "file": "ColeccionSilvarion\\silva-icon.png",
+          "bytes": 48831
+        },
+        {
+          "file": "coleccion-silvarion.js",
+          "bytes": 31875
+        },
+        {
+          "file": "coleccion-silvarion.css",
+          "bytes": 30757
+        },
+        {
+          "file": "ColeccionSilvarion\\gougingFire.gif",
+          "bytes": 16510
+        }
+      ]
+    },
+    {
+      "page": "pesca.html",
+      "images": 25,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 4918195,
+      "largest": [
+        {
+          "file": "spawn-maps\\NPCJames.png",
+          "bytes": 936758
+        },
+        {
+          "file": "spawn-maps\\Starmie.png",
+          "bytes": 582240
+        },
+        {
+          "file": "spawn-maps\\Golduck.png",
+          "bytes": 549658
+        },
+        {
+          "file": "spawn-maps\\Slowking.png",
+          "bytes": 524435
+        },
+        {
+          "file": "spawn-maps\\Milotic.png",
+          "bytes": 514469
+        }
+      ]
+    },
+    {
+      "page": "guias-consejos.html",
+      "images": 16,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 4122918,
+      "largest": [
+        {
+          "file": "GhostDetector\\Ghost-Detector-Banner.png",
+          "bytes": 560962
+        },
+        {
+          "file": "spawn-maps\\tipsandtricks.png",
+          "bytes": 375411
+        },
+        {
+          "file": "spawn-maps\\TMs.png",
+          "bytes": 358420
+        },
+        {
+          "file": "FieryFisherRod\\FieryFisherRod-Banner.png",
+          "bytes": 349537
+        },
+        {
+          "file": "moneyPAD.png",
+          "bytes": 333305
+        }
+      ]
+    },
+    {
+      "page": "FieryFisherRod.html",
+      "images": 10,
+      "lazy": 0,
+      "sized": 9,
+      "directLocalBytes": 3495174,
+      "largest": [
+        {
+          "file": "FieryFisherRod\\lava.gif",
+          "bytes": 3144827
+        },
+        {
+          "file": "fl-boton.png",
+          "bytes": 87080
+        },
+        {
+          "file": "FieryFisherRod\\AlcremieDessert.png",
+          "bytes": 52876
+        },
+        {
+          "file": "FieryFisherRod\\FieryFisherRod.png",
+          "bytes": 51330
+        },
+        {
+          "file": "script.js",
+          "bytes": 27381
+        }
+      ]
+    },
+    {
+      "page": "eventos.html",
+      "images": 4,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 2525844,
+      "largest": [
+        {
+          "file": "EventosPAD\\halloween2024\\danierin2.png",
+          "bytes": 1234647
+        },
+        {
+          "file": "EventosPAD\\halloween2024\\danierin1.png",
+          "bytes": 1090662
+        },
+        {
+          "file": "fl-boton.png",
+          "bytes": 87080
+        },
+        {
+          "file": "eventos-banner.png",
+          "bytes": 66887
+        },
+        {
+          "file": "script.js",
+          "bytes": 27381
+        }
+      ]
+    },
+    {
+      "page": "tipstricks.html",
+      "images": 2,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 1865253,
+      "largest": [
+        {
+          "file": "Shedinja.png",
+          "bytes": 1725024
+        },
+        {
+          "file": "fl-boton.png",
+          "bytes": 87080
+        },
+        {
+          "file": "script.js",
+          "bytes": 27381
+        },
+        {
+          "file": "styles.css",
+          "bytes": 18146
+        },
+        {
+          "file": "nursery-level-calc.js",
+          "bytes": 4004
+        }
+      ]
+    },
+    {
+      "page": "Proficiency.html",
+      "images": 1,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 1564038,
+      "largest": [
+        {
+          "file": "pokemon-proficiency-level-data.js",
+          "bytes": 783390
+        },
+        {
+          "file": "proficiency-pokemon-data.js",
+          "bytes": 553274
+        },
+        {
+          "file": "Proficiency.js",
+          "bytes": 90614
+        },
+        {
+          "file": "fl-boton.png",
+          "bytes": 87080
+        },
+        {
+          "file": "script.js",
+          "bytes": 27381
+        }
+      ]
+    },
+    {
+      "page": "daily-tasks.html",
+      "images": 2,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 951105,
+      "largest": [
+        {
+          "file": "elemental-grounds.png",
+          "bytes": 806403
+        },
+        {
+          "file": "fl-boton.png",
+          "bytes": 87080
+        },
+        {
+          "file": "script.js",
+          "bytes": 27381
+        },
+        {
+          "file": "styles.css",
+          "bytes": 18146
+        },
+        {
+          "file": "daily-tasks.js",
+          "bytes": 12095
+        }
+      ]
+    },
+    {
+      "page": "BugNet.html",
+      "images": 16,
+      "lazy": 0,
+      "sized": 15,
+      "directLocalBytes": 814036,
+      "largest": [
+        {
+          "file": "BugNet\\arbolesyhierba.png",
+          "bytes": 332205
+        },
+        {
+          "file": "BugNet\\arbustos.png",
+          "bytes": 227004
+        },
+        {
+          "file": "fl-boton.png",
+          "bytes": 87080
+        },
+        {
+          "file": "BugNet\\BugNet.png",
+          "bytes": 60551
+        },
+        {
+          "file": "script.js",
+          "bytes": 27381
+        }
+      ]
+    },
+    {
+      "page": "LeadPickaxe.html",
+      "images": 12,
+      "lazy": 0,
+      "sized": 10,
+      "directLocalBytes": 720982,
+      "largest": [
+        {
+          "file": "Pickaxe\\rocksPickaxe.png",
+          "bytes": 431485
+        },
+        {
+          "file": "fl-boton.png",
+          "bytes": 87080
+        },
+        {
+          "file": "Pickaxe\\LeadPickaxe-detail.png",
+          "bytes": 84354
+        },
+        {
+          "file": "script.js",
+          "bytes": 27381
+        },
+        {
+          "file": "styles.css",
+          "bytes": 18146
+        }
+      ]
+    },
+    {
+      "page": "GhostDetector.html",
+      "images": 8,
+      "lazy": 0,
+      "sized": 6,
+      "directLocalBytes": 697650,
+      "largest": [
+        {
+          "file": "GhostDetector\\GhostDetector-Locations.png",
+          "bytes": 521986
+        },
+        {
+          "file": "fl-boton.png",
+          "bytes": 87080
+        },
+        {
+          "file": "script.js",
+          "bytes": 27381
+        },
+        {
+          "file": "styles.css",
+          "bytes": 18146
+        },
+        {
+          "file": "GhostDetector.js",
+          "bytes": 15585
+        }
+      ]
+    },
+    {
+      "page": "PokeLegion.html",
+      "images": 2,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 638407,
+      "largest": [
+        {
+          "file": "PokeLegion\\Items\\coin.png",
+          "bytes": 232297
+        },
+        {
+          "file": "PokeLegion.js",
+          "bytes": 222782
+        },
+        {
+          "file": "PokeLegion\\Items\\gem.png",
+          "bytes": 153255
+        },
+        {
+          "file": "PokeLegion.css",
+          "bytes": 30073
+        }
+      ]
+    },
+    {
+      "page": "MagneticDetector.html",
+      "images": 13,
+      "lazy": 0,
+      "sized": 9,
+      "directLocalBytes": 575342,
+      "largest": [
+        {
+          "file": "MagneticDetector\\MagneticDetector-objects.png",
+          "bytes": 265258
+        },
+        {
+          "file": "MagneticDetector\\MagneticDetector-details.png",
+          "bytes": 116589
+        },
+        {
+          "file": "fl-boton.png",
+          "bytes": 87080
+        },
+        {
+          "file": "script.js",
+          "bytes": 27381
+        },
+        {
+          "file": "MagneticDetector.js",
+          "bytes": 21134
+        }
+      ]
+    },
+    {
+      "page": "coleccion-nemesis.html",
+      "images": 158,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 535379,
+      "largest": [
+        {
+          "file": "ColeccionSilvarion\\neme-icon2.png",
+          "bytes": 117871
+        },
+        {
+          "file": "ColeccionSilvarion\\neme-icon1.png",
+          "bytes": 86174
+        },
+        {
+          "file": "coleccion-nemesis.css",
+          "bytes": 30856
+        },
+        {
+          "file": "coleccion-nemesis.js",
+          "bytes": 19678
+        },
+        {
+          "file": "ColeccionSilvarion\\shinyDitto.gif",
+          "bytes": 18561
+        }
+      ]
+    },
+    {
+      "page": "IceHammer.html",
+      "images": 12,
+      "lazy": 0,
+      "sized": 10,
+      "directLocalBytes": 490788,
+      "largest": [
+        {
+          "file": "IceHammer\\IceBlocks.png",
+          "bytes": 206647
+        },
+        {
+          "file": "fl-boton.png",
+          "bytes": 87080
+        },
+        {
+          "file": "IceHammer\\IceHammer-2.png",
+          "bytes": 70894
+        },
+        {
+          "file": "script.js",
+          "bytes": 27381
+        },
+        {
+          "file": "styles.css",
+          "bytes": 18146
+        }
+      ]
+    },
+    {
+      "page": "isolated-fishing-assistant.html",
+      "images": 2,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 312355,
+      "largest": [
+        {
+          "file": "PAD-Baits.png",
+          "bytes": 196993
+        },
+        {
+          "file": "PAD-Rods.png",
+          "bytes": 81025
+        },
+        {
+          "file": "styles.css",
+          "bytes": 18146
+        },
+        {
+          "file": "isolated-fishing-assistant.js",
+          "bytes": 16191
+        }
+      ]
+    },
+    {
+      "page": "reglas.html",
+      "images": 3,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 301691,
+      "largest": [
+        {
+          "file": "FL-logotype.png",
+          "bytes": 102532
+        },
+        {
+          "file": "fl-boton.png",
+          "bytes": 87080
+        },
+        {
+          "file": "reglas-banner.png",
+          "bytes": 66552
+        },
+        {
+          "file": "script.js",
+          "bytes": 27381
+        },
+        {
+          "file": "styles.css",
+          "bytes": 18146
+        }
+      ]
+    },
+    {
+      "page": "bazar.html",
+      "images": 2,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 214674,
+      "largest": [
+        {
+          "file": "flbazar-logo.png",
+          "bytes": 191306
+        },
+        {
+          "file": "bazar.js",
+          "bytes": 12562
+        },
+        {
+          "file": "backBTN.png",
+          "bytes": 8368
+        },
+        {
+          "file": "bazar.css",
+          "bytes": 2438
+        }
+      ]
+    },
+    {
+      "page": "contacto.html",
+      "images": 2,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 199836,
+      "largest": [
+        {
+          "file": "fl-boton.png",
+          "bytes": 87080
+        },
+        {
+          "file": "contacto-banner.png",
+          "bytes": 67229
+        },
+        {
+          "file": "script.js",
+          "bytes": 27381
+        },
+        {
+          "file": "styles.css",
+          "bytes": 18146
+        }
+      ]
+    },
+    {
+      "page": "respawns.html",
+      "images": 2,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 168647,
+      "largest": [
+        {
+          "file": "fl-boton.png",
+          "bytes": 87080
+        },
+        {
+          "file": "respawnData.js",
+          "bytes": 36040
+        },
+        {
+          "file": "script.js",
+          "bytes": 27381
+        },
+        {
+          "file": "styles.css",
+          "bytes": 18146
+        }
+      ]
+    },
+    {
+      "page": "padventures.html",
+      "images": 2,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 168490,
+      "largest": [
+        {
+          "file": "padventures\\graphic_assets\\logo.png",
+          "bytes": 65742
+        },
+        {
+          "file": "padventures\\graphic_assets\\logo.png",
+          "bytes": 65742
+        },
+        {
+          "file": "padventures.css",
+          "bytes": 25531
+        },
+        {
+          "file": "padventures.js",
+          "bytes": 11475
+        }
+      ]
+    },
+    {
+      "page": "tms.html",
+      "images": 19,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 167434,
+      "largest": [
+        {
+          "file": "fl-boton.png",
+          "bytes": 87080
+        },
+        {
+          "file": "tm-search.js",
+          "bytes": 31209
+        },
+        {
+          "file": "script.js",
+          "bytes": 27381
+        },
+        {
+          "file": "styles.css",
+          "bytes": 18146
+        },
+        {
+          "file": "pagination.js",
+          "bytes": 3618
+        }
+      ]
+    },
+    {
+      "page": "BossRaids.html",
+      "images": 1,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 165979,
+      "largest": [
+        {
+          "file": "fl-boton.png",
+          "bytes": 87080
+        },
+        {
+          "file": "BossRaids.js",
+          "bytes": 28082
+        },
+        {
+          "file": "script.js",
+          "bytes": 27381
+        },
+        {
+          "file": "styles.css",
+          "bytes": 18146
+        },
+        {
+          "file": "bossstyles.css",
+          "bytes": 5290
+        }
+      ]
+    },
+    {
+      "page": "PokeDuel.html",
+      "images": 2,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 125550,
+      "largest": [
+        {
+          "file": "PokeDuel-Script.js",
+          "bytes": 104741
+        },
+        {
+          "file": "PokeDuel-Style.css",
+          "bytes": 20809
+        }
+      ]
+    },
+    {
+      "page": "PAD-Down.html",
+      "images": 2,
+      "lazy": 0,
+      "sized": 2,
+      "directLocalBytes": 61095,
+      "largest": [
+        {
+          "file": "script-paddown.js",
+          "bytes": 39008
+        },
+        {
+          "file": "style-paddown.css",
+          "bytes": 18668
+        },
+        {
+          "file": "PADDown\\pokeball.png",
+          "bytes": 3107
+        },
+        {
+          "file": "PADDown\\masterball.png",
+          "bytes": 312
+        }
+      ]
+    },
+    {
+      "page": "eventospad.html",
+      "images": 0,
+      "lazy": 0,
+      "sized": 0,
+      "directLocalBytes": 0,
+      "largest": []
+    }
+  ],
+  "largestAssets": [
+    {
+      "file": "guild-quests\\DiancieCatch.gif",
+      "bytes": 10110058
+    },
+    {
+      "file": "padventures\\graphic_assets\\hero-main.png",
+      "bytes": 8975130
+    },
+    {
+      "file": "ColeccionSilvarion\\BannerSilvarion.png",
+      "bytes": 5091303
+    },
+    {
+      "file": "EventosPAD\\SeasonEvent2024\\caramelo10.png",
+      "bytes": 4133178
+    },
+    {
+      "file": "guild-quests\\AmaDiancie.png",
+      "bytes": 4069910
+    },
+    {
+      "file": "EventosPAD\\SeasonEvent2024\\caramelo9.png",
+      "bytes": 3996822
+    },
+    {
+      "file": "EventosPAD\\SeasonEvent2024\\caramelo11.png",
+      "bytes": 3488972
+    },
+    {
+      "file": "guild-quests\\nov3.png",
+      "bytes": 3425234
+    },
+    {
+      "file": "guild-quests\\nov6.png",
+      "bytes": 3377760
+    },
+    {
+      "file": "guild-quests\\nov7.png",
+      "bytes": 3308385
+    },
+    {
+      "file": "EventosPAD\\SeasonEvent2024\\caramelo8.png",
+      "bytes": 3189782
+    },
+    {
+      "file": "guild-quests\\nov1.png",
+      "bytes": 3188934
+    },
+    {
+      "file": "FieryFisherRod\\lava.gif",
+      "bytes": 3144827
+    },
+    {
+      "file": "guild-quests\\nov2.png",
+      "bytes": 2918426
+    },
+    {
+      "file": "guild-quests\\levy-magic fishing rod.png",
+      "bytes": 2844790
+    },
+    {
+      "file": "guild-quests\\MasterRodNov4.png",
+      "bytes": 2772659
+    },
+    {
+      "file": "guild-quests\\MasterRodNov1.png",
+      "bytes": 2722491
+    },
+    {
+      "file": "guild-quests\\veno28Abr.png",
+      "bytes": 2690167
+    },
+    {
+      "file": "guild-quests\\elementalJul14.png",
+      "bytes": 2681259
+    },
+    {
+      "file": "guild-quests\\MasterRodNov3.png",
+      "bytes": 2666635
+    }
+  ]
+}

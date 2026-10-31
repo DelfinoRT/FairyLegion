@@ -1,0 +1,878 @@
+{
+  "environment": "Local uncompressed HTTP, cold context per page, Chrome headless, 390x844, no CPU/network throttling, 4 second observation; external APIs live",
+  "results": [
+    {
+      "page": "index.html",
+      "longTasks": [],
+      "lcp": 184,
+      "cls": 0,
+      "shiftSources": [],
+      "domNodes": 235,
+      "images": 55,
+      "lazyImages": 53,
+      "resources": 19,
+      "localResourceBytes": 1374932,
+      "dcl": 63.5,
+      "proficiencyRows": 0,
+      "requests": 20,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    },
+    {
+      "page": "coleccion-silvarion.html",
+      "longTasks": [],
+      "lcp": 296,
+      "cls": 0.30973625066115085,
+      "shiftSources": [
+        {
+          "value": 0.08823693143188262,
+          "nodes": [
+            {
+              "node": "<p class=\"desc\">\n                  El objetivo de mi colección es conseguir Pokémon en ball especial dependiendo de su tipo.\n                  Capturando, comprando o intercambiando, especialmente cloned, shiny, legendarios, raros, de evento y mítico",
+              "previous": {
+                "x": 10,
+                "y": 294,
+                "width": 370,
+                "height": 291.46875,
+                "top": 294,
+                "right": 380,
+                "bottom": 585.46875,
+                "left": 10
+              },
+              "current": {
+                "x": 10,
+                "y": 386.53125,
+                "width": 370,
+                "height": 291.46875,
+                "top": 386.53125,
+                "right": 380,
+                "bottom": 678,
+                "left": 10
+              }
+            },
+            {
+              "node": "<nav class=\"section-index-pixel\">\n                  <div class=\"section-index-title\">Ir a colección:</div>\n                  <ul>\n                    <li><a href=\"#pokeball\"><img loading=\"lazy\" decoding=\"async\" src=\"ColeccionSilvarion/icon-pokeball.g",
+              "previous": {
+                "x": 0,
+                "y": 593.46875,
+                "width": 390,
+                "height": 250.53125,
+                "top": 593.46875,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 686,
+                "width": 390,
+                "height": 158,
+                "top": 686,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            },
+            {
+              "node": "<section id=\"silvarion-character-card\" class=\"silvarion-character-card\" aria-live=\"polite\">\n                  <div class=\"silvarion-character-column\">\n                    <div class=\"silvarion-character-main\">\n                      <img loading=\"lazy",
+              "previous": {
+                "x": 10,
+                "y": 146,
+                "width": 377,
+                "height": 141,
+                "top": 146,
+                "right": 387,
+                "bottom": 287,
+                "left": 10
+              },
+              "current": {
+                "x": 10,
+                "y": 238.53125,
+                "width": 377,
+                "height": 141,
+                "top": 238.53125,
+                "right": 387,
+                "bottom": 379.53125,
+                "left": 10
+              }
+            },
+            {
+              "node": "<a href=\"#phantomball\"><img loading=\"lazy\" decoding=\"async\" src=\"ColeccionSilvarion/icon-phantom.gif\" alt=\"Phantom Ball\" class=\"ball-icon\" style=\"vertical-align:middle;width:24px;height:24px;margin-right:6px;\"><span class=\"index-label\">Phantom Ball</",
+              "previous": {
+                "x": 160.59375,
+                "y": 764.46875,
+                "width": 160,
+                "height": 48,
+                "top": 764.46875,
+                "right": 320.59375,
+                "bottom": 812.46875,
+                "left": 160.59375
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            },
+            {
+              "node": "<a href=\"#ancientball\"><img loading=\"lazy\" decoding=\"async\" src=\"ColeccionSilvarion/icon-ancient.gif\" alt=\"Ancient Ball\" class=\"ball-icon\" style=\"vertical-align:middle;width:24px;height:24px;margin-right:6px;\"><span class=\"index-label\">Ancient Ball</",
+              "previous": {
+                "x": 69.40625,
+                "y": 764.46875,
+                "width": 160,
+                "height": 48,
+                "top": 764.46875,
+                "right": 229.40625,
+                "bottom": 812.46875,
+                "left": 69.40625
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ]
+        },
+        {
+          "value": 0.052228047648412386,
+          "nodes": [
+            {
+              "node": "<p class=\"desc\">\n                  El objetivo de mi colección es conseguir Pokémon en ball especial dependiendo de su tipo.\n                  Capturando, comprando o intercambiando, especialmente cloned, shiny, legendarios, raros, de evento y mítico",
+              "previous": {
+                "x": 10,
+                "y": 386.53125,
+                "width": 370,
+                "height": 291.46875,
+                "top": 386.53125,
+                "right": 380,
+                "bottom": 678,
+                "left": 10
+              },
+              "current": {
+                "x": 10,
+                "y": 404.90625,
+                "width": 370,
+                "height": 211.828125,
+                "top": 404.90625,
+                "right": 380,
+                "bottom": 616.734375,
+                "left": 10
+              }
+            },
+            {
+              "node": "<nav class=\"section-index-pixel\">\n                  <div class=\"section-index-title\">Ir a colección:</div>\n                  <ul>\n                    <li><a href=\"#pokeball\"><img loading=\"lazy\" decoding=\"async\" src=\"ColeccionSilvarion/icon-pokeball.g",
+              "previous": {
+                "x": 0,
+                "y": 686,
+                "width": 390,
+                "height": 158,
+                "top": 686,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 624.734375,
+                "width": 390,
+                "height": 219.265625,
+                "top": 624.734375,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            },
+            {
+              "node": "<section id=\"silvarion-character-card\" class=\"silvarion-character-card\" aria-live=\"polite\">\n                  <div class=\"silvarion-character-column\">\n                    <div class=\"silvarion-character-main\">\n                      <img loading=\"lazy",
+              "previous": {
+                "x": 10,
+                "y": 238.53125,
+                "width": 377,
+                "height": 141,
+                "top": 238.53125,
+                "right": 387,
+                "bottom": 379.53125,
+                "left": 10
+              },
+              "current": {
+                "x": 10,
+                "y": 256.90625,
+                "width": 377,
+                "height": 141,
+                "top": 256.90625,
+                "right": 387,
+                "bottom": 397.90625,
+                "left": 10
+              }
+            },
+            {
+              "node": "<a href=\"#phantomball\"><img loading=\"lazy\" decoding=\"async\" src=\"ColeccionSilvarion/icon-phantom.gif\" alt=\"Phantom Ball\" class=\"ball-icon\" style=\"vertical-align:middle;width:24px;height:24px;margin-right:6px;\"><span class=\"index-label\">Phantom Ball</",
+              "previous": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              },
+              "current": {
+                "x": 160.59375,
+                "y": 793.734375,
+                "width": 160,
+                "height": 48,
+                "top": 793.734375,
+                "right": 320.59375,
+                "bottom": 841.734375,
+                "left": 160.59375
+              }
+            },
+            {
+              "node": "<a href=\"#ancientball\"><img loading=\"lazy\" decoding=\"async\" src=\"ColeccionSilvarion/icon-ancient.gif\" alt=\"Ancient Ball\" class=\"ball-icon\" style=\"vertical-align:middle;width:24px;height:24px;margin-right:6px;\"><span class=\"index-label\">Ancient Ball</",
+              "previous": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              },
+              "current": {
+                "x": 69.40625,
+                "y": 793.734375,
+                "width": 160,
+                "height": 48,
+                "top": 793.734375,
+                "right": 229.40625,
+                "bottom": 841.734375,
+                "left": 69.40625
+              }
+            }
+          ]
+        },
+        {
+          "value": 0.06073994755571989,
+          "nodes": [
+            {
+              "node": "<p class=\"desc\">\n                  El objetivo de mi colección es conseguir Pokémon en ball especial dependiendo de su tipo.\n                  Capturando, comprando o intercambiando, especialmente cloned, shiny, legendarios, raros, de evento y mítico",
+              "previous": {
+                "x": 10,
+                "y": 404.90625,
+                "width": 370,
+                "height": 211.828125,
+                "top": 404.90625,
+                "right": 380,
+                "bottom": 616.734375,
+                "left": 10
+              },
+              "current": {
+                "x": 10,
+                "y": 502.90625,
+                "width": 370,
+                "height": 211.828125,
+                "top": 502.90625,
+                "right": 380,
+                "bottom": 714.734375,
+                "left": 10
+              }
+            },
+            {
+              "node": "<nav class=\"section-index-pixel\">\n                  <div class=\"section-index-title\">Ir a colección:</div>\n                  <ul>\n                    <li><a href=\"#pokeball\"><img loading=\"lazy\" decoding=\"async\" src=\"ColeccionSilvarion/icon-pokeball.g",
+              "previous": {
+                "x": 0,
+                "y": 624.734375,
+                "width": 390,
+                "height": 219.265625,
+                "top": 624.734375,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 722.734375,
+                "width": 390,
+                "height": 121.265625,
+                "top": 722.734375,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            },
+            {
+              "node": "<div id=\"silvarion-team-card\" class=\"silvarion-team-card\" aria-live=\"polite\">\n                    <div class=\"silvarion-team-body\">\n                      <div id=\"silvarion-team-grid\" class=\"silvarion-team-grid\" aria-label=\"Equipo del jugador\"></div>",
+              "previous": {
+                "x": 27,
+                "y": 359.90625,
+                "width": 336,
+                "height": 16,
+                "top": 359.90625,
+                "right": 363,
+                "bottom": 375.90625,
+                "left": 27
+              },
+              "current": {
+                "x": 27,
+                "y": 457.90625,
+                "width": 336,
+                "height": 16,
+                "top": 457.90625,
+                "right": 363,
+                "bottom": 473.90625,
+                "left": 27
+              }
+            },
+            {
+              "node": "<a href=\"#phantomball\"><img loading=\"lazy\" decoding=\"async\" src=\"ColeccionSilvarion/icon-phantom.gif\" alt=\"Phantom Ball\" class=\"ball-icon\" style=\"vertical-align:middle;width:24px;height:24px;margin-right:6px;\"><span class=\"index-label\">Phantom Ball</",
+              "previous": {
+                "x": 160.59375,
+                "y": 793.734375,
+                "width": 160,
+                "height": 48,
+                "top": 793.734375,
+                "right": 320.59375,
+                "bottom": 841.734375,
+                "left": 160.59375
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            },
+            {
+              "node": "<a href=\"#ancientball\"><img loading=\"lazy\" decoding=\"async\" src=\"ColeccionSilvarion/icon-ancient.gif\" alt=\"Ancient Ball\" class=\"ball-icon\" style=\"vertical-align:middle;width:24px;height:24px;margin-right:6px;\"><span class=\"index-label\">Ancient Ball</",
+              "previous": {
+                "x": 69.40625,
+                "y": 793.734375,
+                "width": 160,
+                "height": 48,
+                "top": 793.734375,
+                "right": 229.40625,
+                "bottom": 841.734375,
+                "left": 69.40625
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ]
+        },
+        {
+          "value": 0.10853132402513593,
+          "nodes": [
+            {
+              "node": "<p class=\"desc\">\n                  El objetivo de mi colección es conseguir Pokémon en ball especial dependiendo de su tipo.\n                  Capturando, comprando o intercambiando, especialmente cloned, shiny, legendarios, raros, de evento y mítico",
+              "previous": {
+                "x": 10,
+                "y": 502.90625,
+                "width": 370,
+                "height": 211.828125,
+                "top": 502.90625,
+                "right": 380,
+                "bottom": 714.734375,
+                "left": 10
+              },
+              "current": {
+                "x": 10,
+                "y": 742.90625,
+                "width": 370,
+                "height": 101.09375,
+                "top": 742.90625,
+                "right": 380,
+                "bottom": 844,
+                "left": 10
+              }
+            },
+            {
+              "node": "<nav class=\"section-index-pixel\">\n                  <div class=\"section-index-title\">Ir a colección:</div>\n                  <ul>\n                    <li><a href=\"#pokeball\"><img loading=\"lazy\" decoding=\"async\" src=\"ColeccionSilvarion/icon-pokeball.g",
+              "previous": {
+                "x": 0,
+                "y": 722.734375,
+                "width": 390,
+                "height": 121.265625,
+                "top": 722.734375,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ]
+        }
+      ],
+      "domNodes": 2128,
+      "images": 726,
+      "lazyImages": 724,
+      "resources": 59,
+      "localResourceBytes": 367737,
+      "dcl": 184.7999999821186,
+      "proficiencyRows": 0,
+      "requests": 62,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [
+        {
+          "url": "https://api.padventures.org/w/RZF8C9QcAiZZQJSRQckaXF",
+          "status": 403
+        }
+      ],
+      "interactions": []
+    },
+    {
+      "page": "coleccion-nemesis.html",
+      "longTasks": [],
+      "lcp": 276,
+      "cls": 0.130650753648245,
+      "shiftSources": [
+        {
+          "value": 0.0012164435052787477,
+          "nodes": [
+            {
+              "previous": {
+                "x": 195,
+                "y": 452.625,
+                "width": 142,
+                "height": 99.34375,
+                "top": 452.625,
+                "right": 337,
+                "bottom": 551.96875,
+                "left": 195
+              },
+              "current": {
+                "x": 195,
+                "y": 432.96875,
+                "width": 142,
+                "height": 119,
+                "top": 432.96875,
+                "right": 337,
+                "bottom": 551.96875,
+                "left": 195
+              }
+            }
+          ]
+        },
+        {
+          "value": 0.12943431014296625,
+          "nodes": [
+            {
+              "node": "<nav class=\"section-index-pixel\" aria-label=\"Indice de secciones de coleccion\">\n      <div class=\"section-index-title\">Filtrar por tipo:</div>\n      <ul>\n          <li><a href=\"#type-normal\" role=\"button\" aria-pressed=\"false\"><img loading=\"lazy\" deco",
+              "previous": {
+                "x": 0,
+                "y": 302.421875,
+                "width": 390,
+                "height": 541.578125,
+                "top": 302.421875,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 273.515625,
+                "width": 390,
+                "height": 570.484375,
+                "top": 273.515625,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            },
+            {
+              "node": "<p class=\"desc\">\n      Mi colección Pokémon en PAdventures es como yo, con una vibrante energía tan tóxica como legendaria!\n    </p>",
+              "previous": {
+                "x": 0,
+                "y": 71.1875,
+                "width": 390,
+                "height": 212.234375,
+                "top": 71.1875,
+                "right": 390,
+                "bottom": 283.421875,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 94.375,
+                "width": 390,
+                "height": 160.140625,
+                "top": 94.375,
+                "right": 390,
+                "bottom": 254.515625,
+                "left": 0
+              }
+            },
+            {
+              "node": "<div class=\"preview-screen-frame\">\n        <div class=\"preview-screen\">\n          <img loading=\"lazy\" decoding=\"async\" id=\"preview-pokemon-img\" src=\"http://127.0.0.1:25578/ColeccionSilvarion/aerodactyl.gif\" alt=\"Aerodactyl\">\n        </div>\n      </di",
+              "previous": {
+                "x": 156,
+                "y": 215,
+                "width": 220,
+                "height": 262,
+                "top": 215,
+                "right": 376,
+                "bottom": 477,
+                "left": 156
+              },
+              "current": {
+                "x": 156,
+                "y": 221,
+                "width": 220,
+                "height": 262,
+                "top": 221,
+                "right": 376,
+                "bottom": 483,
+                "left": 156
+              }
+            },
+            {
+              "node": "<div class=\"total-pokemon-btn-container\">\n      <button id=\"total-pokemon-btn\" type=\"button\">Pokémon en la colección: 8</button>\n    </div>",
+              "previous": {
+                "x": 0,
+                "y": 252.421875,
+                "width": 390,
+                "height": 112,
+                "top": 252.421875,
+                "right": 390,
+                "bottom": 364.421875,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 223.515625,
+                "width": 390,
+                "height": 112,
+                "top": 223.515625,
+                "right": 390,
+                "bottom": 335.515625,
+                "left": 0
+              }
+            },
+            {
+              "node": "<span id=\"glitch-title\" class=\"glitch-text\" aria-label=\"La toxicoleccion de Nemesis\" data-text=\"La toxicoleccion de Nemesis\"><span class=\"glitch-char\">L</span><span class=\"glitch-char\">a</span><span class=\"glitch-char\">&nbsp;</span><span class=\"glitc",
+              "previous": {
+                "x": 76.234375,
+                "y": 45,
+                "width": 237.515625,
+                "height": 23.1875,
+                "top": 45,
+                "right": 313.75,
+                "bottom": 68.1875,
+                "left": 76.234375
+              },
+              "current": {
+                "x": 27,
+                "y": 45,
+                "width": 336,
+                "height": 46.375,
+                "top": 45,
+                "right": 363,
+                "bottom": 91.375,
+                "left": 27
+              }
+            }
+          ]
+        }
+      ],
+      "domNodes": 551,
+      "images": 212,
+      "lazyImages": 156,
+      "resources": 55,
+      "localResourceBytes": 314290,
+      "dcl": 145.7000000178814,
+      "proficiencyRows": 0,
+      "requests": 58,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    },
+    {
+      "page": "pesca.html",
+      "longTasks": [],
+      "lcp": 108,
+      "cls": 0.6681127719042411,
+      "shiftSources": [
+        {
+          "value": 0.6681127719042411,
+          "nodes": [
+            {
+              "node": "<div class=\"fishing-assistant\">\n          <div class=\"pokemon-picker-controls\">\n            <label for=\"pokemon-search-grid\" class=\"sr-only\">Buscar pokemon</label>\n            <input type=\"text\" id=\"pokemon-search-grid\" placeholder=\"Buscar Pokémon o ",
+              "previous": {
+                "x": 4,
+                "y": 307.8125,
+                "width": 386,
+                "height": 166,
+                "top": 307.8125,
+                "right": 390,
+                "bottom": 473.8125,
+                "left": 4
+              },
+              "current": {
+                "x": 4,
+                "y": 397.640625,
+                "width": 386,
+                "height": 446.359375,
+                "top": 397.640625,
+                "right": 390,
+                "bottom": 844,
+                "left": 4
+              }
+            },
+            {
+              "node": "<section id=\"events\">\n        <h2>Recursos de Pesca</h2>\n        <p>Te dejamos una colección de recursos que te pueden ayudar a comprender mejor el sistema de pesca en PAdventures:</p>\n        <div>\n            <ul>\n                <li><a href=\"http:",
+              "previous": {
+                "x": 20,
+                "y": 469.8125,
+                "width": 350,
+                "height": 374.1875,
+                "top": 469.8125,
+                "right": 370,
+                "bottom": 844,
+                "left": 20
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            },
+            {
+              "node": "<div id=\"pokemon-info\">\n                <img src=\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/594.png\" alt=\"Alomomola\">\n                <h3>Alomomola</h3>\n                <ul><li>Ultra Rod con Kannovalola Bait</li><li>Mas",
+              "previous": {
+                "x": 4,
+                "y": 371.8125,
+                "width": 386,
+                "height": 102,
+                "top": 371.8125,
+                "right": 390,
+                "bottom": 473.8125,
+                "left": 4
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            },
+            {
+              "node": "<p>Que quieres pescar en este momento?</p>",
+              "previous": {
+                "x": 40,
+                "y": 245.8125,
+                "width": 310,
+                "height": 42,
+                "top": 245.8125,
+                "right": 350,
+                "bottom": 287.8125,
+                "left": 40
+              },
+              "current": {
+                "x": 40,
+                "y": 335.640625,
+                "width": 310,
+                "height": 42,
+                "top": 335.640625,
+                "right": 350,
+                "bottom": 377.640625,
+                "left": 40
+              }
+            }
+          ]
+        }
+      ],
+      "domNodes": 749,
+      "images": 150,
+      "lazyImages": 23,
+      "resources": 130,
+      "localResourceBytes": 833828,
+      "dcl": 74.59999999403954,
+      "proficiencyRows": 0,
+      "requests": 131,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    },
+    {
+      "page": "PokeLegion.html",
+      "longTasks": [
+        123
+      ],
+      "lcp": 220,
+      "cls": 0.5004094802172009,
+      "shiftSources": [
+        {
+          "value": 0.322139674956762,
+          "nodes": [
+            {
+              "node": "<div class=\"modal-content\">\n\t\t\t<button id=\"modalClose\" class=\"modal-close\" aria-label=\"Close profile dialog\">✕</button>\n\t\t\t<h2>Create your Trainer</h2>\n\t\t\t<div id=\"avatarPreview\" class=\"avatar-preview\">🙂</div>\n\t\t\t<label>Name</label>\n\t\t\t<input id=\"pl",
+              "previous": {
+                "x": 0,
+                "y": 89.09375,
+                "width": 390,
+                "height": 677.8125,
+                "top": 89.09375,
+                "right": 390,
+                "bottom": 766.90625,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 20.59375,
+                "width": 390,
+                "height": 814.8125,
+                "top": 20.59375,
+                "right": 390,
+                "bottom": 835.40625,
+                "left": 0
+              }
+            }
+          ]
+        },
+        {
+          "value": 0.027425259989667796,
+          "nodes": [
+            {
+              "node": "<div class=\"modal-content\">\n\t\t\t<button id=\"modalClose\" class=\"modal-close\" aria-label=\"Close profile dialog\">✕</button>\n\t\t\t<h2>Create your Trainer</h2>\n\t\t\t<div id=\"avatarPreview\" class=\"avatar-preview\">🙂</div>\n\t\t\t<label>Name</label>\n\t\t\t<input id=\"pl",
+              "previous": {
+                "x": 0,
+                "y": 20.59375,
+                "width": 390,
+                "height": 814.8125,
+                "top": 20.59375,
+                "right": 390,
+                "bottom": 835.40625,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 44.59375,
+                "width": 390,
+                "height": 766.8125,
+                "top": 44.59375,
+                "right": 390,
+                "bottom": 811.40625,
+                "left": 0
+              }
+            }
+          ]
+        },
+        {
+          "value": 0.03354596707171897,
+          "nodes": [
+            {
+              "node": "<div class=\"modal-content\">\n\t\t\t<button id=\"modalClose\" class=\"modal-close\" aria-label=\"Close profile dialog\">✕</button>\n\t\t\t<h2>Create your Trainer</h2>\n\t\t\t<div id=\"avatarPreview\" class=\"avatar-preview\">🙂</div>\n\t\t\t<label>Name</label>\n\t\t\t<input id=\"pl",
+              "previous": {
+                "x": 0,
+                "y": 44.59375,
+                "width": 390,
+                "height": 766.8125,
+                "top": 44.59375,
+                "right": 390,
+                "bottom": 811.40625,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 15.59375,
+                "width": 390,
+                "height": 824.8125,
+                "top": 15.59375,
+                "right": 390,
+                "bottom": 840.40625,
+                "left": 0
+              }
+            }
+          ]
+        },
+        {
+          "value": 0.11729857819905214,
+          "nodes": [
+            {
+              "node": "<div class=\"modal-content\">\n\t\t\t<button id=\"modalClose\" class=\"modal-close\" aria-label=\"Close profile dialog\">✕</button>\n\t\t\t<h2>Create your Trainer</h2>\n\t\t\t<div id=\"avatarPreview\" class=\"avatar-preview\">🙂</div>\n\t\t\t<label>Name</label>\n\t\t\t<input id=\"pl",
+              "previous": {
+                "x": 0,
+                "y": 15.59375,
+                "width": 390,
+                "height": 824.8125,
+                "top": 15.59375,
+                "right": 390,
+                "bottom": 840.40625,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            }
+          ]
+        }
+      ],
+      "domNodes": 298,
+      "images": 31,
+      "lazyImages": 0,
+      "resources": 53,
+      "localResourceBytes": 3678129,
+      "dcl": 60.599999994039536,
+      "proficiencyRows": 0,
+      "requests": 53,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    }
+  ]
+}

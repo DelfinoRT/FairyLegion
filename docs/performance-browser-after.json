@@ -1,0 +1,466 @@
+{
+  "environment": "Local uncompressed HTTP, cold context per page, Chrome headless, 390x844, no CPU/network throttling, 4 second observation; external APIs live",
+  "results": [
+    {
+      "page": "index.html",
+      "longTasks": [],
+      "lcp": 188,
+      "cls": 0,
+      "shiftSources": [],
+      "domNodes": 235,
+      "images": 55,
+      "lazyImages": 53,
+      "resources": 19,
+      "localResourceBytes": 1375209,
+      "dcl": 67.59999999403954,
+      "proficiencyRows": 0,
+      "requests": 20,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    },
+    {
+      "page": "coleccion-silvarion.html",
+      "longTasks": [],
+      "lcp": 272,
+      "cls": 0.01699589764323261,
+      "shiftSources": [
+        {
+          "value": 0.01699589764323261,
+          "nodes": [
+            {
+              "node": "<div id=\"silvarion-team-card\" class=\"silvarion-team-card\" aria-live=\"polite\">\n                    <div class=\"silvarion-team-body\">\n                      <div id=\"silvarion-team-grid\" class=\"silvarion-team-grid\" aria-label=\"Equipo del jugador\"></div>",
+              "previous": {
+                "x": 27,
+                "y": 473.53125,
+                "width": 336,
+                "height": 283,
+                "top": 473.53125,
+                "right": 363,
+                "bottom": 756.53125,
+                "left": 27
+              },
+              "current": {
+                "x": 27,
+                "y": 439.53125,
+                "width": 336,
+                "height": 283,
+                "top": 439.53125,
+                "right": 363,
+                "bottom": 722.53125,
+                "left": 27
+              }
+            },
+            {
+              "node": "<p class=\"desc\">\n                  El objetivo de mi colecci\u00c3\u00b3n es conseguir Pok\u00c3\u00a9mon en ball especial dependiendo de su tipo.\n                  Capturando, comprando o intercambiando, especialmente cloned, shiny, legendarios, raros, de evento y m\u00c3\u00adtico",
+              "previous": {
+                "x": 10,
+                "y": 785.53125,
+                "width": 370,
+                "height": 58.46875,
+                "top": 785.53125,
+                "right": 380,
+                "bottom": 844,
+                "left": 10
+              },
+              "current": {
+                "x": 10,
+                "y": 751.53125,
+                "width": 370,
+                "height": 92.46875,
+                "top": 751.53125,
+                "right": 380,
+                "bottom": 844,
+                "left": 10
+              }
+            }
+          ]
+        }
+      ],
+      "domNodes": 2128,
+      "images": 726,
+      "lazyImages": 723,
+      "resources": 54,
+      "localResourceBytes": 345837,
+      "dcl": 164.90000000596046,
+      "proficiencyRows": 0,
+      "requests": 57,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [
+        {
+          "url": "https://api.padventures.org/w/RZF8C9QcAiZZQJSRQckaXF",
+          "status": 403
+        }
+      ],
+      "interactions": []
+    },
+    {
+      "page": "coleccion-nemesis.html",
+      "longTasks": [],
+      "lcp": 300,
+      "cls": 0.0015168752303822569,
+      "shiftSources": [
+        {
+          "value": 0.0012164435052787477,
+          "nodes": [
+            {
+              "previous": {
+                "x": 195,
+                "y": 452.625,
+                "width": 142,
+                "height": 99.34375,
+                "top": 452.625,
+                "right": 337,
+                "bottom": 551.96875,
+                "left": 195
+              },
+              "current": {
+                "x": 195,
+                "y": 432.96875,
+                "width": 142,
+                "height": 119,
+                "top": 432.96875,
+                "right": 337,
+                "bottom": 551.96875,
+                "left": 195
+              }
+            }
+          ]
+        },
+        {
+          "value": 0.0003004317251035092,
+          "nodes": [
+            {
+              "node": "<img loading=\"lazy\" decoding=\"async\" id=\"preview-pokemon-img\" src=\"http://127.0.0.1:2155/ColeccionSilvarion/aerodactyl.gif\" alt=\"Aerodactyl\">",
+              "previous": {
+                "x": 205.09375,
+                "y": 287,
+                "width": 121.796875,
+                "height": 90,
+                "top": 287,
+                "right": 326.890625,
+                "bottom": 377,
+                "left": 205.09375
+              },
+              "current": {
+                "x": 205.09375,
+                "y": 280.421875,
+                "width": 121.796875,
+                "height": 103.15625,
+                "top": 280.421875,
+                "right": 326.890625,
+                "bottom": 383.578125,
+                "left": 205.09375
+              }
+            }
+          ]
+        }
+      ],
+      "domNodes": 551,
+      "images": 212,
+      "lazyImages": 156,
+      "resources": 55,
+      "localResourceBytes": 314290,
+      "dcl": 159,
+      "proficiencyRows": 0,
+      "requests": 58,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    },
+    {
+      "page": "Proficiency.html",
+      "longTasks": [],
+      "lcp": 128,
+      "cls": 0.047692953454981486,
+      "shiftSources": [
+        {
+          "value": 0.047692953454981486,
+          "nodes": [
+            {
+              "node": "<section class=\"content-section\">\n            <h2 class=\"section-title\">Mec\u00c3\u00a1nicas Fundamentales</h2>\n            <div class=\"info-grid\">\n                <div class=\"info-card\">\n                    <h3>Progreso por Cuenta</h3>\n                    <p>L",
+              "previous": {
+                "x": 0,
+                "y": 363,
+                "width": 390,
+                "height": 481,
+                "top": 363,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 416,
+                "width": 390,
+                "height": 428,
+                "top": 416,
+                "right": 390,
+                "bottom": 844,
+                "left": 0
+              }
+            },
+            {
+              "node": "<div class=\"quick-nav\">\n                <a class=\"quick-nav-btn\" href=\"#proficiency-explorer\">Ir al Explorador de Proficiencias</a>\n                <a class=\"quick-nav-btn\" href=\"#pokemon-search\">Ir al Buscador por Pok\u00c3\u00a9mon</a>\n            <button id=",
+              "previous": {
+                "x": 9,
+                "y": 220,
+                "width": 381,
+                "height": 126,
+                "top": 220,
+                "right": 390,
+                "bottom": 346,
+                "left": 9
+              },
+              "current": {
+                "x": 9,
+                "y": 226,
+                "width": 381,
+                "height": 173,
+                "top": 226,
+                "right": 390,
+                "bottom": 399,
+                "left": 9
+              }
+            },
+            {
+              "node": "<p>Ruta de maestr\u00c3\u00ada personalizada para tus Pok\u00c3\u00a9mon \u00e2\u20ac\u201d vinculada a tu personaje, no al Pok\u00c3\u00a9mon.</p>",
+              "previous": {
+                "x": 30,
+                "y": 198,
+                "width": 360,
+                "height": 21,
+                "top": 198,
+                "right": 390,
+                "bottom": 219,
+                "left": 30
+              },
+              "current": {
+                "x": 30,
+                "y": 204,
+                "width": 360,
+                "height": 21,
+                "top": 204,
+                "right": 390,
+                "bottom": 225,
+                "left": 30
+              }
+            }
+          ]
+        }
+      ],
+      "domNodes": 1034,
+      "images": 1,
+      "lazyImages": 0,
+      "resources": 10,
+      "localResourceBytes": 1576763,
+      "dcl": 96.90000000596046,
+      "proficiencyRows": 25,
+      "requests": 11,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    },
+    {
+      "page": "daily-tasks.html",
+      "longTasks": [],
+      "lcp": 60,
+      "cls": 0,
+      "shiftSources": [],
+      "domNodes": 282,
+      "images": 49,
+      "lazyImages": 36,
+      "resources": 10,
+      "localResourceBytes": 588706,
+      "dcl": 47.099999994039536,
+      "proficiencyRows": 0,
+      "requests": 28,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": [
+        {
+          "action": "type ala",
+          "newRequests": 17,
+          "apiRequests": 0
+        }
+      ]
+    },
+    {
+      "page": "pesca.html",
+      "longTasks": [],
+      "lcp": 108,
+      "cls": 0,
+      "shiftSources": [],
+      "domNodes": 749,
+      "images": 150,
+      "lazyImages": 147,
+      "resources": 38,
+      "localResourceBytes": 834105,
+      "dcl": 74.30000001192093,
+      "proficiencyRows": 0,
+      "requests": 39,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    },
+    {
+      "page": "tms.html",
+      "longTasks": [],
+      "lcp": 56,
+      "cls": 0,
+      "shiftSources": [],
+      "domNodes": 308,
+      "images": 19,
+      "lazyImages": 17,
+      "resources": 26,
+      "localResourceBytes": 1679426,
+      "dcl": 54.20000001788139,
+      "proficiencyRows": 0,
+      "requests": 27,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    },
+    {
+      "page": "BossRaids.html",
+      "longTasks": [],
+      "lcp": 100,
+      "cls": 0,
+      "shiftSources": [],
+      "domNodes": 132,
+      "images": 1,
+      "lazyImages": 0,
+      "resources": 8,
+      "localResourceBytes": 177537,
+      "dcl": 74.7999999821186,
+      "proficiencyRows": 0,
+      "requests": 9,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    },
+    {
+      "page": "PokeLegion.html",
+      "longTasks": [
+        56
+      ],
+      "lcp": 132,
+      "cls": 0.00020555338621532104,
+      "shiftSources": [
+        {
+          "value": 0.00020555338621532104,
+          "nodes": [
+            {
+              "node": "<img alt=\"Charmander\" src=\"PokeLegion/Pokemon/charmander.png\" style=\"width: 36px; height: 36px; object-fit: contain; margin-right: 8px;\">",
+              "previous": {
+                "x": 154.328125,
+                "y": 647.8125,
+                "width": 6.625,
+                "height": 36,
+                "top": 647.8125,
+                "right": 160.953125,
+                "bottom": 683.8125,
+                "left": 154.328125
+              },
+              "current": {
+                "x": 139.640625,
+                "y": 647.8125,
+                "width": 36,
+                "height": 36,
+                "top": 647.8125,
+                "right": 175.640625,
+                "bottom": 683.8125,
+                "left": 139.640625
+              }
+            },
+            {
+              "node": "<img alt=\"Chikorita\" src=\"PokeLegion/Pokemon/chikorita.png\" style=\"width: 36px; height: 36px; object-fit: contain; margin-right: 8px;\">",
+              "previous": {
+                "x": 43,
+                "y": 719.8125,
+                "width": 25.96875,
+                "height": 36,
+                "top": 719.8125,
+                "right": 68.96875,
+                "bottom": 755.8125,
+                "left": 43
+              },
+              "current": {
+                "x": 37.984375,
+                "y": 719.8125,
+                "width": 36,
+                "height": 36,
+                "top": 719.8125,
+                "right": 73.984375,
+                "bottom": 755.8125,
+                "left": 37.984375
+              }
+            },
+            {
+              "node": "<img alt=\"Cyndaquil\" src=\"PokeLegion/Pokemon/cyndaquil.png\" style=\"width: 36px; height: 36px; object-fit: contain; margin-right: 8px;\">",
+              "previous": {
+                "x": 154.328125,
+                "y": 719.8125,
+                "width": 19.953125,
+                "height": 36,
+                "top": 719.8125,
+                "right": 174.28125,
+                "bottom": 755.8125,
+                "left": 154.328125
+              },
+              "current": {
+                "x": 146.3125,
+                "y": 719.8125,
+                "width": 36,
+                "height": 36,
+                "top": 719.8125,
+                "right": 182.3125,
+                "bottom": 755.8125,
+                "left": 146.3125
+              }
+            }
+          ]
+        }
+      ],
+      "domNodes": 298,
+      "images": 31,
+      "lazyImages": 0,
+      "resources": 53,
+      "localResourceBytes": 3678800,
+      "dcl": 57.400000005960464,
+      "proficiencyRows": 0,
+      "requests": 53,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    },
+    {
+      "page": "PokeDuel.html",
+      "longTasks": [],
+      "lcp": 52,
+      "cls": 0,
+      "shiftSources": [],
+      "domNodes": 189,
+      "images": 2,
+      "lazyImages": 0,
+      "resources": 2,
+      "localResourceBytes": 125550,
+      "dcl": 41.39999997615814,
+      "proficiencyRows": 0,
+      "requests": 3,
+      "apiRequests": 0,
+      "errors": [],
+      "failures": [],
+      "interactions": []
+    }
+  ]
+}
