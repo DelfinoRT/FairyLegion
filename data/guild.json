@@ -1,0 +1,95 @@
+{
+  "updatedAt": "2026-11-06T12:02:06.720Z",
+  "name": "FAIRY LEGION",
+  "world": "Diamond",
+  "leader": "Nemesis",
+  "level": 5,
+  "experience": "22515657",
+  "points": 0,
+  "members": 1300,
+  "online": 12,
+  "createdAt": 1609622962,
+  "recruiting": true,
+  "recruitment": {
+    "rank": "Member",
+    "tax": 20,
+    "effectiveTax": 20,
+    "minimumLevel": 1,
+    "requirements": ""
+  },
+  "description": "Bienvenidos a FAIRY LEGION!  Somos una guild creada para entrenadores que buscan vivir grandes aventuras en PAdventures, disfrutar del juego y compartir su pasión por el mundo Pokémon. Aquí encontrarás un lugar para cazar, capturar y coleccionar Pokémon, completar tu Pokédex, intercambiar experiencias, superar retos y, sobre todo, divertirte junto a otros jugadores. No importa si eres un entrenador experimentado o si apenas comienzas tu aventura, ¡todos son bienvenidos! Buscamos personas con ganas de convivir, apoyarse y crear grandes recuerdos. ¡Únete a FAIRY LEGION y demuestra que las mejores aventuras se viven en equipo!",
+  "languages": [
+    "English",
+    "Español"
+  ],
+  "tags": [
+    "Social",
+    "Hunting",
+    "Shiny Hunting",
+    "New-player Friendly"
+  ],
+  "skills": {
+    "general": [
+      {
+        "id": "trainer_exp",
+        "name": "Trainer EXP",
+        "tier": 0,
+        "maximum": 5,
+        "bonus": 0,
+        "nextBonus": 1,
+        "cost": 1,
+        "requiredLevel": 2
+      },
+      {
+        "id": "pokemon_exp",
+        "name": "Pokemon EXP",
+        "tier": 0,
+        "maximum": 5,
+        "bonus": 0,
+        "nextBonus": 1,
+        "cost": 1,
+        "requiredLevel": 2
+      },
+      {
+        "id": "loot",
+        "name": "Loot",
+        "tier": 1,
+        "maximum": 4,
+        "bonus": 5,
+        "nextBonus": 10,
+        "cost": 1,
+        "requiredLevel": 8
+      },
+      {
+        "id": "catch",
+        "name": "General catch",
+        "tier": 2,
+        "maximum": 5,
+        "bonus": 4,
+        "nextBonus": 6,
+        "cost": 1,
+        "requiredLevel": 10
+      },
+      {
+        "id": "shiny",
+        "name": "Shiny",
+        "tier": 1,
+        "maximum": 5,
+        "bonus": 2,
+        "nextBonus": 4,
+        "cost": 1,
+        "requiredLevel": 5
+      },
+      {
+        "id": "proficiency_exp",
+        "name": "Proficiency EXP",
+        "tier": 0,
+        "maximum": 5,
+        "bonus": 0,
+        "nextBonus": 1,
+        "cost": 1,
+        "requiredLevel": 2
+      }
+    ]
+  }
+}

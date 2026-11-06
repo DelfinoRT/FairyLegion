@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const current = document.getElementById('currentImage');
     const total = document.getElementById('totalImages');
     const original = document.getElementById('gallery-original');
+    const slider = document.getElementById('gallery-slider');
     let currentIndex = 0;
     let visible = false;
     function loadImage(image) {
@@ -19,8 +20,19 @@ document.addEventListener('DOMContentLoaded', function () {
         if (visible) loadImage(image);
         if (current) current.textContent = currentIndex + 1;
         if (original) original.href = image.dataset.original || image.dataset.src || image.src;
+        if (slider) {
+            slider.value = currentIndex + 1;
+            slider.setAttribute('aria-valuetext', `Imagen ${currentIndex + 1} de ${images.length}`);
+        }
     }
     if (total) total.textContent = images.length;
+    if (slider) {
+        slider.max = images.length;
+        slider.addEventListener('input', () => { visible = true; showImage(Number(slider.value) - 1); });
+        images.forEach((image, index) => {
+            if (!image.hasAttribute('alt')) image.alt = `Actividad del gremio, imagen ${index + 1} de ${images.length}`;
+        });
+    }
     window.nextImage = () => { visible = true; showImage(currentIndex + 1); };
     window.prevImage = () => { visible = true; showImage(currentIndex - 1); };
     showImage(0);

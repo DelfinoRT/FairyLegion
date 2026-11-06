@@ -14,11 +14,6 @@
     "width": 1583,
     "height": 326
   },
-  "/BossRaids/PokeLegion-Banner.png": {
-    "path": "optimized-images/PokeLegion-Banner-b3c6e91cb9.webp",
-    "width": 1622,
-    "height": 298
-  },
   "/BugNet/BugNet-Banner.png": {
     "path": "optimized-images/BugNet-Banner-0a2d0e4eb3.webp",
     "width": 1155,
@@ -118,16 +113,6 @@
     "path": "optimized-images/SrEko-9af7c5bb3e.webp",
     "width": 1832,
     "height": 866
-  },
-  "/casa-donacion-1.png": {
-    "path": "optimized-images/casa-donacion-1-75ebb8d5de.webp",
-    "width": 2082,
-    "height": 1459
-  },
-  "/casa-donacion-2.png": {
-    "path": "optimized-images/casa-donacion-2-c81005c2e0.webp",
-    "width": 1351,
-    "height": 1459
   },
   "/elemental-grounds.png": {
     "path": "optimized-images/elemental-grounds-e961ae9fe8.webp",
@@ -393,16 +378,6 @@
     "path": "optimized-images/danierin2-363d2463ff.webp",
     "width": 776,
     "height": 726
-  },
-  "PokeLegion/Items/coin.png": {
-    "path": "optimized-images/coin-07aff55972.webp",
-    "width": 1280,
-    "height": 1280
-  },
-  "PokeLegion/Items/gem.png": {
-    "path": "optimized-images/gem-ef5c9e1e10.webp",
-    "width": 750,
-    "height": 650
   },
   "flbazar-logo.png": {
     "path": "optimized-images/flbazar-logo-9d9412e8dd.webp",

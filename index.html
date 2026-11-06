@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -7,6 +7,8 @@
     <title>Fairy Legion - Inicio</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="flag.css">
+    <link rel="stylesheet" href="bossstyles.css">
+    <link rel="stylesheet" href="home.css">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 </head>
 
@@ -22,12 +24,87 @@
                 <li><a href="/index.html" class="border active">Inicio</a></li>
                 <li><a href="/guias-consejos.html" class="border ">Guías/Consejos</a></li>
                 <li><a href="/reglas.html" class="border">Reglas</a></li>
-                <li><a href="/eventos.html" class="border">Eventos</a></li>
-                <li><a href="/contacto.html" class="border">Contacto</a></li>
-                <li><a href="https://pokerus.fairylegion.com" class="border">Pokerus!</a></li>
             </ul>
         </nav>
     </header>
+
+    <section class="guild-profile" id="guild-profile" aria-labelledby="guild-heading">
+        <div class="guild-profile__header">
+            <div>
+                <p class="guild-profile__eyebrow">Nuestra comunidad · PAdventures</p>
+                <h1 id="guild-heading">Fairy Legion</h1>
+                <p class="guild-profile__intro">Un gremio, muchas aventuras.</p>
+            </div>
+            <img class="guild-profile__logo" src="/optimized-images/FL-logotype-928cd3d865.webp" width="968" height="755" alt="">
+        </div>
+        <p id="guild-status" class="guild-profile__status" role="status">Cargando la información del gremio...</p>
+        <div id="guild-data" hidden>
+            <h2 id="guild-name" class="guild-profile__name"></h2>
+            <dl class="guild-stats">
+                <div><dt>Miembros</dt><dd id="guild-members"></dd></div>
+                <div><dt>Conectados al actualizar</dt><dd id="guild-online"></dd></div>
+                <div><dt>Nivel</dt><dd id="guild-level"></dd></div>
+                <div><dt>Experiencia del gremio</dt><dd id="guild-experience"></dd></div>
+                <div><dt>Puntos disponibles</dt><dd id="guild-points"></dd></div>
+                <div><dt>Mundo</dt><dd id="guild-world"></dd></div>
+                <div><dt>Líder</dt><dd id="guild-leader"></dd></div>
+                <div><dt>Fundación</dt><dd id="guild-founded"></dd></div>
+                <div><dt>Reclutamiento</dt><dd id="guild-recruiting"></dd></div>
+                <div><dt>Idiomas</dt><dd id="guild-languages"></dd></div>
+                <div><dt>Intereses</dt><dd id="guild-tags"></dd></div>
+            </dl>
+            <p id="guild-description"></p>
+            <div class="guild-recruitment">
+                <h3>Condiciones de ingreso</h3>
+                <p id="guild-recruitment-terms"></p>
+                <p id="guild-requirements"></p>
+            </div>
+            <p id="guild-updated" class="guild-profile__updated"></p>
+        </div>
+        <noscript>Activa JavaScript para consultar la copia del perfil del gremio.</noscript>
+        <a class="guild-profile__link" href="https://www.padventures.org/index.php/guildsystem/index/0/a3cc8b7b0c895b3dbe60f588a5e0cfd8" target="_blank" rel="noopener noreferrer">Ver perfil oficial <span aria-hidden="true">↗</span></a>
+    </section>
+
+    <section class="guild-skills" id="guild-skills" aria-labelledby="guild-skills-heading">
+        <p class="gallery-eyebrow">Beneficios del gremio</p>
+        <h2 id="guild-skills-heading">Habilidades de Fairy Legion</h2>
+        <p>Bonificaciones y progreso según la última copia del perfil oficial.</p>
+        <p id="guild-skills-status" role="status">Cargando habilidades...</p>
+        <div id="guild-skills-data" hidden>
+            <h3>Habilidades generales</h3>
+            <div id="guild-skills-general" class="guild-skills__grid"></div>
+        </div>
+        <noscript>Activa JavaScript para consultar las habilidades del gremio.</noscript>
+    </section>
+
+    <section class="collections" id="collections" aria-labelledby="collections-heading">
+        <p class="gallery-eyebrow">Nuestra comunidad</p>
+        <h2 id="collections-heading">Colecciones FairyLegion</h2>
+        <p>Descubre las colecciones de nuestros miembros.</p>
+        <div class="collections__links">
+            <a class="collection-card" href="coleccion-silvarion.html">
+                <span class="collection-card__name">Colección Silvarion</span>
+                <span class="mini-monitor-device" aria-hidden="true">
+                    <span class="mini-monitor-bezel">
+                        <span class="mini-monitor-label">SILVARION</span>
+                        <span class="mini-monitor-screen"><span id="mini-monitor-sprites" class="collection-sprites"></span></span>
+                    </span>
+                </span>
+                <span class="collection-card__action">Ver colección <span aria-hidden="true">→</span></span>
+            </a>
+            <a class="collection-card" href="coleccion-nemesis.html">
+                <span class="collection-card__name">Colección Nemesis</span>
+                <span class="mini-monitor-device" aria-hidden="true">
+                    <span class="mini-monitor-bezel">
+                        <span class="mini-monitor-label">NEMESIS</span>
+                        <span class="mini-monitor-screen"><span id="mini-monitor-sprites-nemesis" class="collection-sprites"></span></span>
+                    </span>
+                </span>
+                <span class="collection-card__action">Ver colección <span aria-hidden="true">→</span></span>
+            </a>
+        </div>
+        <p class="collections__note">Si formas parte del gremio y te gustaría tener una página para tu colección, platica con <strong>Silvarion</strong> para acordar el proceso y consultar la disponibilidad.</p>
+    </section>
 
     <aside class="floating-events" aria-label="Próximos eventos del gremio">
         <button class="floating-events__close" type="button" aria-label="Cerrar aviso">&times;</button>
@@ -38,107 +115,76 @@
         </div>
     </aside>
 
-    <section class="home-p">
-        <h1>Bievenidos al sitio de Fairy Legion!</h1>
-        <div class="img-bienvenidos">
-            <img width="968" height="755" src="/optimized-images/FL-logotype-928cd3d865.webp">
-        </div>
-        <p>Adéntrate en un mundo donde las aventuras Pokémon no conocen límites.</p>
-        <p>En <b>Fairy Legion</b>, somos más que un gremio; somos una comunidad unida por nuestro gusto por Pokémon y
-            nuestra búsqueda compartida de la mejor experiencia de juego en <a
-                href="https://padventures.org/">PAdventures</a>.</p>
-
-        <p>Únete a nosotros y disfruta de la mejor maner la experiencia de <a
-                href="https://padventures.org/">PAdventures</a>, donde se forjan amistades, se ganan batallas y nacen
-            leyendas. Ya seas un entrenador experimentado o un nuevo jugador, aquí hay un lugar para ti.</p>
-
-    </section>
-
-    <section class="apps-section">
-        <h2>Guías y Herramientas</h2>
-        <div class="apps-grid">
-            <a class="app-card" href="/guia-inicial.html">
-                <img loading="lazy" decoding="async" src="/PAD-Inicio.png" alt="Guía de Inicio">
-                <div class="app-text">Guía de Inicio</div>
-            </a>
-            <a class="app-card" href="/pesca.html">
-                <img loading="lazy" decoding="async" src="/optimized-images/fishin1-92cdffaa36.webp" alt="Asistente de Pesca">
-                <div class="app-text">Asistente de Pesca</div>
-            </a>
-            <a class="app-card" href="/respawns.html">
-                <img loading="lazy" decoding="async" src="/optimized-images/respawns-c3bc2ccb7f.webp" alt="Respawns">
-                <div class="app-text">Respawns</div>
-            </a>
-            <a class="app-card" href="/daily-tasks.html">
-                <img loading="lazy" decoding="async" src="/optimized-images/dailybanner-fe6c80dec1.webp" alt="Daily Tasks">
-                <div class="app-text">Daily Tasks</div>
-            </a>
-            <a class="app-card" href="/tms.html">
-                <img loading="lazy" decoding="async" src="/optimized-images/TMs-c9eed1ab41.webp" alt="TMs">
-                <div class="app-text">Referencia de TMs</div>
-            </a>
-            <a class="app-card" href="/tipstricks.html">
-                <img loading="lazy" decoding="async" src="/optimized-images/tipsandtricks-0dd0d678c9.webp" alt="Tips & Tricks">
-                <div class="app-text">Tips & Tricks</div>
-            </a>
-            <a class="app-card" href="/LeadPickaxe.html">
-                <img loading="lazy" decoding="async" src="/optimized-images/LeadPickaxe-689b050730.webp" alt="Lead Pickaxe">
-                <div class="app-text">Lead Pickaxe</div>
-            </a>
-            <a class="app-card" href="/IceHammer.html">
-                <img loading="lazy" decoding="async" src="/optimized-images/IceHammer-1ec57e1ec8.webp" alt="Ice Hammer">
-                <div class="app-text">Ice Hammer</div>
-            </a>
-            <a class="app-card" href="/BugNet.html">
-                <img loading="lazy" decoding="async" src="/optimized-images/BugNet-Banner-0a2d0e4eb3.webp" alt="Bug Net">
-                <div class="app-text">Bug Net</div>
-            </a>
-            <a class="app-card" href="/FieryFisherRod.html">
-                <img loading="lazy" decoding="async" src="/optimized-images/FieryFisherRod-Banner-fa544de76b.webp" alt="Fiery Fisher Rod">
-                <div class="app-text">Fiery Fisher Rod</div>
-            </a>
-            <a class="app-card" href="/MagneticDetector.html">
-                <img loading="lazy" decoding="async" src="/optimized-images/MagneticDetector-Banner-c83c8159f6.webp" alt="Magnetic Detector">
-                <div class="app-text">Magnetic Detector</div>
-            </a>
-            <a class="app-card" href="/GhostDetector.html">
-                <img loading="lazy" decoding="async" src="/optimized-images/Ghost-Detector-Banner-66939c4a7d.webp" alt="Magnetic Detector">
-                <div class="app-text">Ghost Detector</div>
-            </a>
-            <a class="app-card" href="/BossRaids.html">
-                <img loading="lazy" decoding="async" src="/optimized-images/BossRaids-Banner-42f461f0e6.webp" alt="Boss Raids">
-                <div class="app-text">Boss Raids</div>
-            </a>
-            <a class="app-card" href="/PAD-Down.html">
-                <img loading="lazy" decoding="async" src="/optimized-images/PokeCatch-dffcda3647.webp" alt="Boss Raids">
-                <div class="app-text">PokeCatch</div>
-            </a>
-            <a class="app-card" href="/PokeDuel.html">
-                <img loading="lazy" decoding="async" src="/optimized-images/PokeDuel-09f8bcb184.webp" alt="Boss Raids">
-                <div class="app-text">PokeDuel</div>
-            </a>
-            <a class="app-card" href="/PokeLegion.html">
-                <img loading="lazy" decoding="async" src="/optimized-images/PokeLegion-Banner-b3c6e91cb9.webp" alt="Boss Raids">
-                <div class="app-text">PokeLegion</div>
-            </a>
-            <a class="app-card" href="/bazar.html">
-                <img loading="lazy" decoding="async" src="/optimized-images/FLBazar-Banner-01d28d2423.webp" alt="Boss Raids">
-                <div class="app-text">FL Bazar</div>
-            </a>
-            <a class="app-card" href="/Proficiency.html">
-                <img loading="lazy" decoding="async" src="/proficiency-icon.svg" alt="Proficiency System">
-                <div class="app-text">Proficiency</div>
-            </a>
+    <section class="home-tools">
+        <h2>Minijuegos</h2>
+        <div class="home-links">
+            <a href="/PAD-Down.html">Jugar PokeCatch</a>
+            <a href="/PokeDuel.html">Jugar PokeDuel</a>
+            <a href="https://pokerus.fairylegion.com/">Ir a Pokerus!</a>
         </div>
     </section>
 
-    <section id="gallery">
-        <h2>Actividad del gremio:</h2>
+    <section class="home-tools" id="nursery">
+        <h2>Calculadora de guardería Pokémon</h2>
+        <p>¿Cuándo llegará tu Pokémon a nivel 100? Selecciona su nivel actual para calcular el tiempo y la fecha estimada.</p>
+        <label for="level-select">Nivel actual:</label>
+        <select id="level-select">
+            <option value="">Selecciona un nivel</option>
+        </select>
+        <div id="level-result" aria-live="polite"></div>
+        <p class="home-note">Basado en los datos de experiencia y tiempo de la Nursery.</p>
+    </section>
+
+    <section class="home-tools" id="raid-info">
+        <h2>Asistente de Raids de Jefes 🛡️</h2>
+        <p>Busca un Jefe de Raid para ver su <b>ubicación</b> y los <b>premios</b> potenciales.</p>
+        <label for="boss-input">Buscar Jefe:</label>
+        <div class="search-controls">
+            <div class="search-container">
+                <input type="text" id="boss-input" placeholder="Escribe el nombre del jefe...">
+                <div id="suggestions-container"></div>
+            </div>
+            <button id="clear-boss-btn" type="button" disabled>Limpiar</button>
+        </div>
+        <p>La imagen del minimapa es solo una referencia y no representa el lugar exacto donde aparece el jefe. Explora el área mostrada para encontrarlo.</p>
+        <div id="boss-dynamic-info"></div>
+        <div id="raid-system-details">
+            <h3>Reglas del Sistema de Loot 💰</h3>
+            <p>El sistema de loot se divide en <b>3 grupos (A, B, C)</b> basados en el valor de los ítems. La asignación depende de la cantidad de participantes y el daño infligido:</p>
+            <ul class="raid-loot-list">
+                <li><b>Grupo A:</b> Loot de mayor valor (mejores recompensas)</li>
+                <li><b>Grupo B:</b> Loot de buen valor</li>
+                <li><b>Grupo C:</b> Loot que podría ser valioso, pero no necesariamente el principal</li>
+            </ul>
+            <h4>Asignación de jugadores por grupo de loot (basado en el daño):</h4>
+            <div class="loot-table">
+                <table>
+                    <thead><tr><th>Jugadores en Raid</th><th>Jugadores asignados por grupo (A, B, C)</th></tr></thead>
+                    <tbody>
+                        <tr><td>10+</td><td>5 jugadores por grupo</td></tr>
+                        <tr><td>9-</td><td>4 jugadores por grupo</td></tr>
+                        <tr><td>7-</td><td>3 jugadores por grupo</td></tr>
+                        <tr><td>5-</td><td>2 jugadores por grupo</td></tr>
+                        <tr><td>3-</td><td>1 jugador por grupo</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="raid-warning">⚠️ <b>Notas importantes:</b><br>
+                Ser asignado a un grupo <b>no garantiza un ítem de ese grupo</b>. La cantidad de ítems puede ser menor que la de jugadores asignados.
+                Si no obtienes loot del Grupo A o B, pasarás al Grupo C. El Grupo A ofrece la mayor probabilidad de obtener la mejor recompensa.</p>
+        </div>
+        <p>Consulta los detalles oficiales en el <a href="https://forum.padventures.org/index.php?threads/raid-system.45269/" target="_blank" rel="noopener noreferrer">foro de PAdventures</a>.</p>
+        <p class="home-note">Gracias a <a href="https://padventures.org/index.php/character/view/Tuerka" target="_blank" rel="noopener noreferrer">Tuerka</a> e <a href="https://padventures.org/index.php/character/view/Iskra" target="_blank" rel="noopener noreferrer">Iskra</a> por compartir ubicaciones de jefes.</p>
+    </section>
+
+    <section id="gallery" aria-labelledby="activity-heading">
+        <p class="gallery-eyebrow">Momentos de Fairy Legion</p>
+        <h2 id="activity-heading">Actividad del gremio</h2>
         <p>Un agradecimiento especial a <b>Andraxxuz</b> por su invaluable apoyo a los miembros de la guild,
             brindándoles ayuda en quests y orientación en el juego.</p>
-        <div class="gallery-container">
-            <button class="prev" onclick="prevImage()">&#10094;</button>
-            <div class="gallery">
+        <div class="gallery-container" role="region" aria-roledescription="carrusel" aria-label="Fotos de actividad del gremio">
+            <button type="button" class="prev" onclick="prevImage()" aria-label="Imagen anterior">&#10094;</button>
+            <div class="gallery" id="gallery-images">
                 <img width="1600" height="1117" data-original="/guild-quests/nov7.png" loading="lazy" decoding="async" data-src="/optimized-images/nov7-2544c16c7e.webp">
                 <img width="1600" height="1078" data-original="/guild-quests/nov6.png" loading="lazy" decoding="async" data-src="/optimized-images/nov6-82bea99341.webp">
                 <img width="1600" height="1003" data-original="/guild-quests/nov5.png" loading="lazy" decoding="async" data-src="/optimized-images/nov5-502ae18fd5.webp">
@@ -173,91 +219,30 @@
                 <img width="1252" height="1200" data-original="/guild-quests/master-vzla.png" loading="lazy" decoding="async" data-src="/optimized-images/master-vzla-717418e4db.webp">
                 <img width="1195" height="1200" data-original="/guild-quests/master-mickell.png" loading="lazy" decoding="async" data-src="/optimized-images/master-mickell-9d07d0c0d4.webp">
             </div>
-            <button class="next" onclick="nextImage()">&#10095;</button>
+            <button type="button" class="next" onclick="nextImage()" aria-label="Imagen siguiente">&#10095;</button>
         </div>
-        <div class="counter">
-            <span id="currentImage">1</span> / <span id="totalImages">33</span>
+        <div class="gallery-controls">
+            <div class="counter" aria-live="polite" aria-atomic="true">
+                <span class="gallery-counter-label">Imagen</span> <span id="currentImage">1</span> / <span id="totalImages">33</span>
+            </div>
+            <label class="gallery-slider-label" for="gallery-slider">Elegir imagen</label>
+            <input id="gallery-slider" type="range" min="1" max="33" value="1" aria-controls="gallery-images" aria-label="Elegir imagen">
             <a id="gallery-original" href="/guild-quests/nov7.png" target="_blank" rel="noopener">Ver imagen original</a>
         </div>
     </section>
 
 
-    <section id="about">
-        <h2>Un poco sobre nuestra historia</h2>
-        <p>Blah blah blah</p>
-    </section>
-
-    <section id="about">
-        <h2>Sistema de adopción</h2>
-        <p>En <b>Fairy Legion</b>, nuestros miembros participan activamente en un sistema de adopción de Pokémon,
-            diseñado para mejorar la experiencia de juego de aquellos que están comenzando su aventura en PAdventures y
-            pueden beneficiarse de un impulso inicial.</p>
-        <p>Este sistema opera de acuerdo con nuestro <a href="/reglas.html">reglamento interno</a> y está sujeto a la
-            discreción de los encargados de las casas de adopción. No se trata de un servicio exigible, sino más bien de
-            un <b>gesto voluntario</b> que se otorga a jugadores que han demostrado <b>compromiso y dedicación al
-                gremio</b> con el tiempo. Esta medida se implementa para prevenir posibles abusos y mantener un
-            equilibrio justo en las donaciones.</p>
-        <p>Nuestra guild administra un par de casas ubicadas en la ciudad de <b>Celadon</b>, donde se lleva a cabo el
-            proceso de adopción de Pokémon. Aquí es donde se albergan los Pokémon donados y se organizan las entregas a
-            los jugadores seleccionados para recibir estas adopciónes.</p>
-        <p>Las casas de adopción son las siguientes:</p>
-        <div class="house-locations">
-            <img loading="lazy" decoding="async" class="pescabanner" src="/optimized-images/casa-donacion-1-75ebb8d5de.webp">
-            <img loading="lazy" decoding="async" class="pescabanner" src="/optimized-images/casa-donacion-2-c81005c2e0.webp">
-        </div>
-    </section>
-
-
-    <section id="contact">
-        <h2>Quieres unirte?</h2>
-        <h2>Contacta dentro del juego a cualquiera de los siguientes jugadores:</h2>
-        <table>
-            <tr>
-                <th>Nemesis</th>
-                <th>- Lider del gremio</th>
-            </tr>
-            <tr>
-                <td>Botaneraclasica</td>
-                <th>- Botanera clásica, no hay más que decir</th>
-            </tr>
-            <tr>
-                <td>Silvarion</td>
-                <th>- El mas guapo del gremio</th>
-            </tr>
-        </table>
-        <p>
-            Opcionalmente, revisa nuestra <a href="https://padventures.org/index.php/guilds/view/10929/">lista de
-                miembros</a> directamente en la página oficial para encontrar jugadores online.
-        </p>
-    </section>
     <button id="back-to-top" onclick="scrollToTop()">Subir ⤴</button>
     <footer>
     <p>
         © <span id="current-year"></span> Fairy Legion
         <a href="https://www.linkedin.com/in/delfino-rosales/" class="linked-in"> / Desarrollado por Silvarion</a>
-        <a href="coleccion-silvarion.html" id="mini-monitor-link" aria-label="Ir a la colección">
-        <div class="mini-monitor-device">
-            <div class="mini-monitor-bezel">
-            <div class="mini-monitor-label">Coleccion Silvarion</div>
-            <div class="mini-monitor-screen">
-                <div id="mini-monitor-sprites" style="display:flex;gap:2px;align-items:center;justify-content:center;width:100%;height:100%;overflow:hidden;"></div>
-            </div>
-            </div>
-        </div>
-        </a>
-        <a href="coleccion-nemesis.html" id="mini-monitor-link-nemesis" aria-label="Ir a la colección">
-        <div class="mini-monitor-device">
-            <div class="mini-monitor-bezel">
-            <div class="mini-monitor-label">Coleccion Nemesis</div>
-            <div class="mini-monitor-screen">
-                <div id="mini-monitor-sprites-nemesis" style="display:flex;gap:2px;align-items:center;justify-content:center;width:100%;height:100%;overflow:hidden;"></div>
-            </div>
-            </div>
-        </div>
-        </a>
     </p>
     </footer>
         <script src="script.js"></script>
+        <script src="nursery-level-calc.js"></script>
+        <script src="BossRaids.js"></script>
+        <script src="guild-profile.js"></script>
         <script src="gallery.js"></script>
         <script src="flag.js"></script>
         <script src="home-monitors.js"></script>

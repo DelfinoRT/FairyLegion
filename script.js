@@ -117,6 +117,9 @@ function sprinkleFairyDusty() {
     };
 
     const onPointerDown = (evt) => {
+        if (window.getComputedStyle(floatingEvents).position !== 'fixed') {
+            return;
+        }
         if (evt.pointerType === 'mouse' && evt.button !== 0) {
             return;
         }

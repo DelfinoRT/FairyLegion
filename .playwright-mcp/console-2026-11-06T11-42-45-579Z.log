@@ -1,0 +1,2 @@
+[     345ms] TypeError: Cannot read properties of null (reading 'addEventListener')
+    at http://127.0.0.1:19376/pagination.js:81:40

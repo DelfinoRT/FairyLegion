@@ -16,7 +16,7 @@ const server = http.createServer((req,res) => {
   const browser = await chromium.launch({executablePath:process.env.CHROME_PATH || 'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
   const results = [];
   try {
-    for (const name of (process.env.AUDIT_PAGES?.split(',') || ['index.html','coleccion-silvarion.html','coleccion-nemesis.html','Proficiency.html','daily-tasks.html','pesca.html','tms.html','BossRaids.html','PokeLegion.html','PokeDuel.html'])) {
+    for (const name of (process.env.AUDIT_PAGES?.split(',') || ['index.html','coleccion-silvarion.html','coleccion-nemesis.html','Proficiency.html','daily-tasks.html','pesca.html','tms.html','BossRaids.html','PokeDuel.html'])) {
       const context = await browser.newContext({viewport:{width:390,height:844}, deviceScaleFactor:1});
       const page = await context.newPage();
       const errors = [], failures = [], requests = [];

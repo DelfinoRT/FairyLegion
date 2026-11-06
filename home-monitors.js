@@ -1,10 +1,10 @@
-// Reuse sprite nodes and animate only while the footer is visible.
+// Reuse sprite nodes and animate only while the collections are visible.
 (() => {
     const paths = ['pikachu', 'bulbasaur', 'charmander', 'squirtle', 'jigglypuff', 'gengar', 'lapras', 'eevee'];
     const containers = ['mini-monitor-sprites', 'mini-monitor-sprites-nemesis']
         .map(id => document.getElementById(id)).filter(Boolean);
-    const footer = document.querySelector('footer');
-    if (!footer || !containers.length) return;
+    const section = document.getElementById('collections');
+    if (!section || !containers.length) return;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let visible = false;
     let timer;
@@ -15,7 +15,7 @@
                 for (let i = 0; i < 5; i++) {
                     const img = document.createElement('img');
                     img.alt = '';
-                    img.width = img.height = 18;
+                    img.width = img.height = 28;
                     img.style.imageRendering = 'pixelated';
                     container.appendChild(img);
                 }
@@ -34,7 +34,7 @@
         if (!reducedMotion.matches) timer = setInterval(update, 650);
     }
     if ('IntersectionObserver' in window) {
-        new IntersectionObserver(entries => { visible = entries[0].isIntersecting; sync(); }).observe(footer);
+        new IntersectionObserver(entries => { visible = entries[0].isIntersecting; sync(); }).observe(section);
     } else { visible = true; sync(); }
     document.addEventListener('visibilitychange', sync);
     reducedMotion.addEventListener('change', sync);

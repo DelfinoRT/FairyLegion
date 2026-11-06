@@ -1,5 +1,5 @@
 // nursery-level-calc.js
-// JS for Level-to-Date calculator in tipstricks.html
+// Level-to-date calculator shared by the homepage and tipstricks.html.
 
 // Path to CSV file (relative to HTML)
 const CSV_PATH = 'Nursery_ExpGain - Sheet1.csv';
@@ -9,10 +9,10 @@ let expTable = [];
 // Parse CSV data into expTable
 function parseCSV(csv) {
     const lines = csv.trim().split('\n');
-    const header = lines[0].split(',');
+    const rows = [];
     for (let i = 1; i < lines.length; i++) {
         const row = lines[i].split(',');
-        expTable.push({
+        rows.push({
             from: parseInt(row[0]),
             to: parseInt(row[1]),
             exp: parseInt(row[2]),
@@ -22,12 +22,22 @@ function parseCSV(csv) {
             seconds: parseInt(row[6])
         });
     }
+    if (rows.length !== 99 || rows.some((row, index) =>
+        row.from !== index + 1 || row.to !== index + 2 ||
+        [row.exp, row.days, row.hours, row.minutes, row.seconds].some(value => !Number.isFinite(value) || value < 0)
+    )) {
+        throw new Error('Los datos de la Nursery están incompletos o son inválidos.');
+    }
+    expTable = rows;
 }
 
 // Fetch CSV file and parse
 function loadCSV(callback) {
-    fetch(CSV_PATH)
-        .then(res => res.text())
+    return fetch(CSV_PATH)
+        .then(res => {
+            if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
+            return res.text();
+        })
         .then(text => {
             parseCSV(text);
             if (callback) callback();
@@ -112,8 +122,15 @@ function onLevelSelect() {
 
 // Init
 window.addEventListener('DOMContentLoaded', function() {
+    const select = document.getElementById('level-select');
+    const result = document.getElementById('level-result');
+    select.disabled = true;
     loadCSV(() => {
         populateDropdown();
-        document.getElementById('level-select').addEventListener('change', onLevelSelect);
+        select.disabled = false;
+        select.addEventListener('change', onLevelSelect);
+    }).catch(error => {
+        console.error('No se pudieron cargar los datos de la Nursery:', error);
+        result.textContent = 'No se pudieron cargar los datos de la Nursery. Inténtalo de nuevo más tarde.';
     });
 });

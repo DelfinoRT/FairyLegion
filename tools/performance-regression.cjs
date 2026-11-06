@@ -134,54 +134,6 @@ const server = http.createServer((req, res) => {
             await context.close();
             console.log('PASS fishing scrollable picker, search, and selection');
         }
-        {
-            const context = await browser.newContext({viewport:{width:390,height:844}});
-            const page = await context.newPage();
-            page.on('pageerror', e => errors.push(`PokeLegion: ${e.message}`));
-            await page.addInitScript(() => {
-                window.activeAuditIntervals = new Set();
-                window.auditResizeListeners = new Set();
-                const interval = window.setInterval, clear = window.clearInterval;
-                window.setInterval = (...args) => {const id=interval(...args);activeAuditIntervals.add(id);return id;};
-                window.clearInterval = id => {activeAuditIntervals.delete(id);return clear(id);};
-                const add = window.addEventListener, remove = window.removeEventListener;
-                window.addEventListener = function(type, listener, options) {if(type==='resize')auditResizeListeners.add(listener);return add.call(this,type,listener,options);};
-                window.removeEventListener = function(type, listener, options) {if(type==='resize')auditResizeListeners.delete(listener);return remove.call(this,type,listener,options);};
-            });
-            await page.goto(`${base}/PokeLegion.html`,{waitUntil:'load'});
-            await page.locator('#playerName').fill('Performance Test');
-            await page.locator('.avatar-choice').first().evaluate(button => button.click());
-            await page.evaluate(() => document.querySelectorAll('.starter-choice.selected').forEach(button=>button.classList.remove('selected')));
-            for(let i=0;i<3;i++) await page.locator('.starter-choice').nth(i).evaluate(button => button.click());
-            await page.locator('#createBtn').click();
-            await page.waitForFunction(() => window.PokeLegion?.player()?.name === 'Performance Test', null, {timeout:3000}).catch(async error => {
-                console.log('Trainer creation diagnostic', await page.evaluate(() => ({name:document.getElementById('playerName').value, avatars:document.querySelectorAll('.avatar-choice.selected').length, starters:document.querySelectorAll('.starter-choice.selected').length, player:window.PokeLegion?.player(), text:document.body.innerText.slice(-1600)})));
-                throw error;
-            });
-            const result = await page.evaluate(() => {
-                const player = PokeLegion.player();
-                player.tasksCycleStartedAt = Date.now(); player.tasksChosenCount = 2;
-                const intervals = activeAuditIntervals.size, resize = auditResizeListeners.size;
-                for(let i=0;i<50;i++) {
-                    Array.from(document.querySelectorAll('button')).find(b=>b.textContent==='Manage Tasks').click();
-                    Array.from(document.querySelectorAll('button')).find(b=>b.textContent==='Close').click();
-                }
-                return {intervals, afterIntervals:activeAuditIntervals.size, resize};
-            });
-            assert.equal(result.afterIntervals,result.intervals,'Tasks should not retain intervals');
-            await page.setViewportSize({width:1280,height:900});
-            await page.locator('#depotBtn').click();
-            await page.evaluate(() => {
-                const input=document.querySelector('#depotRoot input[type=search]');
-                for(let i=0;i<100;i++) {input.value=i%2?'a':'';input.dispatchEvent(new Event('input'));}
-            });
-            assert.equal(await page.evaluate(() => auditResizeListeners.size),result.resize,'Depot renders should not register resize callbacks');
-            await page.locator('#depotBackTop').click();
-            assert.equal(await page.locator('#depotRoot').count(),0);
-            assert.equal(await page.evaluate(() => auditResizeListeners.size),result.resize);
-            await context.close();
-            console.log('PASS PokeLegion trainer creation, 50 task dialog cycles, 100 depot searches, timer/listener cleanup');
-        }
         assert.deepEqual(errors, [], 'uncaught script errors');
         assert.deepEqual(failures, [], 'missing local resources');
     } finally {await browser.close();server.close();}
