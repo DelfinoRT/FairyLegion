@@ -1,0 +1,94 @@
+[
+  {
+    "name": "Aerial Ball",
+    "sprite": "ColeccionSilvarion/icon-aerial.gif"
+  },
+  {
+    "name": "Ancient Ball",
+    "sprite": "ColeccionSilvarion/icon-ancient.gif"
+  },
+  {
+    "name": "Charm Ball",
+    "sprite": "ColeccionSilvarion/icon-charm.gif"
+  },
+  {
+    "name": "Cherish Ball",
+    "sprite": "ColeccionSilvarion/icon-cherish.gif"
+  },
+  {
+    "name": "Cloned Ball",
+    "sprite": "ColeccionSilvarion/icon-cloned.gif"
+  },
+  {
+    "name": "Crystal Ball",
+    "sprite": "ColeccionSilvarion/icon-crystal.gif"
+  },
+  {
+    "name": "Dive Ball",
+    "sprite": "ColeccionSilvarion/icon-dive.gif"
+  },
+  {
+    "name": "Dream Ball",
+    "sprite": "ColeccionSilvarion/icon-dream.gif"
+  },
+  {
+    "name": "Fast Ball",
+    "sprite": "ColeccionSilvarion/icon-fast.gif"
+  },
+  {
+    "name": "Friend Ball",
+    "sprite": "ColeccionSilvarion/icon-friend.gif"
+  },
+  {
+    "name": "Golden Ball",
+    "sprite": "ColeccionSilvarion/icon-golden.gif"
+  },
+  {
+    "name": "Heavy Ball",
+    "sprite": "ColeccionSilvarion/icon-heavy.gif"
+  },
+  {
+    "name": "Moon Ball",
+    "sprite": "ColeccionSilvarion/icon-moon.gif"
+  },
+  {
+    "name": "Moss Ball",
+    "sprite": "ColeccionSilvarion/icon-moss.gif"
+  },
+  {
+    "name": "Mythic Ball",
+    "sprite": "ColeccionSilvarion/icon-mythic.gif"
+  },
+  {
+    "name": "Phantom Ball",
+    "sprite": "ColeccionSilvarion/icon-phantom.gif"
+  },
+  {
+    "name": "Poké Ball",
+    "sprite": "ColeccionSilvarion/icon-pokeball.gif"
+  },
+  {
+    "name": "Premier Ball",
+    "sprite": "ColeccionSilvarion/icon-premier.gif"
+  },
+  {
+    "name": "Prism Ball",
+    "sprite": "ColeccionSilvarion/icon-prism.gif"
+  },
+  {
+    "name": "Quick Ball",
+    "sprite": "ColeccionSilvarion/icon-quick.gif"
+  },
+  {
+    "name": "Rocket Ball",
+    "sprite": "ColeccionSilvarion/icon-rocket.gif"
+  },
+  {
+    "name": "Sunrise Ball",
+    "sprite": "ColeccionSilvarion/icon-sunrise.gif"
+  },
+  {
+    "name": "Ultra Ball",
+    "sprite": "ColeccionSilvarion/icon-ultra.gif"
+  }
+]

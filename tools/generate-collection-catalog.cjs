@@ -38,4 +38,13 @@ for (const filename of fs.readdirSync(folder).sort()) {
 const result = [...catalog.values()].sort((a, b) => a.name.localeCompare(b.name, 'en'));
 if (!result.length) throw new Error('No Pokémon found in collection pages.');
 fs.writeFileSync(path.join(root, 'data', 'collection-catalog.json'), JSON.stringify(result, null, 2) + '\n');
+const ballSprites = fs.readdirSync(path.join(root, 'ColeccionSilvarion'))
+  .filter(filename => /^icon-[a-z0-9-]+\.gif$/i.test(filename))
+  .sort()
+  .map(filename => {
+    const key = filename.slice(5, -4).toLowerCase();
+    const name = key === 'pokeball' ? 'Poké Ball' : `${key.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase())} Ball`;
+    return { name, sprite: `ColeccionSilvarion/${filename}` };
+  });
+fs.writeFileSync(path.join(root, 'data', 'collection-balls.json'), JSON.stringify(ballSprites, null, 2) + '\n');
 console.log(`Generated ${result.length} catalog entries.`);

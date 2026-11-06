@@ -66,9 +66,13 @@
           <label>Nombre de la colección <input name="name" required maxlength="80"></label>
           <label>Color de fondo <input name="background" type="color"></label>
           <label>Color de acento <input name="accent" type="color"></label>
-          <button>Guardar colección</button>
+          <button id="save-collection">Guardar colección</button>
         </form>
-        <p>Los cambios en Pokémon se guardan al pulsar «Guardar colección».</p>
+        <div id="unsaved-changes" class="unsaved-changes" role="status" aria-live="polite" hidden>
+          <strong>Cambios sin guardar</strong>
+          <ul id="unsaved-list"></ul>
+        </div>
+        <p>Los cambios en Pokémon se guardan al pulsar «Guardar colección». Termina o cancela el formulario de Pokémon antes de guardar.</p>
         <form id="add-pokemon" class="form-grid">
           <label>Pokémon <input name="pokemon" list="catalog" required autocomplete="off" placeholder="Buscar Pokémon"></label>
           <datalist id="catalog"></datalist>

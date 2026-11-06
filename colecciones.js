@@ -4,13 +4,15 @@
   const API = 'https://api.fairylegion.com';
   const $ = id => document.getElementById(id);
   const types = ['Normal', 'Fire', 'Water', 'Electric', 'Grass', 'Ice', 'Fighting', 'Poison', 'Ground', 'Flying', 'Psychic', 'Bug', 'Rock', 'Ghost', 'Dragon', 'Dark', 'Steel', 'Fairy'];
-  const balls = ['Aerial', 'Ancient', 'Beast', 'Cherish', 'Crystal', 'Dive', 'Dream', 'Friend', 'Great', 'Heavy', 'Master', 'Moon', 'Moss', 'Mythic', 'Poké', 'Premier', 'Prism', 'Rocket', 'Ultra'].map(name => `${name} Ball`);
+  const extraBalls = ['Beast Ball', 'Great Ball', 'Master Ball'];
   const status = text => { $('status').textContent = text; };
   const option = (parent, value) => parent.append(new Option(value, value));
   types.forEach(type => { option($('type-filter'), type); document.querySelectorAll('.type-input').forEach(select => option(select, type)); });
-  balls.forEach(ball => option($('balls'), ball));
   let catalog = [];
+  let ballSprites = [];
   let current = null;
+  let saved = null;
+  let entryOrigins = new WeakMap();
   let editingUser = null;
   let editingIndex = null;
   let typeRequest = 0;
@@ -45,14 +47,62 @@
     return node;
   }
   function linkFor(slug) { return `colecciones.html?coleccion=${encodeURIComponent(slug)}`; }
+  function ballKey(name) {
+    const key = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    return key === 'pokeballball' ? 'pokeball' : key;
+  }
+  function markSaved() {
+    saved = structuredClone(current);
+    entryOrigins = new WeakMap();
+    current.entries.forEach((entry, index) => entryOrigins.set(entry, saved.entries[index]));
+  }
+  function renderChanges() {
+    if (!saved) return;
+    const form = $('settings');
+    const changes = [];
+    for (const [field, label] of [['name', 'Nombre de la colección'], ['background', 'Color de fondo'], ['accent', 'Color de acento']]) {
+      if (form.elements[field].value !== saved[field]) changes.push(`${label}: ${saved[field]} → ${form.elements[field].value}`);
+    }
+    const remaining = new Set(saved.entries);
+    for (const entry of current.entries) {
+      const original = entryOrigins.get(entry);
+      if (!original) changes.push(`Pokémon agregado: ${entry.name}`);
+      else {
+        remaining.delete(original);
+        const fields = [['name', 'nombre'], ['sprite', 'sprite'], ['ball', 'ball'], ['ability', 'habilidad'], ['sex', 'sexo'], ['types', 'tipos']]
+          .filter(([field]) => JSON.stringify(entry[field]) !== JSON.stringify(original[field]))
+          .map(([field, label]) => {
+            const display = value => (Array.isArray(value) ? value.join(' · ') : value) || 'sin especificar';
+            return `${label}: ${display(original[field])} → ${display(entry[field])}`;
+          });
+        if (fields.length) changes.push(`Pokémon modificado: ${original.name} (${fields.join(', ')})`);
+      }
+    }
+    remaining.forEach(entry => changes.push(`Pokémon eliminado: ${entry.name}`));
+    dirty = changes.length > 0;
+    if (pendingEntry) changes.push('Formulario de Pokémon en edición: agrégalo, actualízalo o cancélalo antes de guardar.');
+    $('unsaved-list').replaceChildren(...changes.map(change => element('li', change)));
+    $('unsaved-changes').hidden = !changes.length;
+    $('save-collection').classList.toggle('needs-save', changes.length > 0);
+  }
   function card(entry, editable, index) {
     const node = element('article', undefined, 'card');
     const image = element('img');
     image.src = entry.sprite;
     image.alt = entry.name;
     image.loading = 'lazy';
+    const ball = element('p', undefined, 'ball-label');
+    const ballSprite = ballSprites.find(item => ballKey(item.name) === ballKey(entry.ball));
+    if (ballSprite) {
+      const icon = element('img', undefined, 'ball-icon');
+      icon.src = ballSprite.sprite;
+      icon.alt = '';
+      icon.loading = 'lazy';
+      ball.append(icon);
+    }
+    ball.append(document.createTextNode(entry.ball || 'Ball sin especificar'));
     node.append(image, element('h3', entry.name), element('p', entry.types.join(' · ') || 'Tipo sin especificar'),
-      element('p', entry.ball || 'Ball sin especificar'), element('p', [entry.sex, entry.ability].filter(Boolean).join(' · ') || ''));
+      ball, element('p', [entry.sex, entry.ability].filter(Boolean).join(' · ') || ''));
     if (editable) {
       node.append(button('Editar', () => {
         if (pendingEntry && !confirm('Hay un Pokémon en edición. ¿Descartar esos cambios?')) return;
@@ -68,14 +118,15 @@
         form.elements.type2.value = entry.types[1] || '';
         $('add-button').textContent = 'Actualizar Pokémon';
         $('cancel-edit').hidden = false;
+        renderChanges();
         form.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }), button('Quitar', () => {
         if (!confirm(`¿Quitar ${entry.name} de la colección?`)) return;
         if (pendingEntry && !confirm('Hay un Pokémon en edición. ¿Descartar esos cambios?')) return;
         current.entries.splice(index, 1);
-        dirty = true;
         cancelEdit();
         renderEditable();
+        renderChanges();
       }));
     }
     return node;
@@ -128,19 +179,20 @@
     $('add-pokemon').reset();
     $('add-button').textContent = 'Agregar Pokémon';
     $('cancel-edit').hidden = true;
+    renderChanges();
   }
   async function editCollection(id, username) {
     if ((dirty || pendingEntry) && !confirm('Hay cambios sin guardar. ¿Descartarlos?')) return;
     current = await api(`/editor/${id}`);
     editingUser = id;
-    dirty = false;
-    cancelEdit();
     $('edit-area').hidden = false;
     $('edit-title').textContent = `Editar colección de ${username}`;
     $('settings').elements.name.value = current.name;
     $('settings').elements.background.value = current.background;
     $('settings').elements.accent.value = current.accent;
     $('public-link').href = linkFor(current.slug);
+    markSaved();
+    cancelEdit();
     renderEditable();
   }
   async function loadUsers() {
@@ -205,8 +257,8 @@
     pendingEntry = false;
     location.reload();
   }));
-  $('settings').addEventListener('input', () => { dirty = true; });
-  $('add-pokemon').addEventListener('input', () => { pendingEntry = true; $('cancel-edit').hidden = false; });
+  $('settings').addEventListener('input', renderChanges);
+  $('add-pokemon').addEventListener('input', () => { pendingEntry = true; $('cancel-edit').hidden = false; renderChanges(); });
   document.querySelectorAll('.type-input').forEach(select => select.addEventListener('change', () => { typeRequest++; typeLoading = false; }));
   $('generate-password').addEventListener('click', () => {
     const bytes = crypto.getRandomValues(new Uint8Array(18));
@@ -246,11 +298,19 @@
     run(async () => {
       const form = event.target;
       if (pendingEntry) throw new Error('Agrega o cancela el Pokémon en edición antes de guardar.');
-      current.name = form.elements.name.value;
-      current.background = form.elements.background.value;
-      current.accent = form.elements.accent.value;
-      current = await api(`/editor/${editingUser}`, 'PUT', current);
-      dirty = false;
+      const payload = { ...current, name: form.elements.name.value, background: form.elements.background.value, accent: form.elements.accent.value };
+      $('account').inert = true;
+      try {
+        current = await api(`/editor/${editingUser}`, 'PUT', payload);
+      } finally {
+        $('account').inert = false;
+      }
+      form.elements.name.value = current.name;
+      form.elements.background.value = current.background;
+      form.elements.accent.value = current.accent;
+      markSaved();
+      renderEditable();
+      renderChanges();
       status('Colección guardada.');
     });
   });
@@ -287,15 +347,24 @@
     if (!selected) return status('Selecciona un Pokémon del catálogo.');
     const entry = { name: selected.name, sprite: selected.sprite, ball: form.elements.ball.value, ability: form.elements.ability.value, sex: form.elements.sex.value,
       types: [...new Set([form.elements.type1.value, form.elements.type2.value].filter(Boolean))] };
-    if (editingIndex === null) current.entries.push(entry); else current.entries[editingIndex] = entry;
-    dirty = true;
+    if (editingIndex === null) current.entries.push(entry);
+    else {
+      const original = entryOrigins.get(current.entries[editingIndex]);
+      if (original) entryOrigins.set(entry, original);
+      current.entries[editingIndex] = entry;
+    }
     cancelEdit();
     renderEditable();
+    renderChanges();
     status('Cambio pendiente: guarda la colección.');
   });
   $('cancel-edit').addEventListener('click', cancelEdit);
   ['search', 'type-filter', 'ball-filter', 'sort'].forEach(id => $(id).addEventListener('input', renderPublic));
   run(async () => {
+    const ballResponse = await fetch('data/collection-balls.json');
+    if (!ballResponse.ok) throw new Error('No se pudo cargar el catálogo de Balls.');
+    ballSprites = await ballResponse.json();
+    [...ballSprites.map(item => item.name), ...extraBalls].sort().forEach(ball => option($('balls'), ball));
     const slug = new URLSearchParams(location.search).get('coleccion');
     if (slug) return showCollection(slug);
     const response = await fetch('data/collection-catalog.json');

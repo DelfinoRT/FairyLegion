@@ -16,6 +16,8 @@ Run `node tools/generate-collection-catalog.cjs` from the repository root to reg
 
 Types found in the existing pages or `pokemon-types.json` take priority. For a selected catalog entry without types, the editor tries PokéAPI using the name (removing a leading Shiny or Cloned). PokéAPI does not know all PAdventures variants and can be unavailable; users can select or correct types manually. Ability and ball are entered independently, since game-specific options are not guaranteed by PokéAPI.
 
+The same generator builds `data/collection-balls.json` from `ColeccionSilvarion/icon-*.gif`. Ball names in the editor and public collections are matched case-insensitively (including accented Poké Ball); custom names without a matching sprite remain visible as text. New ball sprites require the generated manifest to be published alongside them. The editor lists differences from the last saved collection and highlights the save button; a Pokémon form in progress must be added or cancelled before saving.
+
 ## Deployment prerequisites
 
 This code has **not** been deployed or verified against the existing droplet. Before installing, check free disk, RAM, port availability, existing proxy, DNS, firewall and backups. It listens only on `127.0.0.1:8081` on the host by default; change the host port in `compose.yml` if occupied. Keep the port private and put it behind an HTTPS reverse proxy. Docker needs permission to write its named volume. Do not mount this service over the Viajes Chukum volumes or reuse its credentials.
