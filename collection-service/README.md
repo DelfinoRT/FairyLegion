@@ -18,6 +18,8 @@ Types found in the existing pages or `pokemon-types.json` take priority. For a s
 
 The same generator builds `data/collection-balls.json` from `ColeccionSilvarion/icon-*.gif`. Ball names in the editor and public collections are matched case-insensitively (including accented Poké Ball); custom names without a matching sprite remain visible as text. New ball sprites require the generated manifest to be published alongside them. The editor lists differences from the last saved collection and highlights the save button; a Pokémon form in progress must be added or cancelled before saving.
 
+Collection colors produce a gradient on the public page. The editor provides color presets and a live preview; presets set the same two stored colors and do not require a database change. The save button is disabled when there are no applied changes, and becomes available when settings or collection entries differ from the last save.
+
 ## Deployment prerequisites
 
 This code has **not** been deployed or verified against the existing droplet. Before installing, check free disk, RAM, port availability, existing proxy, DNS, firewall and backups. It listens only on `127.0.0.1:8081` on the host by default; change the host port in `compose.yml` if occupied. Keep the port private and put it behind an HTTPS reverse proxy. Docker needs permission to write its named volume. Do not mount this service over the Viajes Chukum volumes or reuse its credentials.

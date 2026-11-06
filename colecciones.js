@@ -47,6 +47,15 @@
     return node;
   }
   function linkFor(slug) { return `colecciones.html?coleccion=${encodeURIComponent(slug)}`; }
+  function applyTheme(target, background, accent) {
+    target.style.background = `linear-gradient(#0006, #0006), radial-gradient(circle at top, ${accent}55, transparent 55%), linear-gradient(145deg, ${background}, #191022 85%)`;
+    target.style.setProperty('--collection-accent', accent);
+  }
+  function renderThemePreview() {
+    const form = $('settings');
+    applyTheme($('theme-preview'), form.elements.background.value, form.elements.accent.value);
+    $('preview-name').textContent = form.elements.name.value || 'Tu colección';
+  }
   function ballKey(name) {
     const key = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
     return key === 'pokeballball' ? 'pokeball' : key;
@@ -83,7 +92,8 @@
     if (pendingEntry) changes.push('Formulario de Pokémon en edición: agrégalo, actualízalo o cancélalo antes de guardar.');
     $('unsaved-list').replaceChildren(...changes.map(change => element('li', change)));
     $('unsaved-changes').hidden = !changes.length;
-    $('save-collection').classList.toggle('needs-save', changes.length > 0);
+    $('save-collection').disabled = !dirty;
+    $('save-collection').classList.toggle('needs-save', dirty);
   }
   function card(entry, editable, index) {
     const node = element('article', undefined, 'card');
@@ -166,7 +176,7 @@
     $('public').hidden = false;
     $('collection-name').textContent = current.name;
     document.title = `${current.name} · Fairy Legion`;
-    document.body.style.background = current.background;
+    applyTheme(document.body, current.background, current.accent);
     $('public').style.borderColor = current.accent;
     [...new Set(current.entries.map(entry => entry.ball).filter(Boolean))].sort().forEach(ball => option($('ball-filter'), ball));
     renderPublic();
@@ -191,6 +201,7 @@
     $('settings').elements.background.value = current.background;
     $('settings').elements.accent.value = current.accent;
     $('public-link').href = linkFor(current.slug);
+    renderThemePreview();
     markSaved();
     cancelEdit();
     renderEditable();
@@ -257,7 +268,17 @@
     pendingEntry = false;
     location.reload();
   }));
-  $('settings').addEventListener('input', renderChanges);
+  $('settings').addEventListener('input', () => { renderThemePreview(); renderChanges(); });
+  document.querySelectorAll('.theme-preset').forEach(preset => {
+    preset.style.setProperty('--preset-background', preset.dataset.background);
+    preset.style.setProperty('--preset-accent', preset.dataset.accent);
+    preset.addEventListener('click', () => {
+      $('settings').elements.background.value = preset.dataset.background;
+      $('settings').elements.accent.value = preset.dataset.accent;
+      renderThemePreview();
+      renderChanges();
+    });
+  });
   $('add-pokemon').addEventListener('input', () => { pendingEntry = true; $('cancel-edit').hidden = false; renderChanges(); });
   document.querySelectorAll('.type-input').forEach(select => select.addEventListener('change', () => { typeRequest++; typeLoading = false; }));
   $('generate-password').addEventListener('click', () => {
@@ -297,6 +318,7 @@
     event.preventDefault();
     run(async () => {
       const form = event.target;
+      if (!dirty) return;
       if (pendingEntry) throw new Error('Agrega o cancela el Pokémon en edición antes de guardar.');
       const payload = { ...current, name: form.elements.name.value, background: form.elements.background.value, accent: form.elements.accent.value };
       $('account').inert = true;
@@ -308,6 +330,7 @@
       form.elements.name.value = current.name;
       form.elements.background.value = current.background;
       form.elements.accent.value = current.accent;
+      renderThemePreview();
       markSaved();
       renderEditable();
       renderChanges();

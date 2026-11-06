@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Colecciones Fairy Legion</title>
   <link rel="icon" href="/favicon-32x32.png">
-  <link rel="stylesheet" href="colecciones.css">
-  <script src="colecciones.js" defer></script>
+  <link rel="stylesheet" href="colecciones.css?v=2">
+  <script src="colecciones.js?v=2" defer></script>
 </head>
 <body>
   <main class="shell">
@@ -66,8 +66,23 @@
           <label>Nombre de la colección <input name="name" required maxlength="80"></label>
           <label>Color de fondo <input name="background" type="color"></label>
           <label>Color de acento <input name="accent" type="color"></label>
-          <button id="save-collection">Guardar colección</button>
+          <button id="save-collection" disabled>Guardar colección</button>
         </form>
+        <p>Elige una combinación de degradados o personaliza los colores. La vista previa muestra cómo se verá tu página pública.</p>
+        <div class="theme-presets" aria-label="Combinaciones de colores">
+          <button type="button" class="theme-preset" data-background="#381b53" data-accent="#d499fa">Místico</button>
+          <button type="button" class="theme-preset" data-background="#123e52" data-accent="#79d5e8">Océano</button>
+          <button type="button" class="theme-preset" data-background="#52303d" data-accent="#f4a8b8">Atardecer</button>
+          <button type="button" class="theme-preset" data-background="#214331" data-accent="#9bdcae">Bosque</button>
+        </div>
+        <div class="preview-label">Vista previa de la página pública</div>
+        <div id="theme-preview" class="theme-preview">
+          <div class="theme-preview-header">Colecciones Fairy Legion</div>
+          <div class="theme-preview-panel">
+            <h4 id="preview-name"></h4>
+            <div class="card theme-preview-card"><strong>Pokémon</strong><p>Ejemplo de tu colección</p></div>
+          </div>
+        </div>
         <div id="unsaved-changes" class="unsaved-changes" role="status" aria-live="polite" hidden>
           <strong>Cambios sin guardar</strong>
           <ul id="unsaved-list"></ul>
