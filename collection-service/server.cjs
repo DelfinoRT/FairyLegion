@@ -24,8 +24,12 @@ CREATE TABLE IF NOT EXISTS collections (
   user_id INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
   slug TEXT NOT NULL UNIQUE COLLATE NOCASE, name TEXT NOT NULL,
   background TEXT NOT NULL DEFAULT '#21132e', accent TEXT NOT NULL DEFAULT '#c58bf0',
-  entries TEXT NOT NULL DEFAULT '[]', version INTEGER NOT NULL DEFAULT 1
+  entries TEXT NOT NULL DEFAULT '[]', version INTEGER NOT NULL DEFAULT 1,
+  sort_order TEXT NOT NULL DEFAULT 'name'
 );`);
+if (!db.prepare('PRAGMA table_info(collections)').all().some(column => column.name === 'sort_order')) {
+  db.exec("ALTER TABLE collections ADD COLUMN sort_order TEXT NOT NULL DEFAULT 'name'");
+}
 
 function hashPassword(password) {
   const salt = crypto.randomBytes(16).toString('hex');
@@ -104,13 +108,14 @@ function limitLogin(username) {
   }
 }
 function collectionFor(userId) {
-  const row = db.prepare('SELECT slug, name, background, accent, entries, version FROM collections WHERE user_id=?').get(userId);
+  const row = db.prepare('SELECT slug, name, background, accent, entries, version, sort_order AS sortOrder FROM collections WHERE user_id=?').get(userId);
   return row ? { ...row, entries: JSON.parse(row.entries) } : null;
 }
 function saveCollection(userId, input) {
-  const { name, background, accent, entries, version } = input;
+  const { name, background, accent, entries, version, sortOrder } = input;
   if (typeof name !== 'string' || !name.trim() || name.length > 80 ||
       !/^#[a-f\d]{6}$/i.test(background || '') || !/^#[a-f\d]{6}$/i.test(accent || '') ||
+      (sortOrder !== undefined && !['name', 'ball', 'type'].includes(sortOrder)) ||
       !Number.isInteger(version) || !Array.isArray(entries) || entries.length > 2000) throw fail(400, 'Datos de colección inválidos.');
   const clean = entries.map(entry => {
     if (!entry || typeof entry !== 'object' ||
@@ -125,8 +130,8 @@ function saveCollection(userId, input) {
     }
     return { name: entry.name.trim(), sprite: entry.sprite, ball: entry.ball.trim(), ability: entry.ability.trim(), sex: entry.sex, types: entry.types };
   });
-  const result = db.prepare('UPDATE collections SET name=?, background=?, accent=?, entries=?, version=version+1 WHERE user_id=? AND version=?')
-    .run(name.trim(), background, accent, JSON.stringify(clean), userId, version);
+  const result = db.prepare('UPDATE collections SET name=?, background=?, accent=?, entries=?, sort_order=COALESCE(?, sort_order), version=version+1 WHERE user_id=? AND version=?')
+    .run(name.trim(), background, accent, JSON.stringify(clean), sortOrder ?? null, userId, version);
   if (!result.changes) throw fail(409, 'La colección cambió en otra sesión; recarga antes de guardar.');
   return collectionFor(userId);
 }

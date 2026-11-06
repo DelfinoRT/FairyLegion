@@ -6,7 +6,7 @@ The static site and this service are separate from Viajes Chukum. The service us
 
 The administrator creates accounts and initial passwords, can reset passwords, edit any member's collection, and deactivate or restore accounts. Deactivation hides the public page, blocks login and revokes sessions without deleting collection data. Members can change their passwords. Existing member sessions are revoked after a password reset.
 
-Each member has one public page at `https://www.fairylegion.com/colecciones.html?coleccion=USERNAME`. Visitors can search, filter and sort it. Account names are lowercase letters, digits, underscores or hyphens; names also determine the public slug. Collection edits use version numbers to reject conflicting saves. Usernames are not secret, and collections are public.
+Each member has one public page at `https://www.fairylegion.com/colecciones.html?coleccion=USERNAME`. Visitors can search and filter it; the owner chooses whether Pokémon are displayed alphabetically or grouped by ball or type. Two-type Pokémon appear in both type groups. Existing collections default to alphabetical order. Account names are lowercase letters, digits, underscores or hyphens; names also determine the public slug. Collection edits use version numbers to reject conflicting saves. Usernames are not secret, and collections are public.
 
 ## Catalog and sprites
 
@@ -19,6 +19,8 @@ Types found in the existing pages or `pokemon-types.json` take priority. For a s
 The same generator builds `data/collection-balls.json` from `ColeccionSilvarion/icon-*.gif`. Ball names in the editor and public collections are matched case-insensitively (including accented Poké Ball); custom names without a matching sprite remain visible as text. New ball sprites require the generated manifest to be published alongside them. The editor lists differences from the last saved collection and highlights the save button; a Pokémon form in progress must be added or cancelled before saving.
 
 Collection colors produce a gradient on the public page. The editor provides color presets and a live preview; presets set the same two stored colors and do not require a database change. The save button is disabled when there are no applied changes, and becomes available when settings or collection entries differ from the last save.
+
+Type icons use the existing `ColeccionSilvarion/type-*.png` files, so viewing a collection does not require PokéAPI requests. Deploy the backend before publishing the frontend that supports owner-selected ordering. On startup the backend adds the ordering column to existing databases, defaulting to alphabetical; take and verify a database backup before upgrading. Old frontend versions can still save without changing the saved ordering.
 
 ## Deployment prerequisites
 

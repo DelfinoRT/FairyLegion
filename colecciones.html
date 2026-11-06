@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Colecciones Fairy Legion</title>
   <link rel="icon" href="/favicon-32x32.png">
-  <link rel="stylesheet" href="colecciones.css?v=2">
-  <script src="colecciones.js?v=2" defer></script>
+  <link rel="stylesheet" href="colecciones.css?v=3">
+  <script src="colecciones.js?v=3" defer></script>
 </head>
 <body>
   <main class="shell">
@@ -22,10 +22,9 @@
         <label>Buscar <input id="search" type="search" placeholder="Nombre o habilidad"></label>
         <label>Tipo <select id="type-filter"><option value="">Todos</option></select></label>
         <label>Ball <select id="ball-filter"><option value="">Todas</option></select></label>
-        <label>Ordenar por <select id="sort"><option value="name">Nombre</option><option value="type">Tipo</option><option value="ball">Ball</option></select></label>
       </div>
       <p id="count"></p>
-      <div id="cards" class="cards"></div>
+      <div id="cards"></div>
     </section>
     <section id="directory" hidden>
       <h2>Colecciones de la comunidad</h2>
@@ -66,6 +65,7 @@
           <label>Nombre de la colección <input name="name" required maxlength="80"></label>
           <label>Color de fondo <input name="background" type="color"></label>
           <label>Color de acento <input name="accent" type="color"></label>
+          <label>Mostrar colección por <select name="sortOrder"><option value="name">Nombre (A–Z)</option><option value="ball">Ball</option><option value="type">Tipo</option></select></label>
           <button id="save-collection" disabled>Guardar colección</button>
         </form>
         <p>Elige una combinación de degradados o personaliza los colores. La vista previa muestra cómo se verá tu página pública.</p>

@@ -4,6 +4,7 @@
   const API = 'https://api.fairylegion.com';
   const $ = id => document.getElementById(id);
   const types = ['Normal', 'Fire', 'Water', 'Electric', 'Grass', 'Ice', 'Fighting', 'Poison', 'Ground', 'Flying', 'Psychic', 'Bug', 'Rock', 'Ghost', 'Dragon', 'Dark', 'Steel', 'Fairy'];
+  const sortLabels = { name: 'Nombre (A–Z)', ball: 'Ball', type: 'Tipo' };
   const extraBalls = ['Beast Ball', 'Great Ball', 'Master Ball'];
   const status = text => { $('status').textContent = text; };
   const option = (parent, value) => parent.append(new Option(value, value));
@@ -72,6 +73,7 @@
     for (const [field, label] of [['name', 'Nombre de la colección'], ['background', 'Color de fondo'], ['accent', 'Color de acento']]) {
       if (form.elements[field].value !== saved[field]) changes.push(`${label}: ${saved[field]} → ${form.elements[field].value}`);
     }
+    if (form.elements.sortOrder.value !== saved.sortOrder) changes.push(`Mostrar colección por: ${sortLabels[saved.sortOrder]} → ${sortLabels[form.elements.sortOrder.value]}`);
     const remaining = new Set(saved.entries);
     for (const entry of current.entries) {
       const original = entryOrigins.get(entry);
@@ -111,7 +113,17 @@
       ball.append(icon);
     }
     ball.append(document.createTextNode(entry.ball || 'Ball sin especificar'));
-    node.append(image, element('h3', entry.name), element('p', entry.types.join(' · ') || 'Tipo sin especificar'),
+    const typeLabels = element('p', undefined, 'type-labels');
+    if (!entry.types.length) typeLabels.textContent = 'Tipo sin especificar';
+    for (const type of entry.types) {
+      const icon = element('img', undefined, 'type-icon');
+      icon.src = `ColeccionSilvarion/type-${type.toLowerCase()}.png`;
+      icon.alt = type;
+      icon.title = type;
+      icon.loading = 'lazy';
+      typeLabels.append(icon);
+    }
+    node.append(image, element('h3', entry.name), typeLabels,
       ball, element('p', [entry.sex, entry.ability].filter(Boolean).join(' · ') || ''));
     if (editable) {
       node.append(button('Editar', () => {
@@ -148,17 +160,39 @@
     const query = $('search').value.toLowerCase().trim();
     const type = $('type-filter').value;
     const ball = $('ball-filter').value;
-    const sort = $('sort').value;
     const entries = current.entries.filter(entry =>
       `${entry.name} ${entry.ability}`.toLowerCase().includes(query) &&
       (!type || entry.types.includes(type)) && (!ball || entry.ball === ball));
-    entries.sort((a, b) => {
-      const left = sort === 'name' ? a.name : sort === 'type' ? (a.types[0] || '') : a.ball;
-      const right = sort === 'name' ? b.name : sort === 'type' ? (b.types[0] || '') : b.ball;
-      return left.localeCompare(right) || a.name.localeCompare(b.name);
-    });
+    entries.sort((a, b) => a.name.localeCompare(b.name));
     $('count').textContent = `${entries.length} Pokémon`;
-    $('cards').replaceChildren(...entries.map(entry => card(entry, false)));
+    const container = $('cards');
+    container.replaceChildren();
+    if (!entries.length) {
+      container.append(element('p', 'No se encontraron Pokémon.'));
+      return;
+    }
+    const order = current.sortOrder || 'name';
+    if (order === 'name') {
+      const grid = element('div', undefined, 'public-grid');
+      grid.append(...entries.map(entry => card(entry, false)));
+      container.append(grid);
+      return;
+    }
+    const groups = new Map();
+    for (const entry of entries) {
+      const labels = order === 'type' ? (entry.types.length ? [...new Set(entry.types)] : ['Tipo sin especificar']) : [entry.ball || 'Ball sin especificar'];
+      for (const label of labels) {
+        if (!groups.has(label)) groups.set(label, []);
+        groups.get(label).push(entry);
+      }
+    }
+    [...groups].sort(([a], [b]) => a.localeCompare(b)).forEach(([label, members]) => {
+      const group = element('div', undefined, 'collection-group');
+      const grid = element('div', undefined, `public-grid by-${order}`);
+      grid.append(...members.map(entry => card(entry, false)));
+      group.append(element('h3', label), grid);
+      container.append(group);
+    });
   }
   async function showDirectory() {
     $('directory').hidden = false;
@@ -194,12 +228,19 @@
   async function editCollection(id, username) {
     if ((dirty || pendingEntry) && !confirm('Hay cambios sin guardar. ¿Descartarlos?')) return;
     current = await api(`/editor/${id}`);
+    const supportsSortOrder = Object.hasOwn(current, 'sortOrder');
+    if (!supportsSortOrder) {
+      current.sortOrder = 'name';
+      status('Actualiza el servicio de colecciones para habilitar el orden de la página pública.');
+    }
     editingUser = id;
     $('edit-area').hidden = false;
     $('edit-title').textContent = `Editar colección de ${username}`;
     $('settings').elements.name.value = current.name;
     $('settings').elements.background.value = current.background;
     $('settings').elements.accent.value = current.accent;
+    $('settings').elements.sortOrder.value = current.sortOrder;
+    $('settings').elements.sortOrder.disabled = !supportsSortOrder;
     $('public-link').href = linkFor(current.slug);
     renderThemePreview();
     markSaved();
@@ -320,16 +361,18 @@
       const form = event.target;
       if (!dirty) return;
       if (pendingEntry) throw new Error('Agrega o cancela el Pokémon en edición antes de guardar.');
-      const payload = { ...current, name: form.elements.name.value, background: form.elements.background.value, accent: form.elements.accent.value };
+      const payload = { ...current, name: form.elements.name.value, background: form.elements.background.value, accent: form.elements.accent.value, sortOrder: form.elements.sortOrder.value };
       $('account').inert = true;
       try {
         current = await api(`/editor/${editingUser}`, 'PUT', payload);
       } finally {
         $('account').inert = false;
       }
+      if (!Object.hasOwn(current, 'sortOrder')) current.sortOrder = 'name';
       form.elements.name.value = current.name;
       form.elements.background.value = current.background;
       form.elements.accent.value = current.accent;
+      form.elements.sortOrder.value = current.sortOrder;
       renderThemePreview();
       markSaved();
       renderEditable();
@@ -382,7 +425,7 @@
     status('Cambio pendiente: guarda la colección.');
   });
   $('cancel-edit').addEventListener('click', cancelEdit);
-  ['search', 'type-filter', 'ball-filter', 'sort'].forEach(id => $(id).addEventListener('input', renderPublic));
+  ['search', 'type-filter', 'ball-filter'].forEach(id => $(id).addEventListener('input', renderPublic));
   run(async () => {
     const ballResponse = await fetch('data/collection-balls.json');
     if (!ballResponse.ok) throw new Error('No se pudo cargar el catálogo de Balls.');

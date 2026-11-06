@@ -21,10 +21,19 @@ button.needs-save { background: #ffdc8a; box-shadow: 0 0 0 3px #ffd36a, 0 0 20px
 button.secondary { color: #fff; background: #543566; }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #ffdc8a; outline-offset: 3px; }
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1rem; }
+.public-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+.public-grid.by-ball { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.public-grid.by-type { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.collection-group { margin: 1.5rem 0; }
+.collection-group h3 { margin: 0 0 .75rem; }
+@media (max-width: 760px) { .public-grid, .public-grid.by-ball { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .public-grid, .public-grid.by-ball, .public-grid.by-type { grid-template-columns: 1fr; } }
 .card { border: 1px solid #8e66a0; border-radius: 14px; padding: 1rem; background: #24132f; overflow-wrap: anywhere; }
 .card img { display: block; width: 110px; height: 110px; object-fit: contain; image-rendering: pixelated; margin: auto; }
 .card .ball-label { display: flex; align-items: center; gap: .4rem; }
 .card .ball-icon { display: inline-block; width: 24px; height: 24px; margin: 0; flex: none; }
+.type-labels { display: flex; flex-wrap: wrap; gap: .35rem; align-items: center; }
+.card .type-icon { display: inline-block; width: 32px; height: 32px; margin: 0; }
 .card h3 { margin: .6rem 0; }
 .card p { margin: .3rem 0; color: #e6d3ed; }
 .unsaved-changes { background: #523a25; border: 1px solid #ffdc8a; border-radius: 9px; padding: .8rem 1rem; overflow-wrap: anywhere; }
