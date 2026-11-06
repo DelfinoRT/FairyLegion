@@ -1,6 +1,23 @@
 const COLLAPSE_ANIMATION_MS = 460;
 const COLLAPSE_EASING = 'cubic-bezier(0.2, 0.75, 0.2, 1)';
 
+(function setupBallRain() {
+  const rain = document.querySelector('.ball-rain');
+  if (!rain) return;
+
+  const icons = document.querySelectorAll('.section-index-pixel .ball-icon');
+  icons.forEach((icon, index) => {
+    const sprite = document.createElement('img');
+    sprite.src = icon.src;
+    sprite.alt = '';
+    sprite.style.setProperty('--rain-x', `${(index + 0.5) * 100 / icons.length}%`);
+    sprite.style.setProperty('--rain-size', `${24 + (index % 4) * 4}px`);
+    sprite.style.setProperty('--rain-duration', `${12 + (index % 5) * 2}s`);
+    sprite.style.setProperty('--rain-delay', `${-(index * 7 % 17)}s`);
+    rain.appendChild(sprite);
+  });
+})();
+
 (function setupPadventuresCharacterCard() {
   const card = document.getElementById('silvarion-character-card');
   const sprite = document.getElementById('silvarion-character-sprite');
@@ -542,6 +559,9 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
   const previewMeta = document.getElementById('preview-pokemon-meta');
   const previewBall = document.getElementById('preview-pokeball-img');
   const previewTypes = document.getElementById('preview-pokemon-types');
+  const closeButton = preview.querySelector('.preview-close-btn');
+  const backdrop = document.querySelector('.preview-backdrop');
+  const mobilePreview = window.matchMedia('(max-width: 1450px)');
   const previewBallContainer = previewBall ? previewBall.closest('.preview-pokeball-container') : null;
   const cards = Array.from(document.querySelectorAll('.collection-section .pokemon-card'));
   const hintStorageKey = 'silvarion-monitor-click-note-seen';
@@ -718,7 +738,6 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
     preview.appendChild(hint);
   }
 
-  previewImg.removeAttribute('src');
   if (previewNameGlitch) {
     previewNameGlitch.setText('Selecciona un Pokémon');
   } else {
@@ -729,6 +748,29 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
   if (previewTypes) previewTypes.replaceChildren();
 
   let selectedCard = null;
+
+  const closePreview = () => {
+    if (!preview.classList.contains('is-open')) return;
+    preview.classList.remove('is-open');
+    document.body.classList.remove('preview-open');
+    preview.removeAttribute('role');
+    preview.removeAttribute('aria-modal');
+    preview.removeAttribute('aria-label');
+    if (selectedCard && mobilePreview.matches) selectedCard.focus({ preventScroll: true });
+  };
+
+  if (closeButton) closeButton.addEventListener('click', closePreview);
+  if (backdrop) backdrop.addEventListener('click', closePreview);
+  document.addEventListener('keydown', (event) => {
+    if (!preview.classList.contains('is-open')) return;
+    if (event.key === 'Escape') {
+      closePreview();
+    } else if (event.key === 'Tab' && closeButton) {
+      event.preventDefault();
+      closeButton.focus();
+    }
+  });
+  mobilePreview.addEventListener('change', closePreview);
 
   const updatePreview = (card) => {
     const sprite = card.querySelector('.pokemon-img');
@@ -793,6 +835,15 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
     selectedCard = card;
     selectedCard.classList.add('is-preview-selected');
 
+    if (mobilePreview.matches && closeButton) {
+      preview.setAttribute('role', 'dialog');
+      preview.setAttribute('aria-modal', 'true');
+      preview.setAttribute('aria-label', 'Monitor Link');
+      preview.classList.add('is-open');
+      document.body.classList.add('preview-open');
+      closeButton.focus({ preventScroll: true });
+    }
+
     if (hint.isConnected) {
       hint.remove();
       window.localStorage.setItem(hintStorageKey, '1');
@@ -801,6 +852,7 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
 
   cards.forEach((card) => {
     card.tabIndex = 0;
+    card.setAttribute('role', 'button');
     card.addEventListener('click', () => updatePreview(card));
     card.addEventListener('keydown', (event) => {
       if (event.key === 'Enter' || event.key === ' ') {
@@ -859,7 +911,7 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
   }
 
   handle.addEventListener('pointerdown', (event) => {
-    if (event.button !== 0) return;
+    if (event.button !== 0 || window.matchMedia('(max-width: 1450px)').matches) return;
 
     const rect = preview.getBoundingClientRect();
     dragging = true;
@@ -900,6 +952,7 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
   handle.addEventListener('pointercancel', finishDrag);
 
   window.addEventListener('resize', () => {
+    if (window.matchMedia('(max-width: 1450px)').matches) return;
     const rect = preview.getBoundingClientRect();
     applyPosition(rect.left, rect.top, true);
   });
