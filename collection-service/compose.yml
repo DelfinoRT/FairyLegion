@@ -1,0 +1,14 @@
+services:
+  collections:
+    build: .
+    restart: unless-stopped
+    environment:
+      COLLECTION_DB: /data/collections.sqlite
+      COLLECTION_ORIGIN: https://www.fairylegion.com
+    ports:
+      - "127.0.0.1:8081:8080"
+    volumes:
+      - collection-data:/data
+    init: true
+volumes:
+  collection-data:

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Colecciones Fairy Legion</title>
+  <link rel="icon" href="/favicon-32x32.png">
+  <link rel="stylesheet" href="colecciones.css">
+  <script src="colecciones.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="header">
+      <a href="/">← Fairy Legion</a>
+      <h1>Colecciones Fairy Legion</h1>
+      <p>Un espacio para compartir tus Pokémon con el gremio.</p>
+    </header>
+    <p id="status" role="status" aria-live="polite"></p>
+    <section id="public" hidden>
+      <h2 id="collection-name"></h2>
+      <div class="toolbar">
+        <label>Buscar <input id="search" type="search" placeholder="Nombre o habilidad"></label>
+        <label>Tipo <select id="type-filter"><option value="">Todos</option></select></label>
+        <label>Ball <select id="ball-filter"><option value="">Todas</option></select></label>
+        <label>Ordenar por <select id="sort"><option value="name">Nombre</option><option value="type">Tipo</option><option value="ball">Ball</option></select></label>
+      </div>
+      <p id="count"></p>
+      <div id="cards" class="cards"></div>
+    </section>
+    <section id="directory" hidden>
+      <h2>Colecciones de la comunidad</h2>
+      <div id="collection-links" class="cards"></div>
+    </section>
+    <section id="login-section" hidden>
+      <h2>Acceso para miembros</h2>
+      <form id="login" class="form-grid">
+        <label>Usuario <input name="username" required autocomplete="username" pattern="[a-z0-9][a-z0-9_-]{2,31}"></label>
+        <label>Contraseña <input name="password" type="password" required autocomplete="current-password"></label>
+        <button>Entrar</button>
+      </form>
+    </section>
+    <section id="account" hidden>
+      <div class="section-title"><h2 id="account-title"></h2><button id="logout" type="button" class="secondary">Cerrar sesión</button></div>
+      <details>
+        <summary>Cambiar mi contraseña</summary>
+        <form id="change-password" class="form-grid">
+          <label>Contraseña actual <input name="current" type="password" required autocomplete="current-password"></label>
+          <label>Nueva contraseña <input name="password" type="password" required minlength="12" maxlength="128" autocomplete="new-password"></label>
+          <button>Cambiar contraseña</button>
+        </form>
+      </details>
+      <div id="administration" hidden>
+        <h3>Administrar miembros</h3>
+        <form id="create-user" class="form-grid">
+          <label>Usuario <input name="username" required pattern="[a-z0-9][a-z0-9_-]{2,31}" placeholder="nombre-usuario"></label>
+          <label>Contraseña inicial <input name="password" type="password" required minlength="12" maxlength="128" autocomplete="new-password"></label>
+          <button id="generate-password" class="secondary" type="button">Generar contraseña</button>
+          <button>Crear usuario y colección</button>
+        </form>
+        <p>Comparte la contraseña por un medio privado. Desactivar oculta la página y conserva los datos.</p>
+        <div id="users"></div>
+      </div>
+      <div id="edit-area" hidden>
+        <div class="section-title"><h3 id="edit-title">Editar colección</h3><a id="public-link" target="_blank" rel="noopener">Ver página pública ↗</a></div>
+        <form id="settings" class="form-grid">
+          <label>Nombre de la colección <input name="name" required maxlength="80"></label>
+          <label>Color de fondo <input name="background" type="color"></label>
+          <label>Color de acento <input name="accent" type="color"></label>
+          <button>Guardar colección</button>
+        </form>
+        <p>Los cambios en Pokémon se guardan al pulsar «Guardar colección».</p>
+        <form id="add-pokemon" class="form-grid">
+          <label>Pokémon <input name="pokemon" list="catalog" required autocomplete="off" placeholder="Buscar Pokémon"></label>
+          <datalist id="catalog"></datalist>
+          <label>Ball <input name="ball" list="balls" maxlength="60" placeholder="Selecciona o escribe"></label>
+          <datalist id="balls"></datalist>
+          <label>Habilidad <input name="ability" maxlength="80"></label>
+          <label>Sexo <select name="sex"><option value="">Sin especificar</option><option>Male</option><option>Female</option><option>Genderless</option></select></label>
+          <label>Tipo 1 <select name="type1" class="type-input"><option value="">Sin especificar</option></select></label>
+          <label>Tipo 2 <select name="type2" class="type-input"><option value="">Sin especificar</option></select></label>
+          <button id="add-button">Agregar Pokémon</button><button type="button" id="cancel-edit" class="secondary" hidden>Cancelar edición</button>
+        </form>
+        <div id="editable-cards" class="cards"></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

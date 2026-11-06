@@ -1,0 +1,28 @@
+:root { color-scheme: dark; font-family: system-ui, sans-serif; background: #191022; color: #f9f1ff; }
+* { box-sizing: border-box; }
+body { margin: 0; background: radial-gradient(circle at top, #55316d, #191022 55%); min-height: 100vh; }
+.shell { width: min(1120px, 94%); margin: auto; padding: 2rem 0 5rem; }
+.header { padding: 2rem 0; }
+.header h1 { font-size: clamp(2rem, 5vw, 3.6rem); margin: .6rem 0; }
+a { color: #f1c7ff; }
+section { background: #2c1a39; border: 1px solid #76518b; border-radius: 20px; margin: 1rem 0; padding: clamp(1rem, 3vw, 2rem); }
+.section-title { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.toolbar, .form-grid { display: flex; align-items: end; gap: 1rem; flex-wrap: wrap; margin: 1rem 0; }
+label { display: grid; gap: .4rem; font-weight: 600; }
+input, select, button { font: inherit; border-radius: 9px; border: 1px solid #a87bb9; padding: .65rem .8rem; }
+input, select { background: #160e1e; color: #fff; max-width: 100%; }
+input[type=color] { width: 5rem; height: 2.8rem; padding: .2rem; }
+button { cursor: pointer; color: #25132d; background: #e0b0f4; font-weight: bold; }
+button:hover { background: #f0d7fa; }
+button.secondary { color: #fff; background: #543566; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #ffdc8a; outline-offset: 3px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1rem; }
+.card { border: 1px solid #8e66a0; border-radius: 14px; padding: 1rem; background: #24132f; overflow-wrap: anywhere; }
+.card img { display: block; width: 110px; height: 110px; object-fit: contain; image-rendering: pixelated; margin: auto; }
+.card h3 { margin: .6rem 0; }
+.card p { margin: .3rem 0; color: #e6d3ed; }
+.member { border-top: 1px solid #76518b; padding: 1rem 0; display: flex; flex-wrap: wrap; gap: .7rem; align-items: center; }
+.member strong { min-width: 10rem; }
+#status:empty { display: none; }
+#status { background: #533668; padding: .8rem; border-radius: 8px; }
+[hidden] { display: none !important; }

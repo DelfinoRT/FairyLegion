@@ -1,0 +1,1362 @@
+[
+  {
+    "name": "Aerodactyl",
+    "sprite": "ColeccionSilvarion/aerodactyl.gif",
+    "types": [
+      "Rock",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Ash's Greninja",
+    "sprite": "ColeccionSilvarion/ashGreninja.gif",
+    "types": [
+      "Water",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Carbink",
+    "sprite": "ColeccionSilvarion/carbink.gif",
+    "types": [
+      "Rock",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Champion Poliwrath",
+    "sprite": "ColeccionSilvarion/championPoliwrath.gif",
+    "types": [
+      "Water",
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Cloned Alomomola",
+    "sprite": "ColeccionSilvarion/clonedAlomomola2.gif",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Cloned Arbok",
+    "sprite": "ColeccionSilvarion/clonedArbok.gif",
+    "types": [
+      "Poison"
+    ]
+  },
+  {
+    "name": "Cloned Arcanine",
+    "sprite": "ColeccionSilvarion/clonedArcanine.gif",
+    "types": [
+      "Fire"
+    ]
+  },
+  {
+    "name": "Cloned Beedrill",
+    "sprite": "ColeccionSilvarion/clonedBeedrill.gif",
+    "types": [
+      "Bug",
+      "Poison"
+    ]
+  },
+  {
+    "name": "Cloned Blastoise",
+    "sprite": "ColeccionSilvarion/clonedBlastoise.gif",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Cloned Butterfree",
+    "sprite": "ColeccionSilvarion/clonedButterfree.gif",
+    "types": [
+      "Bug",
+      "flying"
+    ]
+  },
+  {
+    "name": "Cloned Chansey",
+    "sprite": "ColeccionSilvarion/clonedChansey.gif",
+    "types": [
+      "Normal"
+    ]
+  },
+  {
+    "name": "Cloned Charizard",
+    "sprite": "ColeccionSilvarion/clonedCharizard.gif",
+    "types": [
+      "Fire",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Cloned Claydol",
+    "sprite": "ColeccionSilvarion/clonedClaydol.gif",
+    "types": [
+      "Ground",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Cloned Dewong",
+    "sprite": "ColeccionSilvarion/clonedDewong.gif",
+    "types": [
+      "Water",
+      "Ice"
+    ]
+  },
+  {
+    "name": "Cloned Dragonite",
+    "sprite": "ColeccionSilvarion/clonedDragonite.gif",
+    "types": [
+      "Dragon",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Cloned Electivire",
+    "sprite": "ColeccionSilvarion/clonedElectivire.gif",
+    "types": [
+      "Electric"
+    ]
+  },
+  {
+    "name": "Cloned Electrode",
+    "sprite": "ColeccionSilvarion/clonedElectrode.gif",
+    "types": [
+      "Electric"
+    ]
+  },
+  {
+    "name": "Cloned Farfetch'd",
+    "sprite": "ColeccionSilvarion/clonedFarfetchd.gif",
+    "types": [
+      "Normal",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Cloned Flareon",
+    "sprite": "ColeccionSilvarion/clonedFlareon.gif",
+    "types": [
+      "Fire"
+    ]
+  },
+  {
+    "name": "Cloned Froslass",
+    "sprite": "ColeccionSilvarion/clonedFroslass.gif",
+    "types": [
+      "Ice",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Cloned Gengar",
+    "sprite": "ColeccionSilvarion/clonedGengar.gif",
+    "types": [
+      "Ghost",
+      "Poison"
+    ]
+  },
+  {
+    "name": "Cloned Golbat",
+    "sprite": "ColeccionSilvarion/clonedGolbat.gif",
+    "types": [
+      "Poison",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Cloned Hitmonchan",
+    "sprite": "ColeccionSilvarion/clonedHitmonchan.gif",
+    "types": [
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Cloned Hitmonlee",
+    "sprite": "ColeccionSilvarion/clonedHitmonlee.gif",
+    "types": [
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Cloned Hitmontop",
+    "sprite": "ColeccionSilvarion/clonedHitmontop.gif",
+    "types": [
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Cloned Hypno",
+    "sprite": "ColeccionSilvarion/clonedHypno.gif",
+    "types": [
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Cloned Jolteon",
+    "sprite": "ColeccionSilvarion/clonedJolteon.gif",
+    "types": [
+      "Electric"
+    ]
+  },
+  {
+    "name": "Cloned Jynx",
+    "sprite": "ColeccionSilvarion/clonedJynx.gif",
+    "types": [
+      "Ice",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Cloned Kingler",
+    "sprite": "ColeccionSilvarion/clonedKingler.gif",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Cloned Lapras",
+    "sprite": "ColeccionSilvarion/clonedLapras.gif",
+    "types": [
+      "Water",
+      "Ice"
+    ]
+  },
+  {
+    "name": "Cloned Machamp",
+    "sprite": "ColeccionSilvarion/clonedMachamp.gif",
+    "types": [
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Cloned Magmar",
+    "sprite": "ColeccionSilvarion/clonedMagmar.gif",
+    "types": [
+      "Fire"
+    ]
+  },
+  {
+    "name": "Cloned Ninetales",
+    "sprite": "ColeccionSilvarion/clonedNinetales.gif",
+    "types": [
+      "Fire"
+    ]
+  },
+  {
+    "name": "Cloned Onix",
+    "sprite": "ColeccionSilvarion/clonedOnix.gif",
+    "types": [
+      "Rock",
+      "Ground"
+    ]
+  },
+  {
+    "name": "Cloned Parasect",
+    "sprite": "ColeccionSilvarion/clonedParasect.gif",
+    "types": [
+      "Bug",
+      "Grass"
+    ]
+  },
+  {
+    "name": "Cloned Pinsir",
+    "sprite": "ColeccionSilvarion/clonedPinsir.gif",
+    "types": [
+      "Bug"
+    ]
+  },
+  {
+    "name": "Cloned Primeape",
+    "sprite": "ColeccionSilvarion/clonedPrimeape.gif",
+    "types": [
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Cloned Raichu",
+    "sprite": "ColeccionSilvarion/clonedRaichu.gif",
+    "types": [
+      "Electric"
+    ]
+  },
+  {
+    "name": "Cloned Rhydon",
+    "sprite": "ColeccionSilvarion/clonedRhydon.gif",
+    "types": [
+      "Rock",
+      "Ground"
+    ]
+  },
+  {
+    "name": "Cloned Sandslash",
+    "sprite": "ColeccionSilvarion/clonedSandslash.gif",
+    "types": [
+      "Ground"
+    ]
+  },
+  {
+    "name": "Cloned Scizor",
+    "sprite": "ColeccionSilvarion/clonedScizor.gif",
+    "types": [
+      "Bug",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Cloned Scyther",
+    "sprite": "ColeccionSilvarion/clonedScyther.gif",
+    "types": [
+      "Bug",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Cloned Steelix",
+    "sprite": "ColeccionSilvarion/clonedSteelix.gif",
+    "types": [
+      "Steel",
+      "Ground"
+    ]
+  },
+  {
+    "name": "Cloned Togekiss",
+    "sprite": "ColeccionSilvarion/clonedTogekiss.gif",
+    "types": [
+      "Fairy",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Cloned Togepi",
+    "sprite": "ColeccionSilvarion/clonedTogepi.gif",
+    "types": [
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Cloned Vaporeon",
+    "sprite": "ColeccionSilvarion/clonedVaporeon.gif",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Cloned Weezing",
+    "sprite": "ColeccionSilvarion/clonedWeezing.gif",
+    "types": [
+      "Poison"
+    ]
+  },
+  {
+    "name": "Crystal Onix",
+    "sprite": "ColeccionSilvarion/crystalOnix.gif",
+    "types": [
+      "Ice",
+      "Rock"
+    ]
+  },
+  {
+    "name": "Diancie",
+    "sprite": "ColeccionSilvarion/diancie.gif",
+    "types": [
+      "Rock",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Elder Charizard",
+    "sprite": "ColeccionSilvarion/elderCharizard.gif",
+    "types": [
+      "Fire",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Elite Bisharp",
+    "sprite": "ColeccionSilvarion/eliteBisharp.gif",
+    "types": [
+      "Dark",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Golden Rhydon",
+    "sprite": "ColeccionSilvarion/goldenRhydon.gif",
+    "types": [
+      "Ground",
+      "Rock"
+    ]
+  },
+  {
+    "name": "Gouging Fire",
+    "sprite": "ColeccionSilvarion/gougingFire.gif",
+    "types": [
+      "Fire",
+      "Dragon"
+    ]
+  },
+  {
+    "name": "Hisuian Decidueye",
+    "sprite": "ColeccionSilvarion/hisuianDecidueye.gif",
+    "types": [
+      "Grass",
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Iron Hands",
+    "sprite": "ColeccionSilvarion/ironHands.gif",
+    "types": [
+      "Fighting",
+      "Electric"
+    ]
+  },
+  {
+    "name": "Melmetal",
+    "sprite": "ColeccionSilvarion/melmetal.gif",
+    "types": [
+      "Steel"
+    ]
+  },
+  {
+    "name": "Pikachu Pop Star",
+    "sprite": "ColeccionSilvarion/pikachuPopStar.gif",
+    "types": [
+      "Electric"
+    ]
+  },
+  {
+    "name": "Red Gyarados",
+    "sprite": "ColeccionSilvarion/redGyarados.gif",
+    "types": [
+      "Water",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Roaring Moon",
+    "sprite": "ColeccionSilvarion/roaringMoon.gif",
+    "types": [
+      "Dragon",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Scream Tail",
+    "sprite": "ColeccionSilvarion/screamTail.gif",
+    "types": [
+      "Fairy",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Shiny Aegislash",
+    "sprite": "ColeccionSilvarion/shinyAegislash.gif",
+    "types": [
+      "Ghost",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Shiny Ampharos",
+    "sprite": "ColeccionSilvarion/shinyAmpharos.gif",
+    "types": [
+      "Electric"
+    ]
+  },
+  {
+    "name": "Shiny Araquanid",
+    "sprite": "ColeccionSilvarion/shinyAraquanid.gif",
+    "types": [
+      "Water",
+      "Bug"
+    ]
+  },
+  {
+    "name": "Shiny Arcanine",
+    "sprite": "ColeccionSilvarion/shinyArcanine.gif",
+    "types": [
+      "Fire"
+    ]
+  },
+  {
+    "name": "Shiny Avalugg",
+    "sprite": "ColeccionSilvarion/shinyAvalugg.gif",
+    "types": [
+      "Ice"
+    ]
+  },
+  {
+    "name": "Shiny Beedrill",
+    "sprite": "ColeccionSilvarion/shinyBeedrill.gif",
+    "types": [
+      "Bug",
+      "Poison"
+    ]
+  },
+  {
+    "name": "Shiny Bellibolt",
+    "sprite": "ColeccionSilvarion/shinyBellibolt.gif",
+    "types": [
+      "Electric"
+    ]
+  },
+  {
+    "name": "Shiny Bellossom",
+    "sprite": "ColeccionSilvarion/shinyBellossom.gif",
+    "types": [
+      "Grass"
+    ]
+  },
+  {
+    "name": "Shiny Bewear",
+    "sprite": "ColeccionSilvarion/shinyBewear.gif",
+    "types": [
+      "Normal",
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Shiny Big Magikarp",
+    "sprite": "ColeccionSilvarion/shinyBigMagikarp.gif",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Shiny Bisharp",
+    "sprite": "ColeccionSilvarion/shinyBisharp.gif",
+    "types": [
+      "Dark",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Shiny Blaziken",
+    "sprite": "ColeccionSilvarion/shinyBlaziken.gif",
+    "types": [
+      "Fire",
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Shiny Butterfree",
+    "sprite": "ColeccionSilvarion/shinyButterfree.gif",
+    "types": [
+      "Bug",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Shiny Carnivine",
+    "sprite": "ColeccionSilvarion/shinyCarnivine.gif",
+    "types": [
+      "Grass"
+    ]
+  },
+  {
+    "name": "Shiny Ceruledge",
+    "sprite": "ColeccionSilvarion/shinyCeruledge.gif",
+    "types": [
+      "Fire",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Shiny Cetitan",
+    "sprite": "ColeccionSilvarion/shinyCetitan.gif",
+    "types": [
+      "Ice"
+    ]
+  },
+  {
+    "name": "Shiny Chandelure",
+    "sprite": "ColeccionSilvarion/shinyChandelure.gif",
+    "types": [
+      "Dark",
+      "Fire"
+    ]
+  },
+  {
+    "name": "Shiny Chien-Pao",
+    "sprite": "ColeccionSilvarion/shinyChienPao.gif",
+    "types": [
+      "Dark",
+      "Ice"
+    ]
+  },
+  {
+    "name": "Shiny Chimeco",
+    "sprite": "ColeccionSilvarion/shinyChimeco.gif",
+    "types": [
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Shiny Clefable",
+    "sprite": "ColeccionSilvarion/shinyClefable.gif",
+    "types": [
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Shiny Cofagrigus",
+    "sprite": "ColeccionSilvarion/shinyCofagrigus.gif",
+    "types": [
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Shiny Copperajah",
+    "sprite": "ColeccionSilvarion/shinyCopperajah.gif",
+    "types": [
+      "Steel"
+    ]
+  },
+  {
+    "name": "Shiny Corsola",
+    "sprite": "ColeccionSilvarion/shinyCorsola.gif",
+    "types": [
+      "Water",
+      "Rock"
+    ]
+  },
+  {
+    "name": "Shiny Corviknight",
+    "sprite": "ColeccionSilvarion/shinyCorviknight.gif",
+    "types": [
+      "Flying",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Shiny Crabominable",
+    "sprite": "ColeccionSilvarion/shinyCrabominable.gif",
+    "types": [
+      "Ice",
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Shiny Crustle",
+    "sprite": "ColeccionSilvarion/shinyCrustle.gif",
+    "types": [
+      "Bug",
+      "Rock"
+    ]
+  },
+  {
+    "name": "Shiny Cufant",
+    "sprite": "ColeccionSilvarion/shinyCufant.gif",
+    "types": [
+      "Steel"
+    ]
+  },
+  {
+    "name": "Shiny Cyndaquil",
+    "sprite": "ColeccionSilvarion/shinyCyndaquil.gif",
+    "types": [
+      "Fire"
+    ]
+  },
+  {
+    "name": "Shiny Dedenne",
+    "sprite": "ColeccionSilvarion/shinyDedenne.gif",
+    "types": [
+      "Electric",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Shiny Delibird",
+    "sprite": "ColeccionSilvarion/shinyDelibird.gif",
+    "types": [
+      "Ice",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Shiny Delphox",
+    "sprite": "ColeccionSilvarion/shinyDelphox.gif",
+    "types": [
+      "Fire",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Shiny Diggersby",
+    "sprite": "ColeccionSilvarion/shinyDiggersby.gif",
+    "types": [
+      "Normal",
+      "Ground"
+    ]
+  },
+  {
+    "name": "Shiny Ditto",
+    "sprite": "ColeccionSilvarion/shinyDitto.gif",
+    "types": [
+      "Normal"
+    ]
+  },
+  {
+    "name": "Shiny Dondozo",
+    "sprite": "ColeccionSilvarion/shinyDodonzo.gif",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Shiny Dragapult",
+    "sprite": "ColeccionSilvarion/shinyDragapult.gif",
+    "types": [
+      "Ghost",
+      "Dragon"
+    ]
+  },
+  {
+    "name": "Shiny Eiscue",
+    "sprite": "ColeccionSilvarion/shinyEiscue.gif",
+    "types": [
+      "Ice"
+    ]
+  },
+  {
+    "name": "Shiny Empoleon",
+    "sprite": "ColeccionSilvarion/shinyEmpoleon.gif",
+    "types": [
+      "Water",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Shiny Enamorus",
+    "sprite": "ColeccionSilvarion/shinyEnamorus.gif",
+    "types": [
+      "Fairy",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Shiny Excadrill",
+    "sprite": "ColeccionSilvarion/shinyExcadrill.gif",
+    "types": [
+      "Ground",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Shiny Exeggutor",
+    "sprite": "ColeccionSilvarion/shinyExeggutor.gif",
+    "types": [
+      "Grass",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Shiny Feraligatr",
+    "sprite": "ColeccionSilvarion/shinyFeraligatr.gif",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Shiny Finizen",
+    "sprite": "ColeccionSilvarion/shinyFinizen.gif",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Shiny Flabebe",
+    "sprite": "ColeccionSilvarion/shinyFlabebe.gif",
+    "types": [
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Shiny Flygon",
+    "sprite": "ColeccionSilvarion/shinyFlygon.gif",
+    "types": [
+      "Dragon",
+      "Ground"
+    ]
+  },
+  {
+    "name": "Shiny Frosmoth",
+    "sprite": "ColeccionSilvarion/shinyFrosmoth.gif",
+    "types": [
+      "Ice",
+      "Bug"
+    ]
+  },
+  {
+    "name": "Shiny Galvantula",
+    "sprite": "ColeccionSilvarion/shinyGalvantula.gif",
+    "types": [
+      "Bug",
+      "Electric"
+    ]
+  },
+  {
+    "name": "Shiny Gardevoir",
+    "sprite": "ColeccionSilvarion/shinyGardevoir.gif",
+    "types": [
+      "Psychic",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Shiny Gholdengo",
+    "sprite": "ColeccionSilvarion/shinyGholdengo.gif",
+    "types": [
+      "Steel",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Shiny Gigalith",
+    "sprite": "ColeccionSilvarion/shinyGigalith.gif",
+    "types": [
+      "Rock"
+    ]
+  },
+  {
+    "name": "Shiny Glaceon",
+    "sprite": "ColeccionSilvarion/shinyGlaceon.gif",
+    "types": [
+      "Ice"
+    ]
+  },
+  {
+    "name": "Shiny Glastrier",
+    "sprite": "ColeccionSilvarion/shinyGlastrier.gif",
+    "types": [
+      "Ice"
+    ]
+  },
+  {
+    "name": "Shiny Gliscor",
+    "sprite": "ColeccionSilvarion/shinyGliscor.gif",
+    "types": [
+      "Ground",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Shiny Golem",
+    "sprite": "ColeccionSilvarion/shinyGolem.gif",
+    "types": [
+      "Rock",
+      "Ground"
+    ]
+  },
+  {
+    "name": "Shiny Granbull",
+    "sprite": "ColeccionSilvarion/shinyGranbull.gif",
+    "types": [
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Shiny Grapploct",
+    "sprite": "ColeccionSilvarion/shinyGrapploct.gif",
+    "types": [
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Shiny Greninja",
+    "sprite": "ColeccionSilvarion/shinyGreninja.gif",
+    "types": [
+      "Water",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Shiny Heat Rotom",
+    "sprite": "ColeccionSilvarion/shinyHeatRotom.gif",
+    "types": [
+      "Electric",
+      "Fire"
+    ]
+  },
+  {
+    "name": "Shiny Heliolisk",
+    "sprite": "ColeccionSilvarion/shinyHeliolisk.gif",
+    "types": [
+      "Electric",
+      "Normal"
+    ]
+  },
+  {
+    "name": "Shiny Hisuian Arcanine",
+    "sprite": "ColeccionSilvarion/shinyHisuianArcanine.gif",
+    "types": [
+      "Fire",
+      "Rock"
+    ]
+  },
+  {
+    "name": "Shiny Hisuian Goodra",
+    "sprite": "ColeccionSilvarion/shinyHisuianGoodra.gif",
+    "types": [
+      "Dragon",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Shiny Hisuian Qwilfish",
+    "sprite": "ColeccionSilvarion/shinyHisuianQwilfish.gif",
+    "types": [
+      "Dark",
+      "Poison"
+    ]
+  },
+  {
+    "name": "Shiny Hisuian Zoroark",
+    "sprite": "ColeccionSilvarion/shinyHisuianZoroark.gif",
+    "types": [
+      "Normal",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Shiny Houndoom",
+    "sprite": "ColeccionSilvarion/shinyHoundoom.gif",
+    "types": [
+      "Dark",
+      "Fire"
+    ]
+  },
+  {
+    "name": "Shiny Houndour",
+    "sprite": "ColeccionSilvarion/shinyHoundour.gif",
+    "types": [
+      "Dark",
+      "Fire"
+    ]
+  },
+  {
+    "name": "Shiny Houndstone",
+    "sprite": "ColeccionSilvarion/shinyHoundstone.gif",
+    "types": [
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Shiny Incineroar",
+    "sprite": "ColeccionSilvarion/shinyIncineroar.gif",
+    "types": [
+      "Fire",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Shiny Kingdra",
+    "sprite": "ColeccionSilvarion/shinyKingdra.gif",
+    "types": [
+      "Water",
+      "Dragon"
+    ]
+  },
+  {
+    "name": "Shiny Klefki",
+    "sprite": "ColeccionSilvarion/shinyKlefki.gif",
+    "types": [
+      "Steel",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Shiny Krookodile",
+    "sprite": "ColeccionSilvarion/shinyKrookodile.gif",
+    "types": [
+      "Ground",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Shiny Litten",
+    "sprite": "ColeccionSilvarion/shinyLitten.gif",
+    "types": [
+      "Fire"
+    ]
+  },
+  {
+    "name": "Shiny Lopunny",
+    "sprite": "ColeccionSilvarion/shinyLopunny.gif",
+    "types": [
+      "Normal"
+    ]
+  },
+  {
+    "name": "Shiny Lucario",
+    "sprite": "ColeccionSilvarion/shinyLucario.gif",
+    "types": [
+      "Fighting",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Shiny Ludicolo",
+    "sprite": "ColeccionSilvarion/shinyLudicolo.gif",
+    "types": [
+      "Water",
+      "Grass"
+    ]
+  },
+  {
+    "name": "Shiny Magcargo",
+    "sprite": "ColeccionSilvarion/shinyMagcargo.gif",
+    "types": [
+      "Fire",
+      "Rock"
+    ]
+  },
+  {
+    "name": "Shiny Mamoswine",
+    "sprite": "ColeccionSilvarion/shinyMamoswine.gif",
+    "types": [
+      "Ice",
+      "Ground"
+    ]
+  },
+  {
+    "name": "Shiny Mandibuzz",
+    "sprite": "ColeccionSilvarion/shinyMandibuzz.gif",
+    "types": [
+      "Dark",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Shiny Marshadow",
+    "sprite": "ColeccionSilvarion/shinyMarshadow.gif",
+    "types": [
+      "Fighting",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Shiny Mawile",
+    "sprite": "ColeccionSilvarion/shinyMawile.gif",
+    "types": [
+      "Steel",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Shiny Meowstic",
+    "sprite": "ColeccionSilvarion/shinyMeowsticf.gif",
+    "types": [
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Shiny Metagross",
+    "sprite": "ColeccionSilvarion/shinyMetagross.gif",
+    "types": [
+      "Steel",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Shiny Mightyena",
+    "sprite": "ColeccionSilvarion/shinyMightyena.gif",
+    "types": [
+      "Dark"
+    ]
+  },
+  {
+    "name": "Shiny Milotic",
+    "sprite": "ColeccionSilvarion/shinyMilotic2.gif",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Shiny Mimikyu",
+    "sprite": "ColeccionSilvarion/shinyMimikyu.gif",
+    "types": [
+      "Ghost",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Shiny Mismagius",
+    "sprite": "ColeccionSilvarion/shinyMismagius.gif",
+    "types": [
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Shiny Mr Mime",
+    "sprite": "ColeccionSilvarion/shinyMrMime.gif",
+    "types": [
+      "Psychic",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Shiny Nidoqueen",
+    "sprite": "ColeccionSilvarion/shinyNidoqueen.gif",
+    "types": [
+      "Poison",
+      "Ground"
+    ]
+  },
+  {
+    "name": "Shiny Noctowl",
+    "sprite": "ColeccionSilvarion/shinyNoctowl.gif",
+    "types": [
+      "Normal",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Shiny Orthworm",
+    "sprite": "ColeccionSilvarion/shinyOrthworm.gif",
+    "types": [
+      "Steel"
+    ]
+  },
+  {
+    "name": "Shiny Palafin",
+    "sprite": "ColeccionSilvarion/shinyPalafin.gif",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Shiny Politoed",
+    "sprite": "ColeccionSilvarion/shinyPolitoed.gif",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Shiny Poliwrath",
+    "sprite": "ColeccionSilvarion/shinyPoliwrath.gif",
+    "types": [
+      "Water",
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Shiny Ponyta",
+    "sprite": "ColeccionSilvarion/shinyPonyta.png",
+    "types": [
+      "Fire"
+    ]
+  },
+  {
+    "name": "Shiny Primarina",
+    "sprite": "ColeccionSilvarion/shinyPrimarina.gif",
+    "types": [
+      "Water",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Shiny Pyroar",
+    "sprite": "ColeccionSilvarion/shinyPyroar.gif",
+    "types": [
+      "Fire",
+      "Normal"
+    ]
+  },
+  {
+    "name": "Shiny Quagsire",
+    "sprite": "ColeccionSilvarion/shinyQuagsire.gif",
+    "types": [
+      "Water",
+      "Ground"
+    ]
+  },
+  {
+    "name": "Shiny Quilava",
+    "sprite": "ColeccionSilvarion/shinyQuilava.gif",
+    "types": [
+      "Fire"
+    ]
+  },
+  {
+    "name": "Shiny Sableye",
+    "sprite": "ColeccionSilvarion/shinySableye.gif",
+    "types": [
+      "Dark",
+      "Poison"
+    ]
+  },
+  {
+    "name": "Shiny Sharpedo",
+    "sprite": "ColeccionSilvarion/shinySharpedo.gif",
+    "types": [
+      "Water",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Shiny Shedinja",
+    "sprite": "ColeccionSilvarion/shinyShedinja.gif",
+    "types": [
+      "Bug",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Shiny Slurpuff",
+    "sprite": "ColeccionSilvarion/shinySlurpuff.gif",
+    "types": [
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Shiny Solrock",
+    "sprite": "ColeccionSilvarion/shinySolrock.gif",
+    "types": [
+      "Rock",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Shiny Spiritomb",
+    "sprite": "ColeccionSilvarion/shinySpiritomb.gif",
+    "types": [
+      "Ghost",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Shiny Staraptor",
+    "sprite": "ColeccionSilvarion/shinyStaraptor.gif",
+    "types": [
+      "Normal",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Shiny Sunflora",
+    "sprite": "ColeccionSilvarion/shinySunflora.gif",
+    "types": [
+      "Grass"
+    ]
+  },
+  {
+    "name": "Shiny Sylveon",
+    "sprite": "ColeccionSilvarion/shinySylveon.gif",
+    "types": [
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Shiny Talonflame",
+    "sprite": "ColeccionSilvarion/shinyTalonflame.gif",
+    "types": [
+      "Fire",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Shiny Tinkaton",
+    "sprite": "ColeccionSilvarion/shinyTinkaton.gif",
+    "types": [
+      "Fairy",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Shiny Tinkatuff",
+    "sprite": "ColeccionSilvarion/shinyTinkatuff.gif",
+    "types": [
+      "Fairy",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Shiny Toucannon",
+    "sprite": "ColeccionSilvarion/shinyToucannon.gif",
+    "types": [
+      "Normal",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Shiny Turtonator",
+    "sprite": "ColeccionSilvarion/shinyTurtonator.gif",
+    "types": [
+      "Fire",
+      "Dragon"
+    ]
+  },
+  {
+    "name": "Shiny Typhlosion",
+    "sprite": "ColeccionSilvarion/shinyTyphlosion.gif",
+    "types": [
+      "Fire"
+    ]
+  },
+  {
+    "name": "Shiny Umbreon",
+    "sprite": "ColeccionSilvarion/shinyUmbreon.gif",
+    "types": [
+      "Dark"
+    ]
+  },
+  {
+    "name": "Shiny Ursaring",
+    "sprite": "ColeccionSilvarion/shinyUrsaring.gif",
+    "types": [
+      "Normal"
+    ]
+  },
+  {
+    "name": "Shiny Weavile",
+    "sprite": "ColeccionSilvarion/shinyWeavile.gif",
+    "types": [
+      "Ice",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Shiny Wiglett",
+    "sprite": "ColeccionSilvarion/shinyWiglett.gif",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Shiny Zeraora",
+    "sprite": "ColeccionSilvarion/shinyZeraora.gif",
+    "types": [
+      "Electric"
+    ]
+  },
+  {
+    "name": "Walking Wake",
+    "sprite": "ColeccionSilvarion/walkingWake.gif",
+    "types": [
+      "Water",
+      "Dragon"
+    ]
+  },
+  {
+    "name": "Zarude",
+    "sprite": "ColeccionSilvarion/zarude.gif",
+    "types": [
+      "Dark",
+      "Grass"
+    ]
+  },
+  {
+    "name": "Zeraora",
+    "sprite": "ColeccionSilvarion/zeraora.gif",
+    "types": [
+      "Electric"
+    ]
+  }
+]
