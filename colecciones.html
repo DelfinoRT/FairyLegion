@@ -34,7 +34,7 @@
     <section id="login-section" hidden>
       <h2>Acceso para miembros</h2>
       <form id="login" class="form-grid">
-        <label>Usuario <input name="username" required autocomplete="username" pattern="[a-z0-9][a-z0-9_-]{2,31}"></label>
+        <label>Usuario <input name="username" required autocomplete="username" pattern="[a-z0-9][a-z0-9_\-]{2,31}"></label>
         <label>Contraseña <input name="password" type="password" required autocomplete="current-password"></label>
         <button>Entrar</button>
       </form>
@@ -52,7 +52,7 @@
       <div id="administration" hidden>
         <h3>Administrar miembros</h3>
         <form id="create-user" class="form-grid">
-          <label>Usuario <input name="username" required pattern="[a-z0-9][a-z0-9_-]{2,31}" placeholder="nombre-usuario"></label>
+          <label>Usuario <input name="username" required pattern="[a-z0-9][a-z0-9_\-]{2,31}" placeholder="nombre-usuario"></label>
           <label>Contraseña inicial <input name="password" type="password" required minlength="12" maxlength="128" autocomplete="new-password"></label>
           <button id="generate-password" class="secondary" type="button">Generar contraseña</button>
           <button>Crear usuario y colección</button>
