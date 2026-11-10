@@ -557,3 +557,58 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+// Respawn Search Functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const goBtn = document.getElementById('go-btn');
+  const levelInput = document.getElementById('level-input');
+  const typeSelect = document.getElementById('type-select');
+  const respawnResults = document.getElementById('respawn-results');
+
+  if (!goBtn || !respawnData) return;
+
+  goBtn.addEventListener('click', function() {
+    const userLevel = parseInt(levelInput.value);
+    const selectedType = typeSelect.value;
+
+    if (!userLevel || userLevel < 40) {
+      alert('Por favor, introduce un nivel válido (mínimo 40)');
+      return;
+    }
+
+    let filteredRespawns = respawnData.filter(respawn => respawn.minLevel <= userLevel);
+
+    if (selectedType) {
+      filteredRespawns = filteredRespawns.filter(respawn => respawn.mainType === selectedType);
+    }
+
+    filteredRespawns.sort((a, b) => b.level - a.level);
+
+    if (filteredRespawns.length === 0) {
+      respawnResults.innerHTML = '<p style="color: #ff6b6b; font-weight: bold;">No se encontraron respawns disponibles para tu nivel y tipo seleccionado.</p>';
+      return;
+    }
+
+    let resultsHTML = '<div style="margin-top: 20px;">';
+    filteredRespawns.forEach(respawn => {
+      resultsHTML += `
+        <div style="background-color: #f0f0f0; padding: 15px; margin-bottom: 15px; border-radius: 8px; border-left: 4px solid #007bff;">
+          <h3 style="margin: 0 0 10px 0; color: #333;">${respawn.type} (Level ${respawn.level})</h3>
+          <p style="margin: 5px 0;"><strong>Ubicación:</strong> ${respawn.city}</p>
+          <p style="margin: 5px 0;"><strong>Pokémon Comunes:</strong> ${respawn.spawnMany.join(', ')}</p>
+          <p style="margin: 5px 0;"><strong>Pokémon Raros:</strong> ${respawn.spawnFew.join(', ')}</p>
+          <a href="${respawn.video}" target="_blank" style="display: inline-block; margin-top: 10px; padding: 8px 12px; background-color: #ff0000; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">Ver Video 📹</a>
+        </div>
+      `;
+    });
+    resultsHTML += '</div>';
+
+    respawnResults.innerHTML = resultsHTML;
+  });
+
+  levelInput.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      goBtn.click();
+    }
+  });
+});
