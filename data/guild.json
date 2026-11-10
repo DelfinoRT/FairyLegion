@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-11-06T12:02:06.720Z",
+  "updatedAt": "2026-11-08T06:35:55.071Z",
   "name": "FAIRY LEGION",
   "world": "Diamond",
   "leader": "Nemesis",
-  "level": 5,
-  "experience": "22515657",
+  "level": 6,
+  "experience": "46680641",
   "points": 0,
-  "members": 1300,
-  "online": 12,
+  "members": 1298,
+  "online": 18,
   "createdAt": 1609622962,
   "recruiting": true,
   "recruitment": {
@@ -73,12 +73,12 @@
       {
         "id": "shiny",
         "name": "Shiny",
-        "tier": 1,
+        "tier": 2,
         "maximum": 5,
-        "bonus": 2,
-        "nextBonus": 4,
+        "bonus": 4,
+        "nextBonus": 6,
         "cost": 1,
-        "requiredLevel": 5
+        "requiredLevel": 10
       },
       {
         "id": "proficiency_exp",
