@@ -178,6 +178,44 @@
         <p class="home-note">Gracias a <a href="https://padventures.org/index.php/character/view/Tuerka" target="_blank" rel="noopener noreferrer">Tuerka</a> e <a href="https://padventures.org/index.php/character/view/Iskra" target="_blank" rel="noopener noreferrer">Iskra</a> por compartir ubicaciones de jefes.</p>
     </section>
 
+    <section class="home-tools" id="respawn-search">
+        <h2>Asistente de Respawns 📍</h2>
+        <p>El asistente te ayudará a encontrar los mejores respawns según el nivel de tu personaje.</p>
+        <p>Indica tu nivel y, si lo deseas, el tipo de Pokémon que buscas. El asistente te proporcionará una lista de respawns disponibles, ordenados de mayor a menor nivel, junto con detalles clave y un enlace a un video explicativo de cada ubicación.</p>
+        <label for="level-input-home">Nivel:</label>
+        <input type="number" id="level-input-home" placeholder="Introduce tu nivel" required min="1">
+        <br>
+        <label for="type-select-home">Tipo de Pokémon (opcional):</label>
+        <select id="type-select-home">
+            <option value="">Selecciona un tipo...</option>
+            <option value="Normal">Normal (Normal)</option>
+            <option value="Fire">Fuego (Fire)</option>
+            <option value="Water">Agua (Water)</option>
+            <option value="Electric">Eléctrico (Electric)</option>
+            <option value="Grass">Planta (Grass)</option>
+            <option value="Ice">Hielo (Ice)</option>
+            <option value="Fight">Pelea (Figh)</option>
+            <option value="Poison">Veneno (Poison)</option>
+            <option value="Ground">Tierra (Ground)</option>
+            <option value="Fly">Volador (Fly)</option>
+            <option value="Psychic">Psíquico (Psychic)</option>
+            <option value="Bug">Bicho (Bug)</option>
+            <option value="Rock">Roca (Rock)</option>
+            <option value="Ghost">Fantasma (Ghost)</option>
+            <option value="Dragon">Dragón (Dragon)</option>
+            <option value="Dark">Oscuro (Dark)</option>
+            <option value="Steel">Acero (Steel)</option>
+            <option value="Fairy">Hada (Fairy)</option>
+        </select>
+        <br>
+        <button id="go-btn-home">¡Buscar Respawn!</button>
+
+        <div id="respawn-results-home">
+            <!-- Respawn information will be displayed here -->
+        </div>
+        <p class="home-note">Créditos: Para realizar esto, tomamos como referencia la información del canal de <a href="https://www.youtube.com/@LanyAdventures" target="_blank" rel="noopener noreferrer">LanyAdventures</a>. Nivel mínimo = 40</p>
+    </section>
+
     <section id="gallery" aria-labelledby="activity-heading">
         <p class="gallery-eyebrow">Momentos de Fairy Legion</p>
         <h2 id="activity-heading">Actividad del gremio</h2>
@@ -243,6 +281,7 @@
         <script src="script.js"></script>
         <script src="nursery-level-calc.js"></script>
         <script src="BossRaids.js"></script>
+        <script src="respawnData.js"></script>
         <script src="guild-profile.js"></script>
         <script src="gallery.js"></script>
         <script src="flag.js"></script>

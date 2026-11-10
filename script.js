@@ -560,12 +560,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Respawn Search Functionality
 document.addEventListener('DOMContentLoaded', function() {
-  const goBtn = document.getElementById('go-btn');
-  const levelInput = document.getElementById('level-input');
-  const typeSelect = document.getElementById('type-select');
-  const respawnResults = document.getElementById('respawn-results');
+  // Handle respawn search on any page (home or dedicated respawns page)
+  const goBtn = document.getElementById('go-btn') || document.getElementById('go-btn-home');
+  const levelInput = document.getElementById('level-input') || document.getElementById('level-input-home');
+  const typeSelect = document.getElementById('type-select') || document.getElementById('type-select-home');
+  const respawnResults = document.getElementById('respawn-results') || document.getElementById('respawn-results-home');
 
-  if (!goBtn || !respawnData) return;
+  if (!goBtn || !levelInput || !typeSelect || !respawnResults || !respawnData) return;
 
   goBtn.addEventListener('click', function() {
     const userLevel = parseInt(levelInput.value);
