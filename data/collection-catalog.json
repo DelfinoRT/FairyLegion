@@ -718,6 +718,14 @@
     ]
   },
   {
+    "name": "Shiny Drampa",
+    "sprite": "ColeccionSilvarion/shinyDrampa.gif",
+    "types": [
+      "Normal",
+      "Dragon"
+    ]
+  },
+  {
     "name": "Shiny Eiscue",
     "sprite": "ColeccionSilvarion/shinyEiscue.gif",
     "types": [
@@ -738,6 +746,13 @@
     "types": [
       "Fairy",
       "Flying"
+    ]
+  },
+  {
+    "name": "Shiny Espeon",
+    "sprite": "ColeccionSilvarion/ShinyEspeon.gif",
+    "types": [
+      "Psychic"
     ]
   },
   {
@@ -827,6 +842,13 @@
   {
     "name": "Shiny Glaceon",
     "sprite": "ColeccionSilvarion/shinyGlaceon.gif",
+    "types": [
+      "Ice"
+    ]
+  },
+  {
+    "name": "Shiny Glalie",
+    "sprite": "ColeccionSilvarion/shinyGlalie.gif",
     "types": [
       "Ice"
     ]
