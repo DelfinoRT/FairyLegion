@@ -345,6 +345,14 @@
     ]
   },
   {
+    "name": "Cloned Venusaur",
+    "sprite": "ColeccionSilvarion/clonedVenusaur.gif",
+    "types": [
+      "Grass",
+      "Poison"
+    ]
+  },
+  {
     "name": "Cloned Weezing",
     "sprite": "ColeccionSilvarion/clonedWeezing.gif",
     "types": [
