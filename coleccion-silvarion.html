@@ -1851,6 +1851,55 @@
                   }
                 </script>
 
+                <script>
+                  // Dex number lookup via PokeAPI (prefixes like "Shiny" are stripped by retrying with fewer leading words)
+                  (function() {
+                    var CACHE_KEY = 'silvarionDexCache';
+                    var cache = {};
+                    try { cache = JSON.parse(localStorage.getItem(CACHE_KEY)) || {}; } catch (e) {}
+                    var pending = {};
+
+                    function slug(words) {
+                      return words.join(' ').toLowerCase().replace(/[.'’:]/g, '').replace(/\s+/g, '-');
+                    }
+
+                    function fetchSpecies(s) {
+                      if (s in cache) return Promise.resolve(cache[s]);
+                      if (pending[s]) return pending[s];
+                      pending[s] = fetch('https://pokeapi.co/api/v2/pokemon-species/' + encodeURIComponent(s))
+                        .then(function(r) { return r.ok ? r.json() : (r.status === 404 ? null : Promise.reject()); })
+                        .then(function(d) {
+                          cache[s] = d ? d.id : null;
+                          try { localStorage.setItem(CACHE_KEY, JSON.stringify(cache)); } catch (e) {}
+                          return cache[s];
+                        });
+                      return pending[s];
+                    }
+
+                    function lookup(name) {
+                      var words = name.trim().split(/\s+/);
+                      var i = 0;
+                      function next() {
+                        if (i >= words.length) return Promise.resolve(null);
+                        return fetchSpecies(slug(words.slice(i++))).then(function(id) { return id || next(); });
+                      }
+                      return next();
+                    }
+
+                    document.querySelectorAll('.pokemon-card').forEach(function(card) {
+                      var names = card.querySelectorAll('.pokemon-name');
+                      if (names.length < 2) return;
+                      var line = document.createElement('div');
+                      line.className = 'pokemon-name pokemon-dex';
+                      names[1].insertAdjacentElement('afterend', line);
+                      lookup(names[0].textContent).then(function(id) {
+                        if (id) line.textContent = 'Dex #' + String(id).padStart(3, '0');
+                        else line.remove();
+                      }).catch(function() { line.remove(); });
+                    });
+                  })();
+                </script>
+
                 <script src="coleccion-silvarion.js"></script>
                 <script>
                   // Home button logic
