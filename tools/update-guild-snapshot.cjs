@@ -165,7 +165,8 @@ async function updateSnapshot({ request = fetch, destination = outputPath } = {}
 
 if (require.main === module) {
     updateSnapshot().catch(error => {
-        console.error('No se actualizó la copia del gremio:', error.message);
+        const cause = error.cause && (error.cause.code || error.cause.message);
+        console.error('No se actualizó la copia del gremio:', error.message + (cause ? ` (${cause})` : ''));
         process.exitCode = 1;
     });
 }
