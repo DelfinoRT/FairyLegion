@@ -609,7 +609,7 @@ h1.glitch-title {
   position: fixed;
   left: max(16px, calc(50% - 780px));
   top: 240px;
-  width: 220px;
+  width: 430px;
   border: 4px solid var(--stroke);
   border-radius: 18px;
   padding: 10px 10px 12px;
@@ -642,6 +642,35 @@ h1.glitch-title {
 
 .pokemon-hover-preview.dragging .preview-shell-label {
   cursor: grabbing;
+}
+
+.preview-content {
+  display: grid;
+  grid-template-columns: minmax(0, 190px) minmax(0, 1fr);
+  gap: 10px;
+}
+
+.preview-dex {
+  border: 3px solid #777d88;
+  border-radius: 12px;
+  padding: 12px;
+  color: var(--lcd-0);
+  background: linear-gradient(165deg, #bfd26b, #98b74e);
+  box-shadow: inset 0 0 0 2px rgba(43, 62, 31, 0.3);
+}
+
+.preview-dex-title {
+  font-family: "Press Start 2P", "Courier New", monospace;
+  font-size: 0.5rem;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.preview-pokemon-description {
+  margin: 10px 0 0;
+  font-size: 1.35rem;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
 }
 
 .preview-screen-frame {
@@ -1395,6 +1424,10 @@ body.serials-visible .pokemon-serial {
 }
 
 @media (max-width: 520px) {
+  .preview-content {
+    grid-template-columns: 1fr;
+  }
+
   .silvarion-character-embed-layout {
     padding: 5px;
   }

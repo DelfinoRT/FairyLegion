@@ -557,6 +557,7 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
   const previewImg = document.getElementById('preview-pokemon-img');
   const previewName = document.getElementById('preview-pokemon-name');
   const previewMeta = document.getElementById('preview-pokemon-meta');
+  const previewDescription = document.getElementById('preview-pokemon-description');
   const previewBall = document.getElementById('preview-pokeball-img');
   const previewTypes = document.getElementById('preview-pokemon-types');
   const closeButton = preview.querySelector('.preview-close-btn');
@@ -565,6 +566,29 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
   const previewBallContainer = previewBall ? previewBall.closest('.preview-pokeball-container') : null;
   const cards = Array.from(document.querySelectorAll('.collection-section .pokemon-card'));
   const hintStorageKey = 'silvarion-monitor-click-note-seen';
+  const descriptions = new Map();
+  let selectionVersion = 0;
+
+  const getDescription = (name) => window.silvarionDexLookup(name).then((id) => {
+    if (!id) return null;
+    if (!descriptions.has(id)) {
+      const request = fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+        .then((response) => {
+          if (!response.ok) throw new Error(`PokeAPI returned ${response.status}`);
+          return response.json();
+        })
+        .then((species) => {
+          const entry = species.flavor_text_entries.find((item) => item.language.name === 'en');
+          return entry ? entry.flavor_text.replace(/\s+/g, ' ').trim() : null;
+        })
+        .catch((error) => {
+          descriptions.delete(id);
+          throw error;
+        });
+      descriptions.set(id, request);
+    }
+    return descriptions.get(id);
+  });
   const createGlitchTextController = (element) => {
     if (!element) return null;
 
@@ -790,9 +814,24 @@ document.querySelectorAll('.collapsible-header').forEach((btn) => {
       alt: icon.getAttribute('alt') || '',
     }));
 
+    const currentSelection = ++selectionVersion;
+    if (previewDescription) {
+      previewDescription.textContent = 'Loading Pokédex entry...';
+      getDescription(name).then((description) => {
+        if (currentSelection !== selectionVersion) return;
+        previewDescription.textContent = description || 'No Pokédex entry available.';
+      }).catch((error) => {
+        console.error('Could not load Pokédex entry:', error);
+        if (currentSelection === selectionVersion) {
+          previewDescription.textContent = 'Could not load Pokédex entry. Please try again.';
+        }
+      });
+    }
+
     preview.classList.add('is-updating');
 
     window.setTimeout(() => {
+      if (currentSelection !== selectionVersion) return;
       previewImg.setAttribute('src', src);
       previewImg.setAttribute('alt', alt);
       if (previewNameGlitch) {

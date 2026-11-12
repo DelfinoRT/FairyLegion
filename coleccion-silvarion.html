@@ -261,18 +261,26 @@
                 <aside id="pokemon-hover-preview" class="pokemon-hover-preview" aria-live="polite">
                   <div class="preview-shell-label">Monitor Link</div>
                   <button type="button" class="preview-close-btn" aria-label="Cerrar Monitor Link">×</button>
-                  <div class="preview-screen-frame">
-                    <div class="preview-screen">
-                      <img loading="lazy" decoding="async" id="preview-pokemon-img" src="ColeccionSilvarion/missingno.gif" alt="MissingNo">
+                  <div class="preview-content">
+                    <div class="preview-pokemon-summary">
+                      <div class="preview-screen-frame">
+                        <div class="preview-screen">
+                          <img loading="lazy" decoding="async" id="preview-pokemon-img" src="ColeccionSilvarion/missingno.gif" alt="MissingNo">
+                        </div>
+                      </div>
+                      <div id="preview-pokemon-name" class="preview-pokemon-name">Hover a Pokemon</div>
+                      <div id="preview-pokemon-meta" class="preview-pokemon-meta">Sex / Ability</div>
+                      <div class="preview-pokeball-row">
+                        <div class="preview-pokeball-container">
+                          <img loading="lazy" decoding="async" id="preview-pokeball-img" src="" alt="" class="preview-pokeball-img">
+                        </div>
+                        <div id="preview-pokemon-types" class="preview-pokemon-types" aria-label="Tipos del Pokemon"></div>
+                      </div>
                     </div>
-                  </div>
-                  <div id="preview-pokemon-name" class="preview-pokemon-name">Hover a Pokemon</div>
-                  <div id="preview-pokemon-meta" class="preview-pokemon-meta">Sex / Ability</div>
-                  <div class="preview-pokeball-row">
-                    <div class="preview-pokeball-container">
-                      <img loading="lazy" decoding="async" id="preview-pokeball-img" src="" alt="" class="preview-pokeball-img">
+                    <div class="preview-dex">
+                      <div class="preview-dex-title">Pokédex</div>
+                      <p id="preview-pokemon-description" class="preview-pokemon-description" lang="en">Select a Pokémon to see its Pokédex entry.</p>
                     </div>
-                    <div id="preview-pokemon-types" class="preview-pokemon-types" aria-label="Tipos del Pokemon"></div>
                   </div>
                 </aside>
 
@@ -1867,11 +1875,18 @@
                       if (s in cache) return Promise.resolve(cache[s]);
                       if (pending[s]) return pending[s];
                       pending[s] = fetch('https://pokeapi.co/api/v2/pokemon-species/' + encodeURIComponent(s))
-                        .then(function(r) { return r.ok ? r.json() : (r.status === 404 ? null : Promise.reject()); })
+                        .then(function(r) {
+                          if (r.ok) return r.json();
+                          if (r.status === 404) return null;
+                          throw new Error('PokeAPI returned ' + r.status);
+                        })
                         .then(function(d) {
                           cache[s] = d ? d.id : null;
                           try { localStorage.setItem(CACHE_KEY, JSON.stringify(cache)); } catch (e) {}
                           return cache[s];
+                        }).catch(function(error) {
+                          delete pending[s];
+                          throw error;
                         });
                       return pending[s];
                     }
@@ -1885,6 +1900,8 @@
                       }
                       return next();
                     }
+
+                    window.silvarionDexLookup = lookup;
 
                     document.querySelectorAll('.pokemon-card').forEach(function(card) {
                       var names = card.querySelectorAll('.pokemon-name');
