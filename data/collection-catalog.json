@@ -470,6 +470,14 @@
     ]
   },
   {
+    "name": "Shiny Aerodactyl",
+    "sprite": "ColeccionSilvarion/shinyAerodactyl.gif",
+    "types": [
+      "Rock",
+      "Flying"
+    ]
+  },
+  {
     "name": "Shiny Ampharos",
     "sprite": "ColeccionSilvarion/shinyAmpharos.gif",
     "types": [
